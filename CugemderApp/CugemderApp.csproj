@@ -26,4 +26,8 @@
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CugemderApp.Shared\CugemderApp.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

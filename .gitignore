@@ -1,2 +1,4 @@
 */bin/
 */obj/
+*.v2
+.vs/CugemderApp/v16/.suo
