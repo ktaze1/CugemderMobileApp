@@ -1,4 +1,6 @@
 ﻿using System;
+using CugemderApp.Security;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.MobileBlazorBindings;
@@ -22,6 +24,12 @@ namespace CugemderApp
 
                     // Register app-specific services
                     services.AddSingleton<CounterState>();
+                    services.AddSingleton<AppState>();
+                    services.AddOptions();
+                    services.AddAuthorizationCore();
+                    services.AddScoped<CustomStateProvider>();
+                    services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
+                    services.AddScoped<IAuthService, AuthService>();
                 })
                 .Build();
 

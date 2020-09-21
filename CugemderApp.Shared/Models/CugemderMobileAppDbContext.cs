@@ -22,6 +22,17 @@ namespace CugemderApp.Shared.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Documents> Documents { get; set; }
+        public virtual DbSet<Events> Events { get; set; }
+        public virtual DbSet<Genders> Genders { get; set; }
+        public virtual DbSet<Groups> Groups { get; set; }
+        public virtual DbSet<JobTitles> JobTitles { get; set; }
+        public virtual DbSet<MeetingPoints> MeetingPoints { get; set; }
+        public virtual DbSet<Meetings> Meetings { get; set; }
+        public virtual DbSet<Notifications> Notifications { get; set; }
+        public virtual DbSet<Points> Points { get; set; }
+        public virtual DbSet<Positions> Positions { get; set; }
+        public virtual DbSet<Uploads> Uploads { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -123,13 +134,181 @@ namespace CugemderApp.Shared.Models
                     .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
+
                 entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.EmailConfirmed)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
+                entity.Property(e => e.Summary).HasColumnType("text");
+
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
                 entity.Property(e => e.UserName).HasMaxLength(256);
+
+                entity.HasOne(d => d.GenderNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.Gender)
+                    .HasConstraintName("FK_AspNetUsers_Genders");
+
+                entity.HasOne(d => d.GroupNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.Group)
+                    .HasConstraintName("FK_AspNetUsers_Groups");
+
+                entity.HasOne(d => d.JobTitleNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.JobTitle)
+                    .HasConstraintName("FK_AspNetUsers_JobTitles");
+
+                entity.HasOne(d => d.NotificationsNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.Notifications)
+                    .HasConstraintName("FK_AspNetUsers_Notifications");
+
+                entity.HasOne(d => d.PointsNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.Points)
+                    .HasConstraintName("FK_AspNetUsers_Points");
+
+                entity.HasOne(d => d.PositionNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.Position)
+                    .HasConstraintName("FK_AspNetUsers_Positions");
+            });
+
+            modelBuilder.Entity<Documents>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<Events>(entity =>
+            {
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Title).IsRequired();
+            });
+
+            modelBuilder.Entity<Genders>(entity =>
+            {
+                entity.Property(e => e.GenderName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Groups>(entity =>
+            {
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MeetingPoints>(entity =>
+            {
+                entity.Property(e => e.ReceiverUserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.ReceiverUser)
+                    .WithMany(p => p.MeetingPoints)
+                    .HasForeignKey(d => d.ReceiverUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MeetingPoints_Meetings");
+            });
+
+            modelBuilder.Entity<Meetings>(entity =>
+            {
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.IsApproved).HasColumnName("isApproved");
+
+                entity.Property(e => e.IsResulted).HasColumnName("isResulted");
+
+                entity.Property(e => e.Location)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.ReceiverId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.SenderId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.Receiver)
+                    .WithMany(p => p.Meetings)
+                    .HasForeignKey(d => d.ReceiverId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Meetings_AspNetUsers");
+            });
+
+            modelBuilder.Entity<Notifications>(entity =>
+            {
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.Summary)
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Notifications1)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Notifications_AspNetUsers");
+            });
+
+            modelBuilder.Entity<Points>(entity =>
+            {
+                entity.Property(e => e.AddedBy).IsRequired();
+
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Points1)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Points_AspNetUsers");
+            });
+
+            modelBuilder.Entity<Positions>(entity =>
+            {
+                entity.Property(e => e.Position)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Uploads>(entity =>
+            {
+                entity.Property(e => e.FileName).IsRequired();
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Uploads)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Uploads_AspNetUsers");
             });
 
             OnModelCreatingPartial(modelBuilder);
