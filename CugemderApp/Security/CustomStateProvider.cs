@@ -1,11 +1,10 @@
 ﻿using CugemderApp.Shared.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CugemderApp.Security
@@ -14,6 +13,7 @@ namespace CugemderApp.Security
     {
         private readonly IAuthService api;
         private CurrentUser _currentUser;
+        HttpClient http = AppState._http;
         public CustomStateProvider(IAuthService api)
         {
             this.api = api;
@@ -26,7 +26,10 @@ namespace CugemderApp.Security
                 var userInfo = await GetCurrentUser();
                 if (userInfo.IsAuthenticated)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, _currentUser.UserName) }.Concat(_currentUser.Claims.Select(c => new Claim(c.Key, c.Value)));
+                    var claims = new[] {
+                        new Claim(ClaimTypes.Name, _currentUser.UserName)
+                    }.Concat(_currentUser.Claims.Select(c => new Claim(c.Key, c.Value)));
+
                     identity = new ClaimsIdentity(claims, "Server authentication");
                 }
             }

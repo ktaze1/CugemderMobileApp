@@ -13,6 +13,8 @@ namespace CugemderApp.Shared.Models
         public bool IsApproved { get; set; }
         public bool IsResulted { get; set; }
 
+
+        public virtual AspNetUsers Sender { get; set; }
         public virtual AspNetUsers Receiver { get; set; }
     }
 }

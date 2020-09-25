@@ -1,4 +1,5 @@
 ﻿using System;
+using Blazored.LocalStorage;
 using CugemderApp.Security;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,6 @@ namespace CugemderApp
                 {
                     // Adds web-specific services such as NavigationManager
                     services.AddBlazorHybrid();
-
                     // Register app-specific services
                     services.AddSingleton<CounterState>();
                     services.AddSingleton<AppState>();
@@ -30,6 +30,20 @@ namespace CugemderApp
                     services.AddScoped<CustomStateProvider>();
                     services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
                     services.AddScoped<IAuthService, AuthService>();
+                   
+
+
+
+                    services.AddSingleton<DataAccessClasses.AspNetUsersDAL>();
+                    services.AddSingleton<DataAccessClasses.EventsDAL>();
+                    services.AddSingleton<DataAccessClasses.GendersDAL>();
+                    services.AddSingleton<DataAccessClasses.GroupsDAL>();
+                    services.AddSingleton<DataAccessClasses.JobTitlesDAL>();
+                    services.AddSingleton<DataAccessClasses.MeetingsDAL>();
+                    services.AddSingleton<DataAccessClasses.MeetingPointsDAL>();
+                    services.AddSingleton<DataAccessClasses.PointsDAL>();
+                    services.AddSingleton<DataAccessClasses.PositionsDAL>();
+                    services.AddSingleton<DataAccessClasses.UploadsDAL>();
                 })
                 .Build();
 

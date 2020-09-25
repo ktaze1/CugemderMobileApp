@@ -80,7 +80,21 @@ namespace CugemderApp.Server.Controllers
         public async Task<ActionResult<Positions>> PostPositions(Positions positions)
         {
             _context.Positions.Add(positions);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (PositionsExists(positions.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetPositions", new { id = positions.Id }, positions);
         }

@@ -19,12 +19,11 @@ namespace CugemderApp.Server.Controllers
         {
             _context = context;
         }
-
         // GET: api/Events
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Events>>> GetEvents()
         {
-            return await _context.Events.ToListAsync();
+            return await _context.Events.OrderByDescending(c => c.Date).ToListAsync();
         }
 
         // GET: api/Events/5

@@ -1,10 +1,13 @@
-﻿using CugemderApp.Shared.Models;
+﻿using Blazored.LocalStorage;
+using CugemderApp.Shared.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CugemderApp.Security
@@ -13,12 +16,12 @@ namespace CugemderApp.Security
     {
         HttpClient _httpClient = AppState._http;
 
+
         public async Task<CurrentUser> CurrentUserInfo()
         {
             try
             {
                 var result = await _httpClient.GetFromJsonAsync<CurrentUser>("api/auth/currentuserinfo");
-                Debug.WriteLine(result);
                 return result;
             }
             catch (Exception ex)
@@ -30,19 +33,9 @@ namespace CugemderApp.Security
 
         public async Task Login(LoginRequest loginRequest)
         {
-            try
-            {
-                Debug.WriteLine(loginRequest.UserName, loginRequest.Password);
-                var result = await _httpClient.PostAsJsonAsync("api/auth/login", loginRequest);
-                Debug.WriteLine(result.Content, result.StatusCode.ToString());
-
-                if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
-                result.EnsureSuccessStatusCode();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(" DEBUG MSG : " + ex.Message);
-            }
+            var result = await _httpClient.PostAsJsonAsync("api/auth/login", loginRequest);
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
+            result.EnsureSuccessStatusCode();
         }
 
         public async Task Logout()
@@ -57,6 +50,5 @@ namespace CugemderApp.Security
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }
-
     }
 }

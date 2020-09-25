@@ -1,0 +1,145 @@
+﻿@*@page "/addpoints/{id:int}"
+@page "/addpoints"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@inject HttpClient http
+@inject IJSRuntime js
+@inject NavigationManager uriHelper
+@inject AspNetUsersDAL userDAL
+@inject GroupsDAL groupDAL
+@inject PointsDAL pointDAL
+@inject UploadsDAL uploadDAL
+
+<h1> Puan Ekle </h1>
+
+
+@if (groups == null)
+{
+}
+else
+{
+    <form @onsubmit="@( () => Navigate(option))">
+        <select @bind="option">
+            <option selected value="0"> Tum Uyeler</option>
+            @for (int i = 1; i <= groups.Length; i++)
+            {
+                <option value="@i">@groups[i - 1].GroupName Grubu</option>
+            }
+        </select>
+        <button type="submit">Grup Seç</button>
+    </form>
+}
+
+@if (userlist == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ad Soyad</th>
+                <th>Puan</th>
+                <th>Grup</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AspNetUsers user in id.HasValue ? userlist.Where(x => x.Group == id) : userlist)
+            {
+
+                <tr>
+                    <td><a href="/profile/@user.Id">@user.FirstName @user.LastName</a></td>
+                    @if (user.PointsNavigation == null)
+                    {
+                        <td> - </td>
+                    }
+                    else
+                    {
+                        <td>@user.PointsNavigation.TotalPoints</td>
+                        <td>
+                            <EditForm Model="user.PointsNavigation">
+                                <InputNumber class="form-control input-sm" @bind-Value="@user.PointsNavigation.TotalPoints" />
+                            </EditForm>
+                        </td>
+                    }
+                    @if (user.GroupNavigation == null)
+                    {
+                        <td> - </td>
+                    }
+                    else
+                    {
+                        <td>@user.GroupNavigation.GroupName</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    @if (userlist.Count > 0)
+    {
+        <button type="submit" @onclick="@( () => Update())"> Güncelle </button>
+    }
+}
+
+
+
+@code {
+
+    private List<AspNetUsers> userlist;
+    private List<Groups> groups;
+    [Parameter] public int? id { get; set; }
+    private int option = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userlist = await userDAL.GetUsersNoNull();
+        groups = await groupDAL.GetGroupsAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        option = id.GetValueOrDefault();
+    }
+
+    async Task Delete(string userId)
+    {
+        var user = userlist.First(x => x.Id == userId);
+        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {user.FirstName} {user.LastName}'s ({user.Id}) Record?"))
+        {
+            uploadDAL.DeleteUploads(userId);
+            pointDAL.DeletePoints()
+            await http.DeleteAsync($"api/Points/{userId}");
+            await http.DeleteAsync($"api/AspNetUsers/{userId}");
+            await OnInitializedAsync();
+        }
+    }
+
+    void Navigate(int option)
+    {
+        if (option == 0)
+        {
+            uriHelper.NavigateTo($"/addpoints/");
+        }
+        else
+        {
+            uriHelper.NavigateTo($"/addpoints/{groups.ElementAt(option - 1).Id}");
+        }
+    }
+
+    async void Update()
+    {
+        foreach (AspNetUsers user in userlist)
+        {
+            user.PointsNavigation.TotalPoints = user.PointsNavigation.TotalPoints;
+            await http.PutAsJsonAsync($"api/Points/{user.PointsNavigation.Id}", user.PointsNavigation);
+        }
+        await js.InvokeVoidAsync("alert", $"Gruplar atandı! Rolleri Güncelleyiniz!");
+        uriHelper.NavigateTo("adminsettings");
+    }
+
+
+
+}*@

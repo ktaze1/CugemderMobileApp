@@ -87,18 +87,23 @@ namespace CugemderApp.Server.Controllers
 
         // DELETE: api/Points/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Points>> DeletePoints(int id)
+        public async Task<ActionResult<Points>> DeletePoints(string id)
         {
-            var points = await _context.Points.FindAsync(id);
+            var user = _context.AspNetUsers.FirstOrDefault(c => c.Id == id);
+            user.Points = null;
+            var points = await _context.Points.Where(c => c.UserId == id).ToListAsync();
             if (points == null)
             {
                 return NotFound();
             }
 
-            _context.Points.Remove(points);
+            foreach (var item in points)
+            {
+                _context.Points.Remove(item);
+            }
             await _context.SaveChangesAsync();
 
-            return points;
+            return NoContent();
         }
 
         private bool PointsExists(int id)

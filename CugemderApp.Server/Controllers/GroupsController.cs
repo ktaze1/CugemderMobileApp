@@ -20,12 +20,12 @@ namespace CugemderApp.Server.Controllers
             _context = context;
         }
 
-        // GET: api/Groups
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Groups>>> GetGroups()
         {
             return await _context.Groups.ToListAsync();
         }
+
 
         // GET: api/Groups/5
         [HttpGet("{id}")]

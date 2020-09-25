@@ -1,5 +1,6 @@
 ﻿@page "/"
-
+@inject AspNetUsersDAL userDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <style>
     .emp-profile {
@@ -118,6 +119,12 @@
     }
 </style>
 
+@if (loggedUser == null)
+{
+    <p></p>
+}
+else
+{
     <div class="container emp-profile">
         <div class="row">
             <div class="col-md-4">
@@ -128,33 +135,44 @@
             <div class="col-md-6">
                 <div class="profile-head">
                     <h5>
-                        FirstName SurName
+                        @loggedUser.FirstName @loggedUser.LastName
                     </h5>
                     <h6>
-                       Title
+                        @{ if (loggedUser.JobTitleNavigation != null)
+                            { <p>@loggedUser.JobTitleNavigation.TitleName</p>}
+                        else
+                        { <p> </p>} }
                     </h6>
                     <h6>
-                         Company
+                        @{ if (loggedUser.Company != null)
+                            { <p>@loggedUser.Company</p>}
+                        else
+                        { <p> </p>} }
                     </h6>
                     <p class="proile-rating">
                         CUGEMDER PUANI :
                         <span>
-                           250 points
-                        </span>
+                            @{ if (loggedUser.PointsNavigation != null)
+                                {
+                            <p>@loggedUser.PointsNavigation.TotalPoints</p> }
+                        else
+                        {
+                            <p> </p>
+                        }
+                            }
+                            </span>
                             </p>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a href="#">Bilgiler</a>Bilgiler
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Bilgiler</a>
                                 </li>
                                 <li class="nav-item">
-
-                                    <a href="#">Bilgiler</a>Bilgiler
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Hakkında</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        Modal
                     </div>
                 </div>
                 <div class="row">
@@ -168,23 +186,26 @@
                                         <label>Ad Soyad</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>FirstName SurName</p>
+                                        <p>@loggedUser.FirstName @loggedUser.LastName</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Cinsiyet</label>
                                     </div>
+                                    @if (loggedUser.GenderNavigation != null)
+                                    {
                                         <div class="col-md-6">
-                                            <p>GenderName</p>
+                                            <p>@loggedUser.GenderNavigation.GenderName</p>
                                         </div>
+                                    }
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>E-mail</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>Email</p>
+                                        <p>@loggedUser.Email</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -192,50 +213,77 @@
                                         <label>Telefon</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>PhoneNo</p>
+                                        <p>@loggedUser.PhoneNumber</p>
                                     </div>
                                 </div>
+
+                                @if (loggedUser.PositionNavigation != null)
+                                {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Pozisyon</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <p>Position</p>
+                                            <p>@loggedUser.PositionNavigation.Position</p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
+                                            @if (loggedUser.PositionNavigation.Id != 2)
+                                            {
                                                 <label>Mezuniyet Yılı</label>
+                                            }
+                                            else
+                                            {
+                                                <label>Firma Kuruluş Yılı:</label>
+                                            }
                                         </div>
-                                       
+                                        @if (loggedUser.Year != null)
+                                        {
                                             <div class="col-md-6">
-                                                <p>Year</p>
+                                                <p>@loggedUser.Year</p>
                                             </div>
+                                        }
                                     </div>
+
+                                }
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Uzmanlık Alanı</label>
                                     </div>
                                     <div class="col-md-6">
                                         <p>
-                                            Speciality
-                                        </p>
+                                            @if (loggedUser.Speciality != null)
+                                            {
+                                                @loggedUser.Speciality
+                                            }
+                                            else
+                                            {
+                                            <p>  </p>
+                                        }
+                                            </p>
                                         </div>
                                     </div>
+                                    @if (loggedUser.Website != null)
+                                    {
                                         <div class="row">
                                             <div class="col-md-6">
-
                                                 <label>Web Sitesi :</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <a href="#"> Website</a><br />
+                                                <a href="@loggedUser.Website"> @loggedUser.Website</a><br />
                                             </div>
                                         </div>
+                                    }
                                 </div>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="row">
                                         <div class="card-body">
-                                            <p class="card-text">Summary
+                                            <p class="card-text">
+                                                @if (loggedUser.Summary != null)
+                                                {
+                                                    @loggedUser.Summary
+                                                }
                                             </p>
                                         </div>
                                     </div>
@@ -244,3 +292,22 @@
                         </div>
                     </div>
                 </div>
+
+            }
+@code {
+
+    private AspNetUsers loggedUser;
+    private string _userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+        }
+    }
+
+}

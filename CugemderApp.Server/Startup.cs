@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using CugemderApp.Server.Data;
 using CugemderApp.Server.Model;
 using CugemderApp.Shared.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CugemderApp.Server
 {
@@ -46,7 +49,9 @@ namespace CugemderApp.Server
                     return Task.CompletedTask;
                 };
             });
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                      options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                   );
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));

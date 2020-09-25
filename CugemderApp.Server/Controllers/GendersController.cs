@@ -80,7 +80,21 @@ namespace CugemderApp.Server.Controllers
         public async Task<ActionResult<Genders>> PostGenders(Genders genders)
         {
             _context.Genders.Add(genders);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (GendersExists(genders.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetGenders", new { id = genders.Id }, genders);
         }
