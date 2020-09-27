@@ -36,7 +36,7 @@ namespace CugemderApp.Server.Controllers
                 .Where(c => c.IsApproved == true)
                 .Where(c => c.IsResulted == false)
                 .Where(c => c.Date.AddHours(2) < DateTime.Now)
-                .Include(c => c.Sender)
+                .Include(c => c.Receiver)
                 .ToListAsync();
         }
 
@@ -58,7 +58,7 @@ namespace CugemderApp.Server.Controllers
         [Route("user/{id}")]
         public async Task<ActionResult<IEnumerable<Meetings>>> GetMeetingsOfUser(string id)
         {
-            var meetings = await _context.Meetings.Include(c => c.Sender).Where(c => c.ReceiverId == id).ToListAsync();
+            var meetings = await _context.Meetings.Include(c => c.Receiver).Where(c => c.ReceiverId == id).ToListAsync();
 
             if (meetings == null)
             {

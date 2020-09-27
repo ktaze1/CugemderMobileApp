@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CugemderApp.Shared.Models
 {
@@ -48,17 +49,24 @@ namespace CugemderApp.Shared.Models
         public string Speciality { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string Summary { get; set; }
+
+        [Url]
         public string Website { get; set; }
         public int? Year { get; set; }
         public int? Standings { get; set; }
         public string LastName { get; set; }
+        public int? Relationship { get; set; }
+        public int? LocatedCity { get; set; }
+        public bool? IsAdmin { get; set; }
 
         public virtual Genders GenderNavigation { get; set; }
         public virtual Groups GroupNavigation { get; set; }
         public virtual JobTitles JobTitleNavigation { get; set; }
+        public virtual Cities LocatedCityNavigation { get; set; }
         public virtual Notifications NotificationsNavigation { get; set; }
         public virtual Points PointsNavigation { get; set; }
         public virtual Positions PositionNavigation { get; set; }
+        public virtual Relationship RelationshipNavigation { get; set; }
         public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }

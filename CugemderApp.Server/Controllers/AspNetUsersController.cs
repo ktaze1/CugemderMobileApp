@@ -38,6 +38,8 @@ namespace CugemderApp.Server.Controllers
                 .Include(c => c.GroupNavigation)
                 .Include(c => c.PointsNavigation)
                 .Include(c => c.GenderNavigation)
+                .Include(c => c.RelationshipNavigation)
+                .Include(c => c.LocatedCityNavigation)
                 .OrderByDescending(c => c.PointsNavigation.TotalPoints)
                 .ToListAsync();
         }
@@ -49,6 +51,8 @@ namespace CugemderApp.Server.Controllers
             return await _context.AspNetUsers
                 .Include(c => c.GroupNavigation)
                 .Include(c => c.PointsNavigation)
+                .Include(c => c.RelationshipNavigation)
+                .Include(c => c.LocatedCityNavigation)
                 .Include(c => c.GenderNavigation)
                 .Where(c => c.Points != null)
                 .Where(c => c.Group != null)
@@ -81,6 +85,8 @@ namespace CugemderApp.Server.Controllers
                 .Include(c => c.JobTitleNavigation)
                 .Include(c => c.GroupNavigation)
                 .Include(c => c.JobTitleNavigation)
+                .Include(c => c.RelationshipNavigation)
+                .Include(c => c.LocatedCityNavigation)
                 .Include(c => c.GenderNavigation)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
@@ -102,6 +108,8 @@ namespace CugemderApp.Server.Controllers
                 .Include(c => c.JobTitleNavigation)
                 .Include(c => c.GroupNavigation)
                 .Include(c => c.JobTitleNavigation)
+                .Include(c => c.RelationshipNavigation)
+                .Include(c => c.LocatedCityNavigation)
                 .Include(c => c.GenderNavigation)
                 .FirstOrDefaultAsync(c => c.UserName == username);
 

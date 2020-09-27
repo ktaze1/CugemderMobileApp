@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CugemderApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200919200944_init")]
-    partial class init
+    [Migration("20200926101058_testAuth")]
+    partial class testAuth
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -111,6 +111,22 @@ namespace CugemderApp.Server.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "79b7857a-3501-48bf-b634-a3eecf3b780b",
+                            ConcurrencyStamp = "0ea4d507-d57e-409d-8760-e30cb35233e9",
+                            Name = "Viewer",
+                            NormalizedName = "VIEWER"
+                        },
+                        new
+                        {
+                            Id = "5916112d-7817-4bf4-8299-f49b8bc788dc",
+                            ConcurrencyStamp = "b38b7b1f-7218-4baa-8450-918abf85b819",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

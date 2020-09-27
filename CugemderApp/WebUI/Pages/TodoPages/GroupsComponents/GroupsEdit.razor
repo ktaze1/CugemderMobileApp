@@ -1,25 +1,41 @@
-﻿@*@page "/groups/edit/{groupsId:int}"
-@inject HttpClient http
+﻿@page "/groups/edit/{groupsId:int}"
 @inject NavigationManager uriHelper
-@inject IJSRuntime js
+@inject GroupsDAL groupDAL
 <h3>Güncelle</h3>
 
-<GroupsForm ButtonText="Güncelle" group="group" OnValidSubmit="@EditGroup" />
+<EditForm Model="@group" OnValidSubmit="@EditGroup">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <div>
+            <InputText @bind-Value="@group.GroupName" />
+            <ValidationMessage For="@(() => group.GroupName)" />
+
+            <button type="submit" class="btn btn-success">
+                Kaydet
+            </button>
+        </div>
+    </div>
+</EditForm>
+
+
+
 
 @code {
     [Parameter] public int groupsId { get; set; }
 
     Groups group = new Groups();
 
+
+    DateTime time = DateTime.UtcNow;
+
     protected async override Task OnParametersSetAsync()
     {
-        group = await http.GetFromJsonAsync<Groups>($"api/groups/{groupsId}");
+        group = await groupDAL.GetGroup(groupsId);
     }
     async Task EditGroup()
     {
         group.UpdatedAt = DateTime.UtcNow;
-        await http.PutAsJsonAsync($"api/groups/{groupsId}", group);
-        await js.InvokeVoidAsync("alert", $"Updated Successfully!");
+        groupDAL.PutGroups(groupsId, group);
         uriHelper.NavigateTo("groups");
     }
-}*@
+}

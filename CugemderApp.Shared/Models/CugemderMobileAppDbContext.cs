@@ -22,6 +22,7 @@ namespace CugemderApp.Shared.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<Documents> Documents { get; set; }
         public virtual DbSet<Events> Events { get; set; }
         public virtual DbSet<Genders> Genders { get; set; }
@@ -32,6 +33,7 @@ namespace CugemderApp.Shared.Models
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<Points> Points { get; set; }
         public virtual DbSet<Positions> Positions { get; set; }
+        public virtual DbSet<Relationship> Relationship { get; set; }
         public virtual DbSet<Uploads> Uploads { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -144,6 +146,8 @@ namespace CugemderApp.Shared.Models
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
 
+                entity.Property(e => e.IsAdmin).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
@@ -169,6 +173,11 @@ namespace CugemderApp.Shared.Models
                     .HasForeignKey(d => d.JobTitle)
                     .HasConstraintName("FK_AspNetUsers_JobTitles");
 
+                entity.HasOne(d => d.LocatedCityNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.LocatedCity)
+                    .HasConstraintName("FK_AspNetUsers_Cities");
+
                 entity.HasOne(d => d.NotificationsNavigation)
                     .WithMany(p => p.AspNetUsers)
                     .HasForeignKey(d => d.Notifications)
@@ -183,6 +192,16 @@ namespace CugemderApp.Shared.Models
                     .WithMany(p => p.AspNetUsers)
                     .HasForeignKey(d => d.Position)
                     .HasConstraintName("FK_AspNetUsers_Positions");
+
+                entity.HasOne(d => d.RelationshipNavigation)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.Relationship)
+                    .HasConstraintName("FK_AspNetUsers_Relationship");
+            });
+
+            modelBuilder.Entity<Cities>(entity =>
+            {
+                entity.Property(e => e.CityName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Documents>(entity =>
@@ -292,6 +311,13 @@ namespace CugemderApp.Shared.Models
             modelBuilder.Entity<Positions>(entity =>
             {
                 entity.Property(e => e.Position)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Relationship>(entity =>
+            {
+                entity.Property(e => e.RelationshipStatus)
                     .IsRequired()
                     .HasMaxLength(50);
             });

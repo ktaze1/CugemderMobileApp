@@ -1,31 +1,30 @@
-﻿@*@page "/groups"
-@inject HttpClient client
-@inject IJSRuntime js
+﻿@page "/groups"
+@inject GroupsDAL groupDAL
+@inject AspNetUsersDAL userDAL
 
 <h3>Grup Listesi</h3>
 <br>
 @if (groups == null)
 {
-    <text>Loading...</text>
+    <text>Yükleniyor...</text>
 }
-else if (groups.Length == 0)
+else if (groups.Count == 0)
 {
-    <text>No Records Found.</text>
+    <text>Kayıtlı Grup Bulunamadı!</text>
 }
 else
 {
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Group Name</th>
+                <th>Grup adı</th>
+                <th>İşlemler</th>
             </tr>
         </thead>
         <tbody>
             @foreach (Groups group in groups)
             {
                 <tr>
-                    <td>@group.Id</td>
                     <td>@group.GroupName</td>
                     <td>
                         <a class="btn btn-success" href="groups/edit/@group.Id">Düzenle</a>
@@ -37,18 +36,23 @@ else
     </table>
 }
 @code {
-    Groups[] groups { get; set; }
+    List<Groups> groups;
+    List<AspNetUsers> users;
+
     protected override async Task OnInitializedAsync()
     {
-        groups = await client.GetFromJsonAsync<Groups[]>("api/groups");
+        groups = await groupDAL.GetGroupsAsync();
+        users = await userDAL.GetUsers();
     }
-    async Task Delete(int groupsId)
+
+    void Delete(int groupsId)
     {
-        var grp = groups.First(x => x.Id == groupsId);
-        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {grp.GroupName}'s ({grp.Id}) Record?"))
+        var tempUsers = users.Where(c => c.Group == groupsId).ToList();
+        foreach (var user in tempUsers)
         {
-            await client.DeleteAsync($"api/groups/{groupsId}");
-            await OnInitializedAsync();
+            user.Group = null;
+            userDAL.PutUser(user.Id, user);
         }
+        groupDAL.DeleteGroups(groupsId);
     }
-}*@
+}

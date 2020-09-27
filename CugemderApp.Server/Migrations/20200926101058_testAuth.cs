@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CugemderApp.Server.Migrations
 {
-    public partial class init : Migration
+    public partial class testAuth : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -151,6 +151,16 @@ namespace CugemderApp.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "79b7857a-3501-48bf-b634-a3eecf3b780b", "0ea4d507-d57e-409d-8760-e30cb35233e9", "Viewer", "VIEWER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "5916112d-7817-4bf4-8299-f49b8bc788dc", "b38b7b1f-7218-4baa-8450-918abf85b819", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

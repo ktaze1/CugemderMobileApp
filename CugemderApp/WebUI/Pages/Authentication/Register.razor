@@ -2,6 +2,7 @@
 @layout AuthLayout
 @inject NavigationManager navigationManager
 @inject CugemderApp.Security.CustomStateProvider authStateProvider
+@inject FileUpload fileDAL
 
 <h1 class="h2 font-weight-normal login-title">
     Register
@@ -10,18 +11,27 @@
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerRequest">
     <DataAnnotationsValidator />
 
-    <label for="inputUsername" class="sr-only">User Name</label>
-    <InputText id="inputUsername" class="form-control" placeholder="Username" autofocus @bind-Value="@registerRequest.UserName" />
-    <ValidationMessage For="@(() => registerRequest.UserName)" />
-
+    <label for="inputFirstName" class="sr-only">Adınız:</label>
+    <InputText id="inputFirstName" class="form-control" placeholder="Adınız" autofocus @bind-Value="@registerRequest.FirstName" />
+    <ValidationMessage For="@(() => registerRequest.FirstName)" />
+    <br />
+    <label for="inputLastName" class="sr-only">Soyadınız:</label>
+    <InputText id="inputLastName" class="form-control" placeholder="Soyadınız" autofocus @bind-Value="@registerRequest.LastName" />
+    <ValidationMessage For="@(() => registerRequest.LastName)" />
+    <br />
+    <label for="inputMail" class="sr-only">E-mail:</label>
+    <InputText id="inputMail" class="form-control" placeholder="E-mail" autofocus @bind-Value="@registerRequest.Email" />
+    <ValidationMessage For="@(() => registerRequest.LastName)" />
+    <br />
     <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerRequest.Password" />
+    <InputText type="password" id="inputPassword" class="form-control" placeholder="Şifreniz" @bind-Value="@registerRequest.Password" />
     <ValidationMessage For="@(() => registerRequest.Password)" />
-
+    <br />
     <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
     <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@registerRequest.PasswordConfirm" />
     <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
-
+    <br />
+    <button class="btn btn-info" @onclick="@SelecFiles">Dosya Seç</button>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
 
     <label class="text-danger">@error</label>
@@ -35,12 +45,15 @@
     RegisterRequest registerRequest { get; set; } = new RegisterRequest();
     string error { get; set; }
 
+    IEnumerable<FileResult> pickResult;
+
     async Task OnSubmit()
     {
         error = null;
         try
         {
             await authStateProvider.Register(registerRequest);
+            UploadFiles();
             navigationManager.NavigateTo("");
         }
         catch (Exception ex)
@@ -48,4 +61,23 @@
             error = ex.Message;
         }
     }
+
+    async void SelecFiles()
+    {
+        pickResult = await FilePicker.PickMultipleAsync();
+    }
+
+    async void UploadFiles()
+    {
+        foreach (var item in pickResult)
+        {
+            var stream = await item.OpenReadAsync();
+            var content = new StreamContent(stream);
+            var multi = new MultipartFormDataContent();
+            multi.Add(content, item.FileName, item.FileName);
+            fileDAL.PostPhoto(multi);
+        }
+    }
+
+
 }

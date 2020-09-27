@@ -1,5 +1,6 @@
 ﻿using System;
 using Blazored.LocalStorage;
+using Blazored.Modal;
 using CugemderApp.Security;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,12 +31,14 @@ namespace CugemderApp
                     services.AddScoped<CustomStateProvider>();
                     services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
                     services.AddScoped<IAuthService, AuthService>();
-                   
 
 
 
+                    //services.AddBlazoredModal();
                     services.AddSingleton<DataAccessClasses.AspNetUsersDAL>();
+                    services.AddSingleton<DataAccessClasses.CitiesDAL>();
                     services.AddSingleton<DataAccessClasses.EventsDAL>();
+                    services.AddSingleton<DataAccessClasses.FileUpload>();
                     services.AddSingleton<DataAccessClasses.GendersDAL>();
                     services.AddSingleton<DataAccessClasses.GroupsDAL>();
                     services.AddSingleton<DataAccessClasses.JobTitlesDAL>();
@@ -43,6 +46,7 @@ namespace CugemderApp
                     services.AddSingleton<DataAccessClasses.MeetingPointsDAL>();
                     services.AddSingleton<DataAccessClasses.PointsDAL>();
                     services.AddSingleton<DataAccessClasses.PositionsDAL>();
+                    services.AddSingleton<DataAccessClasses.RelationshipsDAL>();
                     services.AddSingleton<DataAccessClasses.UploadsDAL>();
                 })
                 .Build();
