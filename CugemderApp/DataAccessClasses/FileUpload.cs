@@ -12,7 +12,7 @@ namespace CugemderApp.DataAccessClasses
     {
         public HttpClient _http = AppState._http;
 
-        public async void PostPhoto(MultipartFormDataContent content)
+        public async void UploadDocument(MultipartFormDataContent content)
         {
             await _http.PostAsync("api/FileUpload",content);
         }

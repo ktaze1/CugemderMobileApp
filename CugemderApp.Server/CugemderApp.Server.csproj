@@ -33,5 +33,6 @@
 
   <ItemGroup>
     <Folder Include="StaticFiles\Images\" />
+    <Folder Include="StaticFiles\Contents\" />
   </ItemGroup>
 </Project>

@@ -51,12 +51,13 @@ else
                     else
                     {
 
-                        var test = uploads.Where(x => x.UserId == user.Id)
+                        var test = uploads.Where(x => x.UserMail == user.UserName)
                                         .ToList();
-
+                        var i = 1;
                         foreach (Uploads item in test)
                         {
-                            <a href="/UploadedContent/@item.FileName">Indir</a>
+                            string uri = AppState._http.BaseAddress.ToString() + $"StaticFiles/Contents/{item.FileName}";
+                            <button class="btn-info" @onclick="@( () => Launcher.OpenAsync(uri))">@(i++).Dosyayi Ac </button>
                         }
                     }
                 </td>
@@ -98,12 +99,13 @@ else
         uriHelper.NavigateTo("");
     }
 
+
     async Task Delete(string userId)
     {
         var user = waitingUsers.First(x => x.Id == userId);
+        uploadDAL.DeleteUploads(user.UserName);
         pointDAL.DeletePoints(userId);
-        uploadDAL.DeleteUploads(userId);
         userDAL.DeleteUser(userId);
-        uriHelper.NavigateTo("waitinglist");
+        await OnInitializedAsync();
     }
 }

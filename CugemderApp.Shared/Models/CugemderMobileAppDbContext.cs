@@ -136,6 +136,10 @@ namespace CugemderApp.Shared.Models
                     .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
+                entity.HasIndex(e => e.UserName)
+                    .HasName("IX_AspNetUsers")
+                    .IsUnique();
+
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.DateOfBirth).HasColumnType("date");
@@ -156,7 +160,9 @@ namespace CugemderApp.Shared.Models
 
                 entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
 
-                entity.Property(e => e.UserName).HasMaxLength(256);
+                entity.Property(e => e.UserName)
+                    .IsRequired()
+                    .HasMaxLength(256);
 
                 entity.HasOne(d => d.GenderNavigation)
                     .WithMany(p => p.AspNetUsers)
@@ -326,13 +332,14 @@ namespace CugemderApp.Shared.Models
             {
                 entity.Property(e => e.FileName).IsRequired();
 
-                entity.Property(e => e.UserId)
+                entity.Property(e => e.UserMail)
                     .IsRequired()
-                    .HasMaxLength(450);
+                    .HasMaxLength(256);
 
-                entity.HasOne(d => d.User)
+                entity.HasOne(d => d.UserMailNavigation)
                     .WithMany(p => p.Uploads)
-                    .HasForeignKey(d => d.UserId)
+                    .HasPrincipalKey(p => p.UserName)
+                    .HasForeignKey(d => d.UserMail)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Uploads_AspNetUsers");
             });

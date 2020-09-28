@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace CugemderApp.Shared.Models
 {
@@ -49,8 +48,6 @@ namespace CugemderApp.Shared.Models
         public string Speciality { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string Summary { get; set; }
-
-        [Url]
         public string Website { get; set; }
         public int? Year { get; set; }
         public int? Standings { get; set; }

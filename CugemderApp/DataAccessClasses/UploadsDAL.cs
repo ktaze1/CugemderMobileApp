@@ -17,9 +17,9 @@ namespace CugemderApp.DataAccessClasses
             return await _http.GetFromJsonAsync<List<Uploads>>("api/Uploads");
         }
 
-        public async Task<List<Uploads>> GetFileNames(string userId)
+        public async Task<List<Uploads>> GetFileNames(string mail)
         {
-            return await _http.GetFromJsonAsync<List<Uploads>>($"api/Uploads/user/{userId}");
+            return await _http.GetFromJsonAsync<List<Uploads>>($"api/Uploads/user/{mail}");
         }
 
         public async Task<Uploads> GetUpload(int id)
@@ -37,9 +37,9 @@ namespace CugemderApp.DataAccessClasses
             await _http.PostAsJsonAsync("api/Uploads", uploads);
         }
 
-        public async void DeleteUploads(string id)
+        public async void DeleteUploads(string mail)
         {
-            await _http.DeleteAsync($"api/Uploads/{id}");
+            await _http.DeleteAsync($"api/Uploads/{mail}");
         }
     }
 }

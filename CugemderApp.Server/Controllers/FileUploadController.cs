@@ -18,7 +18,7 @@ namespace CugemderApp.Server.Controllers
             try
             {
                 var file = Request.Form.Files[0];
-                var folderName = Path.Combine("StaticFiles", "Images");
+                var folderName = Path.Combine("StaticFiles", "Contents");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 if (file.Length > 0)
                 {

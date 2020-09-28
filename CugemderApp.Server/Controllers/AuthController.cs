@@ -62,11 +62,7 @@ namespace CugemderApp.Server.Controllers
             _dbContext.Points.Add(new Points { AddedBy = "Yeni Kullanici", TotalPoints = 0, UserId = user.Id, UpdatedAt = DateTime.Now });
             await _dbContext.SaveChangesAsync();
 
-            return await Login(new LoginRequest
-            {
-                UserName = parameters.Email,
-                Password = parameters.Password
-            });
+            return Ok();
         }
         [HttpPost]
         public async Task<IActionResult> Logout()

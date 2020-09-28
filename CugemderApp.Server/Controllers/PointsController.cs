@@ -90,7 +90,6 @@ namespace CugemderApp.Server.Controllers
         public async Task<ActionResult<Points>> DeletePoints(string id)
         {
             var user = _context.AspNetUsers.FirstOrDefault(c => c.Id == id);
-            user.Points = null;
             var points = await _context.Points.Where(c => c.UserId == id).ToListAsync();
             if (points == null)
             {

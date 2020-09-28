@@ -3,6 +3,7 @@
 @inject NavigationManager navigationManager
 @inject CugemderApp.Security.CustomStateProvider authStateProvider
 @inject FileUpload fileDAL
+@inject UploadsDAL uploadDAL
 
 <h1 class="h2 font-weight-normal login-title">
     Register
@@ -23,20 +24,23 @@
     <InputText id="inputMail" class="form-control" placeholder="E-mail" autofocus @bind-Value="@registerRequest.Email" />
     <ValidationMessage For="@(() => registerRequest.LastName)" />
     <br />
-    <label for="inputPassword" class="sr-only">Password</label>
+    <label for="inputPassword" class="sr-only">Şifre</label>
     <InputText type="password" id="inputPassword" class="form-control" placeholder="Şifreniz" @bind-Value="@registerRequest.Password" />
     <ValidationMessage For="@(() => registerRequest.Password)" />
     <br />
-    <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-    <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@registerRequest.PasswordConfirm" />
+    <label for="inputPasswordConfirm" class="sr-only">şifre Onay</label>
+    <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Şifre Onay" @bind-Value="@registerRequest.PasswordConfirm" />
     <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
     <br />
-    <button class="btn btn-info" @onclick="@SelecFiles">Dosya Seç</button>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
+    <button class="btn btn-info" type="button" @onclick="@SelecFiles">Dosya Seç</button>
+    <br />
 
+    <br />
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Üye Ol</button>
+    <br />
     <label class="text-danger">@error</label>
     <NavLink href="login">
-        <h6 class="font-weight-normal text-center">Already have an account? Click here to login</h6>
+        <h6 class="font-weight-normal text-center">Zaten üye misiniz? Buradan giriş yapın.</h6>
     </NavLink>
 </EditForm>
 
@@ -54,7 +58,6 @@
         {
             await authStateProvider.Register(registerRequest);
             UploadFiles();
-            navigationManager.NavigateTo("");
         }
         catch (Exception ex)
         {
@@ -71,11 +74,18 @@
     {
         foreach (var item in pickResult)
         {
+            System.IO.FileInfo fi = new System.IO.FileInfo(item.FileName);
+            string encodedStr = string.Format(@"{0}", Guid.NewGuid());
+            var filename = $"{encodedStr}{fi.Extension}";
             var stream = await item.OpenReadAsync();
             var content = new StreamContent(stream);
             var multi = new MultipartFormDataContent();
-            multi.Add(content, item.FileName, item.FileName);
-            fileDAL.PostPhoto(multi);
+            multi.Add(content, filename, filename) ;
+            fileDAL.UploadDocument(multi);
+            Uploads file = new Uploads();
+            file.UserMail = registerRequest.Email;
+            file.FileName = filename;
+            uploadDAL.PostUploads(file);
         }
     }
 

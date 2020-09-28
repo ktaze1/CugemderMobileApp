@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CugemderApp.Shared.Models;
+using System.IO;
+using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CugemderApp.Server.Controllers
 {
@@ -14,10 +17,12 @@ namespace CugemderApp.Server.Controllers
     public class UploadsController : ControllerBase
     {
         private readonly CugemderMobileAppDbContext _context;
+        private readonly IHostingEnvironment _environment;
 
-        public UploadsController(CugemderMobileAppDbContext context)
+        public UploadsController(CugemderMobileAppDbContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         //GET: api/Uploads
@@ -28,9 +33,9 @@ namespace CugemderApp.Server.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        public async Task<ActionResult<IEnumerable<Uploads>>> GetFileNames(string userId)
+        public async Task<ActionResult<IEnumerable<Uploads>>> GetFileNames(string userMail)
         {
-            return await _context.Uploads.Where(c => c.UserId == userId).ToListAsync();
+            return await _context.Uploads.Where(c => c.UserMail == userMail).ToListAsync();
         }
 
         // GET: api/Uploads/5
@@ -85,17 +90,24 @@ namespace CugemderApp.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Uploads>> PostUploads(Uploads uploads)
         {
-            _context.Uploads.Add(uploads);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Uploads.Add(uploads);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
 
             return CreatedAtAction("GetUploads", new { id = uploads.Id }, uploads);
         }
 
         // DELETE: api/Uploads/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Uploads>> DeleteUploads(string id)
+        [HttpDelete("{mail}")]
+        public async Task<ActionResult<Uploads>> DeleteUploads(string mail)
         {
-            var uploads = await _context.Uploads.Where(c => c.UserId == id).ToListAsync();
+            var uploads = await _context.Uploads.Where(c => c.UserMail == mail).ToListAsync();
             if (uploads == null)
             {
                 return NotFound();
@@ -103,11 +115,11 @@ namespace CugemderApp.Server.Controllers
 
             foreach (var item in uploads)
             {
-                //var file = Path.Combine(_environment.ContentRootPath, "UploadedContent", item.FileName);
-                //if (System.IO.File.Exists(file))
-                //{
-                //    System.IO.File.Delete(file);
-                //}
+                var file = Path.Combine(_environment.ContentRootPath, "Staticfiles", "Contents", item.FileName);
+                if (System.IO.File.Exists(file))
+                {
+                    System.IO.File.Delete(file);
+                }
                 _context.Uploads.Remove(item);
             }
             await _context.SaveChangesAsync();
