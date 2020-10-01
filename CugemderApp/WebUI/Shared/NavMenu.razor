@@ -1,3 +1,6 @@
+﻿@inject AspNetUsersDAL userDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">CUGEMDER</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -9,39 +12,47 @@
     <ul class="nav flex-column">
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="waitinglist">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Waiting List
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="setting">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Settings
+                <span class="oi oi-home" aria-hidden="true"></span> Ana Sayfa
             </NavLink>
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="userlist">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> userlist
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Üye Listesi
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="adminsettings">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> adminsettings
+            <NavLink class="nav-link" href="events">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Etkinlikler
             </NavLink>
         </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="meetingRequests">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Görüşme Talepleri
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="documents">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Dökümanlar
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="setting">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Kullanıcı Ayarları
+            </NavLink>
+        </li>
+        @if (loggedUser != null && loggedUser.IsAdmin.GetValueOrDefault())
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="waitinglist">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Onay Listesi
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="adminsettings">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Yönetici Ayarları
+                </NavLink>
+            </li>
+        }
     </ul>
 </div>
 
@@ -53,5 +64,19 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private AspNetUsers loggedUser;
+    private string _userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+        }
     }
 }

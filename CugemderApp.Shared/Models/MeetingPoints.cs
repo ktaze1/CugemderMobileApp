@@ -10,6 +10,7 @@ namespace CugemderApp.Shared.Models
         public string ReceiverUserId { get; set; }
         public int TotalPoints { get; set; }
 
+        public virtual Meetings Meeting { get; set; }
         public virtual AspNetUsers ReceiverUser { get; set; }
     }
 }

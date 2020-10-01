@@ -1,0 +1,82 @@
+﻿@page "/givemeetingpoint/{meetingId:int}"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject AspNetUsersDAL userDAL
+@inject MeetingsDAL meetingDAL
+@inject MeetingPointsDAL meetingPointDAL
+@using System.ComponentModel.DataAnnotations;
+
+<div class="simple-form">
+    <EditForm Model="modalForm" OnValidSubmit="SubmitForm">
+        <DataAnnotationsValidator />
+
+        <div class="form-group">
+            <label>1. Kriter için puan veriniz:</label>
+            <InputNumber @bind-Value="modalForm.point1" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point1)" />
+        </div>
+        <div class="form-group">
+            <label>2. Kriter için puan veriniz:</label>
+            <InputNumber @bind-Value="modalForm.point2" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point2)" />
+        </div>
+        <div class="form-group">
+            <label>3. Kriter için puan veriniz:</label>
+            <InputNumber @bind-Value="modalForm.point3" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point3)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Puanla</button>
+        <button @onclick="Cancel" type="button" class="btn btn-secondary">Vazgeç</button>
+    </EditForm>
+</div>
+
+@code {
+
+    [Parameter] public int meetingId { get; set; }
+
+    Meetings meeting;
+    MeetingPoints meetingPoint = new MeetingPoints();
+    Form modalForm = new Form();
+
+    public class Form
+    {
+        [Range(1, 10, ErrorMessage = "Puan 1 ile 10 arasında olmalıdır!")]
+        public int point1 { get; set; }
+
+        [Range(1, 10, ErrorMessage = "Puan 1 ile 10 arasında olmalıdır!")]
+        public int point2 { get; set; }
+
+        [Range(1, 10, ErrorMessage = "Puan 1 ile 10 arasında olmalıdır!")]
+        public int point3 { get; set; }
+    }
+
+    protected override async void OnInitialized()
+    {
+        meeting = await meetingDAL.GetMeeting(meetingId);
+    }
+
+
+    void SubmitForm()
+    {
+        meetingPoint.MeetingId = meetingId;
+        meetingPoint.ReceiverUserId = meeting.ReceiverId;
+        meetingPoint.TotalPoints = (modalForm.point1 + modalForm.point2 + modalForm.point3) / 3;
+        meeting.IsResulted = true;
+        meetingPointDAL.PostMeetinPoints(meetingPoint);
+        meetingDAL.PutMeetings(meetingId, meeting);
+    }
+
+    void Cancel()
+    {
+        modalForm = new Form();
+    }
+
+    //MeetingPoints meetingPoint;
+
+    //        meetingPoint.MeetingId = meeting.Id;
+    //        meetingPoint.ReceiverUserId = meeting.ReceiverId;
+    //        meeting.IsResulted = true;
+    //        await http.PostAsJsonAsync("api/MeetingPoints", meetingPoint);
+    //        await http.PutAsJsonAsync($"api/Meetings/{meeting.Id}", meeting);
+
+}

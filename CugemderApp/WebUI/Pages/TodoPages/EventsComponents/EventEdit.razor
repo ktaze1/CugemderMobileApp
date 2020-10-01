@@ -1,7 +1,6 @@
-﻿@*@page "/events/edit/{eventId:int}"
-@inject HttpClient http
+﻿@page "/events/edit/{eventId:int}"
 @inject NavigationManager uriHelper
-@inject IJSRuntime js
+@inject EventsDAL eventDAL
 
 <div class="simple-form">
     <EditForm Model="events" OnValidSubmit="@EditEvent">
@@ -23,8 +22,8 @@
         </div>
         <div class="form-group">
             <label>Tarih ve Saat</label>
-            <input type="datetime" @bind="events.DateTime" @bind:format="dd-MM-yyyy HH:mm" />
-            <ValidationMessage For="@(() => events.DateTime)" />
+            <input type="datetime" @bind="events.Date" @bind:format="dd-MM-yyyy HH:mm" />
+            <ValidationMessage For="@(() => events.Date)" />
         </div>
 
 
@@ -41,16 +40,15 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        events = await http.GetFromJsonAsync<Events>($"api/events/{eventId}");
+        events = await eventDAL.GetEvents(eventId);
     }
     async Task EditEvent()
     {
-        await http.PutAsJsonAsync($"api/Events/{eventId}", events);
-        await js.InvokeVoidAsync("alert", $"Updated Successfully!");
-        uriHelper.NavigateTo("groups");
+        eventDAL.PutEvents(eventId, events);
+        uriHelper.NavigateTo("events/1");
     }
     async Task Cancel()
     {
-        uriHelper.NavigateTo("events");
+        uriHelper.NavigateTo("events/1");
     }
-}*@
+}

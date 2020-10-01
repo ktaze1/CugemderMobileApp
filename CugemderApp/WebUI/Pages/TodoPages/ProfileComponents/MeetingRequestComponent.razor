@@ -1,5 +1,14 @@
-﻿@*<!--<div class="simple-form">
-    <EditForm Model="meeting" OnValidSubmit="SubmitForm">
+﻿@page "/createMeeting/{id}"
+@inject AspNetUsersDAL userDAL
+@inject MeetingsDAL meetingDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager  uriHelper
+
+
+<h3>Görüşme Detaylarını Giriniz</h3>
+
+<div class="simple-form">
+    <EditForm Model="meeting" OnValidSubmit="@SubmitForm">
         <DataAnnotationsValidator />
 
         <div class="form-group">
@@ -9,8 +18,7 @@
         </div>
         <div class="form-group">
             <label>Tarih</label>-->
-            @*<InputDate @bind-Value="meeting.Date" @bind:format="yyy-MM-dd HH:mm"/> 
-<!--<input type="datetime" @bind="meeting.Date" @bind:format="dd-MM-yyyy HH:mm" />
+            <InputDateTime @bind-Value="meeting.Date" />
             <ValidationMessage For="@(() => meeting.Date)" />
         </div>
 
@@ -23,23 +31,42 @@
 
 @code {
 
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
-    int totalPoints;
-    Meetings meeting = new Meetings();
+        [Parameter] public string id { get; set; }
 
-    protected override void OnInitialized()
+        int totalPoints;
+        Meetings meeting = new Meetings() { Date = DateTime.Today};
+
+
+    private AspNetUsers loggedUser;
+    private string _userId;
+
+    protected override async Task OnInitializedAsync()
     {
-        BlazoredModal.SetTitle("Görüşme Detaylarını Giriniz");
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+        }
     }
 
 
-    async Task SubmitForm()
+
+    void SubmitForm()
     {
-        await BlazoredModal.Close(ModalResult.Ok(meeting));
+        meeting.ReceiverId = id;
+        meeting.SenderId = loggedUser.Id;
+        meeting.IsApproved = false;
+        meeting.IsResulted = false;
+        meetingDAL.PostMeetings(meeting);
+        uriHelper.NavigateTo($"profile/{id}");
     }
-    async Task Cancel() => await BlazoredModal.Cancel();
+
+    void Cancel()
+    {
+        uriHelper.NavigateTo($"profile/{id}");
+    }
 
 }
-    
-    *@

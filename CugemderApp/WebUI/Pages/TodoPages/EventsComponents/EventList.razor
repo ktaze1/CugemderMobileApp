@@ -1,5 +1,9 @@
-﻿@page "/events"
+﻿@page "/events/{id:int}"
+@page "/events/"
 @inject EventsDAL eventDAL
+@inject AspNetUsersDAL userDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
+ 
 
 <h3>Etkinlikler</h3>
 
@@ -16,36 +20,45 @@ else
 {
     <table class="table table-striped">
         <tbody>
-            @foreach (Events eachEvent in events)
+            <h2>Etkinlikler</h2>
+            @foreach (Events eachEvent in id == 1 ? events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now) : events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now && c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null))
             {
-
-                <tr>
-                    <div class="row">
-                        <div class="col-sm">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">@eachEvent.Title</h5>
-                                    <p> Lokasyon : @eachEvent.Location </p>
-                                    <p> Tarih: @eachEvent.Date.GetValueOrDefault().ToLongDateString() </p>
-                                    <p> Saat: @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </p>
-                                    <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
-                                    <button class="btn btn-danger" @onclick="@(() => Delete(eachEvent.Id))">Sil</button>]
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </tr>
-
                 <tr>
                     <td>
-                        @eachEvent.Title  <br />
-                        @eachEvent.Location  <br />
-                        @eachEvent.Date.GetValueOrDefault().ToLongDateString()
-                        @eachEvent.Date.GetValueOrDefault().ToShortTimeString()
+                        <p> <b>Başlık</b>: @eachEvent.Title </p>
+                        <p> <b>Lokasyon</b>: @eachEvent.Location </p>
+                        <p> <b>Tarih</b>: @eachEvent.Date.GetValueOrDefault().ToLongDateString() </p>
+                        <p> <b>Saat</b>: @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </p>
+                        <p> <b>Hakkında</b>: @eachEvent.Summary </p>
+                        @if (eachEvent.RelatedGroupNavigation != null)
+                        {<p> <b>Grup</b>: @eachEvent.RelatedGroupNavigation.GroupName</p>}
+                        @if (id == 1)
+                        {
+                            <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
+                            <button class="btn btn-danger" @onclick="@(() => Delete(eachEvent.Id))">Delete</button>
+                        }
                     </td>
+                </tr>
+            }
+            <br />
+            <h2>Geçmiş Etkinlikler</h2>
+            <br />
+            @foreach (Events eachEvent in id == 1 ? events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now) : events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now && c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null))
+            {
+                <tr>
                     <td>
-                        <a class="btn btn-success" href="groups/edit/@eachEvent.Id">Edit</a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(eachEvent.Id))">Delete</button>
+                        <p> <b>Başlık</b>: @eachEvent.Title </p>
+                        <p> <b>Lokasyon</b>: @eachEvent.Location </p>
+                        <p> <b>Tarih</b>: @eachEvent.Date.GetValueOrDefault().ToLongDateString() </p>
+                        <p> <b>Saat</b>: @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </p>
+                        <p> <b>Hakkında</b>: @eachEvent.Summary </p>
+                        @if (eachEvent.RelatedGroupNavigation != null)
+                        {<p> <b>Grup</b>: @eachEvent.RelatedGroupNavigation.GroupName</p>}
+                        @if (id == 1)
+                        {
+                            <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
+                            <button class="btn btn-danger" @onclick="@(() => Delete(eachEvent.Id))">Delete</button>
+                        }
                     </td>
                 </tr>
             }
@@ -54,11 +67,25 @@ else
 }
 
 @code {
+    [Parameter] public int id { get; set; }
+
+    private AspNetUsers loggedUser;
+    private string _userId;
+
+
+
 
     List<Events> events { get; set; }
     protected override async Task OnInitializedAsync()
     {
         events = await eventDAL.GetEvents();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+        }
     }
     async Task Delete(int eventID)
     {

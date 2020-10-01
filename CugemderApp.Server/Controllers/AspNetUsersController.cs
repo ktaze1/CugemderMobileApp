@@ -183,6 +183,39 @@ namespace CugemderApp.Server.Controllers
             return NoContent();
         }
 
+        [HttpPut]
+        [Route("photoUrl/{id}")]
+        public async Task<IActionResult> PutAspNetUsers(string id, [FromBody] string url)
+        {
+            var aspNetUsers = await _context.AspNetUsers.Where(c => c.Email == id).FirstOrDefaultAsync();
+
+
+            if (aspNetUsers == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                aspNetUsers.PhotoUrl = url;
+                _context.Entry(aspNetUsers).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AspNetUsersExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok();
+        }
+
         // PUT: api/AspNetUsers/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

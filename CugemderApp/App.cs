@@ -37,6 +37,7 @@ namespace CugemderApp
                     //services.AddBlazoredModal();
                     services.AddSingleton<DataAccessClasses.AspNetUsersDAL>();
                     services.AddSingleton<DataAccessClasses.CitiesDAL>();
+                    services.AddSingleton<DataAccessClasses.DocumentsDAL>();
                     services.AddSingleton<DataAccessClasses.EventsDAL>();
                     services.AddSingleton<DataAccessClasses.FileUpload>();
                     services.AddSingleton<DataAccessClasses.GendersDAL>();
@@ -47,7 +48,6 @@ namespace CugemderApp
                     services.AddSingleton<DataAccessClasses.PointsDAL>();
                     services.AddSingleton<DataAccessClasses.PositionsDAL>();
                     services.AddSingleton<DataAccessClasses.RelationshipsDAL>();
-                    services.AddSingleton<DataAccessClasses.UploadsDAL>();
                 })
                 .Build();
 

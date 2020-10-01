@@ -13,9 +13,20 @@ namespace CugemderApp.Shared.Models
         [Required]
         public string LastName { get; set; }
 
+        [Required]
+        [Phone]
+        public string PhoneNo { get; set; }
+
+        [Required]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime DateofBirth { get; set; }
+
+
         [EmailAddress]
         [Required]
         public string Email { get; set; }
+
+        public string photoUrl { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "{0} en az {2} ve en fazla {1} karakter uzunluğunda; en az bir büyük, bir küçük ve bir adet özel karakter içermeli.", MinimumLength = 6)]

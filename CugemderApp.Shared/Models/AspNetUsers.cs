@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CugemderApp.Shared.Models
 {
@@ -12,10 +13,10 @@ namespace CugemderApp.Shared.Models
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
             MeetingPoints = new HashSet<MeetingPoints>();
-            Meetings = new HashSet<Meetings>();
+            MeetingsReceiver = new HashSet<Meetings>();
+            MeetingsSender = new HashSet<Meetings>();
             Notifications1 = new HashSet<Notifications>();
             Points1 = new HashSet<Points>();
-            Uploads = new HashSet<Uploads>();
         }
 
         public string Id { get; set; }
@@ -47,6 +48,8 @@ namespace CugemderApp.Shared.Models
         public int? Position { get; set; }
         public string Speciality { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        [StringLength(500, ErrorMessage ="Kişi özeti 500 karakterden uzun olamaz!")]
         public string Summary { get; set; }
         public string Website { get; set; }
         public int? Year { get; set; }
@@ -69,9 +72,9 @@ namespace CugemderApp.Shared.Models
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual ICollection<MeetingPoints> MeetingPoints { get; set; }
-        public virtual ICollection<Meetings> Meetings { get; set; }
+        public virtual ICollection<Meetings> MeetingsReceiver { get; set; }
+        public virtual ICollection<Meetings> MeetingsSender { get; set; }
         public virtual ICollection<Notifications> Notifications1 { get; set; }
         public virtual ICollection<Points> Points1 { get; set; }
-        public virtual ICollection<Uploads> Uploads { get; set; }
     }
 }

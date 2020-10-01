@@ -5,6 +5,11 @@ namespace CugemderApp.Shared.Models
 {
     public partial class Meetings
     {
+        public Meetings()
+        {
+            MeetingPoints = new HashSet<MeetingPoints>();
+        }
+
         public int Id { get; set; }
         public string SenderId { get; set; }
         public string ReceiverId { get; set; }
@@ -14,5 +19,7 @@ namespace CugemderApp.Shared.Models
         public bool IsResulted { get; set; }
 
         public virtual AspNetUsers Receiver { get; set; }
+        public virtual AspNetUsers Sender { get; set; }
+        public virtual ICollection<MeetingPoints> MeetingPoints { get; set; }
     }
 }

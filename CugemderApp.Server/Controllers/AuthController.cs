@@ -55,6 +55,7 @@ namespace CugemderApp.Server.Controllers
                 FirstName = parameters.FirstName,
                 LastName = parameters.LastName,
                 Email = parameters.Email,
+                PhotoUrl = parameters.photoUrl
             };
             var result = await _userManager.CreateAsync(user, parameters.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);

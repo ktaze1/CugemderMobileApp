@@ -59,6 +59,11 @@ namespace CugemderApp.DataAccessClasses
         }
 
 
+        public async void PutPhotoUrl(string id, string url)
+        {
+            await _http.PutAsJsonAsync($"api/AspNetUsers/photoUrl/{id}", url);
+        }
+
         public async void PostUser(AspNetUsers user)
         {
             await _http.PostAsJsonAsync("api/AspNetUsers", user);

@@ -11,51 +11,48 @@ namespace CugemderApp.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventsController : ControllerBase
+    public class DocumentsController : ControllerBase
     {
         private readonly CugemderMobileAppDbContext _context;
 
-        public EventsController(CugemderMobileAppDbContext context)
+        public DocumentsController(CugemderMobileAppDbContext context)
         {
             _context = context;
         }
-        // GET: api/Events
+
+        // GET: api/Documents
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Events>>> GetEvents()
+        public async Task<ActionResult<IEnumerable<Documents>>> GetDocuments()
         {
-            return await _context.Events
-                .Include(c => c.RelatedGroupNavigation)
-                .OrderByDescending(c => c.Date).ToListAsync();
+            return await _context.Documents.ToListAsync();
         }
 
-        // GET: api/Events/5
+        // GET: api/Documents/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Events>> GetEvents(int id)
+        public async Task<ActionResult<Documents>> GetDocuments(int id)
         {
-            var events = await _context.Events
-                .Include(c => c.RelatedGroupNavigation)
-                .Where(c => c.Id == id).FirstOrDefaultAsync();
+            var documents = await _context.Documents.FindAsync(id);
 
-            if (events == null)
+            if (documents == null)
             {
                 return NotFound();
             }
 
-            return events;
+            return documents;
         }
 
-        // PUT: api/Events/5
+        // PUT: api/Documents/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvents(int id, Events events)
+        public async Task<IActionResult> PutDocuments(int id, Documents documents)
         {
-            if (id != events.Id)
+            if (id != documents.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(events).State = EntityState.Modified;
+            _context.Entry(documents).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +60,7 @@ namespace CugemderApp.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventsExists(id))
+                if (!DocumentsExists(id))
                 {
                     return NotFound();
                 }
@@ -76,37 +73,37 @@ namespace CugemderApp.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Events
+        // POST: api/Documents
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Events>> PostEvents(Events events)
+        public async Task<ActionResult<Documents>> PostDocuments(Documents documents)
         {
-            _context.Events.Add(events);
+            _context.Documents.Add(documents);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvents", new { id = events.Id }, events);
+            return CreatedAtAction("GetDocuments", new { id = documents.Id }, documents);
         }
 
-        // DELETE: api/Events/5
+        // DELETE: api/Documents/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Events>> DeleteEvents(int id)
+        public async Task<ActionResult<Documents>> DeleteDocuments(int id)
         {
-            var events = await _context.Events.FindAsync(id);
-            if (events == null)
+            var documents = await _context.Documents.FindAsync(id);
+            if (documents == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(events);
+            _context.Documents.Remove(documents);
             await _context.SaveChangesAsync();
 
-            return events;
+            return documents;
         }
 
-        private bool EventsExists(int id)
+        private bool DocumentsExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return _context.Documents.Any(e => e.Id == id);
         }
     }
 }

@@ -2,9 +2,9 @@
 @inject AspNetUsersDAL userDAL
 @inject GroupsDAL groupDAL
 @inject PointsDAL pointDAL
-@inject UploadsDAL uploadDAL
 @inject NavigationManager  uriHelper
 @inject MeetingsDAL meetingDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <style>
 
     .emp-profile {
@@ -15,7 +15,6 @@
         border-color: black;
         border-radius: 0.5rem;
         background: rgba(170, 165, 165, 0.20);
-        ;
     }
 
     .profile-img {
@@ -23,8 +22,10 @@
     }
 
         .profile-img img {
-            width: 70%;
-            height: 100%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            
         }
 
         .profile-img .file {
@@ -123,206 +124,311 @@
     }
 </style>
 
-@if (loggedUser == null)
+@if (currentUser == null)
 {
-    <p> Loading</p> }
+    <p> Yükleniyor...</p>
+}
 else
 {
     <div class="container emp-profile">
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+                    <img src="@currentUser.PhotoUrl" alt="" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
                     <h5>
-                        @loggedUser.FirstName @loggedUser.LastName
+                        @currentUser.FirstName @currentUser.LastName
                     </h5>
                     <h6>
-                        @{ if (loggedUser.JobTitleNavigation != null)
-                            { <p>@loggedUser.JobTitleNavigation.TitleName</p>}
-                        else
-                        { <p> </p>} }
+                        @{
+                            if (currentUser.JobTitleNavigation != null)
+                            {
+                                <p> @currentUser.JobTitleNavigation.TitleName </p>
+                            }
+                        }
                     </h6>
                     <h6>
-                        @{ if (loggedUser.Company != null)
-                            { <p>@loggedUser.Company</p>}
-                        else
-                        { <p> </p>} }
-                    </h6>
-                    <p class="proile-rating">
-                        CUGEMDER PUANI :
-                        <span>
-                            @{ if (loggedUser.PointsNavigation != null)
-                                {
-                            <p>@loggedUser.PointsNavigation.TotalPoints</p> }
-                        else
-                        {
-                            <p> </p>
-                        }
+                        @{
+                            if (currentUser.Company != null)
+                            {
+                                <p>@currentUser.Company</p>
                             }
-                            </span>
-                            </p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Bilgiler</p>
-                                </li>
-                            </ul>
-                        </div>
+                        }
+                    </h6>
+
+                    @if (currentUser.PointsNavigation != null)
+                    {
+                        <p class="proile-rating">
+                            CUGEMDER PUANI : <span>
+                                <div style="border-radius: 50%; width: 36px; height: 36px; padding: 8px; background: #0f0; border: 2px solid #666; color: #666; text-align: center;">
+                        <p>@currentUser.PointsNavigation.TotalPoints</p>
                     </div>
-                    <div class="col-md-2">
-                    </div>
+                    </span>
+                    </p>
+
+                }
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
+                    <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel Bilgiler</p>
+                </li>
+                <li @onclick="@( () => ChangeTabs(2))" class="nav-item">
+                    <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mesleki Bilgiler</p>
+                </li>
+                <li @onclick="@( () => ChangeTabs(3))" class="nav-item">
+                    <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim Bilgileri</p>
+                </li>
+            </ul>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Ad Soyad</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>@loggedUser.FirstName @loggedUser.LastName</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Cinsiyet</label>
-                                    </div>
-                                    @if (loggedUser.GenderNavigation != null)
-                                    {
-                                        <div class="col-md-6">
-                                            <p>@loggedUser.GenderNavigation.GenderName</p>
-                                        </div>
-                                    }
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>E-mail</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>@loggedUser.Email</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Telefon</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>@loggedUser.PhoneNumber</p>
-                                    </div>
-                                </div>
-
-                                @if (loggedUser.PositionNavigation != null)
-                                {
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Pozisyon</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>@loggedUser.PositionNavigation.Position</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            @if (loggedUser.PositionNavigation.Id != 2)
-                                            {
-                                                <label>Mezuniyet Yılı</label>
-                                            }
-                                            else
-                                            {
-                                                <label>Firma Kuruluş Yılı:</label>
-                                            }
-                                        </div>
-                                        @if (loggedUser.Year != null)
-                                        {
-                                            <div class="col-md-6">
-                                                <p>@loggedUser.Year</p>
-                                            </div>
-                                        }
-                                    </div>
-
-                                }
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Uzmanlık Alanı</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>
-                                            @if (loggedUser.Speciality != null)
-                                            {
-                                                @loggedUser.Speciality
-                                            }
-                                            else
-                                            {
-                                            <p>  </p>
-                                        }
-                                            </p>
-                                        </div>
-                                    </div>
-                                    @if (loggedUser.Website != null)
-                                    {
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Web Sitesi :</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a href="@loggedUser.Website"> @loggedUser.Website</a><br />
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Hakkında :</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="card-text">
-                                                @if (loggedUser.Summary != null)
-                                                {
-                                                    @loggedUser.Summary
-                                                }
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+            </div>
+            <div class="col-md-2">
+                @if (currentUser.Id != loggedUser.Id)
+                {
+                    <input type="button" class="profile-edit-btn" @onclick="@( () => SendMeetingRequest(currentUser.Id))" value="Görüşme Ayarla" />
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <!-- Tab 1 Stars-->
+                    <div hidden="@tab1" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Ad Soyad</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@currentUser.FirstName @currentUser.LastName</p>
                             </div>
                         </div>
+                        @if (currentUser.GenderNavigation != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Cinsiyet</label>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <p>@currentUser.GenderNavigation.GenderName</p>
+                                </div>
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Yaş</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@(calculateAge(currentUser.DateOfBirth.GetValueOrDefault()))</p>
+                            </div>
+                        </div>
+                        @if (currentUser.LocatedCityNavigation != null)
+                        {
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Şehir</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@currentUser.LocatedCityNavigation.CityName</p>
+                                </div>
+                            </div>
+
+                        }
+                        @if (currentUser.RelationshipNavigation != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Medeni Hali</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@currentUser.RelationshipNavigation.RelationshipStatus</p>
+                                </div>
+                            </div>
+                        }
+                        @if (currentUser.Summary != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Hakkında :</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="card-text">
+                                        @if (currentUser.Summary != null)
+                                        {
+                                            @currentUser.Summary
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                        }
                     </div>
+                    <!-- Tab 1 Ends-->
+
+
+                    <!-- Tab 2 Start -->
+                    <div hidden="@tab2" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Meslek</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@currentUser.JobTitleNavigation.TitleName</p>
+                            </div>
+                        </div>
+
+                        @if (currentUser.PositionNavigation != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Pozisyon</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@currentUser.PositionNavigation.Position</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @if (currentUser.PositionNavigation.Id != 2)
+                                    {
+                                        <label>Mezuniyet Yılı</label>
+                                    }
+                                    else
+                                    {
+                                        <label>Firma Kuruluş Yılı:</label>
+                                    }
+                                </div>
+                                @if (currentUser.Year != null)
+                                {
+                                    <div class="col-md-6">
+                                        <p>@currentUser.Year</p>
+                                    </div>
+                                }
+                            </div>
+
+                        }
+
+
+                        @if (currentUser.Speciality != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Uzmanlık Alanı</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        @currentUser.Speciality
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- Tab 2 Ends-->
+
+
+                    <!-- Tab 3 Starts-->
+                    <div hidden="@tab3" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>E-mail</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@currentUser.Email</p>
+                            </div>
+                        </div>
+                        @if (currentUser.PhoneNumber != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Telefon</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@currentUser.PhoneNumber</p>
+                                </div>
+                            </div>
+                        }
+                        @if (currentUser.Website != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Web Sitesi :</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p @onclick="@( () => GoToWebsite(currentUser.Website))"> @currentUser.Website</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- Tab 3 Ends-->
                 </div>
-            }
+            </div>
+        </div>
+        </div>
+
+    }
 
 
 @code {
     [Parameter] public string id { get; set; }
 
-    private AspNetUsers loggedUser;
+    private AspNetUsers currentUser, loggedUser;
     private string _userId;
+    bool tab1 = false, tab2 = true, tab3 = true;
+
+    void ChangeTabs(int tab)
+    {
+        switch (tab)
+        {
+            case 1:
+                tab1 = false;
+                tab2 = true;
+                tab3 = true;
+                break;
+            case 2:
+                tab1 = true;
+                tab2 = false;
+                tab3 = true;
+                break;
+            case 3:
+                tab1 = true;
+                tab2 = true;
+                tab3 = false;
+                break;
+        }
+
+    }
 
     protected override async Task OnParametersSetAsync()
     {
-        loggedUser = await userDAL.GetUsers(id);
+        currentUser = await userDAL.GetUsers(id);
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+        }
     }
 
-    //[CascadingParameter] public IModalService Modal { get; set; }
+    public async void GoToWebsite(string link)
+    {
+        await Browser.OpenAsync(link);
+    }
 
-    //Meetings meeting;
+    int calculateAge(DateTime date)
+    {
+        var age = DateTime.Today.Year - date.Year;
 
-    //async Task ShowModal()
-    //{
-    //    var MeetingModal = Modal.Show<MeetingRequestComponent>();
-    //    var result = await MeetingModal.Result;
+        if (date.Date > DateTime.Today.AddYears(-age)) age--;
+        return age;
+    }
 
-    //    if (!result.Cancelled)
-    //    {
-    //        meeting = (Meetings)result.Data;
-    //        meeting.ReceiverId = id;
-    //        meeting.SenderId = _userId;
-    //        meetingDAL.PostMeetings(meeting);
-    //    }
-    //}
-
+    void SendMeetingRequest(string id)
+    {
+        uriHelper.NavigateTo($"createMeeting/{id}");
+    }
 }

@@ -8,6 +8,7 @@ namespace CugemderApp.Shared.Models
         public Groups()
         {
             AspNetUsers = new HashSet<AspNetUsers>();
+            Events = new HashSet<Events>();
         }
 
         public int Id { get; set; }
@@ -16,5 +17,6 @@ namespace CugemderApp.Shared.Models
         public string GroupName { get; set; }
 
         public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
+        public virtual ICollection<Events> Events { get; set; }
     }
 }

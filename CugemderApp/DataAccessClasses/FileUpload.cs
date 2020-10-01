@@ -17,5 +17,22 @@ namespace CugemderApp.DataAccessClasses
             await _http.PostAsync("api/FileUpload",content);
         }
 
+        public async void UploadPhoto(MultipartFormDataContent content)
+        {
+            await _http.PostAsync("api/FileUpload/Photo", content);
+        }
+
+        public async void DeletePhoto(string photoName)
+        {
+            await _http.DeleteAsync($"api/FileUpload/Photo/{photoName}");
+        }
+
+        public async void DeleteDocument(string documentName)
+        {
+            await _http.DeleteAsync($"api/FileUpload/Document/{documentName}");
+        }
+
+
+
     }
 }

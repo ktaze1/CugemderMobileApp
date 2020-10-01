@@ -3,6 +3,8 @@
 @inject FileUpload fileDAL
 @inject EventsDAL eventDAL
 @inject JobTitlesDAL jobDAL
+@inject GroupsDAL groupDAL
+@inject DocumentsDAL documentDAL
 
 <table class="table">
     <thead class="thead-light">
@@ -35,36 +37,7 @@
         </tr>
         <tr>
             <td>
-                <NavLink class="nav-link" href="groups">
-                    <span class="oi oi-people" aria-hidden="true"></span>Meslek Listesi
-                </NavLink>
-                <h4>Yeni Meslek Ekle</h4>
-                <EditForm Model="@jobTitles" OnValidSubmit="@CreateJobTitle">
-                    <DataAnnotationsValidator />
-                    <div class="form-group">
-                        <div>
-                            <InputText @bind-Value="@jobTitles.TitleName" />
-                            <ValidationMessage For="@(() => jobTitles.TitleName)" />
-
-                            <button type="submit" class="btn btn-success">
-                                Kaydet
-                            </button>
-                        </div>
-                    </div>
-                </EditForm>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <NavLink class="nav-link" href="addpoints">
-                    <span class="oi oi-people" aria-hidden="true"></span>Puan Atamasi Yap
-                </NavLink>
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                <NavLink class="nav-link" href="events">
+                <NavLink class="nav-link" href="events/1" Match="@NavLinkMatch.All">
                     <span class="oi oi-people" aria-hidden="true"></span>Etkinlik Listesine Git
                 </NavLink>
                 <br />
@@ -92,30 +65,129 @@
                             <InputDateTime @bind-Value="events.Date" />
                             <ValidationMessage For="@(() => events.Date)" />
                         </div>
+                        <div class="form-group col-sm-3">
+                            @if (groupList != null)
+                            {
+                                <select class="form-control"
+                                        @bind="events.RelatedGroup">
+                                    <option value="0">---Grup Seçin---</option>
+                                    @foreach (var group in groupList)
+                                    {
+                                        @if (group.Id == groupId)
+                                        {
+                                            <option selected value="@group.Id">@group.GroupName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@group.Id">@group.GroupName</option>
+                                        }
+
+                                    }
+                                </select>
+                            }
+                        </div>
 
                         <button type="submit" class="btn btn-primary">Ekle</button>
                     </EditForm>
                 </div>
             </td>
         </tr>
+        <tr>
+            <td>
+                <NavLink class="nav-link" href="groups">
+                    <span class="oi oi-people" aria-hidden="true"></span>Meslek Listesi
+                </NavLink>
+                <h4>Yeni Meslek Ekle</h4>
+                <EditForm Model="@jobTitles" OnValidSubmit="@CreateJobTitle">
+                    <DataAnnotationsValidator />
+                    <div class="form-group">
+                        <div>
+                            <InputText @bind-Value="@jobTitles.TitleName" />
+                            <ValidationMessage For="@(() => jobTitles.TitleName)" />
+
+                            <button type="submit" class="btn btn-success">
+                                Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </EditForm>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> Yeni Döküman Ekle</h4>
+                <EditForm Model="@document" OnValidSubmit="@UploadFiles">
+                    <label>Döküman Adı</label>
+                    <InputText @bind-Value="@document.Title" />
+                    <br />
+                    <label>Döküman Açıklaması</label>
+                    <InputText @bind-Value="@document.Summary" />
+                    <br />
+                    <button class="btn btn-block" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
+                    <button>Dosyayı Ekle</button>
+                </EditForm>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <NavLink class="nav-link" href="addpoints">
+                    <span class="oi oi-people" aria-hidden="true"></span>Puan Atamasi Yap
+                </NavLink>
+            </td>
+            <td></td>
+        </tr>
+
+
     </tbody>
 </table>
 
 @code {
 
     Groups group = new Groups();
+    List<Groups> groupList;
     Events events = new Events();
     JobTitles jobTitles = new JobTitles();
+    Documents document = new Documents();
+
+    FileResult pickResults;
+
+    public int groupId = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        // ...
+        groupList = await groupDAL.GetGroupsAsync();
     }
 
+    async void SelectFiles()
+    {
 
+        pickResults = await FilePicker.PickAsync();
+    }
+
+    async void UploadFiles()
+    {
+        if (pickResults != null)
+        {
+            System.IO.FileInfo fi = new System.IO.FileInfo(pickResults.FileName);
+            string encodedStr = string.Format(@"{0}", Guid.NewGuid());
+            var filename = $"{encodedStr}{fi.Extension}";
+            var stream = await pickResults.OpenReadAsync();
+            var content = new StreamContent(stream);
+            var multi = new MultipartFormDataContent();
+            multi.Add(content, filename, filename);
+            fileDAL.UploadDocument(multi);
+            document.Url = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Contents/{filename}";
+
+            documentDAL.PostDocuments(document);
+            document = new Documents();
+        }
+    }
 
     void CreateEvent()
     {
+        if (events.RelatedGroup == 0)
+            events.RelatedGroup = null;
         eventDAL.PostEvents(events);
         events = new Events();
     }
@@ -134,7 +206,7 @@
     async void Test()
     {
         var pickResult = await FilePicker.PickMultipleAsync();
-        if(pickResult != null)
+        if (pickResult != null)
         {
             var fileList = new List<FileBase>();
             foreach (var item in pickResult)

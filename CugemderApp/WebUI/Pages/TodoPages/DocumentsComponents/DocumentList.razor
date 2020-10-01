@@ -1,0 +1,70 @@
+﻿@page "/documents"
+@inject DocumentsDAL documentDAL
+@inject AspNetUsersDAL userDAL
+@inject FileUpload fileDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+
+@if (documentList != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Dosya Bilgileri</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in documentList)
+            {
+                <tr>
+                    <td>
+                        <p><strong>Başlık</strong>: @item.Title </p>
+                        <p><strong>Açıklama</strong>: @item.Summary</p>
+                    </td>
+                    <td>
+                        <button @onclick="@( () => Launcher.OpenAsync(item.Url))" class="btn btn-primary" type="button"> Dosyayı Aç</button>
+                        @if (loggedUser != null && loggedUser.IsAdmin == true)
+                        {
+                            <button class="btn btn-danger" @onclick="@( () => DeleteFile(item.Url, item.Id))" type="button"> Dosyayı Sil </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private AspNetUsers loggedUser;
+
+    List<Documents> documentList;
+
+    FileResult item;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        documentList = await documentDAL.GetDocuments();
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+        }
+    }
+
+    async void DeleteFile(string url, int id)
+    {
+        var filetoDelete = System.IO.Path.GetFileName(url);
+        if (filetoDelete != null)
+        {
+            fileDAL.DeleteDocument(filetoDelete);
+            documentDAL.DeleteDocuments(id);
+        }
+    }
+}

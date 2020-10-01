@@ -2,7 +2,6 @@
 @inject AspNetUsersDAL userDAL
 @inject GroupsDAL groupDAL
 @inject PointsDAL pointDAL
-@inject UploadsDAL uploadDAL
 @inject NavigationManager  uriHelper
 
 @if (waitingUsers == null)
@@ -16,55 +15,36 @@ else
             <tr>
                 <th>Uye Adı</th>
                 <th>Atanacak Grubu</th>
-                <th>Dosyaları</th>
                 <th>Kullanıcıyı Sil</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var user in waitingUsers)
             {
-            <tr>
-                <td>@user.FirstName @user.LastName</td>
-                <td>
-                    <select class="form-control"
-                            @bind="user.Group">
-                        <option value="0">---Grup Seçin---</option>
-                        @foreach (var group in groups)
-                        {
-                            @if (group.Id == groupId)
+                <tr>
+                    <td>@user.FirstName @user.LastName</td>
+                    <td>
+                        <select class="form-control"
+                                @bind="user.Group">
+                            <option value="0">---Grup Seçin---</option>
+                            @foreach (var group in groups)
                             {
-                                <option selected value="@group.Id">@group.GroupName</option>
-                            }
-                            else
-                            {
-                                <option value="@group.Id">@group.GroupName</option>
-                            }
+                                @if (group.Id == groupId)
+                                {
+                                    <option selected value="@group.Id">@group.GroupName</option>
+                                }
+                                else
+                                {
+                                    <option value="@group.Id">@group.GroupName</option>
+                                }
 
-                        }
-                    </select>
-                </td>
-                <td>
-                    @if (uploads == null)
-                    {
-                        <p> ... </p>
-                    }
-                    else
-                    {
-
-                        var test = uploads.Where(x => x.UserMail == user.UserName)
-                                        .ToList();
-                        var i = 1;
-                        foreach (Uploads item in test)
-                        {
-                            string uri = AppState._http.BaseAddress.ToString() + $"StaticFiles/Contents/{item.FileName}";
-                            <button class="btn-info" @onclick="@( () => Launcher.OpenAsync(uri))">@(i++).Dosyayi Ac </button>
-                        }
-                    }
-                </td>
-                <td>
-                    <button class="btn btn-danger" @onclick="@(() => Delete(user.Id))">Delete</button>
-                </td>
-            </tr>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(user.Id))">Delete</button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -75,14 +55,12 @@ else
     List<AspNetUsers> waitingUsers;
     public int groupId = 0;
     List<Groups> groups;
-    List<Uploads> uploads;
     List<Points> points;
 
     protected override async Task OnInitializedAsync()
     {
         waitingUsers = await userDAL.GetUsersNoGroup();
         groups = await groupDAL.GetGroupsAsync();
-        uploads = await uploadDAL.GetUploads();
         points = await pointDAL.GetPoints();
 
 
@@ -103,7 +81,6 @@ else
     async Task Delete(string userId)
     {
         var user = waitingUsers.First(x => x.Id == userId);
-        uploadDAL.DeleteUploads(user.UserName);
         pointDAL.DeletePoints(userId);
         userDAL.DeleteUser(userId);
         await OnInitializedAsync();

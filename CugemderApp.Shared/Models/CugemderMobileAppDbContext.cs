@@ -34,7 +34,6 @@ namespace CugemderApp.Shared.Models
         public virtual DbSet<Points> Points { get; set; }
         public virtual DbSet<Positions> Positions { get; set; }
         public virtual DbSet<Relationship> Relationship { get; set; }
-        public virtual DbSet<Uploads> Uploads { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -160,9 +159,7 @@ namespace CugemderApp.Shared.Models
 
                 entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
 
-                entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasMaxLength(256);
+                entity.Property(e => e.UserName).HasMaxLength(256);
 
                 entity.HasOne(d => d.GenderNavigation)
                     .WithMany(p => p.AspNetUsers)
@@ -212,16 +209,25 @@ namespace CugemderApp.Shared.Models
 
             modelBuilder.Entity<Documents>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Summary).IsRequired();
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Title).IsRequired();
+
+                entity.Property(e => e.Url).IsRequired();
             });
 
             modelBuilder.Entity<Events>(entity =>
             {
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
+                entity.Property(e => e.RelatedGroup).HasColumnName("relatedGroup");
+
                 entity.Property(e => e.Title).IsRequired();
+
+                entity.HasOne(d => d.RelatedGroupNavigation)
+                    .WithMany(p => p.Events)
+                    .HasForeignKey(d => d.RelatedGroup)
+                    .HasConstraintName("FK_Events_Groups");
             });
 
             modelBuilder.Entity<Genders>(entity =>
@@ -243,6 +249,12 @@ namespace CugemderApp.Shared.Models
                 entity.Property(e => e.ReceiverUserId)
                     .IsRequired()
                     .HasMaxLength(450);
+
+                entity.HasOne(d => d.Meeting)
+                    .WithMany(p => p.MeetingPoints)
+                    .HasForeignKey(d => d.MeetingId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MeetingPoints_MeetingPoints");
 
                 entity.HasOne(d => d.ReceiverUser)
                     .WithMany(p => p.MeetingPoints)
@@ -272,8 +284,14 @@ namespace CugemderApp.Shared.Models
                     .HasMaxLength(450);
 
                 entity.HasOne(d => d.Receiver)
-                    .WithMany(p => p.Meetings)
+                    .WithMany(p => p.MeetingsReceiver)
                     .HasForeignKey(d => d.ReceiverId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Meetings_AspNetUsers1");
+
+                entity.HasOne(d => d.Sender)
+                    .WithMany(p => p.MeetingsSender)
+                    .HasForeignKey(d => d.SenderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Meetings_AspNetUsers");
             });
@@ -326,22 +344,6 @@ namespace CugemderApp.Shared.Models
                 entity.Property(e => e.RelationshipStatus)
                     .IsRequired()
                     .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<Uploads>(entity =>
-            {
-                entity.Property(e => e.FileName).IsRequired();
-
-                entity.Property(e => e.UserMail)
-                    .IsRequired()
-                    .HasMaxLength(256);
-
-                entity.HasOne(d => d.UserMailNavigation)
-                    .WithMany(p => p.Uploads)
-                    .HasPrincipalKey(p => p.UserName)
-                    .HasForeignKey(d => d.UserMail)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Uploads_AspNetUsers");
             });
 
             OnModelCreatingPartial(modelBuilder);
