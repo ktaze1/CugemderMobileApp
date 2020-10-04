@@ -1,15 +1,19 @@
-﻿using System;
+﻿
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using Android.Gms.Common;
 using Android.OS;
+using Android.Util;
+using System;
 using Microsoft.MobileBlazorBindings.WebView.Android;
+using Android.Runtime;
+using CugemderApp.WebUI.Pages;
+using Plugin.PushNotification;
 
 namespace CugemderApp.Droid
 {
-    [Activity(Label = "CugemderApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "CugemderApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -24,6 +28,9 @@ namespace CugemderApp.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+
+
+            WebUI.Pages.Index.topicSubscribed += OnSubscribeTopic;
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -32,5 +39,57 @@ namespace CugemderApp.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        //groupname 
+        public void OnSubscribeTopic(string groupname)
+        {
+            Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(groupname);
+        }
+
+
+        //protected override void OnNewIntent(Intent intent)
+        //{
+        //    if (intent.Extras != null)
+        //    {
+        //        var message = intent.GetStringExtra("message");
+        //        (App.Current.MainPage as CugemderApp.Main)?.AddMessage(message);
+        //    }
+
+        //    base.OnNewIntent(intent);
+        //}
+
+        //bool IsPlayServiceAvailable()
+        //{
+        //    int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+        //    if (resultCode != ConnectionResult.Success)
+        //    {
+        //        if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+        //            Log.Debug(AppConstants.DebugTag, GoogleApiAvailability.Instance.GetErrorString(resultCode));
+        //        else
+        //        {
+        //            Log.Debug(AppConstants.DebugTag, "This device is not supported");
+        //        }
+        //        return false;
+        //    }
+        //    return true;
+        //}
+
+        //void CreateNotificationChannel()
+        //{
+        //    // Notification channels are new as of "Oreo".
+        //    // There is no need to create a notification channel on older versions of Android.
+        //    if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+        //    {
+        //        var channelName = AppConstants.NotificationChannelName;
+        //        var channelDescription = String.Empty;
+        //        var channel = new NotificationChannel(channelName, channelName, NotificationImportance.Default)
+        //        {
+        //            Description = channelDescription
+        //        };
+
+        //        var notificationManager = (NotificationManager)GetSystemService(NotificationService);
+        //        notificationManager.CreateNotificationChannel(channel);
+        //    }
+        //}
     }
 }

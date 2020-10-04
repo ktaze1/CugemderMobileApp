@@ -8,14 +8,16 @@
 @inject RelationshipsDAL relationshipDAL
 @inject CitiesDAL cityDAL
 @inject NavigationManager  uriHelper
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h1> Üyeler </h1>
 <button class="btn-dark" @onclick="@ToggleFilter"> Uye Filtreleme </button>
 <br />
 @if (showFilter)
 {
-    @if (groups != null && jobTitles != null && genders != null && relationships != null && cities != null)
+    @if (groups != null && jobTitles != null && genders != null && cities != null)
     {
+        <button type="button" @onclick="ToggleFilterScope">@filterHeader Üyelerde Arama Yap</button>
         <br />
         <EditForm Model="sc" OnValidSubmit="Filter">
             <div>
@@ -48,26 +50,29 @@
                     </select>
                 </div>
             </div>
-            <div>
-                <label>Grup :</label>
+            @if (!isAllMembers)
+            {
                 <div>
-                    <select class="form-control-sm" @bind="sc.groupId">
-                        <option value="0">---Grup Seçin---</option>
-                        @foreach (var group in groups)
-                        {
-                            @if (group.Id == groupId)
+                    <label>Grup :</label>
+                    <div>
+                        <select class="form-control-sm" @bind="sc.groupId">
+                            <option value="0">---Grup Seçin---</option>
+                            @foreach (var group in groups)
                             {
-                                <option selected value="@group.Id">@group.GroupName</option>
-                            }
-                            else
-                            {
-                                <option value="@group.Id">@group.GroupName</option>
-                            }
+                                @if (group.Id == groupId)
+                                {
+                                    <option selected value="@group.Id">@group.GroupName</option>
+                                }
+                                else
+                                {
+                                    <option value="@group.Id">@group.GroupName</option>
+                                }
 
-                        }
-                    </select>
+                            }
+                        </select>
+                    </div>
                 </div>
-            </div>
+            }
             <div>
                 <label>Meslek :</label>
                 <div>
@@ -102,26 +107,6 @@
                             else
                             {
                                 <option value="@city.Id">@city.CityName</option>
-                            }
-
-                        }
-                    </select>
-                </div>
-            </div>
-            <div>
-                <label>Medeni Hali :</label>
-                <div>
-                    <select class="form-control-sm" @bind="sc.relationshipId">
-                        <option value="0">---Medeni Hal Seçin---</option>
-                        @foreach (var relation in relationships)
-                        {
-                            @if (relation.Id == relationshipId)
-                            {
-                                <option selected value="@relation.Id">@relation.RelationshipStatus</option>
-                            }
-                            else
-                            {
-                                <option value="@relation.Id">@relation.RelationshipStatus</option>
                             }
 
                         }
@@ -199,15 +184,15 @@ else
 
 
 @code {
-
-    private List<AspNetUsers> userlist, tempList;
+    private AspNetUsers user;
+    private List<AspNetUsers> userlist, tempList, usersInGroup;
     private List<Groups> groups;
     private List<Genders> genders;
     private List<JobTitles> jobTitles;
-    private List<Relationship> relationships;
     private List<Cities> cities;
     Dictionary<string, int> standings = new Dictionary<string, int>();
     int standingNo = 1;
+    string filterHeader = "Tüm";
 
     [Parameter] public int? id { get; set; }
 
@@ -215,25 +200,30 @@ else
     private int positionId = 0;
     private int genderId = 0;
     private int jobTitleId = 0;
-    private int relationshipId = 0;
     private int citiesId = 0;
     SearchForm sc = new SearchForm();
 
-    bool showFilter = false;
+    bool showFilter = false, isAllMembers = false;
 
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userAuth = authState.User;
+
+        if (userAuth.Identity.IsAuthenticated)
+        {
+            user = await userDAL.GetUserID(userAuth.Identity.Name);
+        }
         userlist = await userDAL.GetUsersNoNull();
-        foreach (var user in userlist)
+        tempList = userlist.Where(c => c.Group == user.Group).ToList();
+        foreach (var user in tempList)
         {
             standings.Add(user.Email, standingNo++);
         }
-        tempList = userlist;
         groups = await groupDAL.GetGroupsAsync();
         genders = await genderDAL.GetGenders();
         jobTitles = await jobTitleDAL.GetJobTitles();
         cities = await cityDAL.GetCities();
-        relationships = await relationshipDAL.GetRelationships();
 
     }
 
@@ -304,12 +294,41 @@ else
                 tempList = tempList.Where(c => c.Group == sc.groupId).ToList();
             if (sc.jobId != null && sc.jobId != 0)
                 tempList = tempList.Where(c => c.JobTitle == sc.jobId).ToList();
-            if (sc.relationshipId != null && sc.relationshipId != 0)
-                tempList = tempList.Where(c => c.Relationship == sc.relationshipId).ToList();
+            if (sc.cityId != null && sc.cityId != 0)
+                tempList = tempList.Where(c => c.LocatedCity == sc.cityId).ToList();
             if (sc.minAge != null && sc.maxAge != null)
                 tempList = tempList.Where(c => c.DateOfBirth.GetValueOrDefault().Year < (DateTime.Today.Year - sc.minAge) &&
                 c.DateOfBirth.GetValueOrDefault().Year > (DateTime.Today.Year - sc.maxAge)).ToList();
         }
+    }
+
+    void ToggleFilterScope()
+    {
+        isAllMembers = !isAllMembers;
+        if (isAllMembers)
+        {
+            filterHeader = "Grup İçi";
+            tempList = userlist;
+            standings = new Dictionary<string, int>();
+            int standingNo = 1;
+            foreach (var user in tempList)
+            {
+                standings.Add(user.Email, standingNo++);
+            }
+        }else
+        {
+            filterHeader = "Tüm";
+            tempList = userlist.Where(c => c.Group == user.Group).ToList();
+            standings = new Dictionary<string, int>();
+            int standingNo = 1;
+            foreach (var user in tempList)
+            {
+                standings.Add(user.Email, standingNo++);
+            }
+
+        }
+
+
     }
 
 

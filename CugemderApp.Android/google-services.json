@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "185740890093",
+    "firebase_url": "https://cugemdermobile.firebaseio.com",
+    "project_id": "cugemdermobile",
+    "storage_bucket": "cugemdermobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185740890093:android:bea69380633bcd12bba1e4",
+        "android_client_info": {
+          "package_name": "com.cugemder.cugemdercms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185740890093-e3mac0h4gc455gn72ihjc86aur4a8p67.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIPlEY-nondAjdhoNlbjAzORDuFURTKDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185740890093-e3mac0h4gc455gn72ihjc86aur4a8p67.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -20,14 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazored.LocalStorage" Version="3.0.0" />
-    <PackageReference Include="Blazored.Modal" Version="5.1.0" />
-    <PackageReference Include="Blazored.Typeahead" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.8" />
     <PackageReference Include="Microsoft.MobileBlazorBindings" Version="0.4.74-preview" />
-    <PackageReference Include="RestSharp" Version="106.11.5" />
+    <PackageReference Include="Plugin.PushNotification" Version="3.3.3" />
     <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre2" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />

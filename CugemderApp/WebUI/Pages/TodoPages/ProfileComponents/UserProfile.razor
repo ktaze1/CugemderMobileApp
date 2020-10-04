@@ -140,47 +140,52 @@ else
             <div class="col-md-6">
                 <div class="profile-head">
                     <h5>
-                        @currentUser.FirstName @currentUser.LastName
+                        @loggedUser.FirstName @loggedUser.LastName
                     </h5>
                     <h6>
                         @{
-                            if (currentUser.JobTitleNavigation != null)
+                            if (loggedUser.Company != null)
                             {
-                                <p> @currentUser.JobTitleNavigation.TitleName </p>
+                                <p>@loggedUser.Company</p>
                             }
                         }
                     </h6>
-                    <h6>
-                        @{
-                            if (currentUser.Company != null)
-                            {
-                                <p>@currentUser.Company</p>
-                            }
-                        }
-                    </h6>
-
-                    @if (currentUser.PointsNavigation != null)
+                    @if (loggedUser.Summary != null)
+                    {
+                        <h6>Hakkında</h6>
+                        <p>@loggedUser.Summary</p>
+                    }
+                    @if (loggedUser.PointsNavigation != null)
                     {
                         <p class="proile-rating">
-                            CUGEMDER PUANI : <span>
+                            CUGEMDER PUANI :
+                            <span>
                                 <div style="border-radius: 50%; width: 36px; height: 36px; padding: 8px; background: #0f0; border: 2px solid #666; color: #666; text-align: center;">
-                        <p>@currentUser.PointsNavigation.TotalPoints</p>
+                        <p>@loggedUser.PointsNavigation.TotalPoints</p>
                     </div>
                     </span>
                     </p>
 
+                    <p class="proile-rating"> Grup Sıralaması</p> <span>
+                        <div>
+                            @if (standings[loggedUser.Email] != null)
+                            {
+                                @standings[loggedUser.Email];
+                            }
+                        </div>
+                    </span>
                 }
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
-                    <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel Bilgiler</p>
-                </li>
-                <li @onclick="@( () => ChangeTabs(2))" class="nav-item">
-                    <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mesleki Bilgiler</p>
-                </li>
-                <li @onclick="@( () => ChangeTabs(3))" class="nav-item">
-                    <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim Bilgileri</p>
-                </li>
-            </ul>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
+                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel Bilgiler</p>
+                        </li>
+                        <li @onclick="@( () => ChangeTabs(2))" class="nav-item">
+                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mesleki Bilgiler</p>
+                        </li>
+                        <li @onclick="@( () => ChangeTabs(3))" class="nav-item">
+                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim Bilgileri</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col-md-2">
@@ -197,14 +202,6 @@ else
                 <div class="tab-content profile-tab" id="myTabContent">
                     <!-- Tab 1 Stars-->
                     <div hidden="@tab1" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Ad Soyad</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>@currentUser.FirstName @currentUser.LastName</p>
-                            </div>
-                        </div>
                         @if (currentUser.GenderNavigation != null)
                         {
                             <div class="row">
@@ -378,6 +375,12 @@ else
     private string _userId;
     bool tab1 = false, tab2 = true, tab3 = true;
 
+    int standingNo = 1;
+
+    Dictionary<string, int> standings = new Dictionary<string, int>();
+
+    private List<AspNetUsers> userlist, tempList;
+
     void ChangeTabs(int tab)
     {
         switch (tab)
@@ -411,6 +414,12 @@ else
         if (user.Identity.IsAuthenticated)
         {
             loggedUser = await userDAL.GetUserID(user.Identity.Name);
+            userlist = await userDAL.GetUsersNoNull();
+            userlist = userlist.Where(c => c.Group == loggedUser.Group).ToList();
+            foreach (var users in userlist)
+            {
+                standings.Add(users.Email, standingNo++);
+            }
         }
     }
 

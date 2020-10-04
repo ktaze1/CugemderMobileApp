@@ -1,6 +1,4 @@
 ﻿using System;
-using Blazored.LocalStorage;
-using Blazored.Modal;
 using CugemderApp.Security;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,8 +31,6 @@ namespace CugemderApp
                     services.AddScoped<IAuthService, AuthService>();
 
 
-
-                    //services.AddBlazoredModal();
                     services.AddSingleton<DataAccessClasses.AspNetUsersDAL>();
                     services.AddSingleton<DataAccessClasses.CitiesDAL>();
                     services.AddSingleton<DataAccessClasses.DocumentsDAL>();

@@ -140,20 +140,17 @@ else
                     </h5>
                     <h6>
                         @{
-                            if (loggedUser.JobTitleNavigation != null)
-                            {
-                                <p> @loggedUser.JobTitleNavigation.TitleName </p>
-                            }
-                        }
-                    </h6>
-                    <h6>
-                        @{
                             if (loggedUser.Company != null)
                             {
                                 <p>@loggedUser.Company</p>
                             }
                         }
                     </h6>
+                    @if (loggedUser.Summary != null)
+                    {
+                            <h6>Hakkında</h6>
+                            <p>@loggedUser.Summary</p>
+                    }
                     @if (loggedUser.PointsNavigation != null)
                     {
                         <p class="proile-rating">
@@ -165,11 +162,15 @@ else
                     </span>
                     </p>
 
-                    <p class="proile-rating"> Grup Sıralaması</p> <span><div>@if (standings[loggedUser.Email] != null)
-                    {
-                        @standings[loggedUser.Email];
-                    }</div></span>
-                }
+                    <p class="proile-rating"> Grup Sıralaması</p> <span>
+                        <div>
+                            @if (standings[loggedUser.Email] != null)
+                            {
+                                @standings[loggedUser.Email];
+                            }
+                    </div>
+                </span>
+            }
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
                             <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel Bilgiler</p>
@@ -193,14 +194,6 @@ else
                 <div class="tab-content profile-tab" id="myTabContent">
                     <!-- Tab 1 Stars-->
                     <div hidden="@tab1" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Ad Soyad</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>@loggedUser.FirstName @loggedUser.LastName</p>
-                            </div>
-                        </div>
                         @if (loggedUser.GenderNavigation != null)
                         {
                             <div class="row">
@@ -366,12 +359,29 @@ else
     private AspNetUsers loggedUser;
     private string _userId;
     int standingNo = 1;
-
+    public delegate bool onSubscribe(string groupname);
     Dictionary<string, int> standings = new Dictionary<string, int>();
+
+    public delegate void SubscribeTopicEventHandler(string groupname);
+
+    public static event SubscribeTopicEventHandler topicSubscribed;
+
+    protected virtual void onTopicSubscribed(string groupname)
+    {
+        if (topicSubscribed != null)
+            topicSubscribed(groupname);
+
+    }
 
     private List<AspNetUsers> userlist, tempList;
 
     bool tab1 = false, tab2 = true, tab3 = true;
+
+    public void Subscribe(string groupname)
+    {
+        //
+        onTopicSubscribed(groupname);
+    }
 
     void ChangeTabs(int tab)
     {
@@ -404,6 +414,7 @@ else
         if (user.Identity.IsAuthenticated)
         {
             loggedUser = await userDAL.GetUserID(user.Identity.Name);
+            Subscribe(loggedUser.GroupNavigation.GroupName);
             userlist = await userDAL.GetUsersNoNull();
             userlist = userlist.Where(c => c.Group == loggedUser.Group).ToList();
             foreach (var users in userlist)
