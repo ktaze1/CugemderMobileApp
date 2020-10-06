@@ -16,7 +16,6 @@ namespace CugemderApp.Server.Model
         public DateTime? DateOfBirth { get; set; }
         public int? Group { get; set; }
         public int? JobTitle { get; set; }
-        public int? Notifications { get; set; }
         public string PhotoUrl { get; set; }
         public int? Points { get; set; }
         public int? Position { get; set; }

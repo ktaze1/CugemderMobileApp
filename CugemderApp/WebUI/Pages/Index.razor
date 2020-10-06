@@ -367,36 +367,36 @@ else
     public delegate bool onSubscribe(string groupname);
     public delegate bool onUnSubscribe(string groupname);
 
-    public delegate void SubscribeTopicEventHandler(string groupname);
+    public delegate void SubscribeTopicEventHandler(string groupname, string username);
     public delegate void UnsubscribeTopicEventHandler(string groupname);
 
     public static event SubscribeTopicEventHandler topicSubscribed;
     public static event UnsubscribeTopicEventHandler topicUnsubscribed;
 
-    protected virtual void onTopicSubscribed(string groupname)
+    protected virtual void onTopicSubscribed(string groupname, string username)
     {
         if (topicSubscribed != null)
-            topicSubscribed(groupname);
+            topicSubscribed(groupname, username);
 
     }
 
     protected virtual void onTopicUnsubscribed(string groupname)
     {
-        if (topicSubscribed != null)
-            topicSubscribed(groupname);
+        if (topicUnsubscribed != null)
+            topicUnsubscribed(groupname);
 
     }
 
     public void Unsubscribe(string groupname)
     {
         //
-        onTopicSubscribed(groupname);
+        onTopicUnsubscribed(groupname);
     }
 
-    public void Subscribe(string groupname)
+    public void Subscribe(string groupname, string username)
     {
         //
-        onTopicSubscribed(groupname);
+        onTopicSubscribed(groupname, username);
     }
 
     void ChangeTabs(int tab)
@@ -432,7 +432,18 @@ else
             loggedUser = await userDAL.GetUserID(user.Identity.Name);
             if(loggedUser.GroupNavigation != null)
             {
-                Subscribe(loggedUser.GroupNavigation.GroupName);
+                if (loggedUser.IsTopicSubscribed.GetValueOrDefault() && loggedUser.LastGroupName != loggedUser.GroupNavigation.GroupName)
+                {
+                    Unsubscribe(loggedUser.LastGroupName);
+                    Subscribe(loggedUser.GroupNavigation.GroupName, "");
+                }
+                else if(!loggedUser.IsTopicSubscribed.GetValueOrDefault())
+                {
+                    Subscribe(loggedUser.GroupNavigation.GroupName, loggedUser.Email);
+                    loggedUser.IsTopicSubscribed = true;
+                    userDAL.PutUser(loggedUser.Id, loggedUser);
+                }
+
             }
             else
             {

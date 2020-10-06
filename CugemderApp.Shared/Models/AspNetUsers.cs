@@ -14,7 +14,6 @@ namespace CugemderApp.Shared.Models
             MeetingPoints = new HashSet<MeetingPoints>();
             MeetingsReceiver = new HashSet<Meetings>();
             MeetingsSender = new HashSet<Meetings>();
-            Notifications1 = new HashSet<Notifications>();
             Points1 = new HashSet<Points>();
         }
 
@@ -41,7 +40,6 @@ namespace CugemderApp.Shared.Models
         public DateTime? DateOfBirth { get; set; }
         public int? Group { get; set; }
         public int? JobTitle { get; set; }
-        public int? Notifications { get; set; }
         public string PhotoUrl { get; set; }
         public int? Points { get; set; }
         public int? Position { get; set; }
@@ -56,12 +54,12 @@ namespace CugemderApp.Shared.Models
         public int? LocatedCity { get; set; }
         public bool? IsAdmin { get; set; }
         public string LastGroupName { get; set; }
+        public bool? IsTopicSubscribed { get; set; }
 
         public virtual Genders GenderNavigation { get; set; }
         public virtual Groups GroupNavigation { get; set; }
         public virtual JobTitles JobTitleNavigation { get; set; }
         public virtual Cities LocatedCityNavigation { get; set; }
-        public virtual Notifications NotificationsNavigation { get; set; }
         public virtual Points PointsNavigation { get; set; }
         public virtual Positions PositionNavigation { get; set; }
         public virtual Relationship RelationshipNavigation { get; set; }
@@ -72,7 +70,6 @@ namespace CugemderApp.Shared.Models
         public virtual ICollection<MeetingPoints> MeetingPoints { get; set; }
         public virtual ICollection<Meetings> MeetingsReceiver { get; set; }
         public virtual ICollection<Meetings> MeetingsSender { get; set; }
-        public virtual ICollection<Notifications> Notifications1 { get; set; }
         public virtual ICollection<Points> Points1 { get; set; }
     }
 }

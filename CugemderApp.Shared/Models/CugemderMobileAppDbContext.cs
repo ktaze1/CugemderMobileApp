@@ -23,6 +23,7 @@ namespace CugemderApp.Shared.Models
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
+        public virtual DbSet<DeviceTokens> DeviceTokens { get; set; }
         public virtual DbSet<Documents> Documents { get; set; }
         public virtual DbSet<Events> Events { get; set; }
         public virtual DbSet<Genders> Genders { get; set; }
@@ -151,6 +152,8 @@ namespace CugemderApp.Shared.Models
 
                 entity.Property(e => e.IsAdmin).HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.IsTopicSubscribed).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.LastGroupName).HasMaxLength(50);
 
                 entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
@@ -183,11 +186,6 @@ namespace CugemderApp.Shared.Models
                     .HasForeignKey(d => d.LocatedCity)
                     .HasConstraintName("FK_AspNetUsers_Cities");
 
-                entity.HasOne(d => d.NotificationsNavigation)
-                    .WithMany(p => p.AspNetUsers)
-                    .HasForeignKey(d => d.Notifications)
-                    .HasConstraintName("FK_AspNetUsers_Notifications");
-
                 entity.HasOne(d => d.PointsNavigation)
                     .WithMany(p => p.AspNetUsers)
                     .HasForeignKey(d => d.Points)
@@ -207,6 +205,15 @@ namespace CugemderApp.Shared.Models
             modelBuilder.Entity<Cities>(entity =>
             {
                 entity.Property(e => e.CityName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<DeviceTokens>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.DeviceToken).HasColumnName("deviceToken");
+
+                entity.Property(e => e.UserEmail).HasColumnName("userEmail");
             });
 
             modelBuilder.Entity<Documents>(entity =>
@@ -302,21 +309,11 @@ namespace CugemderApp.Shared.Models
 
             modelBuilder.Entity<Notifications>(entity =>
             {
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.Body).IsRequired();
 
-                entity.Property(e => e.Summary)
-                    .IsRequired()
-                    .HasColumnType("text");
+                entity.Property(e => e.Time).HasColumnType("datetime");
 
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Notifications1)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Notifications_AspNetUsers");
+                entity.Property(e => e.Title).IsRequired();
             });
 
             modelBuilder.Entity<Points>(entity =>

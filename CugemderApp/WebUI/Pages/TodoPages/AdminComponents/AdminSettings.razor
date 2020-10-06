@@ -5,6 +5,7 @@
 @inject JobTitlesDAL jobDAL
 @inject GroupsDAL groupDAL
 @inject DocumentsDAL documentDAL
+@inject NotificationsDAL notifications
 
 <table class="table">
     <thead class="thead-light">
@@ -187,7 +188,18 @@
     void CreateEvent()
     {
         if (events.RelatedGroup == 0)
+        {
             events.RelatedGroup = null;
+            foreach (var item in groupList)
+            {
+                notifications.SendNotification($"{events.Date.Value.ToLongTimeString()} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", item.GroupName);
+            }
+        }
+        else if (events.RelatedGroup != 0)
+        {
+            notifications.SendNotification($"{events.Date.Value.ToLongTimeString()} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", groupList.Where(c => c.Id == events.RelatedGroup).First().GroupName);
+        }
+
         eventDAL.PostEvents(events);
         events = new Events();
     }

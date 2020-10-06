@@ -3,9 +3,12 @@ using Android.Content;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Util;
+using Firebase.Iid;
 using Firebase.Messaging;
 using System;
 using System.Linq;
+using System.Net.Http;
+using CugemderApp.Shared.Models;
 
 namespace CugemderApp.Droid
 {
@@ -14,6 +17,7 @@ namespace CugemderApp.Droid
     public class MyFirebaseIIDService : FirebaseInstanceIdService
     {
         const string TAG = "MyFirebaseIIDService";
+        HttpClient http = AppState._http;
         public override void OnTokenRefresh()
         {
             var refreshedToken = FirebaseInstanceId.Instance.Token;
@@ -21,7 +25,6 @@ namespace CugemderApp.Droid
         }
         void SendRegistrationToServer(string token)
         {
-            // send this token to server
         }
     }
 }

@@ -10,12 +10,16 @@ using Microsoft.MobileBlazorBindings.WebView.Android;
 using Android.Runtime;
 using CugemderApp.WebUI.Pages;
 using Plugin.PushNotification;
+using System.Net.Http;
 
 namespace CugemderApp.Droid
 {
     [Activity(Label = "CugemderApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+
+        HttpClient http = AppState._http;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             BlazorHybridAndroid.Init();
@@ -42,9 +46,12 @@ namespace CugemderApp.Droid
         }
 
         //groupname 
-        public void OnSubscribeTopic(string groupname)
+        public void OnSubscribeTopic(string groupname, string username)
         {
             Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(groupname);
+            if(username != "")
+                Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(username);
+
         }
 
         public void OnUnsubscribeTopic(string groupname)

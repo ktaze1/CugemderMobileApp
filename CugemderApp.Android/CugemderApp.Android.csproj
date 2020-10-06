@@ -68,6 +68,9 @@
     <PackageReference Include="Plugin.PushNotification">
       <Version>3.3.3</Version>
     </PackageReference>
+    <PackageReference Include="System.Net.Http">
+      <Version>4.3.4</Version>
+    </PackageReference>
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
     <PackageReference Include="Xamarin.Azure.NotificationHubs.Android">
       <Version>1.1.1</Version>
@@ -83,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />
-    <None Include="MyFirebaseIIDService.cs" />
+    <Compile Include="MyFirebaseIIDService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="MyFirebaseMessagingService.cs" />
@@ -118,6 +121,10 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CugemderApp.Shared\CugemderApp.Shared.csproj">
+      <Project>{2f820f8e-357b-4ad3-8781-ec734b1c46fc}</Project>
+      <Name>CugemderApp.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CugemderApp\CugemderApp.csproj">
       <Project>{B6B6C0F5-8B48-4569-A770-DB2ACC1E5494}</Project>
       <Name>CugemderApp</Name>
