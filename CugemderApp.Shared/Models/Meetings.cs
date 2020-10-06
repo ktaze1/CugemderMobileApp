@@ -16,7 +16,8 @@ namespace CugemderApp.Shared.Models
         public string Location { get; set; }
         public DateTime Date { get; set; }
         public bool IsApproved { get; set; }
-        public bool IsResulted { get; set; }
+        public bool IsResultedbySender { get; set; }
+        public bool IsResultedbyReceiver { get; set; }
 
         public virtual AspNetUsers Receiver { get; set; }
         public virtual AspNetUsers Sender { get; set; }

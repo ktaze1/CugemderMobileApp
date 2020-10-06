@@ -32,9 +32,7 @@ namespace CugemderApp.Server.Controllers
         public async Task<ActionResult<IEnumerable<Meetings>>> GetMeetingsNeedPoint(string id)
         {
             return await _context.Meetings
-                .Where(c => c.SenderId == id || c.ReceiverId == id)
-                .Where(c => c.IsApproved == true)
-                .Where(c => c.IsResulted == false)
+                .Where(c => (c.SenderId == id && c.IsResultedbySender == false) || (c.ReceiverId == id && c.IsResultedbyReceiver == false))
                 .Where(c => c.Date.AddHours(2) < DateTime.Now)
                 .Include(c => c.Receiver)
                 .Include(c => c.Sender)
@@ -62,8 +60,6 @@ namespace CugemderApp.Server.Controllers
             var meetings = await _context.Meetings
                 .Include(c => c.Sender)
                 .Include(c => c.Receiver)
-                .Where(c => c.IsApproved == false)
-                .Where(c => c.Date > DateTime.Now)
                 .Where(c => c.ReceiverId == id || c.SenderId == id).ToListAsync();
 
             if (meetings == null)

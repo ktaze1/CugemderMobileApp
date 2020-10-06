@@ -59,7 +59,8 @@
         meeting.ReceiverId = id;
         meeting.SenderId = loggedUser.Id;
         meeting.IsApproved = false;
-        meeting.IsResulted = false;
+        meeting.IsResultedbyReceiver = false;
+        meeting.IsResultedbySender = false;
         meetingDAL.PostMeetings(meeting);
         uriHelper.NavigateTo($"profile/{id}");
     }

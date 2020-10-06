@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace CugemderApp.Shared.Models
 {
@@ -48,8 +47,6 @@ namespace CugemderApp.Shared.Models
         public int? Position { get; set; }
         public string Speciality { get; set; }
         public DateTime? UpdatedAt { get; set; }
-
-        [StringLength(500, ErrorMessage ="Kişi özeti 500 karakterden uzun olamaz!")]
         public string Summary { get; set; }
         public string Website { get; set; }
         public int? Year { get; set; }
@@ -58,6 +55,7 @@ namespace CugemderApp.Shared.Models
         public int? Relationship { get; set; }
         public int? LocatedCity { get; set; }
         public bool? IsAdmin { get; set; }
+        public string LastGroupName { get; set; }
 
         public virtual Genders GenderNavigation { get; set; }
         public virtual Groups GroupNavigation { get; set; }

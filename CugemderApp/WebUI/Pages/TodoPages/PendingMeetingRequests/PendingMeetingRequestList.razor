@@ -11,7 +11,7 @@
 {
     <p><em>Yükleniyor</em></p>
 }
-else if (givePoints.Count == 0)
+else if (givePoints.Where(c => c.IsApproved == true).Count() == 0)
 {
     <p> Kayıt Bulunamadı!</p>
 }
@@ -27,7 +27,7 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (var meeting in givePoints)
+                @foreach (var meeting in givePoints.Where(c => c.IsApproved == true))
                 {
                 <tr class="row">
                     @if (meeting.Sender.Id == loggedUser.Id)
@@ -61,7 +61,7 @@ else
 {
     <p><em>Yükleniyor</em></p>
 }
-else if (meetingList.Count == 0)
+else if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
 {
     <p> Kayıt Bulunamadı!</p>
 }
@@ -77,7 +77,7 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (var meeting in meetingList)
+                @foreach (var meeting in meetingList.Where(c => c.IsApproved == false  && c.Date > DateTime.Now))
                 {
                 <tr class="row">
                     @if (meeting.SenderId == loggedUser.Id)
@@ -141,7 +141,6 @@ else
     {
         meetingDAL.DeleteMeetings(meetingId);
 
-        uriHelper.NavigateTo($"meetingRequests", true);
     }
 
     async Task Approve(int meetingId)
@@ -149,6 +148,5 @@ else
         var meeting = meetingList.First(x => x.Id == meetingId);
         meeting.IsApproved = true;
         meetingDAL.PutMeetings(meeting.Id, meeting);
-        uriHelper.NavigateTo($"meetingRequests", true );
     }
 }

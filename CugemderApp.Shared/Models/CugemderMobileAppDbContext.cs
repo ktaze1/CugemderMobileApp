@@ -151,6 +151,8 @@ namespace CugemderApp.Shared.Models
 
                 entity.Property(e => e.IsAdmin).HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.LastGroupName).HasMaxLength(50);
+
                 entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
@@ -269,7 +271,9 @@ namespace CugemderApp.Shared.Models
 
                 entity.Property(e => e.IsApproved).HasColumnName("isApproved");
 
-                entity.Property(e => e.IsResulted).HasColumnName("isResulted");
+                entity.Property(e => e.IsResultedbyReceiver).HasColumnName("isResultedbyReceiver");
+
+                entity.Property(e => e.IsResultedbySender).HasColumnName("isResultedbySender");
 
                 entity.Property(e => e.Location)
                     .IsRequired()

@@ -31,6 +31,7 @@ namespace CugemderApp.Droid
 
 
             WebUI.Pages.Index.topicSubscribed += OnSubscribeTopic;
+            WebUI.Pages.Index.topicUnsubscribed += OnUnsubscribeTopic;
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -44,6 +45,11 @@ namespace CugemderApp.Droid
         public void OnSubscribeTopic(string groupname)
         {
             Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(groupname);
+        }
+
+        public void OnUnsubscribeTopic(string groupname)
+        {
+            Firebase.Messaging.FirebaseMessaging.Instance.UnsubscribeFromTopic(groupname);
         }
 
 

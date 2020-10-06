@@ -32,9 +32,9 @@ namespace CugemderApp.DataAccessClasses
             await _http.PostAsJsonAsync("api/MeetingPoints", meetingPoints);
         }
 
-        public async void DeleteMeetinPoints(int id)
+        public async void DeleteMeetinPoints(string userId)
         {
-            await _http.DeleteAsync($"api/MeetingPoints/{id}");
+            await _http.DeleteAsync($"api/MeetingPoints/{userId}");
         }
     }
 }

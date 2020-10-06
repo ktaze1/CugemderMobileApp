@@ -44,7 +44,6 @@ namespace CugemderApp.Server
                .AddRoles<IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = false;

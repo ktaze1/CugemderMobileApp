@@ -10,19 +10,54 @@
         <DataAnnotationsValidator />
 
         <div class="form-group">
-            <label>1. Kriter için puan veriniz:</label>
+            <label>Toplantıya Katılım:</label>
             <InputNumber @bind-Value="modalForm.point1" class="form-control" placeholder="Puan Giriniz" />
             <ValidationMessage For="@(() => modalForm.point1)" />
         </div>
         <div class="form-group">
-            <label>2. Kriter için puan veriniz:</label>
+            <label>Toplantı Saatine Uyum:</label>
             <InputNumber @bind-Value="modalForm.point2" class="form-control" placeholder="Puan Giriniz" />
             <ValidationMessage For="@(() => modalForm.point2)" />
         </div>
         <div class="form-group">
-            <label>3. Kriter için puan veriniz:</label>
+            <label>Dress Code Uyumu:</label>
             <InputNumber @bind-Value="modalForm.point3" class="form-control" placeholder="Puan Giriniz" />
             <ValidationMessage For="@(() => modalForm.point3)" />
+        </div>
+        <div class="form-group">
+            <label>Mikrofon / Kamera Kalitesi / Yönetimi:</label>
+            <InputNumber @bind-Value="modalForm.point4" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point4)" />
+        </div>
+        <div class="form-group">
+            <label>Söz Kesme / Kesmeme:</label>
+            <InputNumber @bind-Value="modalForm.point5" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point5)" />
+        </div>
+        <div class="form-group">
+            <label>Süreye Uyum:</label>
+            <InputNumber @bind-Value="modalForm.point6" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point6)" />
+        </div>
+        <div class="form-group">
+            <label>Firmasını ve Yaptığı İşi Güzel Tanıtma:</label>
+            <InputNumber @bind-Value="modalForm.point7" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point7)" />
+        </div>
+        <div class="form-group">
+            <label>Kendisini Güzel İfade Etme:</label>
+            <InputNumber @bind-Value="modalForm.point8" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point8)" />
+        </div>
+        <div class="form-group">
+            <label>Sonuç Odaklılık:</label>
+            <InputNumber @bind-Value="modalForm.point9" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point9)" />
+        </div>
+        <div class="form-group">
+            <label>Kişisel İzlenim:</label>
+            <InputNumber @bind-Value="modalForm.point10" class="form-control" placeholder="Puan Giriniz" />
+            <ValidationMessage For="@(() => modalForm.point10)" />
         </div>
 
         <button type="submit" class="btn btn-primary">Puanla</button>
@@ -34,35 +69,79 @@
 
     [Parameter] public int meetingId { get; set; }
 
+    private AspNetUsers loggedUser;
     Meetings meeting;
     MeetingPoints meetingPoint = new MeetingPoints();
     Form modalForm = new Form();
 
     public class Form
     {
-        [Range(1, 10, ErrorMessage = "Puan 1 ile 10 arasında olmalıdır!")]
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point1 { get; set; }
 
-        [Range(1, 10, ErrorMessage = "Puan 1 ile 10 arasında olmalıdır!")]
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point2 { get; set; }
 
-        [Range(1, 10, ErrorMessage = "Puan 1 ile 10 arasında olmalıdır!")]
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point3 { get; set; }
+
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
+        public int point4 { get; set; }
+
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
+        public int point5 { get; set; }
+
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
+        public int point6 { get; set; }
+
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
+        public int point7 { get; set; }
+
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
+        public int point8 { get; set; }
+
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
+        public int point9 { get; set; }
+
+        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
+        public int point10 { get; set; }
     }
 
     protected override async void OnInitialized()
     {
         meeting = await meetingDAL.GetMeeting(meetingId);
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+        }
     }
 
 
     void SubmitForm()
     {
         meetingPoint.MeetingId = meetingId;
+
         meetingPoint.ReceiverUserId = meeting.ReceiverId;
-        meetingPoint.TotalPoints = (modalForm.point1 + modalForm.point2 + modalForm.point3) / 3;
-        meeting.IsResulted = true;
+
+        meetingPoint.TotalPoints = (modalForm.point1 + modalForm.point2 + modalForm.point3
+            + modalForm.point4 + modalForm.point5 + modalForm.point6
+            + modalForm.point7 + modalForm.point8 + modalForm.point9
+            + modalForm.point10);
+
+        if(loggedUser.Id == meeting.ReceiverId)
+        {
+            meeting.IsResultedbyReceiver = true;
+        }
+        else if(loggedUser.Id == meeting.SenderId)
+        {
+            meeting.IsResultedbySender = true;
+        }
+
         meetingPointDAL.PostMeetinPoints(meetingPoint);
+
         meetingDAL.PutMeetings(meetingId, meeting);
     }
 

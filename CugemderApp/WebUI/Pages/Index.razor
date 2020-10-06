@@ -357,14 +357,21 @@ else
 @code {
 
     private AspNetUsers loggedUser;
+    private List<AspNetUsers> userlist, tempList;
+    bool tab1 = false, tab2 = true, tab3 = true;
     private string _userId;
     int standingNo = 1;
-    public delegate bool onSubscribe(string groupname);
     Dictionary<string, int> standings = new Dictionary<string, int>();
 
+
+    public delegate bool onSubscribe(string groupname);
+    public delegate bool onUnSubscribe(string groupname);
+
     public delegate void SubscribeTopicEventHandler(string groupname);
+    public delegate void UnsubscribeTopicEventHandler(string groupname);
 
     public static event SubscribeTopicEventHandler topicSubscribed;
+    public static event UnsubscribeTopicEventHandler topicUnsubscribed;
 
     protected virtual void onTopicSubscribed(string groupname)
     {
@@ -373,9 +380,18 @@ else
 
     }
 
-    private List<AspNetUsers> userlist, tempList;
+    protected virtual void onTopicUnsubscribed(string groupname)
+    {
+        if (topicSubscribed != null)
+            topicSubscribed(groupname);
 
-    bool tab1 = false, tab2 = true, tab3 = true;
+    }
+
+    public void Unsubscribe(string groupname)
+    {
+        //
+        onTopicSubscribed(groupname);
+    }
 
     public void Subscribe(string groupname)
     {
@@ -414,7 +430,14 @@ else
         if (user.Identity.IsAuthenticated)
         {
             loggedUser = await userDAL.GetUserID(user.Identity.Name);
-            Subscribe(loggedUser.GroupNavigation.GroupName);
+            if(loggedUser.GroupNavigation != null)
+            {
+                Subscribe(loggedUser.GroupNavigation.GroupName);
+            }
+            else
+            {
+                Unsubscribe(loggedUser.LastGroupName);
+            }
             userlist = await userDAL.GetUsersNoNull();
             userlist = userlist.Where(c => c.Group == loggedUser.Group).ToList();
             foreach (var users in userlist)

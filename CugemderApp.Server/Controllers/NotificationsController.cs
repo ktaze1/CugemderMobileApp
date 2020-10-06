@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CugemderApp.Shared.Models;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using FirebaseAdmin.Messaging;
 
 namespace CugemderApp.Server.Controllers
 {
@@ -14,6 +17,10 @@ namespace CugemderApp.Server.Controllers
     public class NotificationsController : ControllerBase
     {
         private readonly CugemderMobileAppDbContext _context;
+        private readonly FirebaseApp _firebaseApp = FirebaseApp.DefaultInstance == null ? FirebaseApp.Create(new AppOptions()
+        {
+            Credential = GoogleCredential.FromFile("C:\\Users\\Kaan\\Downloads\\cugemdermobile-firebase-adminsdk-wgo74-9dc80b63a3.json"),
+}) : FirebaseApp.DefaultInstance;
 
         public NotificationsController(CugemderMobileAppDbContext context)
         {
@@ -22,9 +29,28 @@ namespace CugemderApp.Server.Controllers
 
         // GET: api/Notifications
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Notifications>>> GetNotifications()
+        public async Task<string> SendNotif()
         {
-            return await _context.Notifications.ToListAsync();
+
+            var topic = "Teknoloji";
+
+            // See documentation on defining a message payload.
+            var message = new Message()
+            {
+                Notification = new Notification()
+                {
+                    Title = "$GOOG up 1.43% on the day",
+                    Body = "$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.",
+                },
+                
+                Topic = topic,
+            };
+
+            // Send a message to the devices subscribed to the provided topic.
+            string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+            // Response is a message ID string.
+            Console.WriteLine("Successfully sent message: " + response);
+            return response;
         }
 
         // GET: api/Notifications/5

@@ -1,0 +1,109 @@
+﻿@page "/addpoints/{id:int}"
+@page "/addpoints"
+@inject NavigationManager uriHelper
+@inject AspNetUsersDAL userDAL
+@inject GroupsDAL groupDAL
+@inject PointsDAL pointDAL
+@inject MeetingPointsDAL meetingPointDAL
+
+<h1> Puan Ekle </h1>
+
+
+@if (groups == null)
+{
+}
+else
+{
+    <form @onsubmit="@( () => Navigate(option))">
+        <select @bind="option">
+            <option selected value="0"> Tum Uyeler</option>
+            @for (int i = 1; i <= groups.Count; i++)
+            {
+                <option value="@i">@groups[i - 1].GroupName Grubu</option>
+            }
+        </select>
+        <button type="submit">Grup Seç</button>
+    </form>
+}
+
+@if (userlist == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ad Soyad</th>
+                <th>Güncel Puan</th>
+                <th>Son Puan Veriliş Tarihi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AspNetUsers user in id.HasValue ? userlist.Where(x => x.Group == id) : userlist)
+            {
+
+                <tr>
+                    <td><a href="/profile/@user.Id">@user.FirstName @user.LastName</a></td>
+                    @if (user.PointsNavigation != null)
+                    {
+                        <td>@user.PointsNavigation.TotalPoints</td>
+                        <td>@user.PointsNavigation.UpdatedAt.ToShortDateString()</td>
+                    }
+                    <td><a href="/addpoints/@user.Id">Puan Girişi Yap</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+
+    private List<AspNetUsers> userlist;
+    private List<Groups> groups;
+    private List<Points> pointlist;
+    [Parameter] public int? id { get; set; }
+    private int option = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userlist = await userDAL.GetUsersNoNull();
+        groups = await groupDAL.GetGroupsAsync();
+        pointlist = await pointDAL.GetPoints();
+    }
+
+    protected override void OnParametersSet()
+    {
+        option = id.GetValueOrDefault();
+    }
+
+    void Delete(string userId)
+    {
+        meetingPointDAL.DeleteMeetinPoints(userId);
+        pointDAL.DeletePoints(userId);
+        userDAL.DeleteUser(userId);
+    }
+
+    //Points GetLatestPoint(string id)
+    //{
+    //    return pointlist.Where(c => c.UserId == id).OrderBy(c => c.UpdatedAt).FirstOrDefault();
+    //}
+
+    void Navigate(int option)
+    {
+        if (option == 0)
+        {
+            uriHelper.NavigateTo($"/addpoints/");
+        }
+        else
+        {
+            uriHelper.NavigateTo($"/addpoints/{groups.ElementAt(option - 1).Id}");
+        }
+    }
+
+
+
+}

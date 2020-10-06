@@ -3,9 +3,6 @@
 @inject EventsDAL eventDAL
 @inject AspNetUsersDAL userDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
- 
-
-<h3>Etkinlikler</h3>
 
 <br>
 @if (events == null)
@@ -21,7 +18,7 @@ else
     <table class="table table-striped">
         <tbody>
             <h2>Etkinlikler</h2>
-            @foreach (Events eachEvent in id == 1 ? events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now) : events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now && c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null))
+            @foreach (Events eachEvent in id == 1 ? events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now).Take(10) : events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now && (c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null)).Take(10))
             {
                 <tr>
                     <td>
@@ -43,7 +40,7 @@ else
             <br />
             <h2>Geçmiş Etkinlikler</h2>
             <br />
-            @foreach (Events eachEvent in id == 1 ? events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now) : events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now && c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null))
+            @foreach (Events eachEvent in id == 1 ? events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now).Take(20) : events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now && (c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null)).Take(20))
             {
                 <tr>
                     <td>

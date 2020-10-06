@@ -82,6 +82,11 @@ namespace CugemderApp.Server.Controllers
             _context.Points.Add(points);
             await _context.SaveChangesAsync();
 
+            var user = await _context.AspNetUsers.Where(c => c.Id == points.UserId).FirstOrDefaultAsync();
+            user.Points = points.Id;
+
+            await _context.SaveChangesAsync();
+
             return CreatedAtAction("GetPoints", new { id = points.Id }, points);
         }
 

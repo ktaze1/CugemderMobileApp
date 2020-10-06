@@ -71,6 +71,7 @@ else
         foreach (AspNetUsers user in waitingUsers)
         {
             user.EmailConfirmed = true;
+            user.LastGroupName = groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName;
             user.Points = points.Where(c => c.UserId == user.Id).FirstOrDefault().Id;
             userDAL.PutUser(user.Id, user);
         }
