@@ -1,0 +1,108 @@
+﻿@page "/adminlist"
+@inject AspNetUsersDAL userDAL
+
+<div>
+    <div>
+        <EditForm Model="sc" OnValidSubmit="Filter">
+            <div>
+                İsim: <InputText @bind-Value="sc.name" />
+            </div>
+
+            <div>
+                Soyisim: <InputText @bind-Value="sc.surname" />
+            </div>
+
+            <button class="btn btn-dark"> Filtrele</button>
+        </EditForm>
+    </div>
+    <br />
+    <div>
+        <table>
+            <thead>
+            <th>İsim</th>
+            <th>E-Mail</th>
+            <th>İşlem</th>
+            </thead>
+            <tbody>
+                @if (tempUserList != null)
+                {
+
+                    @foreach (var item in tempUserList)
+                    {
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>@item.Email</td>
+                    <td><button class="btn btn-dark" @onclick="@( () => MakeAdmin(item.Id))">Yönetici Yap</button></td>
+                }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @if (users != null)
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Yöneticiler</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var admin in users.Where(c => c.IsAdmin == true))
+                {
+                    <tr>
+                        <td>@admin.FirstName @admin.LastName</td>
+                        <td>
+                            <button class="btn btn-danger" @onclick="@(() => Delete(admin.Id))">Yöneticilikten Çıkar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+
+    @code {
+        List<AspNetUsers> users, tempUserList;
+
+        SearchForm sc = new SearchForm();
+
+        protected override async Task OnInitializedAsync()
+        {
+            users = await userDAL.GetUsers();
+        }
+
+
+        async void Delete(string id)
+        {
+            AspNetUsers user = await userDAL.GetUserID(id);
+            user.IsAdmin = false;
+            userDAL.PutUser(id, user);
+        }
+
+        async void MakeAdmin(string id)
+        {
+            AspNetUsers user = await userDAL.GetUserID(id);
+            user.IsAdmin = true;
+            userDAL.PutUser(id, user);
+        }
+
+        public class SearchForm
+        {
+            public string? name { get; set; }
+
+            public string? surname { get; set; }
+        }
+
+        async void Filter()
+        {
+            if (users != null)
+            {
+                tempUserList = users;
+                if (sc.name != null)
+                    tempUserList = tempUserList.Where(c => c.FirstName.ToLower().Contains(sc.name.ToLower())).ToList();
+                if (sc.surname != null)
+                    tempUserList = tempUserList.Where(c => c.LastName.ToLower().Contains(sc.surname.ToLower())).ToList();
+            }
+        }
+    }

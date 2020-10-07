@@ -2,8 +2,24 @@
 @inject GroupsDAL groupDAL
 @inject AspNetUsersDAL userDAL
 
+<h3>Grup Ekle</h3>
+<br />
+<EditForm Model="@newGroup" OnValidSubmit="@CreateGroup">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <div>
+            <InputText @bind-Value="@newGroup.GroupName" />
+            <ValidationMessage For="@(() => newGroup.GroupName)" />
+
+            <button type="submit" class="btn btn-success">
+                Kaydet
+            </button>
+        </div>
+    </div>
+</EditForm>
+
 <h3>Grup Listesi</h3>
-<br>
+<br />
 @if (groups == null)
 {
     <text>Yükleniyor...</text>
@@ -38,6 +54,8 @@ else
 @code {
     List<Groups> groups;
     List<AspNetUsers> users;
+    Groups newGroup = new Groups();
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,5 +72,10 @@ else
             userDAL.PutUser(user.Id, user);
         }
         groupDAL.DeleteGroups(groupsId);
+    }
+
+    void CreateGroup()
+    {
+        groupDAL.PostGroups(newGroup);
     }
 }

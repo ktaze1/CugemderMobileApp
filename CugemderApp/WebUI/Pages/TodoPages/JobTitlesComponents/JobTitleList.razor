@@ -1,0 +1,74 @@
+﻿@page "/jobtitles"
+@inject JobTitlesDAL jobDAL
+@inject AspNetUsersDAL userDAL
+
+<h3>JobTitleList</h3>
+
+<h4>Yeni Meslek Ekle</h4>
+<EditForm Model="@jobTitles" OnValidSubmit="@CreateJobTitle">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <div>
+            <InputText @bind-Value="@jobTitles.TitleName" />
+            <ValidationMessage For="@(() => jobTitles.TitleName)" />
+
+            <button type="submit" class="btn btn-success">
+                Kaydet
+            </button>
+        </div>
+    </div>
+</EditForm>
+
+@if (jobTitlesList != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Grup adı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in jobTitlesList)
+            {
+                <tr>
+                    <td>@job.TitleName</td>
+                    <td>
+                        <a class="btn btn-success" href="groups/edit/@job.Id">Düzenle</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(job.Id))">Sil</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+
+
+    JobTitles jobTitles = new JobTitles();
+    List<JobTitles> jobTitlesList;
+    List<AspNetUsers> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        jobTitlesList = await jobDAL.GetJobTitles();
+        users = await userDAL.GetUsers();
+    }
+
+    void CreateJobTitle()
+    {
+        jobDAL.PostJobTitles(jobTitles);
+        jobTitles = new JobTitles();
+    }
+
+    void Delete(int jobId)
+    {
+        var tempUsers = users.Where(c => c.JobTitle == jobId).ToList();
+        foreach (var user in tempUsers)
+        {
+            user.Group = null;
+            userDAL.PutUser(user.Id, user);
+        }
+        jobDAL.DeleteJobTitles(jobId);
+    }
+}

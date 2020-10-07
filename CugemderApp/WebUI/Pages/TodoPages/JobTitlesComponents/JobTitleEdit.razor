@@ -1,0 +1,38 @@
+﻿@page "/jobTitles/edit/{id}"
+@inject NavigationManager uriHelper
+@inject JobTitlesDAL jobDal
+
+<h3>Güncelle</h3>
+
+<EditForm Model="@job" OnValidSubmit="@EditGroup">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <div>
+            <InputText @bind-Value="@job.TitleName" />
+            <ValidationMessage For="@(() => job.TitleName)" />
+
+            <button type="submit" class="btn btn-success">
+                Kaydet
+            </button>
+        </div>
+    </div>
+</EditForm>
+
+
+
+
+@code {
+    [Parameter] public int id { get; set; }
+
+    JobTitles job = new JobTitles();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        job = await jobDal.GetJobTitles(id);
+    }
+    async Task EditGroup()
+    {
+        jobDal.PutJobTitles(id, job);
+        uriHelper.NavigateTo("jobtitles");
+    }
+}

@@ -437,9 +437,9 @@ else
                     Unsubscribe(loggedUser.LastGroupName);
                     Subscribe(loggedUser.GroupNavigation.GroupName, "");
                 }
-                else if(!loggedUser.IsTopicSubscribed.GetValueOrDefault())
+                else if(loggedUser.IsTopicSubscribed.GetValueOrDefault() != true)
                 {
-                    Subscribe(loggedUser.GroupNavigation.GroupName, loggedUser.Email);
+                    Subscribe(loggedUser.GroupNavigation.GroupName, loggedUser.Id);
                     loggedUser.IsTopicSubscribed = true;
                     userDAL.PutUser(loggedUser.Id, loggedUser);
                 }

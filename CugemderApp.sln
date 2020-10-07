@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CugemderApp.Server", "Cugem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CugemderApp.Shared", "CugemderApp.Shared\CugemderApp.Shared.csproj", "{2F820F8E-357B-4AD3-8781-EC734B1C46FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerService\WorkerService.csproj", "{85AC2ECA-0D87-4663-9094-D3A740D1F4DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerService", "WorkerService\WorkerService.csproj", "{85AC2ECA-0D87-4663-9094-D3A740D1F4DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

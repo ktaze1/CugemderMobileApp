@@ -4,6 +4,21 @@
 @inject FileUpload fileDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
+@if (loggedUser.IsAdmin.Value)
+{
+    <h4> Yeni Döküman Ekle</h4>
+    <EditForm Model="@document" OnValidSubmit="@UploadFiles">
+        <label>Döküman Adı</label>
+        <InputText @bind-Value="@document.Title" />
+        <br />
+        <label>Döküman Açıklaması</label>
+        <InputText @bind-Value="@document.Summary" />
+        <br />
+        <button class="btn btn-block" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
+        <button>Dosyayı Ekle</button>
+    </EditForm>
+}
+
 
 @if (documentList != null)
 {
@@ -43,7 +58,9 @@
 
     FileResult item;
 
+    FileResult pickResults;
 
+    Documents document = new Documents();
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,4 +84,49 @@
             documentDAL.DeleteDocuments(id);
         }
     }
+
+    async void UploadFiles()
+    {
+        if (pickResults != null)
+        {
+            System.IO.FileInfo fi = new System.IO.FileInfo(pickResults.FileName);
+            string encodedStr = string.Format(@"{0}", Guid.NewGuid());
+            var filename = $"{encodedStr}{fi.Extension}";
+            var stream = await pickResults.OpenReadAsync();
+            var content = new StreamContent(stream);
+            var multi = new MultipartFormDataContent();
+            multi.Add(content, filename, filename);
+            fileDAL.UploadDocument(multi);
+            document.Url = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Contents/{filename}";
+
+            documentDAL.PostDocuments(document);
+            document = new Documents();
+        }
+    }
+
+
+    //async void Test()
+    //{
+    //    var pickResult = await FilePicker.PickMultipleAsync();
+    //    if (pickResult != null)
+    //    {
+    //        var fileList = new List<FileBase>();
+    //        foreach (var item in pickResult)
+    //        {
+    //            var stream = await item.OpenReadAsync();
+    //            var content = new StreamContent(stream);
+    //            var multi = new MultipartFormDataContent();
+    //            multi.Add(content, item.FileName, item.FileName);
+    //            fileDAL.UploadDocument(multi);
+    //        }
+
+    //    }
+    //}
+
+    async void SelectFiles()
+    {
+
+        pickResults = await FilePicker.PickAsync();
+    }
+
 }
