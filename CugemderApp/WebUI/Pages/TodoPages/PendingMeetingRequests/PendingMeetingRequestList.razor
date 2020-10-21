@@ -3,6 +3,7 @@
 @inject AspNetUsersDAL userDAL
 @inject MeetingsDAL meetingDAL
 @inject MeetingPointsDAL meetingPointDAL
+@inject NotificationsDAL notification
 @inject NavigationManager uriHelper
 <h3> Puanlama Bekleyen Görüşme Talepleri </h3>
 
@@ -130,7 +131,7 @@ else
 
         if (user.Identity.IsAuthenticated)
         {
-            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
             meetingList = await meetingDAL.GetMeetingOfUser(loggedUser.Id);
             givePoints = await meetingDAL.GetMeetingNeedPoint(loggedUser.Id);
         }
@@ -148,5 +149,31 @@ else
         var meeting = meetingList.First(x => x.Id == meetingId);
         meeting.IsApproved = true;
         meetingDAL.PutMeetings(meeting.Id, meeting);
+        Notifications recepientNotif = new Notifications();
+        Notifications senderNotif = new Notifications();
+
+        // TODO notification edit for receivers
+
+        string recepientNotifName = meeting.ReceiverId == loggedUser.Id ? $"{meeting.Sender.FirstName} {meeting.Sender.LastName}" :
+        $"{meeting.Receiver.FirstName} {meeting.Receiver.LastName}";
+
+        string senderNotifName = meeting.ReceiverId == loggedUser.Id ? $"{meeting.Receiver.FirstName} {meeting.Receiver.LastName}" :
+            $"{meeting.Sender.FirstName} {meeting.Sender.LastName}";
+
+        recepientNotif.Title = "Görüşme Talebi";
+        senderNotif.Title = "Görüşme Talebi";
+
+        recepientNotif.Body = $"Bugün içerisinde {recepientNotifName} ile saat {meeting.Date.ToShortTimeString()} görüşmeniz var";
+        senderNotif.Body = $"Bugün içerisinde {senderNotifName} ile saat {meeting.Date.ToShortTimeString()} görüşmeniz var";
+
+        recepientNotif.Time = meeting.Date;
+        senderNotif.Time = meeting.Date;
+
+        recepientNotif.Receiver = meeting.ReceiverId;
+        senderNotif.Receiver = meeting.SenderId;
+
+        notification.AddNotificaiton(recepientNotif);
+        notification.AddNotificaiton(senderNotif);
+
     }
 }

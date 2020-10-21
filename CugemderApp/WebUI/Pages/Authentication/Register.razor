@@ -32,11 +32,11 @@
     <InputText id="inputPhone" class="form-control" placeholder="Telefon" autofocus @bind-Value="@registerRequest.PhoneNo" />
     <ValidationMessage For="@(() => registerRequest.Email)" />
     <br />
-    <label for="inputPassword">Şifre</label>
+    <label for="inputPassword">Şifre:</label>
     <InputText type="password" id="inputPassword" class="form-control" placeholder="Şifreniz" @bind-Value="@registerRequest.Password" />
     <ValidationMessage For="@(() => registerRequest.Password)" />
     <br />
-    <label for="inputPasswordConfirm">Şifre Onay</label>
+    <label for="inputPasswordConfirm">Şifre Onay:</label>
     <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Şifre Onay" @bind-Value="@registerRequest.PasswordConfirm" />
     <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
     <br />

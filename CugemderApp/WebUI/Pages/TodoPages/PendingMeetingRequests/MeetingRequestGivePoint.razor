@@ -11,53 +11,113 @@
 
         <div class="form-group">
             <label>Toplantıya Katılım:</label>
-            <InputNumber @bind-Value="modalForm.point1" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point1)" />
+            <select class="form-control"
+                    @bind="modalForm.point1">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Toplantı Saatine Uyum:</label>
-            <InputNumber @bind-Value="modalForm.point2" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point2)" />
+            <select class="form-control"
+                    @bind="modalForm.point2">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Dress Code Uyumu:</label>
-            <InputNumber @bind-Value="modalForm.point3" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point3)" />
+            <select class="form-control"
+                    @bind="modalForm.point3">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Mikrofon / Kamera Kalitesi / Yönetimi:</label>
-            <InputNumber @bind-Value="modalForm.point4" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point4)" />
+            <select class="form-control"
+                    @bind="modalForm.point4">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Söz Kesme / Kesmeme:</label>
-            <InputNumber @bind-Value="modalForm.point5" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point5)" />
+            <select class="form-control"
+                    @bind="modalForm.point5">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Süreye Uyum:</label>
-            <InputNumber @bind-Value="modalForm.point6" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point6)" />
+            <select class="form-control"
+                    @bind="modalForm.point6">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Firmasını ve Yaptığı İşi Güzel Tanıtma:</label>
-            <InputNumber @bind-Value="modalForm.point7" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point7)" />
+            <select class="form-control"
+                    @bind="modalForm.point7">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Kendisini Güzel İfade Etme:</label>
-            <InputNumber @bind-Value="modalForm.point8" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point8)" />
+            <select class="form-control"
+                    @bind="modalForm.point8">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Sonuç Odaklılık:</label>
-            <InputNumber @bind-Value="modalForm.point9" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point9)" />
+            <select class="form-control"
+                    @bind="modalForm.point9">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <label>Kişisel İzlenim:</label>
-            <InputNumber @bind-Value="modalForm.point10" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => modalForm.point10)" />
+            <select class="form-control"
+                    @bind="modalForm.point10">
+                <option selected value="0">0</option>
+                @for (int i = 1; i <= pointValues.Count; i++)
+                {
+                    <option value="@i">@pointValues[i - 1]</option>
+                }
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Puanla</button>
@@ -73,6 +133,7 @@
     Meetings meeting;
     MeetingPoints meetingPoint = new MeetingPoints();
     Form modalForm = new Form();
+    List<int> pointValues = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
     public class Form
     {
@@ -115,7 +176,7 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
         }
     }
 
@@ -131,11 +192,11 @@
             + modalForm.point7 + modalForm.point8 + modalForm.point9
             + modalForm.point10);
 
-        if(loggedUser.Id == meeting.ReceiverId)
+        if (loggedUser.Id == meeting.ReceiverId)
         {
             meeting.IsResultedbyReceiver = true;
         }
-        else if(loggedUser.Id == meeting.SenderId)
+        else if (loggedUser.Id == meeting.SenderId)
         {
             meeting.IsResultedbySender = true;
         }

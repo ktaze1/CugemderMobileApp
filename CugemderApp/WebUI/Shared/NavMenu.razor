@@ -17,39 +17,39 @@
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="userlist">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Üye Listesi
+                <span class="oi oi-people" aria-hidden="true"></span> Üye Listesi
             </NavLink>
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="events">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Etkinlikler
+                <span class="oi oi-puzzle-piece" aria-hidden="true"></span> Etkinlikler
             </NavLink>
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="meetingRequests">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Görüşme Talepleri
+                <span class="oi oi-task" aria-hidden="true"></span> Görüşme Talepleri
             </NavLink>
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="documents">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Dökümanlar
+                <span class="oi oi-file" aria-hidden="true"></span> Dökümanlar
             </NavLink>
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="setting">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Kullanıcı Ayarları
+                <span class="oi oi-wrench" aria-hidden="true"></span> Kullanıcı Ayarları
             </NavLink>
         </li>
         @if (loggedUser != null && loggedUser.IsAdmin.GetValueOrDefault())
         {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="waitinglist">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Onay Listesi
+                    <span class="oi oi-timer" aria-hidden="true"></span> Onay Listesi
                 </NavLink>
             </li>
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="adminsettings">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Yönetici Ayarları
+                    <span class="oi oi-command" aria-hidden="true"></span> Yönetici Ayarları
                 </NavLink>
             </li>
         }
@@ -76,7 +76,7 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
         }
     }
 }

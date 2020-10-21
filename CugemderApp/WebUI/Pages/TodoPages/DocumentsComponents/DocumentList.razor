@@ -4,21 +4,30 @@
 @inject FileUpload fileDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-@if (loggedUser.IsAdmin.Value)
+@if (loggedUser != null)
 {
-    <h4> Yeni Döküman Ekle</h4>
-    <EditForm Model="@document" OnValidSubmit="@UploadFiles">
-        <label>Döküman Adı</label>
-        <InputText @bind-Value="@document.Title" />
-        <br />
-        <label>Döküman Açıklaması</label>
-        <InputText @bind-Value="@document.Summary" />
-        <br />
-        <button class="btn btn-block" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
-        <button>Dosyayı Ekle</button>
-    </EditForm>
+    @if (loggedUser.IsAdmin.Value.Equals(true))
+    {
+        <h4> Yeni Döküman Ekle</h4>
+        <EditForm Model="@document" OnValidSubmit="@UploadFiles">
+            <div>
+                <div>
+                    <label>Döküman Adı</label>
+                    <InputText class="input-group" @bind-Value="@document.Title" />
+                </div>
+                <br />
+                <div>
+                    <label>Döküman Açıklaması</label>
+                    <InputText class="input-group" @bind-Value="@document.Summary" />
+                </div>
+                <br />
+                <button class="btn btn-secondary" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
+                <button class="btn btn-dark">Dosyayı Ekle</button>
+            </div>
+            <br />
+        </EditForm>
+    }
 }
-
 
 @if (documentList != null)
 {
@@ -71,7 +80,7 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
         }
     }
 

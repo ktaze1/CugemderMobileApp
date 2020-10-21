@@ -90,11 +90,20 @@ namespace CugemderApp.Server.Controllers
         public async Task<ActionResult<Groups>> DeleteGroups(int id)
         {
             var groups = await _context.Groups.FindAsync(id);
+            var users = await _context.AspNetUsers.Where(c => c.Group == id).ToListAsync();
             if (groups == null)
             {
                 return NotFound();
             }
 
+
+            foreach (var user in users)
+            {
+                user.Group = null;
+            }
+
+
+            await _context.SaveChangesAsync();
             _context.Groups.Remove(groups);
             await _context.SaveChangesAsync();
 

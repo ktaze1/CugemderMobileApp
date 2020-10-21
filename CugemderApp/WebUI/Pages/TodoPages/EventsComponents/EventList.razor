@@ -1,4 +1,5 @@
-﻿@page "/events/"
+﻿@page "/events"
+@page "/events/{id:int}"
 @inject EventsDAL eventDAL
 @inject AspNetUsersDAL userDAL
 @inject GroupsDAL groupDAL
@@ -6,114 +7,136 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 
-@if (loggedUser.IsAdmin.Value)
+
+@if (loggedUser != null)
 {
-    <h4>Yeni Etkinlik Ekle:</h4>
-    <div class="simple-form col-sm-3">
-        <EditForm Model="newEvent" OnValidSubmit="CreateEvent">
-            <DataAnnotationsValidator />
-            <div class="form-group col-sm-3">
-                <label class="col-sm-3">Başlık</label>
-                <InputText @bind-Value="newEvent.Title" class="form-control" placeholder="Başlık Giriniz" />
-                <ValidationMessage For="@(() => newEvent.Title)" />
-            </div>
-            <div class="form-group col-sm-3">
-                <label>Lokasyon</label>
-                <InputText @bind-Value="newEvent.Location" class="form-control" placeholder="Adres Giriniz" />
-                <ValidationMessage For="@(() => newEvent.Location)" />
-            </div>
-            <div class="form-group col-sm-3">
-                <label class="col-sm-3">Aciklama</label>
-                <InputTextArea @bind-Value="newEvent.Summary" class="form-control" placeholder="Açıklama Giriniz" />
-                <ValidationMessage For="@(() => newEvent.Summary)" />
-            </div>
-            <div class="form-group col-sm-3">
-                <label class="col-sm-3" for="createdDate">Tarih ve Saat</label>
-                <InputDateTime @bind-Value="newEvent.Date" />
-                <ValidationMessage For="@(() => newEvent.Date)" />
-            </div>
-            <div class="form-group col-sm-3">
-                @if (groupList != null)
-                {
-                    <select class="form-control"
-                            @bind="newEvent.RelatedGroup">
-                        <option value="0">---Grup Seçin---</option>
-                        @foreach (var group in groupList)
+    @if (loggedUser.IsAdmin.Value.Equals(true))
+    {
+
+        <div>
+            <h4>Yeni Etkinlik Ekle:</h4>
+            <div class="simple-form col-sm-3">
+                <EditForm Model="newEvent" OnValidSubmit="CreateEvent">
+                    <DataAnnotationsValidator />
+                    <div class="form-group col-sm-3">
+                        <label class="col-sm-3">Başlık</label>
+                        <InputText @bind-Value="newEvent.Title" class="form-control" placeholder="Başlık Giriniz" />
+                        <ValidationMessage For="@(() => newEvent.Title)" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label class="col-sm-3">Lokasyon</label>
+                        <InputText @bind-Value="newEvent.Location" class="form-control" placeholder="Adres Giriniz" />
+                        <ValidationMessage For="@(() => newEvent.Location)" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label class="col-sm-3">Aciklama</label>
+                        <InputTextArea @bind-Value="newEvent.Summary" class="form-control" placeholder="Açıklama Giriniz" />
+                        <ValidationMessage For="@(() => newEvent.Summary)" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label class="col-sm-3" for="createdDate">Tarih ve Saat</label>
+                        <InputDateTime @bind-Value="newEvent.Date" />
+                        <ValidationMessage For="@(() => newEvent.Date)" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @if (groupList != null)
                         {
-                            @if (group.Id == groupId)
-                            {
-                                <option selected value="@group.Id">@group.GroupName</option>
-                            }
-                            else
-                            {
-                                <option value="@group.Id">@group.GroupName</option>
-                            }
+                            <select class="form-control"
+                                    @bind="newEvent.RelatedGroup">
+                                <option value="0">---Grup Seçin---</option>
+                                @foreach (var group in groupList)
+                                {
+                                    @if (group.Id == groupId)
+                                    {
+                                        <option selected value="@group.Id">@group.GroupName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@group.Id">@group.GroupName</option>
+                                    }
 
+                                }
+                            </select>
                         }
-                    </select>
-                }
-            </div>
+                    </div>
 
-            <button type="submit" class="btn btn-primary">Ekle</button>
-        </EditForm>
-    </div>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </EditForm>
+            </div>
+        </div>
+    }
 }
 
 
 <br>
 @if (events == null)
 {
-    <text>Loading...</text>
+    <p> Yukleniyor</p>
 }
 else if (events.Count == 0)
 {
-    <text>Etkinlik bulunamadi</text>
+    <p>Kayıt Bulunamadı</p>
 }
 else
 {
+    <br />
     <table class="table table-striped">
         <tbody>
             <h2>Etkinlikler</h2>
-            @foreach (Events eachEvent in loggedUser.IsAdmin.Value == true ? events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now).Take(10) : events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now && (c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null)).Take(10))
+            @try
             {
-                <tr>
-                    <td>
-                        <p> <b>Başlık</b>: @eachEvent.Title </p>
-                        <p> <b>Lokasyon</b>: @eachEvent.Location </p>
-                        <p> <b>Tarih</b>: @eachEvent.Date.GetValueOrDefault().ToLongDateString() </p>
-                        <p> <b>Saat</b>: @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </p>
-                        <p> <b>Hakkında</b>: @eachEvent.Summary </p>
-                        @if (eachEvent.RelatedGroupNavigation != null)
-                        {<p> <b>Grup</b>: @eachEvent.RelatedGroupNavigation.GroupName</p>}
-                        @if (loggedUser.IsAdmin.Value)
-                        {
-                            <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
-                            <button class="btn btn-danger" @onclick="@(() => Delete(eachEvent.Id))">Delete</button>
-                        }
-                    </td>
-                </tr>
+                @foreach (Events eachEvent in loggedUser.IsAdmin.Value.Equals(true) ? events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now).Take(10) : events.Where(c => c.Date.GetValueOrDefault() > DateTime.Now && (c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null)).Take(10))
+                {
+                    <tr>
+                        <td>
+                            <p> <b>Başlık</b>: @eachEvent.Title </p>
+                            <p> <b>Lokasyon</b>: @eachEvent.Location </p>
+                            <p> <b>Tarih</b>: @eachEvent.Date.GetValueOrDefault().ToLongDateString() </p>
+                            <p> <b>Saat</b>: @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </p>
+                            <p> <b>Hakkında</b>: @eachEvent.Summary </p>
+                            @if (eachEvent.RelatedGroupNavigation != null)
+                            {<p> <b>Grup</b>: @eachEvent.RelatedGroupNavigation.GroupName</p>}
+                            @if (loggedUser.IsAdmin.Value.Equals(true))
+                            {
+                                <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
+                                <button class="btn btn-danger" @onclick="@(() => Delete(eachEvent.Id))">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             <br />
             <h2>Geçmiş Etkinlikler</h2>
             <br />
-            @foreach (Events eachEvent in loggedUser.IsAdmin.Value == true ? events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now).Take(20) : events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now && (c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null)).Take(20))
+            @try
             {
-                <tr>
-                    <td>
-                        <p> <b>Başlık</b>: @eachEvent.Title </p>
-                        <p> <b>Lokasyon</b>: @eachEvent.Location </p>
-                        <p> <b>Tarih</b>: @eachEvent.Date.GetValueOrDefault().ToLongDateString() </p>
-                        <p> <b>Saat</b>: @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </p>
-                        <p> <b>Hakkında</b>: @eachEvent.Summary </p>
-                        @if (eachEvent.RelatedGroupNavigation != null)
-                        {<p> <b>Grup</b>: @eachEvent.RelatedGroupNavigation.GroupName</p>}
-                        @if (loggedUser.IsAdmin.Value)
-                        {
-                            <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
-                            <button class="btn btn-danger" @onclick="@(() => Delete(eachEvent.Id))">Delete</button>
-                        }
-                    </td>
-                </tr>
+                @foreach (Events eachEvent in loggedUser.IsAdmin.Value.Equals(true) ? events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now).Take(20) : events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now && (c.RelatedGroup == loggedUser.Group || c.RelatedGroup == null)).Take(20))
+                {
+                    <tr>
+                        <td>
+                            <p> <b>Başlık</b>: @eachEvent.Title </p>
+                            <p> <b>Lokasyon</b>: @eachEvent.Location </p>
+                            <p> <b>Tarih</b>: @eachEvent.Date.GetValueOrDefault().ToLongDateString() </p>
+                            <p> <b>Saat</b>: @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </p>
+                            <p> <b>Hakkında</b>: @eachEvent.Summary </p>
+                            @if (eachEvent.RelatedGroupNavigation != null)
+                            {<p> <b>Grup</b>: @eachEvent.RelatedGroupNavigation.GroupName</p>}
+                            @if (loggedUser.IsAdmin.Value.Equals(true))
+                            {
+                                <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
+                                <button class="btn btn-danger" @onclick="@(() => Delete(eachEvent.Id))">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
         </tbody>
     </table>
@@ -124,7 +147,7 @@ else
     private string _userId;
     List<Groups> groupList;
     public int groupId = 0;
-
+    [Parameter] public int id { get; set; }
 
 
     Events newEvent = new Events();
@@ -132,34 +155,49 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        events = await eventDAL.GetEvents();
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
 
         if (user.Identity.IsAuthenticated)
         {
-            loggedUser = await userDAL.GetUserID(user.Identity.Name);
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
+            events = await eventDAL.GetEvents();
             groupList = await groupDAL.GetGroupsAsync();
         }
     }
     async Task Delete(int eventID)
     {
         eventDAL.DeleteEvents(eventID);
+        notifications.DeleteNotification(eventID);
     }
 
     void CreateEvent()
     {
-        if (newEvent.RelatedGroup == 0)
+        if (newEvent.RelatedGroup == null)
         {
             newEvent.RelatedGroup = null;
             foreach (var item in groupList)
             {
                 notifications.SendNotification($"{newEvent.Date.Value.ToLongDateString()} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", item.GroupName);
+                notifications.AddNotificaiton(new Notifications()
+                {
+                    Title = "Etkinlik",
+                    Body = $"Bugün olacak etkinliğin saati: {newEvent.Date.Value.ToShortTimeString()} ",
+                    Time = newEvent.Date.Value,
+                    Receiver = item.GroupName
+                });
             }
         }
         else if (newEvent.RelatedGroup != 0)
         {
             notifications.SendNotification($"{newEvent.Date.Value.ToLongDateString()} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
+            notifications.AddNotificaiton(new Notifications()
+            {
+                Title = "Etkinlik",
+                Body = $"Bugün olacak etkinliğin saati: {newEvent.Date.Value.ToShortTimeString()} ",
+                Time = newEvent.Date.Value,
+                Receiver = groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName
+            });
         }
 
         eventDAL.PostEvents(newEvent);

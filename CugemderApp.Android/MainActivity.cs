@@ -11,6 +11,9 @@ using Android.Runtime;
 using CugemderApp.WebUI.Pages;
 using Plugin.PushNotification;
 using System.Net.Http;
+using System.Text;
+using System.Globalization;
+using System.Linq;
 
 namespace CugemderApp.Droid
 {
@@ -48,7 +51,9 @@ namespace CugemderApp.Droid
         //groupname 
         public void OnSubscribeTopic(string groupname, string username)
         {
-            Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(groupname);
+            var normalizedGroupName = String.Join("", groupname.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                .Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)).Replace("ı", "i");
+            Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(normalizedGroupName);
             if(username != "")
                 Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(username);
 
@@ -56,9 +61,32 @@ namespace CugemderApp.Droid
 
         public void OnUnsubscribeTopic(string groupname)
         {
-            Firebase.Messaging.FirebaseMessaging.Instance.UnsubscribeFromTopic(groupname);
+
+            var normalizedGroupName = String.Join("", groupname.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                .Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)).Replace("ı", "i");
+            Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(normalizedGroupName);
         }
 
+        public static string RemoveDiacritics(string text)
+        {
+            Encoding srcEncoding = Encoding.UTF8;
+            Encoding destEncoding = Encoding.GetEncoding(1252); // Latin alphabet
+
+            text = destEncoding.GetString(Encoding.Convert(srcEncoding, destEncoding, srcEncoding.GetBytes(text)));
+
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < normalizedString.Length; i++)
+            {
+                if (!CharUnicodeInfo.GetUnicodeCategory(normalizedString[i]).Equals(UnicodeCategory.NonSpacingMark))
+                {
+                    result.Append(normalizedString[i]);
+                }
+            }
+
+            return result.ToString();
+        }
 
         //protected override void OnNewIntent(Intent intent)
         //{

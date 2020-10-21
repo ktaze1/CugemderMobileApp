@@ -17,5 +17,15 @@ namespace CugemderApp.DataAccessClasses
             NotificationObject notif = new NotificationObject { body = _body, title = _title, topic = _topic };
             await _http.PostAsJsonAsync("api/Notifications/sendNotification", notif);
         }
+
+        public async void AddNotificaiton(Notifications notification)
+        {
+            await _http.PostAsJsonAsync("api/Notifications", notification);
+        }
+        public async void DeleteNotification(int id)
+        {
+            await _http.DeleteAsync($"api/Notifications/{id}");
+        }
+
     }
 }

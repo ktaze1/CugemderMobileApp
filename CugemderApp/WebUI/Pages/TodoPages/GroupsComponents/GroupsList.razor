@@ -34,7 +34,7 @@ else
         <thead>
             <tr>
                 <th>Grup adı</th>
-                <th>İşlemler</th>
+                <th  class="d-flex justify-content-center">İşlemler</th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@ else
             {
                 <tr>
                     <td>@group.GroupName</td>
-                    <td>
+                    <td class="d-flex justify-content-end">
                         <a class="btn btn-success" href="groups/edit/@group.Id">Düzenle</a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(group.Id))">Sil</button>
                     </td>

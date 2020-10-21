@@ -90,10 +90,20 @@ namespace CugemderApp.Server.Controllers
         public async Task<ActionResult<Cities>> DeleteCities(int id)
         {
             var cities = await _context.Cities.FindAsync(id);
+            var users =  await _context.AspNetUsers.Where(c => c.LocatedCity == id).ToListAsync();
+
+
             if (cities == null)
             {
                 return NotFound();
             }
+
+            foreach (var user in users)
+            {
+                user.LocatedCity = null;
+            }
+
+            await _context.SaveChangesAsync();
 
             _context.Cities.Remove(cities);
             await _context.SaveChangesAsync();

@@ -76,16 +76,16 @@ else
             user.LastGroupName = groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName;
             user.Points = points.Where(c => c.UserId == user.Id).FirstOrDefault().Id;
             userDAL.PutUser(user.Id, user);
-            if(GroupsWithNewUsers.Contains(user.GroupNavigation.GroupName))
+            if(!GroupsWithNewUsers.Contains(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName))
             {
-                GroupsWithNewUsers.Add(user.GroupNavigation.GroupName);
+                GroupsWithNewUsers.Add(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName);
             }
         }
         foreach (var item in GroupsWithNewUsers)
         {
             notifications.SendNotification("Grubunuza yeni bir üye katıldı!", "Yeni Üye", item);
         }
-        uriHelper.NavigateTo("");
+        uriHelper.NavigateTo("/");
     }
 
 
@@ -94,6 +94,5 @@ else
         var user = waitingUsers.First(x => x.Id == userId);
         pointDAL.DeletePoints(userId);
         userDAL.DeleteUser(userId);
-        await OnInitializedAsync();
     }
 }

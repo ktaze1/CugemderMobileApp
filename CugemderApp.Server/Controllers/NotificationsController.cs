@@ -9,6 +9,8 @@ using CugemderApp.Shared.Models;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using FirebaseAdmin.Messaging;
+using System.Text;
+using System.Globalization;
 
 namespace CugemderApp.Server.Controllers
 {
@@ -17,11 +19,10 @@ namespace CugemderApp.Server.Controllers
     public class NotificationsController : ControllerBase
     {
         private readonly CugemderMobileAppDbContext _context;
-        private readonly FirebaseApp _firebaseApp = FirebaseApp.DefaultInstance == null ? FirebaseApp.Create(new AppOptions()
+        private FirebaseApp _firebaseApp = FirebaseApp.DefaultInstance == null ? FirebaseApp.Create(new AppOptions()
         {
             Credential = GoogleCredential.FromFile("C:\\Users\\Kaan\\Downloads\\cugemdermobile-firebase-adminsdk-wgo74-9dc80b63a3.json"),
-}) : FirebaseApp.DefaultInstance;
-
+        }) : FirebaseApp.DefaultInstance;
         public NotificationsController(CugemderMobileAppDbContext context)
         {
             _context = context;
@@ -62,6 +63,12 @@ namespace CugemderApp.Server.Controllers
             }
 
             return notifications;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Notifications>>> GetNotifications()
+        {
+            return await _context.Notifications.Where(c => c.Time.Date == DateTime.Now.Date).ToListAsync();
         }
 
         // PUT: api/Notifications/5
@@ -112,6 +119,9 @@ namespace CugemderApp.Server.Controllers
         [Route("sendNotification")]
         public async void SendNotification(NotificationObject notification)
         {
+
+            var normalizedTopic = RemoveDiacritics(notification.topic);
+            
             var message = new Message()
             {
                 Notification = new Notification()
@@ -120,7 +130,7 @@ namespace CugemderApp.Server.Controllers
                     Body = notification.body,
                 },
 
-                Topic = notification.topic,
+                Topic = normalizedTopic,
             };
 
             // Send a message to the devices subscribed to the provided topic.
@@ -133,7 +143,7 @@ namespace CugemderApp.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Notifications>> DeleteNotifications(int id)
         {
-            var notifications = await _context.Notifications.FindAsync(id);
+            var notifications = await _context.Notifications.Where(c => c.GroupId == id).FirstOrDefaultAsync();
             if (notifications == null)
             {
                 return NotFound();
@@ -148,6 +158,27 @@ namespace CugemderApp.Server.Controllers
         private bool NotificationsExists(int id)
         {
             return _context.Notifications.Any(e => e.Id == id);
+        }
+
+        private static string RemoveDiacritics(string text)
+        {
+            Encoding srcEncoding = Encoding.UTF8;
+            Encoding destEncoding = Encoding.GetEncoding(1252); // Latin alphabet
+
+            text = destEncoding.GetString(Encoding.Convert(srcEncoding, destEncoding, srcEncoding.GetBytes(text)));
+
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < normalizedString.Length; i++)
+            {
+                if (!CharUnicodeInfo.GetUnicodeCategory(normalizedString[i]).Equals(UnicodeCategory.NonSpacingMark))
+                {
+                    result.Append(normalizedString[i]);
+                }
+            }
+
+            return result.ToString();
         }
     }
 }

@@ -90,10 +90,18 @@ namespace CugemderApp.Server.Controllers
         public async Task<ActionResult<JobTitles>> DeleteJobTitles(int id)
         {
             var jobTitles = await _context.JobTitles.FindAsync(id);
+            var users = await _context.AspNetUsers.Where(c => c.JobTitle == id).ToListAsync();
             if (jobTitles == null)
             {
                 return NotFound();
             }
+
+            foreach (var user in users)
+            {
+                user.JobTitle = null;
+            }
+
+            await _context.SaveChangesAsync();
 
             _context.JobTitles.Remove(jobTitles);
             await _context.SaveChangesAsync();

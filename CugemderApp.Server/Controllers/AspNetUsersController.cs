@@ -99,19 +99,19 @@ namespace CugemderApp.Server.Controllers
         }
 
         [HttpGet]
-        [Route("getId/{username}")]
-        public async Task<ActionResult<AspNetUsers>> GetAspNetUserID(string username)
+        [Route("getId/{Id}")]
+        public async Task<ActionResult<AspNetUsers>> GetAspNetUserID(string Id)
         {
             var aspNetUsers = await _context.AspNetUsers
-                .Include(c => c.PositionNavigation)
-                .Include(c => c.PointsNavigation)
-                .Include(c => c.JobTitleNavigation)
-                .Include(c => c.GroupNavigation)
-                .Include(c => c.JobTitleNavigation)
-                .Include(c => c.RelationshipNavigation)
-                .Include(c => c.LocatedCityNavigation)
-                .Include(c => c.GenderNavigation)
-                .FirstOrDefaultAsync(c => c.UserName == username);
+                 .Include(c => c.PositionNavigation)
+                 .Include(c => c.PointsNavigation)
+                 .Include(c => c.JobTitleNavigation)
+                 .Include(c => c.GroupNavigation)
+                 .Include(c => c.JobTitleNavigation)
+                 .Include(c => c.RelationshipNavigation)
+                 .Include(c => c.LocatedCityNavigation)
+                 .Include(c => c.GenderNavigation)
+                 .FirstOrDefaultAsync(c => c.Id == Id);
 
             if (aspNetUsers == null)
             {
@@ -125,7 +125,16 @@ namespace CugemderApp.Server.Controllers
         [Route("username/{email}")]
         public async Task<ActionResult<AspNetUsers>> GetUsername(string email)
         {
-            var aspNetUsers = await _context.AspNetUsers.Where(c => c.Email == email).FirstOrDefaultAsync();
+            var aspNetUsers = await _context.AspNetUsers
+                 .Include(c => c.PositionNavigation)
+                 .Include(c => c.PointsNavigation)
+                 .Include(c => c.JobTitleNavigation)
+                 .Include(c => c.GroupNavigation)
+                 .Include(c => c.JobTitleNavigation)
+                 .Include(c => c.RelationshipNavigation)
+                 .Include(c => c.LocatedCityNavigation)
+                 .Include(c => c.GenderNavigation)
+                 .FirstOrDefaultAsync(c => c.Email == email);
 
             if (aspNetUsers == null)
             {

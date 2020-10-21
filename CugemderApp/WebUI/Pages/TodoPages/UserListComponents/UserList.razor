@@ -11,13 +11,14 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h1> Üyeler </h1>
-<button class="btn-dark" @onclick="@ToggleFilter"> Uye Filtreleme </button>
+<button class="btn btn-dark" @onclick="@ToggleFilter"> Uye Filtreleme </button>
 <br />
 @if (showFilter)
 {
     @if (groups != null && jobTitles != null && genders != null && cities != null)
     {
-        <button type="button" @onclick="ToggleFilterScope">@filterHeader Üyelerde Arama Yap</button>
+        <br />
+        <button class="btn btn-secondary" type="button" @onclick="ToggleFilterScope">@filterHeader Üyelerde Arama Yap</button>
         <br />
         <EditForm Model="sc" OnValidSubmit="Filter">
             <div>
@@ -121,7 +122,7 @@
             </div>
 
             <button class="btn btn-dark"> Filtrele</button>
-            <button class="btn btn-light" type="button" @onclick="ClearFilter"> Filtreleri Temizle</button>
+            <button class="btn btn-secondary" type="button" @onclick="ClearFilter"> Filtreleri Temizle</button>
         </EditForm>
 
     }
@@ -212,7 +213,7 @@ else
 
         if (userAuth.Identity.IsAuthenticated)
         {
-            user = await userDAL.GetUserID(userAuth.Identity.Name);
+            user = await userDAL.GetUsername(userAuth.Identity.Name);
         }
         userlist = await userDAL.GetUsersNoNull();
         tempList = userlist.Where(c => c.Group == user.Group).ToList();
@@ -314,7 +315,8 @@ else
             {
                 standings.Add(user.Email, standingNo++);
             }
-        }else
+        }
+        else
         {
             filterHeader = "Tüm";
             tempList = userlist.Where(c => c.Group == user.Group).ToList();

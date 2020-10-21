@@ -58,6 +58,18 @@ namespace CugemderApp.Security
             await api.Login(loginParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
+
+        public async Task ResetPassword(PasswordChangeModel model)
+        {
+            await api.ResetPassword(model);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
+        public async Task ForgotPassword(ForgotPasswordModel model)
+        {
+            await api.ForgotPassword(model);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
         public async Task Register(RegisterRequest registerParameters)
         {
             await api.Register(registerParameters);

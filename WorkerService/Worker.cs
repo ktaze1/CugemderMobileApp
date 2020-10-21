@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using CugemderApp.Shared.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -15,6 +17,11 @@ namespace WorkerService
         DateTime someDate = DateTime.Now.AddMinutes(1);
         HttpClient http = new HttpClient() { BaseAddress = new Uri( "http://localhost:3000/") };
 
+        NotificaitonDAL DAL = new NotificaitonDAL();
+
+        List<Notifications> notificationList;
+        
+
         public Worker(ILogger<Worker> logger)
         {
             _logger = logger;
@@ -25,13 +32,45 @@ namespace WorkerService
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                if (DateTime.Now.Minute == someDate.Minute)
+                if (DateTime.Now.Hour == 9)
                 {
-                    _logger.LogInformation("Kaan taze -- time is now");
-                    await http.GetAsync("api/Notifications");
+                    //_logger.LogInformation("Kaan taze -- time is now");
+
+                    notificationList = await DAL.GetNotifications();
+
+                    foreach (var notificaiton in notificationList)
+                    {
+                        DAL.SendNotification(notificaiton.Body, notificaiton.Title, notificaiton.Receiver);
+                        DAL.DeleteNotification(notificaiton.Id);
+                    }
+
                 }
                 await Task.Delay(60000, stoppingToken);
             }
         }
     }
+
+    public class NotificaitonDAL
+    {
+
+        HttpClient http = new HttpClient() { BaseAddress = new Uri("http://localhost:3000/") };
+
+
+        public async Task<List<Notifications>> GetNotifications()
+        {
+            return await http.GetFromJsonAsync<List<Notifications>>("api/Notifications");
+        }
+
+        public async void SendNotification(string _body, string _title, string _topic)
+        {
+            NotificationObject notif = new NotificationObject { body = _body, title = _title, topic = _topic };
+            await http.PostAsJsonAsync("api/Notifications/sendNotification", notif);
+        }
+
+        public async void DeleteNotification(int id)
+        {
+            await http.DeleteAsync($"api/Notifications/{id}");
+        }
+    }
+
 }

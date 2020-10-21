@@ -74,6 +74,7 @@
 
     .profile-head .nav-tabs {
         margin-bottom: 5%;
+        margin-right: 3px;
     }
 
         .profile-head .nav-tabs .nav-link {
@@ -148,8 +149,8 @@ else
                     </h6>
                     @if (loggedUser.Summary != null)
                     {
-                            <h6>Hakkında</h6>
-                            <p>@loggedUser.Summary</p>
+                        <h6>Kısa Özet</h6>
+                        <p>@loggedUser.Summary</p>
                     }
                     @if (loggedUser.PointsNavigation != null)
                     {
@@ -162,24 +163,23 @@ else
                     </span>
                     </p>
 
-                    <p class="proile-rating"> Grup Sıralaması</p> <span>
-                        <div>
-                            @if (standings[loggedUser.Email] != null)
-                            {
-                                @standings[loggedUser.Email];
-                            }
-                    </div>
-                </span>
-            }
+                    <p class="proile-rating">
+                        Grup Sıralaması :      @if (standings[loggedUser.Email] != null)
+                        {
+                            @standings[loggedUser.Email];
+                        }
+                    </p> <span>
+                    </span>
+                }
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
-                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel Bilgiler</p>
+                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Hakkında</p>
                         </li>
                         <li @onclick="@( () => ChangeTabs(2))" class="nav-item">
-                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mesleki Bilgiler</p>
+                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İş Bilgileri</p>
                         </li>
                         <li @onclick="@( () => ChangeTabs(3))" class="nav-item">
-                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim Bilgileri</p>
+                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim</p>
                         </li>
                     </ul>
                 </div>
@@ -206,14 +206,17 @@ else
                                 </div>
                             </div>
                         }
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Yaş</label>
+                        @if (loggedUser.DateOfBirth != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Yaş</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@(calculateAge(loggedUser.DateOfBirth.GetValueOrDefault()))</p>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <p>@(calculateAge(loggedUser.DateOfBirth.GetValueOrDefault()))</p>
-                            </div>
-                        </div>
+                        }
                         @if (loggedUser.LocatedCityNavigation != null)
                         {
 
@@ -238,34 +241,21 @@ else
                                 </div>
                             </div>
                         }
-                        @if (loggedUser.Summary != null)
-                        {
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Hakkında :</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="card-text">
-                                        @if (loggedUser.Summary != null)
-                                        {
-                                            @loggedUser.Summary
-                                        }
-                                    </p>
-                                </div>
-                            </div>
-                        }
                     </div>
                     <!-- Tab 1 Ends-->
                     <!-- Tab 2 Start -->
                     <div hidden="@tab2" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Meslek</label>
+                        @if (loggedUser.JobTitleNavigation != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Meslek</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@loggedUser.JobTitleNavigation.TitleName</p>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <p>@loggedUser.JobTitleNavigation.TitleName</p>
-                            </div>
-                        </div>
+                        }
 
                         @if (loggedUser.PositionNavigation != null)
                         {
@@ -352,7 +342,6 @@ else
             </div>
         </div>
         </div>
-
     }
 @code {
 
@@ -429,15 +418,15 @@ else
 
         if (user.Identity.IsAuthenticated)
         {
-            loggedUser = await userDAL.GetUserID(user.Identity.Name);
-            if(loggedUser.GroupNavigation != null)
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
+            if (loggedUser.GroupNavigation != null)
             {
                 if (loggedUser.IsTopicSubscribed.GetValueOrDefault() && loggedUser.LastGroupName != loggedUser.GroupNavigation.GroupName)
                 {
                     Unsubscribe(loggedUser.LastGroupName);
                     Subscribe(loggedUser.GroupNavigation.GroupName, "");
                 }
-                else if(loggedUser.IsTopicSubscribed.GetValueOrDefault() != true)
+                else if (loggedUser.IsTopicSubscribed.GetValueOrDefault() != true)
                 {
                     Subscribe(loggedUser.GroupNavigation.GroupName, loggedUser.Id);
                     loggedUser.IsTopicSubscribed = true;

@@ -9,5 +9,7 @@ namespace CugemderApp.Shared.Models
         public string Title { get; set; }
         public string Body { get; set; }
         public DateTime Time { get; set; }
+        public string Receiver { get; set; }
+        public int? GroupId { get; set; }
     }
 }

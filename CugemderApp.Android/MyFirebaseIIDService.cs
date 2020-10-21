@@ -14,15 +14,17 @@ namespace CugemderApp.Droid
 {
     [Service]
     [IntentFilter(new[] { "com.google.firebase.INSTANCE_ID_EVENT" })]
-    public class MyFirebaseIIDService : FirebaseInstanceIdService
+    public class MyFirebaseIIDService : FirebaseMessagingService
     {
         const string TAG = "MyFirebaseIIDService";
         HttpClient http = AppState._http;
-        public override void OnTokenRefresh()
+        public override void OnNewToken(string p0)
         {
-            var refreshedToken = FirebaseInstanceId.Instance.Token;
-            SendRegistrationToServer(refreshedToken);
+            base.OnNewToken(p0);
+            SendRegistrationToServer(p0);
         }
+        //var refreshedToken = FirebaseInstanceId.Instance.Token;
+        //SendRegistrationToServer(refreshedToken);
         void SendRegistrationToServer(string token)
         {
         }

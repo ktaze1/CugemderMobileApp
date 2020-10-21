@@ -1,0 +1,323 @@
+﻿@page "/adminaccessuser/{id}"
+@inject AspNetUsersDAL userDAL
+@inject JobTitlesDAL jobTitleDAL
+@inject GroupsDAL groupDAL
+@inject PositionsDAL positionDAL
+@inject GendersDAL genderDAL
+@inject RelationshipsDAL relationshipDAL
+@inject CitiesDAL cityDAL
+@inject FileUpload fileDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CugemderApp.Security.CustomStateProvider customStateProvider
+@inject NavigationManager uriHelper
+
+<EditForm Model="@user" OnValidSubmit="@EditUser">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Ad :</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.FirstName" />
+            <ValidationMessage For="@(() => user.FirstName)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Soyad :</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.LastName" />
+            <ValidationMessage For="@(() => user.LastName)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Profil Fotoğrafı :</label>
+        <div>
+            <button class="btn btn-info" type="button" @onclick="@SelectFiles">Dosya Seç</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Mail :</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.Email" />
+            <ValidationMessage For="@(() => user.Email)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Yeni Şifre Ata :</label>
+        <div>
+            <em>En az 6 karakter olmalı ve bir adet büyük, bir adet küçük ve bir adet özel karakter içermeli:</em>
+            <input type="password" placeholder="Örnek: Password.1" class="form-control" @bind="@newPassword" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Cinsiyet :</label>
+        <div>
+            <select class="form-control"
+                    @bind="user.Gender">
+                <option value="0">---Cinsiyet Seçin---</option>
+                @foreach (var gender in genders)
+                {
+                    @if (gender.Id == genderId)
+                    {
+                        <option selected value="@gender.Id">@gender.GenderName</option>
+                    }
+                    else
+                    {
+                        <option value="@gender.Id">@gender.GenderName</option>
+                    }
+
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Grup :</label>
+        <div>
+            <select class="form-control"
+                    @bind="user.Group">
+                <option value="0">---Cinsiyet Seçin---</option>
+                @foreach (var group in groups)
+                {
+                    @if (group.Id == groupId)
+                    {
+                        <option selected value="@group.Id">@group.GroupName</option>
+                    }
+                    else
+                    {
+                        <option value="@group.Id">@group.GroupName</option>
+                    }
+
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Medeni Hali :</label>
+        <div>
+            <select class="form-control"
+                    @bind="user.Relationship">
+                <option value="0">---Medeni Hal Seçin---</option>
+                @foreach (var relation in relationships)
+                {
+                    @if (relation.Id == relationshipId)
+                    {
+                        <option selected value="@relation.Id">@relation.RelationshipStatus</option>
+                    }
+                    else
+                    {
+                        <option value="@relation.Id">@relation.RelationshipStatus</option>
+                    }
+
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Şehir :</label>
+        <div>
+            <select class="form-control"
+                    @bind="user.LocatedCity">
+                <option value="0">---Şehir Seçin---</option>
+                @foreach (var city in cities)
+                {
+                    @if (city.Id == cityId)
+                    {
+                        <option selected value="@city.Id">@city.CityName</option>
+                    }
+                    else
+                    {
+                        <option value="@city.Id">@city.CityName</option>
+                    }
+
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Doğum Tarihi :</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@user.DateOfBirth" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Pozisyon :</label>
+        <div>
+            <select class="form-control"
+                    @bind="user.Position">
+                <option value="0">---Posizyon Secin---</option>
+                @foreach (var position in positions)
+                {
+                    @if (position.Id == positionId)
+                    {
+                        <option selected value="@position.Id">@position.Position</option>
+                    }
+                    else
+                    {
+                        <option value="@position.Id">@position.Position</option>
+                    }
+
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Telefon :</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.PhoneNumber" />
+            <ValidationMessage For="@(() => user.PhoneNumber)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Firma :</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.Company" />
+            <ValidationMessage For="@(() => user.Company)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Meslek :</label>
+        <div>
+            <select class="form-control"
+                    @bind="user.JobTitle">
+                <option value="0">---Cinsiyet Secin---</option>
+                @foreach (var jobTitle in jobTitles)
+                {
+                    @if (jobTitle.Id == jobTitleId)
+                    {
+                        <option selected value="@jobTitle.Id">@jobTitle.TitleName</option>
+                    }
+                    else
+                    {
+                        <option value="@jobTitle.Id">@jobTitle.TitleName</option>
+                    }
+
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Uzmanlık Alanı :</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.Speciality" />
+            <ValidationMessage For="@(() => user.Speciality)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Hakkında Özet :</label>
+        <div>
+            <InputTextArea row="6" class="form-control" @bind-Value="@user.Summary" />
+            <ValidationMessage For="@(() => user.Summary)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Web Sitesi :</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.Website" />
+            <ValidationMessage For="@(() => user.Website)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Mezuniyet/Firma Kuruluş Yılı :</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@user.Year" />
+            <ValidationMessage For="@(() => user.Year)" />
+        </div>
+    </div>
+    <div class="form-group"></div>
+    <button type="submit" class="btn btn-success">
+        Güncelle
+    </button>
+</EditForm>
+
+
+@code {
+    [Parameter] public string id { get; set; }
+    private AspNetUsers user;
+    private string _userId;
+
+    DateTime time = DateTime.UtcNow;
+    private int groupId = 0;
+    private int positionId = 0;
+    private int genderId = 0;
+    private int jobTitleId = 0;
+    private int relationshipId = 0;
+    private int cityId = 0;
+    private string newPassword;
+
+    private List<Groups> groups;
+    private List<Positions> positions;
+    private List<Genders> genders;
+    private List<JobTitles> jobTitles;
+    private List<Relationship> relationships;
+    private List<Cities> cities;
+
+
+    private JobTitles selectedTitle;
+
+    FileResult item;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userAuth = authState.User;
+
+        groups = await groupDAL.GetGroupsAsync();
+        positions = await positionDAL.GetPositions();
+        genders = await genderDAL.GetGenders();
+        jobTitles = await jobTitleDAL.GetJobTitles();
+        cities = await cityDAL.GetCities();
+        relationships = await relationshipDAL.GetRelationships();
+
+
+        if (userAuth.Identity.IsAuthenticated)
+        {
+            user = await userDAL.GetUsers(id);
+            groupId = user.Group.HasValue ? (int)user.Group : 0;
+            genderId = user.Gender.HasValue ? (int)user.Gender : 0;
+            positionId = user.Position.HasValue ? (int)user.Position : 0;
+            jobTitleId = user.JobTitle.HasValue ? (int)user.JobTitle : 0;
+            cityId = user.LocatedCity.HasValue ? (int)user.LocatedCity : 0;
+            relationshipId = user.Relationship.HasValue ? (int)user.Relationship : 0;
+        }
+    }
+
+    async Task EditUser()
+    {
+        user.UpdatedAt = DateTime.UtcNow;
+        //if (user.Company.Trim() == "") user.Company = null;
+        //if (user.Position == 0) user.Position = null;
+        //if (user.Speciality.Trim() == "") user.Speciality = null;
+        //if (user.Summary.Trim() == "") user.Summary = null;
+
+        var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
+        if (filetoDelete != null && item != null)
+        {
+            fileDAL.DeletePhoto(filetoDelete);
+            System.IO.FileInfo fi = new System.IO.FileInfo(item.FileName);
+            string encodedStr = string.Format(@"{0}", Guid.NewGuid());
+            var filename = $"{encodedStr}{fi.Extension}";
+            var stream = await item.OpenReadAsync();
+            var content = new StreamContent(stream);
+            var multi = new MultipartFormDataContent();
+            multi.Add(content, filename, filename);
+            fileDAL.UploadPhoto(multi);
+            user.PhotoUrl = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Images/{filename}";
+        }
+
+        userDAL.PutUser(user.Id, user);
+        if (newPassword != null)
+        {
+            PasswordChangeModel passwordChange = new PasswordChangeModel();
+            passwordChange.id = user.Id;
+            passwordChange.newPassword = newPassword;
+            await customStateProvider.ResetPassword(passwordChange);
+        }
+
+        uriHelper.NavigateTo("adminaccessuserlist");
+    }
+
+    async void SelectFiles()
+    {
+        item = await FilePicker.PickAsync();
+    }
+
+}

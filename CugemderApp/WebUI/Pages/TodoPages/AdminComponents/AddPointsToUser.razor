@@ -3,212 +3,335 @@
 @inject PointsDAL pointDAL
 @inject MeetingPointsDAL meetingPointDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
-
-
-@using System.ComponentModel.DataAnnotations;
-
-
-<div class="simple-form">
-    <EditForm Model="form" OnValidSubmit="onSubmit">
-        <DataAnnotationsValidator />
-
-        <div class="form-group">
-            <label>Toplantıya Katılım:</label>
-            <InputNumber @bind-Value="form.point1" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point1)" />
-        </div>
-        <div class="form-group">
-            <label>Toplantı Saatine Uyum:</label>
-            <InputNumber @bind-Value="form.point2" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point2)" />
-        </div>
-        <div class="form-group">
-            <label>Dress Code Uyumu:</label>
-            <InputNumber @bind-Value="form.point3" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point3)" />
-        </div>
-        <div class="form-group">
-            <label>Mikrofon / Kamera Kalitesi / Yönetimi:</label>
-            <InputNumber @bind-Value="form.point4" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point4)" />
-        </div>
-        <div class="form-group">
-            <label>Söz Kesme / Kesmeme:</label>
-            <InputNumber @bind-Value="form.point5" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point5)" />
-        </div>
-        <div class="form-group">
-            <label>Süreye Uyum:</label>
-            <InputNumber @bind-Value="form.point6" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point6)" />
-        </div>
-        <div class="form-group">
-            <label>Firmasını ve Yaptığı İşi Güzel Tanıtma:</label>
-            <InputNumber @bind-Value="form.point7" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point7)" />
-        </div>
-        <div class="form-group">
-            <label>Kendisini Güzel İfade Etme:</label>
-            <InputNumber @bind-Value="form.point8" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point8)" />
-        </div>
-        <div class="form-group">
-            <label>Sonuç Odaklılık:</label>
-            <InputNumber @bind-Value="form.point9" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point9)" />
-        </div>
-        <div class="form-group">
-            <label>Kişisel İzlenim:</label>
-            <InputNumber @bind-Value="form.point10" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point10)" />
-        </div>
-        <div class="form-group">
-            <label>Toplantıya Katılım:</label>
-            <InputNumber @bind-Value="form.point11" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point11)" />
-        </div>
-        <div class="form-group">
-            <label>Toplantı Saatine Uyum:</label>
-            <InputNumber @bind-Value="form.point12" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point12)" />
-        </div>
-        <div class="form-group">
-            <label>Dress Code Uyumu:</label>
-            <InputNumber @bind-Value="form.point13" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point13)" />
-        </div>
-        <div class="form-group">
-            <label>Mikrofon / Kamera Kalitesi / Yönetimi:</label>
-            <InputNumber @bind-Value="form.point14" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point14)" />
-        </div>
-        <div class="form-group">
-            <label>Söz Kesme / Kesmeme:</label>
-            <InputNumber @bind-Value="form.point15" class="form-control" placeholder="Puan Giriniz" />
-            <ValidationMessage For="@(() => form.point15)" />
-        </div>
-        <button type="submit" class="btn btn-primary">Puanla</button>
-        <button @onclick="@( () => { form = new PointCriteria(); })" type="button" class="btn btn-secondary">Vazgeç</button>
-    </EditForm>
+@inject NavigationManager uriHelper
+@inject NotificationsDAL notifications
+@inject NetworkingActivityPointDAL networkingActivityDAL
+@inject NetworkingMeetingPointDAL networkingMeetingDAL
+<!-- TODO: Fix visuality of table -->
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Puan Türü</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <button class="btn btn-dark" @onclick="toggleMeetingForm">Network Toplantı</button>
+                    <button class="btn btn-dark" @onclick="toggleActivityForm">Network Faaliyet</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+
+<hr />
+
+<h3> Puan Ver </h3>
+
+<hr />
+
+@if (isNetworkActivity)
+{
+    <div class="simple-form">
+        <EditForm Model="form" OnValidSubmit="onNetworkActivitySubmit">
+            <h4>NETWORKING FAALİYETLERİ DEĞERLENDİRME</h4>
+            <br />
+            <div class="form-group">
+                <label>Toplantıya Katılım:</label>
+                <select class="form-control"
+                        @bind="form.point11">
+                    <option selected value="0">@pointBinary[0]</option>
+                    <option value="1">@pointBinary[1]</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Toplantı Saatine Uyum:</label>
+                <select class="form-control"
+                        @bind="form.point12">
+                    <option selected value="0">@pointBinary[0]</option>
+                    <option value="1">@pointBinary[1]</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Dress Code Uyumu:</label>
+                <select class="form-control"
+                        @bind="form.point13">
+                    <option selected value="0">@pointBinary[0]</option>
+                    <option value="1">@pointBinary[1]</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Mikrofon / Kamera Kalitesi / Yönetimi:</label>
+                <select class="form-control"
+                        @bind="form.point14">
+                    <option selected value="0">@pointBinary[0]</option>
+                    <option value="1">@pointBinary[1]</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Söz Kesme / Kesmeme:</label>
+                <select class="form-control"
+                        @bind="form.point15">
+                    <option selected value="0">@pointBinary[0]</option>
+                    <option value="1">@pointBinary[1]</option>
+                </select>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <button type="submit" class="btn btn-primary">Puanla</button>
+            <button @onclick="@( () => { form = new PointCriteria(); })" type="button" class="btn btn-secondary">Vazgeç</button>
+            <br />
+            <br />
+        </EditForm>
+    </div>
+
+    <hr />
+}
+
+
+@if (isNetworkingMeeting)
+{
+
+    <div class="simple-form">
+        <EditForm Model="form" OnValidSubmit="onNetworkMeetingSubmit">
+            <DataAnnotationsValidator />
+            <h4>NETWORK TOPLANTI DEĞERLENDİRME</h4>
+            <br />
+            <div class="form-group">
+                <label>Toplantıya Katılım:</label>
+                <select class="form-control"
+                        @bind="form.point1">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Toplantı Saatine Uyum:</label>
+                <select class="form-control"
+                        @bind="form.point2">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Dress Code Uyumu:</label>
+                <select class="form-control"
+                        @bind="form.point3">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Mikrofon / Kamera Kalitesi / Yönetimi:</label>
+                <select class="form-control"
+                        @bind="form.point4">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Söz Kesme / Kesmeme:</label>
+                <select class="form-control"
+                        @bind="form.point5">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Süreye Uyum:</label>
+                <select class="form-control"
+                        @bind="form.point6">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>İsim ve Slogan Bildirimi:</label>
+                <select class="form-control"
+                        @bind="form.point7">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Yapılan İş Tanımı:</label>
+                <select class="form-control"
+                        @bind="form.point8">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Sunum Etkileyiciliği:</label>
+                <select class="form-control"
+                        @bind="form.point9">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Özel Görüşme İsteği Puanı:</label>
+                <select class="form-control"
+                        @bind="form.point10">
+                    <option selected value="0">0</option>
+                    @for (int i = 1; i <= pointValues.Count; i++)
+                    {
+                        <option value="@i">@pointValues[i - 1]</option>
+                    }
+                </select>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <button type="submit" class="btn btn-primary">Puanla</button>
+            <button @onclick="@( () => { form = new PointCriteria(); })" type="button" class="btn btn-secondary">Vazgeç</button>
+            <br />
+            <br />
+        </EditForm>
+    </div>
+
+}
 
 
 @code {
 
     [Parameter] public string id { get; set; }
-    AspNetUsers user;
-    private AspNetUsers loggedUser;
+
+    AspNetUsers loggedUser, user;
+
     List<Points> pointsOfUser;
     List<MeetingPoints> meetingPoints;
     Points pointToAdd = new Points();
     PointCriteria form = new PointCriteria();
 
-    int noMeetingPoints, noPoints;
 
-    int meetingPointTotal = 0, networkingMeetingPoint = 0, networkingActivity = 0;
+    List<int> pointValues = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    Dictionary<int, string> pointBinary = new Dictionary<int, string>()
+{
+        {0, "Hayır" },
+        {1, "Evet" }
+    };
+
+    bool isNetworkingMeeting = false, isNetworkActivity = false;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var userobj = authState.User;
-
         if (userobj.Identity.IsAuthenticated)
         {
-            loggedUser = await userDAL.GetUserID(userobj.Identity.Name);
+            loggedUser = await userDAL.GetUsername(userobj.Identity.Name);
 
         }
         user = await userDAL.GetUsers(id);
-        meetingPoints = await meetingPointDAL.GetMeetingPoints();
-        pointsOfUser = await pointDAL.GetPoints();
-        pointsOfUser = pointsOfUser.Where(c => c.UserId == id).ToList();
-        meetingPoints = meetingPoints.Where(c => c.ReceiverUserId == id).ToList();
-        foreach (var item in meetingPoints)
-        {
-            meetingPointTotal += item.TotalPoints;
-        }
-        meetingPointTotal /= meetingPoints.Count();
-        foreach (var item in pointsOfUser)
-        {
-            networkingMeetingPoint += item.CategoryNetworkingMeetingPoint;
-            networkingActivity += item.CategoryNetworkingActivityPoint;
-        }
-        noMeetingPoints = meetingPoints.Count();
-        noPoints = pointsOfUser.Count();
+
     }
 
-    void onSubmit()
+    void onNetworkMeetingSubmit()
     {
-        pointToAdd.UpdatedAt = DateTime.Now;
+        NetworkingMeetingPoints networkingMeeting = new NetworkingMeetingPoints()
+        {
+            UpdatedAt = DateTime.Now,
+            ReceiverUserId = id,
+            AddedBy = $"{loggedUser.FirstName} {loggedUser.LastName}",
+        };
 
-        pointToAdd.AddedBy = loggedUser.Id;
-
-        pointToAdd.UserId = id;
-
-        pointToAdd.CategoryMeetingPoint = meetingPointTotal;
-
-        pointToAdd.CategoryNetworkingMeetingPoint = (form.point1 + form.point2 + form.point3
+        networkingMeeting.TotalPoints = (form.point1 + form.point2 + form.point3
             + form.point4 + form.point5 + form.point6
             + form.point7 + form.point8 + form.point9
             + form.point10);
 
-        pointToAdd.CategoryNetworkingActivityPoint = 20 * (form.point11 + form.point12 + form.point13
+        networkingMeetingDAL.PostNetworkingMeetingPoints(networkingMeeting);
+
+
+        uriHelper.NavigateTo("adminaccessuserlist");
+    }
+
+    void onNetworkActivitySubmit()
+    {
+        NetworkingActivityPoint networkingActivity = new NetworkingActivityPoint()
+        {
+            UpdatedAt = DateTime.Now,
+            ReceiverUserId = id,
+            AddedBy = $"{loggedUser.FirstName} {loggedUser.LastName}",
+        };
+
+        networkingActivity.TotalPoints = 20 * (form.point11 + form.point12 + form.point13
             + form.point14 + form.point15);
 
-        int meetingPointAvg = noMeetingPoints == 0 ? 0 : ((pointToAdd.CategoryMeetingPoint / noMeetingPoints) * 30 / 100);
-        int networkingMeetingAvg = noPoints == 0 ? 0 : (((pointToAdd.CategoryNetworkingMeetingPoint + networkingMeetingPoint) / noPoints) * 20 / 100);
-        int networkingActivityAvg = noPoints == 0 ? 0 :(((pointToAdd.CategoryNetworkingActivityPoint + networkingActivity) / noPoints) * 50 / 100);
-        pointToAdd.TotalPoints = meetingPointAvg + networkingMeetingAvg + networkingActivityAvg;
+        networkingActivityDAL.PostNetworkingActivityPoint(networkingActivity);
 
-    pointDAL.PostPoints(pointToAdd);
+
+        uriHelper.NavigateTo("adminaccessuserlist");
     }
+
+    void toggleMeetingForm() => isNetworkingMeeting = !isNetworkingMeeting;
+
+    void toggleActivityForm() => isNetworkActivity = !isNetworkActivity;
+
 
     public class PointCriteria
     {
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point1 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point2 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point3 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point4 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point5 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point6 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point7 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point8 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point9 { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Puan 0 ile 10 arasında olmalıdır!")]
         public int point10 { get; set; }
 
-        [Range(0, 1, ErrorMessage = "Puan 0 ile 1 arasında olmalıdır!")]
         public int point11 { get; set; }
 
-        [Range(0, 1, ErrorMessage = "Puan 0 ile 1 arasında olmalıdır!")]
         public int point12 { get; set; }
 
-        [Range(0, 1, ErrorMessage = "Puan 0 ile 1 arasında olmalıdır!")]
         public int point13 { get; set; }
 
-        [Range(0, 1, ErrorMessage = "Puan 0 ile 1 arasında olmalıdır!")]
         public int point14 { get; set; }
 
-        [Range(0, 1, ErrorMessage = "Puan 0 ile 1 arasında olmalıdır!")]
         public int point15 { get; set; }
-
     }
 
 }

@@ -35,6 +35,14 @@ namespace CugemderApp.DataAccessClasses
             await _http.PostAsJsonAsync("api/Points", points);
         }
 
+        public async void PostPoints(List<Points> points)
+        {
+            await _http.PostAsJsonAsync("api/Points/list", points);
+        }
+
+
+
+
         public async void DeletePoints(string id)
         {
             await _http.DeleteAsync($"api/Points/{id}");

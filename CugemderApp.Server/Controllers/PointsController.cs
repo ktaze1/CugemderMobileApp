@@ -87,7 +87,29 @@ namespace CugemderApp.Server.Controllers
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPoints", new { id = points.Id }, points);
+            //return CreatedAtAction("GetPoints", new { id = points.Id }, points);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("list")]
+        public async Task<ActionResult<Points>> PostPoints(List<Points> points)
+        {
+            foreach (var point in points)
+            {
+                _context.Points.Add(point);
+                await _context.SaveChangesAsync();
+
+                var user = await _context.AspNetUsers.Where(c => c.Id == point.UserId).FirstOrDefaultAsync();
+                user.Points = point.Id;
+
+                await _context.SaveChangesAsync();
+            }
+
+            //return CreatedAtAction("GetPoints", new { id = points.Id }, points);
+
+            return Ok();
         }
 
         // DELETE: api/Points/5

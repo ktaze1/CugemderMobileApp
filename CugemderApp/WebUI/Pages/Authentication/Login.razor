@@ -10,13 +10,13 @@
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginRequest">
     <DataAnnotationsValidator />
 
-    <label for="inputUsername" class="sr-only">E-mail</label>
+    <label for="inputUsername">E-mail:</label>
     <InputText id="inputUsername" class="form-control" @bind-Value="loginRequest.UserName" autofocus placeholder="E-mail" />
     <ValidationMessage For="@(() => loginRequest.UserName)" />
 
     <br />
 
-    <label for="inputPassword" class="sr-only">Şifre</label>
+    <label for="inputPassword">Şifre:</label>
     <InputText type="password" id="inputPassword" class="form-control" placeholder="Şifre" @bind-Value="loginRequest.Password" />
     <ValidationMessage For="@(() => loginRequest.Password)" />
 

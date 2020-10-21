@@ -26,11 +26,14 @@ namespace CugemderApp.Shared.Models
         public virtual DbSet<DeviceTokens> DeviceTokens { get; set; }
         public virtual DbSet<Documents> Documents { get; set; }
         public virtual DbSet<Events> Events { get; set; }
+        public virtual DbSet<ForgotPasswordRequests> ForgotPasswordRequests { get; set; }
         public virtual DbSet<Genders> Genders { get; set; }
         public virtual DbSet<Groups> Groups { get; set; }
         public virtual DbSet<JobTitles> JobTitles { get; set; }
         public virtual DbSet<MeetingPoints> MeetingPoints { get; set; }
         public virtual DbSet<Meetings> Meetings { get; set; }
+        public virtual DbSet<NetworkingActivityPoint> NetworkingActivityPoint { get; set; }
+        public virtual DbSet<NetworkingMeetingPoints> NetworkingMeetingPoints { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<Points> Points { get; set; }
         public virtual DbSet<Positions> Positions { get; set; }
@@ -239,6 +242,15 @@ namespace CugemderApp.Shared.Models
                     .HasConstraintName("FK_Events_Groups");
             });
 
+            modelBuilder.Entity<ForgotPasswordRequests>(entity =>
+            {
+                entity.Property(e => e.Id).HasMaxLength(200);
+
+                entity.Property(e => e.ExpireDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UserEmail).IsRequired();
+            });
+
             modelBuilder.Entity<Genders>(entity =>
             {
                 entity.Property(e => e.GenderName)
@@ -307,9 +319,47 @@ namespace CugemderApp.Shared.Models
                     .HasConstraintName("FK_Meetings_AspNetUsers");
             });
 
+            modelBuilder.Entity<NetworkingActivityPoint>(entity =>
+            {
+                entity.Property(e => e.AddedBy).IsRequired();
+
+                entity.Property(e => e.ReceiverUserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
+                entity.HasOne(d => d.ReceiverUser)
+                    .WithMany(p => p.NetworkingActivityPoint)
+                    .HasForeignKey(d => d.ReceiverUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_NetworkingActivityPoint_AspNetUsers");
+            });
+
+            modelBuilder.Entity<NetworkingMeetingPoints>(entity =>
+            {
+                entity.Property(e => e.AddedBy).IsRequired();
+
+                entity.Property(e => e.ReceiverUserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
+                entity.HasOne(d => d.ReceiverUser)
+                    .WithMany(p => p.NetworkingMeetingPoints)
+                    .HasForeignKey(d => d.ReceiverUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_NetworkingMeetingPoints_AspNetUsers");
+            });
+
             modelBuilder.Entity<Notifications>(entity =>
             {
                 entity.Property(e => e.Body).IsRequired();
+
+                entity.Property(e => e.GroupId).HasColumnName("GroupID");
+
+                entity.Property(e => e.Receiver).IsRequired();
 
                 entity.Property(e => e.Time).HasColumnType("datetime");
 

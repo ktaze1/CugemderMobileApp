@@ -1,28 +1,38 @@
-﻿@page "/addpoints/{id:int}"
-@page "/addpoints"
-@inject NavigationManager uriHelper
-@inject AspNetUsersDAL userDAL
+﻿@page "/adminaccessuserlist"
+@page "/adminaccessuserlist/{id:int}"
+
+
 @inject GroupsDAL groupDAL
 @inject PointsDAL pointDAL
+@inject AspNetUsersDAL userDAL
+@inject NavigationManager uriHelper
+@inject NotificationsDAL notifications
 @inject MeetingPointsDAL meetingPointDAL
+@inject NetworkingMeetingPointDAL networkingMeetingDAL
+@inject NetworkingActivityPointDAL networkingActivityDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-<h1> Puan Ekle </h1>
 
 
 @if (groups == null)
 {
+    <p><em>Yükleniyor...</em></p>
 }
 else
 {
     <form @onsubmit="@( () => Navigate(option))">
-        <select @bind="option">
-            <option selected value="0"> Tum Uyeler</option>
-            @for (int i = 1; i <= groups.Count; i++)
-            {
-                <option value="@i">@groups[i - 1].GroupName Grubu</option>
-            }
-        </select>
-        <button type="submit">Grup Seç</button>
+        <div>
+            <select class="form-control" @bind="option">
+                <option selected value="0"> Tum Uyeler</option>
+                @for (int i = 1; i <= groups.Count; i++)
+                {
+                    <option value="@groups[i-1].Id">@groups[i - 1].GroupName Grubu</option>
+                }
+            </select>
+            <br />
+            <button class="btn btn-info" type="submit">Grup Seç</button>
+        </div>
+        <br />
     </form>
 }
 
@@ -32,12 +42,20 @@ else
 }
 else
 {
+
+    <button class="btn btn-dark" @onclick="@UpdatePoints"> Puanları Güncelle</button>
+
+    <br />
+    <br />
+    <br />
+
     <table class="table">
         <thead>
             <tr>
                 <th>Ad Soyad</th>
                 <th>Güncel Puan</th>
                 <th>Son Puan Veriliş Tarihi</th>
+                <th>Kullanıcı Ayarlarını Değiştir</th>
             </tr>
         </thead>
         <tbody>
@@ -45,13 +63,20 @@ else
             {
 
                 <tr>
-                    <td><a href="/profile/@user.Id">@user.FirstName @user.LastName</a></td>
+                    <td>
+                        <a href="/profile/@user.Id">@user.FirstName @user.LastName</a>
+                    </td>
                     @if (user.PointsNavigation != null)
                     {
                         <td>@user.PointsNavigation.TotalPoints</td>
                         <td>@user.PointsNavigation.UpdatedAt.ToShortDateString()</td>
                     }
-                    <td><a href="/addpoints/@user.Id">Puan Girişi Yap</a></td>
+                    <td>
+                        <a href="/addpoints/@user.Id">Puan Ver</a>
+                        <br />
+                        <br />
+                        <a href="/adminaccessuser/@user.Id">Ayar Değiştir</a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -62,17 +87,50 @@ else
 
 @code {
 
+
+    [Parameter] public int? id { get; set; }
+
     private List<AspNetUsers> userlist;
     private List<Groups> groups;
     private List<Points> pointlist;
-    [Parameter] public int? id { get; set; }
+
+
+    private AspNetUsers loggedUser;
+
+    List<Points> pointsOfUser;
+    List<MeetingPoints> meetingPoints;
+    List<NetworkingActivityPoint> networkingActivityPoints;
+    List<NetworkingMeetingPoints> networkingMeetingPoints;
+
+
     private int option = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        userlist = await userDAL.GetUsersNoNull();
-        groups = await groupDAL.GetGroupsAsync();
-        pointlist = await pointDAL.GetPoints();
+        try
+        {
+
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userobj = authState.User;
+
+            if (userobj.Identity.IsAuthenticated)
+            {
+                loggedUser = await userDAL.GetUsername(userobj.Identity.Name);
+
+            }
+
+
+            pointlist = await pointDAL.GetPoints();
+            groups = await groupDAL.GetGroupsAsync();
+            userlist = await userDAL.GetUsersNoNull();
+            meetingPoints = await meetingPointDAL.GetMeetingPoints();
+            networkingMeetingPoints = await networkingMeetingDAL.GetNetworkingMeetingPoints();
+            networkingActivityPoints = await networkingActivityDAL.GetNetworkingActivityPoint();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+        }
     }
 
     protected override void OnParametersSet()
@@ -95,15 +153,43 @@ else
     void Navigate(int option)
     {
         if (option == 0)
-        {
-            uriHelper.NavigateTo($"/addpoints/");
-        }
+            uriHelper.NavigateTo($"/adminaccessuserlist/");
         else
-        {
-            uriHelper.NavigateTo($"/addpoints/{groups.ElementAt(option - 1).Id}");
-        }
+            uriHelper.NavigateTo($"/adminaccessuserlist/{option}");
     }
 
 
+    void UpdatePoints()
+    {
+        var tempUserList = id.HasValue ? userlist.Where(x => x.Group == id) : userlist;
 
+        var pointList = new List<Points>();
+
+        foreach (var user in tempUserList)
+        {
+            var meetingPointsOfUserList = meetingPoints.Where(c => c.ReceiverUserId == user.Id);
+            var networkingMeetingPointsOfUserList = networkingMeetingPoints.Where(c => c.ReceiverUserId == user.Id);
+            var networkingActivityPointsOfUserList = networkingActivityPoints.Where(c => c.ReceiverUserId == user.Id);
+
+
+            var avgActivityPoint = networkingActivityPointsOfUserList.Any() ? networkingActivityPointsOfUserList.Average(c => c.TotalPoints) : 0;
+            var avgNetworkMeetingPoint = networkingMeetingPointsOfUserList.Any() ? networkingMeetingPointsOfUserList.Average(c => c.TotalPoints) : 0;
+            var avgMeetingPoint = meetingPointsOfUserList.Any() ? meetingPointsOfUserList.Average(c => c.TotalPoints) : 0;
+
+
+            var pointToAdd = new Points()
+            {
+                UpdatedAt = DateTime.Now,
+                AddedBy = $"{loggedUser.FirstName} {loggedUser.LastName}",
+                UserId = user.Id,
+                TotalPoints = Convert.ToInt32((avgMeetingPoint * 30 / 100) + (avgNetworkMeetingPoint * 20 / 100) + (avgActivityPoint * 50 / 100)),
+            };
+
+            pointList.Add(pointToAdd);
+            notifications.SendNotification($"Puanınız güncellenmiştir, Yeni Puanınız: {pointToAdd.TotalPoints}", "Puan Değişikliği!", user.Id);
+        }
+
+        pointDAL.PostPoints(pointList);
+        uriHelper.NavigateTo("adminsettings");
+    }
 }

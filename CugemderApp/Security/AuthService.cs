@@ -43,9 +43,23 @@ namespace CugemderApp.Security
             result.EnsureSuccessStatusCode();
         }
 
+        public async Task ResetPassword(PasswordChangeModel model)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/auth/Changepassword", model);
+            result.EnsureSuccessStatusCode();
+        }
+
         public async Task Register(RegisterRequest registerRequest)
         {
             var result = await _httpClient.PostAsJsonAsync("api/auth/register", registerRequest);
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
+            result.EnsureSuccessStatusCode();
+        }
+
+        public async Task ForgotPassword(ForgotPasswordModel model)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/auth/SendEmailForConfirmation", model);
+
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }

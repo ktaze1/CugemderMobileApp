@@ -15,9 +15,6 @@ namespace CugemderApp.Shared.Models
         public DateTime UpdatedAt { get; set; }
         public double TotalPoints { get; set; }
         public string UserId { get; set; }
-        public int CategoryMeetingPoint { get; set; }
-        public int CategoryNetworkingMeetingPoint { get; set; }
-        public int CategoryNetworkingActivityPoint { get; set; }
 
         public virtual AspNetUsers User { get; set; }
         public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
