@@ -32,20 +32,22 @@ namespace WorkerService
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                if (DateTime.Now.Hour == 9)
+                if (DateTime.Now.Hour == 17)
                 {
                     //_logger.LogInformation("Kaan taze -- time is now");
-
+                    _logger.LogInformation("Kaan taze -- time is now");
                     notificationList = await DAL.GetNotifications();
 
+                    _logger.LogInformation("test");
                     foreach (var notificaiton in notificationList)
                     {
+                        _logger.LogInformation("Kaan taze -- time is now");
                         DAL.SendNotification(notificaiton.Body, notificaiton.Title, notificaiton.Receiver);
                         DAL.DeleteNotification(notificaiton.Id);
                     }
 
                 }
-                await Task.Delay(60000, stoppingToken);
+                await Task.Delay(1000 * 60 * 60 * 24, stoppingToken);
             }
         }
     }
@@ -53,12 +55,20 @@ namespace WorkerService
     public class NotificaitonDAL
     {
 
-        HttpClient http = new HttpClient() { BaseAddress = new Uri("http://localhost:3000/") };
+        HttpClient http = new HttpClient() { BaseAddress = new Uri("http://192.168.43.189:3000/") };
 
 
         public async Task<List<Notifications>> GetNotifications()
         {
-            return await http.GetFromJsonAsync<List<Notifications>>("api/Notifications");
+            try
+            {
+                return await http.GetFromJsonAsync<List<Notifications>>("api/Notifications");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return new List<Notifications>();
         }
 
         public async void SendNotification(string _body, string _title, string _topic)

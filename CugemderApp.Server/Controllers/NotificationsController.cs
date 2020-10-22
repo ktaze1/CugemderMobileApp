@@ -28,28 +28,28 @@ namespace CugemderApp.Server.Controllers
             _context = context;
         }
 
-        // GET: api/Notifications
-        [HttpGet]
-        public async Task<string> SendNotif()
-        {
-            // See documentation on defining a message payload.
-            //var message = new Message()
-            //{
-            //    Notification = new Notification()
-            //    {
-            //        Title = title,
-            //        Body = body,
-            //    },
+        //// GET: api/Notifications
+        //[HttpGet]
+        //public async Task<string> SendNotif()
+        //{
+        //    // See documentation on defining a message payload.
+        //    //var message = new Message()
+        //    //{
+        //    //    Notification = new Notification()
+        //    //    {
+        //    //        Title = title,
+        //    //        Body = body,
+        //    //    },
                 
-            //    Topic = topic,
-            //};
+        //    //    Topic = topic,
+        //    //};
 
-            //// Send a message to the devices subscribed to the provided topic.
-            //string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
-            //// Response is a message ID string.
-            //Console.WriteLine("Successfully sent message: " + response);
-            return "";
-        }
+        //    //// Send a message to the devices subscribed to the provided topic.
+        //    //string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+        //    //// Response is a message ID string.
+        //    //Console.WriteLine("Successfully sent message: " + response);
+        //    return "";
+        //}
 
         // GET: api/Notifications/5
         [HttpGet("{id}")]
@@ -143,7 +143,7 @@ namespace CugemderApp.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Notifications>> DeleteNotifications(int id)
         {
-            var notifications = await _context.Notifications.Where(c => c.GroupId == id).FirstOrDefaultAsync();
+            var notifications = await _context.Notifications.FindAsync(id);
             if (notifications == null)
             {
                 return NotFound();
