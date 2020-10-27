@@ -7,11 +7,14 @@
         padding: 3%;
         margin-top: 3%;
         margin-bottom: 3%;
-        border: thin;
-        border-color: black;
-        border-radius: 0.5rem;
-        background: rgba(170, 165, 165, 0.20);
-        ;
+    }
+
+    .nav-link-active {
+        background-color: red !important;
+    }
+
+    .navbar-light .navbar-nav .nav-link:hover {
+        color: red !important;
     }
 
     .profile-img {
@@ -84,7 +87,7 @@
 
             .profile-head .nav-tabs .nav-link.active {
                 border: none;
-                border-bottom: 2px solid #0062cc;
+                border-bottom: 2px solid red;
             }
 
     .profile-work {
@@ -136,50 +139,59 @@ else
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
-                    <h5>
+                    <br />
+                    <h4 class="d-flex justify-content-center">
                         @loggedUser.FirstName @loggedUser.LastName
-                    </h5>
-                    <h6>
-                        @{
-                            if (loggedUser.Company != null)
-                            {
-                                <p>@loggedUser.Company</p>
-                            }
+                    </h4>
+                    <br />
+                    @{
+                        if (loggedUser.Company != null)
+                        {
+                            <h6 style="color:red">Şirket Adı: <span style="font-size:16px;" class="proile-rating">@loggedUser.Company</span></h6>
                         }
-                    </h6>
+                    }
+                    @{
+                        if (loggedUser.Speciality != null)
+                        {
+                            <h6 style="color:red">Uzmanlık Alanı: <span style="font-size:16px;" class="proile-rating">@loggedUser.Speciality</span></h6>
+                        }
+                    }
+
+                    <br />
                     @if (loggedUser.Summary != null)
                     {
-                        <h6>Kısa Özet</h6>
-                        <p>@loggedUser.Summary</p>
+                        <h6 style="color: red;">Hakkında</h6>
+                        <p style="font-size:16px; font-weight:500" class="proile-rating">@loggedUser.Summary</p>
                     }
+
+                    <br />
                     @if (loggedUser.PointsNavigation != null)
                     {
-                        <p class="proile-rating">
-                            CUGEMDER PUANI :
-                            <span>
-                                <div style="border-radius: 50%; width: 36px; height: 36px; padding: 8px; background: #0f0; border: 2px solid #666; color: #666; text-align: center;">
-                        <p>@loggedUser.PointsNavigation.TotalPoints</p>
-                    </div>
-                    </span>
-                    </p>
+                        <h6 style="color:red;">BeePort Puanı:</h6>
 
-                    <p class="proile-rating">
-                        Grup Sıralaması :      @if (standings[loggedUser.Email] != null)
-                        {
-                            @standings[loggedUser.Email];
-                        }
-                    </p> <span>
-                    </span>
-                }
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <div class="progress">
+                            <div class="progress-bar-striped progress-bar progress-bar-animated @progressBarColor((int)loggedUser.PointsNavigation.TotalPoints)"
+                                 style="width: @((int)loggedUser.PointsNavigation.TotalPoints)%"
+                                 aria-valuemin="0" aria-valuemax="100" aria-valuenow="@((int)loggedUser.PointsNavigation.TotalPoints)">%@((int)loggedUser.PointsNavigation.TotalPoints)</div>
+                        </div>
+
+                        <h5 style="color:red;" class="proile-rating">
+                            Grup Sıralaması :      @if (standings[loggedUser.Email] != null)
+                            {
+                                @standings[loggedUser.Email];
+                            }
+                        </h5> <span>
+                        </span>
+                    }
+                    <ul class="nav nav-tabs d-flex justify-content-between" id="myTab" role="tablist">
                         <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
-                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Hakkında</p>
+                            <p class="@(isTabActive(tab1))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel</p>
                         </li>
                         <li @onclick="@( () => ChangeTabs(2))" class="nav-item">
-                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İş Bilgileri</p>
+                            <p class="@(isTabActive(tab2))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İş Bilgileri</p>
                         </li>
                         <li @onclick="@( () => ChangeTabs(3))" class="nav-item">
-                            <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim</p>
+                            <p class="@(isTabActive(tab3))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim</p>
                         </li>
                     </ul>
                 </div>
@@ -194,146 +206,98 @@ else
                 <div class="tab-content profile-tab" id="myTabContent">
                     <!-- Tab 1 Stars-->
                     <div hidden="@tab1" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <br />
                         @if (loggedUser.GenderNavigation != null)
                         {
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Cinsiyet</label>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <p>@loggedUser.GenderNavigation.GenderName</p>
-                                </div>
+                                <h6 class="col-md-6" style="color:red">Cinsiyet: <span style="font-size:16px;" class="proile-rating">@loggedUser.GenderNavigation.GenderName</span></h6>
                             </div>
                         }
                         @if (loggedUser.DateOfBirth != null)
                         {
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Yaş</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>@(calculateAge(loggedUser.DateOfBirth.GetValueOrDefault()))</p>
-                                </div>
+                                <h6 class="col-md-6" style="color:red">Yaş: <span style="font-size:16px;" class="proile-rating">@(calculateAge(loggedUser.DateOfBirth.GetValueOrDefault()))</span></h6>
                             </div>
                         }
                         @if (loggedUser.LocatedCityNavigation != null)
                         {
-
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Şehir</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>@loggedUser.LocatedCityNavigation.CityName</p>
-                                </div>
+                                <h6 class="col-md-6" style="color:red">Şehir: <span style="font-size:16px;" class="proile-rating">@loggedUser.LocatedCityNavigation.CityName</span></h6>
                             </div>
 
                         }
                         @if (loggedUser.RelationshipNavigation != null)
                         {
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Medeni Hali</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>@loggedUser.RelationshipNavigation.RelationshipStatus</p>
-                                </div>
+                                <h6 class="col-md-6" style="color:red">Medeni Hali: <span style="font-size:16px;" class="proile-rating">@loggedUser.RelationshipNavigation.RelationshipStatus</span></h6>
                             </div>
                         }
                     </div>
                     <!-- Tab 1 Ends-->
+
                     <!-- Tab 2 Start -->
                     <div hidden="@tab2" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <br />
+                        @if (loggedUser.GroupNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Grup: <span style="font-size:16px;" class="proile-rating">@loggedUser.GroupNavigation.GroupName</span></h6>
+                            </div>
+                        }
                         @if (loggedUser.JobTitleNavigation != null)
                         {
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Meslek</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>@loggedUser.JobTitleNavigation.TitleName</p>
-                                </div>
+                                <h6 class="col-md-6" style="color:red">Meslek: <span style="font-size:16px;" class="proile-rating">@loggedUser.JobTitleNavigation.TitleName</span></h6>
                             </div>
                         }
 
                         @if (loggedUser.PositionNavigation != null)
                         {
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Pozisyon</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>@loggedUser.PositionNavigation.Position</p>
-                                </div>
+                                <h6 class="col-md-6" style="color:red">Pozisyon: <span style="font-size:16px;" class="proile-rating">@loggedUser.PositionNavigation.Position</span></h6>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
-                                    @if (loggedUser.PositionNavigation.Id != 2)
+                                <h6 class="col-md-6" style="color:red">
+                                    @if (loggedUser.PositionNavigation.Id == 4)
                                     {
-                                        <label>Mezuniyet Yılı</label>
+                                        @if (loggedUser.Year != null)
+                                        {
+                                            <h6>
+                                                Mezuniyet Yılı: <span style="font-size:16px;" class="proile-rating">@loggedUser.Year</span>
+                                            </h6>
+                                        }
                                     }
                                     else
                                     {
-                                        <label>Firma Kuruluş Yılı:</label>
+                                        @if (loggedUser.Year != null)
+                                        {
+                                            <h6>
+                                                Firma Kuruluş Yılı: <span style="font-size:16px;" class="proile-rating">@loggedUser.Year</span>
+                                            </h6>
+                                        }
                                     }
-                                </div>
-                                @if (loggedUser.Year != null)
-                                {
-                                    <div class="col-md-6">
-                                        <p>@loggedUser.Year</p>
-                                    </div>
-                                }
+                                </h6>
                             </div>
 
-                        }
-
-
-                        @if (loggedUser.Speciality != null)
-                        {
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Uzmanlık Alanı</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>
-                                        @loggedUser.Speciality
-                                    </p>
-                                </div>
-                            </div>
                         }
                     </div>
                     <!-- Tab 2 Ends-->
                     <!-- Tab 3 Starts-->
                     <div hidden="@tab3" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <br />
                         <div class="row">
-                            <div class="col-md-6">
-                                <label>E-mail</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>@loggedUser.Email</p>
-                            </div>
+                            <h6 class="col-md-6" style="color:red">E-mail: <span style="font-size:16px;" class="proile-rating">@loggedUser.Email</span></h6>
                         </div>
                         @if (loggedUser.PhoneNumber != null)
                         {
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Telefon</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>@loggedUser.PhoneNumber</p>
-                                </div>
+                                <h6 class="col-md-6" style="color:red">Telefon: <span @onclick="@( () => DialNumber(loggedUser.PhoneNumber))" style="font-size:16px;" class="proile-rating">@loggedUser.PhoneNumber</span></h6>
                             </div>
                         }
                         @if (loggedUser.Website != null)
                         {
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Web Sitesi :</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p @onclick="@( () => GoToWebsite(loggedUser.Website))"> @loggedUser.Website</p>
-                                </div>
+                                <h6 class="col-md-6" style="color:red">Web Sitesi: <span @onclick="@( () => GoToWebsite(loggedUser.Website))" style="font-size:16px;" class="proile-rating">@loggedUser.Website</span></h6>
                             </div>
                         }
                     </div>
@@ -341,8 +305,8 @@ else
                 </div>
             </div>
         </div>
-        </div>
-    }
+    </div>
+}
 @code {
 
     private AspNetUsers loggedUser;
@@ -458,5 +422,30 @@ else
 
         if (date.Date > DateTime.Today.AddYears(-age)) age--;
         return age;
+    }
+
+    string isTabActive(bool isActive)
+    {
+        if (!isActive)
+            return "nav-link active";
+        else
+            return "nav-link";
+    }
+
+    string progressBarColor(int pointValue)
+    {
+        if (pointValue < 25)
+            return "bg-danger";
+        else if (pointValue >= 25 && pointValue < 50)
+            return "bg-warning";
+        else if (pointValue >= 50 && pointValue < 75)
+            return "bg-info";
+        else
+            return "bg-success";
+    }
+
+    void DialNumber(string number)
+    {
+        PhoneDialer.Open(number);
     }
 }
