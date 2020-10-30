@@ -11,45 +11,47 @@
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Uye Adı</th>
-                <th>Atanacak Grubu</th>
-                <th>Kullanıcıyı Sil</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in waitingUsers)
-            {
-                <tr>
-                    <td>@user.FirstName @user.LastName</td>
-                    <td>
-                        <select class="form-control"
-                                @bind="user.Group">
-                            <option value="0">---Grup Seçin---</option>
-                            @foreach (var group in groups)
-                            {
-                                @if (group.Id == groupId)
-                                {
-                                    <option selected value="@group.Id">@group.GroupName</option>
-                                }
-                                else
-                                {
-                                    <option value="@group.Id">@group.GroupName</option>
-                                }
-
-                            }
-                        </select>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(user.Id))">Delete</button>
-                    </td>
+    <div class="table-responsive-sm">
+        <table class="table table-striped" style="margin: 4px;">
+            <thead>
+                <tr class="d-flex">
+                    <th class="col-5">Uye Adı</th>
+                    <th class="col-6">Atanacak Grubu</th>
+                    <th class="col-1"> &nbsp; </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var user in waitingUsers)
+                {
+                    <tr class="d-flex">
+                        <td class="col-5">@user.FirstName @user.LastName</td>
+                        <td class="col-4">
+                            <select class="form-control"
+                                    @bind="user.Group">
+                                <option value="0">Seç</option>
+                                @foreach (var group in groups)
+                                {
+                                    @if (group.Id == groupId)
+                                    {
+                                        <option selected value="@group.Id">@group.GroupName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@group.Id">@group.GroupName</option>
+                                    }
 
+                                }
+                            </select>
+                        </td>
+                        <td class="col-3 d-flex justify-content-end">
+                            <button class="btn btn-danger" @onclick="@(() => Delete(user.Id))">Sil</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
     <button type="submit" class="btn btn-primary" @onclick="@Update"> Guncelle </button>
 }
 @code {
@@ -76,7 +78,7 @@ else
             user.LastGroupName = groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName;
             user.Points = points.Where(c => c.UserId == user.Id).FirstOrDefault().Id;
             userDAL.PutUser(user.Id, user);
-            if(!GroupsWithNewUsers.Contains(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName))
+            if (!GroupsWithNewUsers.Contains(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName))
             {
                 GroupsWithNewUsers.Add(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName);
             }

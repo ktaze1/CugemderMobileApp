@@ -51,7 +51,7 @@
         <div>
             <select class="form-control"
                     @bind="user.Gender">
-                <option value="0">---Cinsiyet Seçin---</option>
+                <option value="0">Seç</option>
                 @foreach (var gender in genders)
                 {
                     @if (gender.Id == genderId)
@@ -72,7 +72,7 @@
         <div>
             <select class="form-control"
                     @bind="user.Relationship">
-                <option value="0">---Medeni Hal Seçin---</option>
+                <option value="0">Seç</option>
                 @foreach (var relation in relationships)
                 {
                     @if (relation.Id == relationshipId)
@@ -93,7 +93,7 @@
         <div>
             <select class="form-control"
                     @bind="user.LocatedCity">
-                <option value="0">---Şehir Seçin---</option>
+                <option value="0">Seç</option>
                 @foreach (var city in cities)
                 {
                     @if (city.Id == cityId)
@@ -120,7 +120,7 @@
         <div>
             <select class="form-control"
                     @bind="user.Position">
-                <option value="0">---Posizyon Secin---</option>
+                <option value="0">Seç</option>
                 @foreach (var position in positions)
                 {
                     @if (position.Id == positionId)
@@ -155,7 +155,7 @@
         <div>
             <select class="form-control"
                     @bind="user.JobTitle">
-                <option value="0">---Meslek Secin---</option>
+                <option value="0">Seç</option>
                 @foreach (var jobTitle in jobTitles)
                 {
                     @if (jobTitle.Id == jobTitleId)
@@ -205,7 +205,7 @@
 </EditForm>
 
 <br/>
-<button class="btn btn-danger" @onclick="@( () => customStateProvider.Logout())">Çıkış Yap</button>
+
 @code {
 
     private AspNetUsers user;

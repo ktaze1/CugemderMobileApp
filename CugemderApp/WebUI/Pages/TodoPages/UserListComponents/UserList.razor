@@ -10,32 +10,140 @@
 @inject NavigationManager  uriHelper
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-<h1> Üyeler </h1>
-<button class="btn btn-dark" @onclick="@ToggleFilter"> Uye Filtreleme </button>
+
+<style>
+    .list {
+        max-width: 700px;
+    }
+
+    .img-list a {
+        text-decoration: none;
+    }
+
+    .li-sub p {
+        color: red;
+        margin: 0;
+    }
+
+    .list li {
+        display: table;
+        border-collapse: collapse;
+    }
+
+    .inner {
+        display: table-row;
+        overflow: hidden;
+    }
+
+    .li-img {
+        display: table-cell;
+        vertical-align: middle;
+        border-radius: 50%;
+        width: 30%;
+        padding-right: 1em;
+    }
+
+        .li-img img {
+            display: block;
+            border-radius: 50%;
+            width: 100%;
+            height: auto;
+        }
+
+    .li-text {
+        display: table-cell;
+        vertical-align: middle;
+        width: 70%;
+    }
+
+    .li-head {
+        color: black;
+        margin: 0;
+    }
+
+    .li-sub {
+        margin: 0;
+    }
+
+    .br {
+        display: block;
+        margin-bottom: 0;
+    } 
+
+    @@media all and (min-width: 45em) {
+        .list li {
+            float: left;
+            width: 50%;
+        }
+    }
+
+    @@media all and (min-width: 75em) {
+        .list li {
+            width: 33.33333%;
+        }
+    }
+
+    /* for flexbox */
+    @@supports(display: flex) {
+        .list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+            .li-img,
+            .li-text,
+            .list li {
+                display: block;
+                float: none;
+            }
+
+        .li-img {
+            align-self: center; /* to match the middle aligncoment of the original */
+        }
+
+        .inner {
+            display: flex;
+        }
+    }
+
+    /* for grid */
+    @@supports(display: grid) {
+        .list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        }
+
+            .list li {
+                width: auto; /* this overrides the media queries */
+            }
+    }
+</style>
+
+<button class="btn btn-dark" @onclick="@ToggleFilter"> Üye Filtreleme </button>
 <br />
 @if (showFilter)
 {
     @if (groups != null && jobTitles != null && genders != null && cities != null)
     {
         <br />
-        <button class="btn btn-secondary" type="button" @onclick="ToggleFilterScope">@filterHeader Üyelerde Arama Yap</button>
-        <br />
         <EditForm Model="sc" OnValidSubmit="Filter">
             <div>
                 <div>
                     <label>Ad: </label>
-                    <InputText class="input-group" @bind-Value="sc.name" />
+                    <InputText class="form-control" @bind-Value="sc.name" />
                 </div>
+                <br />
                 <div>
                     <label>Soyad: </label>
-                    <InputText class="input-group" @bind-Value="sc.surname" />
+                    <InputText class="form-control" @bind-Value="sc.surname" />
                 </div>
             </div>
+            <br />
             <div>
                 <label>Cinsiyet :</label>
                 <div>
-                    <select class="form-control-sm" @bind="sc.genderId">
-                        <option value="0">---Cinsiyet Seçin---</option>
+                    <select class="form-control" @bind="sc.genderId">
+                        <option value="0">Seç</option>
                         @foreach (var gender in genders)
                         {
                             @if (gender.Id == genderId)
@@ -51,34 +159,34 @@
                     </select>
                 </div>
             </div>
-            @if (!isAllMembers)
-            {
+            <br />
+            <div>
+                <label>Grup :</label>
                 <div>
-                    <label>Grup :</label>
-                    <div>
-                        <select class="form-control-sm" @bind="sc.groupId">
-                            <option value="0">---Grup Seçin---</option>
-                            @foreach (var group in groups)
+                    <select class="form-control" @bind="sc.groupId">
+                        <option value="0">Seç</option>
+                        <option value="0">Hepsi</option>
+                        @foreach (var group in groups)
+                        {
+                            @if (group.Id == groupId)
                             {
-                                @if (group.Id == groupId)
-                                {
-                                    <option selected value="@group.Id">@group.GroupName</option>
-                                }
-                                else
-                                {
-                                    <option value="@group.Id">@group.GroupName</option>
-                                }
-
+                                <option selected value="@group.Id">@group.GroupName</option>
                             }
-                        </select>
-                    </div>
+                            else
+                            {
+                                <option value="@group.Id">@group.GroupName</option>
+                            }
+
+                        }
+                    </select>
                 </div>
-            }
+            </div>
+            <br />
             <div>
                 <label>Meslek :</label>
                 <div>
-                    <select class="form-control-sm" @bind="sc.jobId">
-                        <option value="0">---Meslek Secin---</option>
+                    <select class="form-control" @bind="sc.jobId">
+                        <option value="0">Seç</option>
                         @foreach (var jobTitle in jobTitles)
                         {
                             @if (jobTitle.Id == jobTitleId)
@@ -94,11 +202,12 @@
                     </select>
                 </div>
             </div>
+            <br />
             <div>
                 <label>Şehir :</label>
                 <div>
-                    <select class="form-control-sm" @bind="sc.cityId">
-                        <option value="0">---Şehir Seçin---</option>
+                    <select class="form-control" @bind="sc.cityId">
+                        <option value="0">Seç</option>
                         @foreach (var city in cities)
                         {
                             @if (city.Id == citiesId)
@@ -115,13 +224,15 @@
                 </div>
             </div>
             <br />
-            <div>
-                <label>Min-Max Yas</label>
-                <InputNumber style="width: 2em;" @bind-Value="sc.minAge" /> -
-                <InputNumber style="width: 2em;" @bind-Value="sc.maxAge" />
+            <div class="row">
+                <label class="col-3">Yaş: </label>
+                <div class="d-flex col-3 offset-3">
+                    <InputNumber placeholder="Min" style="width: 4.5em;" class="form-group" @bind-Value="sc.minAge" /> &emsp;
+                    <InputNumber placeholder="Max" style="width: 4.5em;" class="form-group" @bind-Value="sc.maxAge" />
+                </div>
             </div>
-
-            <button class="btn btn-dark"> Filtrele</button>
+            <br />
+            <button type="submit" class="btn btn-dark"> Filtrele</button>
             <button class="btn btn-secondary" type="button" @onclick="ClearFilter"> Filtreleri Temizle</button>
         </EditForm>
 
@@ -137,47 +248,41 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
-            <tr>
-                <th>Sıralama</th>
-                <th>Ad Soyad</th>
-                <th>Puan</th>
-                <th>Grup</th>
-                <!--<th>İşlemler</th>-->
+            <tr style="text-align: center;">
+                <th style="font-size: large"> ÜYELER </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (AspNetUsers user in tempList)
-            {
-
-                <tr>
-                    <td>@standings[user.Email]</td>
-                    <td><a href="/profile/@user.Id">@user.FirstName @user.LastName</a></td>
-                    @if (user.PointsNavigation == null)
+            @{ try
+                {
+                    @foreach (AspNetUsers user in tempList)
                     {
-                        <td> - </td>
-                    }
-                    else
-                    {
-                        <td>@user.PointsNavigation.TotalPoints</td>
-                    }
-                    @if (user.GroupNavigation == null)
-                    {
-                        <td> - </td>
-                    }
-                    else
-                    {
-                        <td>@user.GroupNavigation.GroupName</td>
-                    }
-                    <!--
-                            <td>
-                                <a class="btn btn-success" href="users/edit/@user.Id">Düzenle</a>
-                                <button class="btn btn-danger" @onclick="@(() => Delete(user.Id))">Sil</button>
+                        <tr>
+                            <td class="inner">
+                                    <div @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-img">
+                                        <img src="@user.PhotoUrl" />
+                                    </div>
+                                    <div class="li-text">
+                                        <h6 @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-head" style="color: red;"> @user.FirstName @user.LastName.ToUpper()</h6>
+                                        <div class="li-sub">
+                                            <p style="color:grey;">
+                                                Firma: <span><em>@user.Company</em></span> <span class="br"></span>
+                                                Uzmanlık Alanı: <span><em>@user.Speciality</em></span> <span class="br"></span>
+                                                Grup: <span><em>@user.GroupNavigation.GroupName</em></span> <span class="br"></span>
+                                                Puan: <span><em>@user.PointsNavigation.TotalPoints</em></span>
+                                            </p>
+                                        </div>
+                                    </div>
                             </td>
-                    -->
-                </tr>
-            }
+                        </tr>
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                }}
         </tbody>
     </table>
 }
@@ -192,10 +297,8 @@ else
     private List<JobTitles> jobTitles;
     private List<Cities> cities;
     Dictionary<string, int> standings = new Dictionary<string, int>();
-    int standingNo = 1;
-    string filterHeader = "Tüm";
-
-    [Parameter] public int? id { get; set; }
+    Dictionary<string, int> groupStandings = new Dictionary<string, int>();
+    int standingNo = 1, groupStandingNo = 1;
 
     private int groupId = 0;
     private int positionId = 0;
@@ -204,7 +307,7 @@ else
     private int citiesId = 0;
     SearchForm sc = new SearchForm();
 
-    bool showFilter = false, isAllMembers = false;
+    bool showFilter = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -217,14 +320,27 @@ else
         }
         userlist = await userDAL.GetUsersNoNull();
         tempList = userlist.Where(c => c.Group == user.Group).ToList();
-        foreach (var user in tempList)
+        foreach (var user in userlist)
         {
             standings.Add(user.Email, standingNo++);
         }
+
+
         groups = await groupDAL.GetGroupsAsync();
+
+
         genders = await genderDAL.GetGenders();
         jobTitles = await jobTitleDAL.GetJobTitles();
         cities = await cityDAL.GetCities();
+
+        foreach (var group in groups)
+        {
+            foreach (var user in userlist.Where(c => c.Group == group.Id))
+            {
+                groupStandings.Add(user.Email, groupStandingNo++);
+            }
+            groupStandingNo = 1;
+        }
 
     }
 
@@ -234,18 +350,6 @@ else
 
         pointDAL.DeletePoints(userId);
         userDAL.DeleteUser(userId);
-    }
-
-    void Navigate(int option)
-    {
-        if (option == 0)
-        {
-            uriHelper.NavigateTo($"/userlist/");
-        }
-        else
-        {
-            uriHelper.NavigateTo($"/userlist/{groups.ElementAt(option - 1).Id}");
-        }
     }
 
     public class SearchForm
@@ -301,36 +405,5 @@ else
                 c.DateOfBirth.GetValueOrDefault().Year > (DateTime.Today.Year - sc.maxAge)).ToList();
         }
     }
-
-    void ToggleFilterScope()
-    {
-        isAllMembers = !isAllMembers;
-        if (isAllMembers)
-        {
-            filterHeader = "Grup İçi";
-            tempList = userlist;
-            standings = new Dictionary<string, int>();
-            int standingNo = 1;
-            foreach (var user in tempList)
-            {
-                standings.Add(user.Email, standingNo++);
-            }
-        }
-        else
-        {
-            filterHeader = "Tüm";
-            tempList = userlist.Where(c => c.Group == user.Group).ToList();
-            standings = new Dictionary<string, int>();
-            int standingNo = 1;
-            foreach (var user in tempList)
-            {
-                standings.Add(user.Email, standingNo++);
-            }
-
-        }
-
-
-    }
-
 
 }

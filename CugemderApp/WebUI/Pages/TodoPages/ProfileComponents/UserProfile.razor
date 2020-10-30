@@ -173,19 +173,21 @@
                         {
                             <h6 style="color:red;">BeePort Puanı:</h6>
 
-                            <div class="progress">
-                                <div class="progress-bar @progressBarColor((int)currentUser.PointsNavigation.TotalPoints)"
-                                     style="width: @((int)loggedUser.PointsNavigation.TotalPoints)%"
-                                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="@((int)currentUser.PointsNavigation.TotalPoints)"> @((int)currentUser.PointsNavigation.TotalPoints)</div>
+                            <div>
+                                <div class="progress">
+                                    <div class="progress-bar-striped progress-bar progress-bar-animated @progressBarColor((int)currentUser.PointsNavigation.TotalPoints)"
+                                         style="width: @((int)currentUser.PointsNavigation.TotalPoints)%"
+                                         aria-valuemin="0" aria-valuemax="100" aria-valuenow="@((int)currentUser.PointsNavigation.TotalPoints)">%@((int)currentUser.PointsNavigation.TotalPoints)</div>
+                                </div>
+                                <h6 class="proile-rating" style="margin-top: 7px;">
+                                    <span style="font-size:16px;" class="proile-rating">
+                                        Grup Sıralaması :      @if (standings[currentUser.Email] != null)
+                                        {
+                                            @standings[currentUser.Email];
+                                        }
+                                    </span>
+                                </h6>
                             </div>
-
-                            <h5 style="color:red;" class="proile-rating">
-                                Grup Sıralaması :      @if (standings[currentUser.Email] != null)
-                                {
-                                    @standings[currentUser.Email];
-                                }
-                            </h5> <span>
-                            </span>
                         }
                         <ul class="nav nav-tabs d-flex justify-content-between" id="myTab" role="tablist">
                             <li @onclick="@( () => ChangeTabs(1))" class="nav-item">

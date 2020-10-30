@@ -13,12 +13,12 @@
             <div>
                 <div>
                     <label>Döküman Adı</label>
-                    <InputText class="input-group" @bind-Value="@document.Title" />
+                    <InputText class="form-control" @bind-Value="@document.Title" />
                 </div>
                 <br />
                 <div>
                     <label>Döküman Açıklaması</label>
-                    <InputText class="input-group" @bind-Value="@document.Summary" />
+                    <InputText class="form-control" @bind-Value="@document.Summary" />
                 </div>
                 <br />
                 <button class="btn btn-secondary" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
@@ -34,8 +34,8 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Dosya Bilgileri</th>
-                <th>İşlemler</th>
+                <th class="col-8">Dosya Bilgileri</th>
+                <th class="col-4">İşlemler&emsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +50,7 @@
                         <button @onclick="@( () => Launcher.OpenAsync(item.Url))" class="btn btn-primary" type="button"> Dosyayı Aç</button>
                         @if (loggedUser != null && loggedUser.IsAdmin == true)
                         {
-                            <button class="btn btn-danger" @onclick="@( () => DeleteFile(item.Url, item.Id))" type="button"> Dosyayı Sil </button>
+                            <button style="margin-top: 4px;" class="btn btn-danger" @onclick="@( () => DeleteFile(item.Url, item.Id))" type="button"> Dosyayı Sil </button>
                         }
                     </td>
                 </tr>

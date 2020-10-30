@@ -4,12 +4,11 @@
 
 <h3>Meslek Listesi</h3>
 
-<h4>Yeni Meslek Ekle</h4>
 <EditForm Model="@jobTitles" OnValidSubmit="@CreateJobTitle">
     <DataAnnotationsValidator />
     <div class="form-group">
         <div>
-            <InputText @bind-Value="@jobTitles.TitleName" />
+            <InputText placeholder="Yeni Meslek Ekle" @bind-Value="@jobTitles.TitleName" />
             <ValidationMessage For="@(() => jobTitles.TitleName)" />
 
             <button type="submit" class="btn btn-success">

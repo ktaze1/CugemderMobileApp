@@ -1,5 +1,6 @@
 ﻿@inject AspNetUsersDAL userDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CugemderApp.Security.CustomStateProvider customStateProvider
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">BeePort</a>
@@ -53,6 +54,11 @@
                 </NavLink>
             </li>
         }
+        <li class="nav-item px-3">
+            <div class="nav-link" style="color: lightgrey;">
+                <span  class="oi oi-account-logout" aria-hidden="true" @onclick="@( () => customStateProvider.Logout())"></span> Çıkış Yap
+            </div>
+        </li>
     </ul>
 </div>
 
