@@ -467,6 +467,7 @@ namespace CugemderApp.Droid
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Attribute.scrimAnimationDuration = global::CugemderApp.Droid.Resource.Attribute.scrimAnimationDuration;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Attribute.scrimBackground = global::CugemderApp.Droid.Resource.Attribute.scrimBackground;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Attribute.scrimVisibleHeightTrigger = global::CugemderApp.Droid.Resource.Attribute.scrimVisibleHeightTrigger;
+			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Attribute.scrollViewStyle = global::CugemderApp.Droid.Resource.Attribute.scrollViewStyle;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Attribute.searchHintIcon = global::CugemderApp.Droid.Resource.Attribute.searchHintIcon;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Attribute.searchIcon = global::CugemderApp.Droid.Resource.Attribute.searchIcon;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Attribute.searchViewStyle = global::CugemderApp.Droid.Resource.Attribute.searchViewStyle;
@@ -1523,6 +1524,7 @@ namespace CugemderApp.Droid
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.String.hide_bottom_view_on_scroll_behavior = global::CugemderApp.Droid.Resource.String.hide_bottom_view_on_scroll_behavior;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.String.mtrl_chip_close_icon_content_description = global::CugemderApp.Droid.Resource.String.mtrl_chip_close_icon_content_description;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.String.not_set = global::CugemderApp.Droid.Resource.String.not_set;
+			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.String.overflow_tab_title = global::CugemderApp.Droid.Resource.String.overflow_tab_title;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.String.password_toggle_content_description = global::CugemderApp.Droid.Resource.String.password_toggle_content_description;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.String.path_password_eye = global::CugemderApp.Droid.Resource.String.path_password_eye;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.String.path_password_eye_mask_strike_through = global::CugemderApp.Droid.Resource.String.path_password_eye_mask_strike_through;
@@ -1798,6 +1800,8 @@ namespace CugemderApp.Droid
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text = global::CugemderApp.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton = global::CugemderApp.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow = global::CugemderApp.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow;
+			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Style.scrollViewScrollBars = global::CugemderApp.Droid.Resource.Style.scrollViewScrollBars;
+			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Style.scrollViewTheme = global::CugemderApp.Droid.Resource.Style.scrollViewTheme;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Style.TextAppearance_AppCompat = global::CugemderApp.Droid.Resource.Style.TextAppearance_AppCompat;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Style.TextAppearance_AppCompat_Body1 = global::CugemderApp.Droid.Resource.Style.TextAppearance_AppCompat_Body1;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Style.TextAppearance_AppCompat_Body2 = global::CugemderApp.Droid.Resource.Style.TextAppearance_AppCompat_Body2;
@@ -2782,6 +2786,8 @@ namespace CugemderApp.Droid
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground = global::CugemderApp.Droid.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.ScrollingViewBehavior_Layout = global::CugemderApp.Droid.Resource.Styleable.ScrollingViewBehavior_Layout;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.ScrollingViewBehavior_Layout_behavior_overlapTop = global::CugemderApp.Droid.Resource.Styleable.ScrollingViewBehavior_Layout_behavior_overlapTop;
+			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.ScrollViewRendererTheme = global::CugemderApp.Droid.Resource.Styleable.ScrollViewRendererTheme;
+			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.ScrollViewRendererTheme_scrollViewStyle = global::CugemderApp.Droid.Resource.Styleable.ScrollViewRendererTheme_scrollViewStyle;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.SearchView = global::CugemderApp.Droid.Resource.Styleable.SearchView;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.SearchView_android_focusable = global::CugemderApp.Droid.Resource.Styleable.SearchView_android_focusable;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.SearchView_android_imeOptions = global::CugemderApp.Droid.Resource.Styleable.SearchView_android_imeOptions;
@@ -2992,275 +2998,6 @@ namespace CugemderApp.Droid
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.View_paddingEnd = global::CugemderApp.Droid.Resource.Styleable.View_paddingEnd;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.View_paddingStart = global::CugemderApp.Droid.Resource.Styleable.View_paddingStart;
 			global::Microsoft.MobileBlazorBindings.WebView.Android.Resource.Styleable.View_theme = global::CugemderApp.Droid.Resource.Styleable.View_theme;
-			global::Plugin.PushNotification.Resource.Attribute.alpha = global::CugemderApp.Droid.Resource.Attribute.alpha;
-			global::Plugin.PushNotification.Resource.Attribute.buttonSize = global::CugemderApp.Droid.Resource.Attribute.buttonSize;
-			global::Plugin.PushNotification.Resource.Attribute.circleCrop = global::CugemderApp.Droid.Resource.Attribute.circleCrop;
-			global::Plugin.PushNotification.Resource.Attribute.colorScheme = global::CugemderApp.Droid.Resource.Attribute.colorScheme;
-			global::Plugin.PushNotification.Resource.Attribute.coordinatorLayoutStyle = global::CugemderApp.Droid.Resource.Attribute.coordinatorLayoutStyle;
-			global::Plugin.PushNotification.Resource.Attribute.font = global::CugemderApp.Droid.Resource.Attribute.font;
-			global::Plugin.PushNotification.Resource.Attribute.fontProviderAuthority = global::CugemderApp.Droid.Resource.Attribute.fontProviderAuthority;
-			global::Plugin.PushNotification.Resource.Attribute.fontProviderCerts = global::CugemderApp.Droid.Resource.Attribute.fontProviderCerts;
-			global::Plugin.PushNotification.Resource.Attribute.fontProviderFetchStrategy = global::CugemderApp.Droid.Resource.Attribute.fontProviderFetchStrategy;
-			global::Plugin.PushNotification.Resource.Attribute.fontProviderFetchTimeout = global::CugemderApp.Droid.Resource.Attribute.fontProviderFetchTimeout;
-			global::Plugin.PushNotification.Resource.Attribute.fontProviderPackage = global::CugemderApp.Droid.Resource.Attribute.fontProviderPackage;
-			global::Plugin.PushNotification.Resource.Attribute.fontProviderQuery = global::CugemderApp.Droid.Resource.Attribute.fontProviderQuery;
-			global::Plugin.PushNotification.Resource.Attribute.fontStyle = global::CugemderApp.Droid.Resource.Attribute.fontStyle;
-			global::Plugin.PushNotification.Resource.Attribute.fontVariationSettings = global::CugemderApp.Droid.Resource.Attribute.fontVariationSettings;
-			global::Plugin.PushNotification.Resource.Attribute.fontWeight = global::CugemderApp.Droid.Resource.Attribute.fontWeight;
-			global::Plugin.PushNotification.Resource.Attribute.imageAspectRatio = global::CugemderApp.Droid.Resource.Attribute.imageAspectRatio;
-			global::Plugin.PushNotification.Resource.Attribute.imageAspectRatioAdjust = global::CugemderApp.Droid.Resource.Attribute.imageAspectRatioAdjust;
-			global::Plugin.PushNotification.Resource.Attribute.keylines = global::CugemderApp.Droid.Resource.Attribute.keylines;
-			global::Plugin.PushNotification.Resource.Attribute.layout_anchor = global::CugemderApp.Droid.Resource.Attribute.layout_anchor;
-			global::Plugin.PushNotification.Resource.Attribute.layout_anchorGravity = global::CugemderApp.Droid.Resource.Attribute.layout_anchorGravity;
-			global::Plugin.PushNotification.Resource.Attribute.layout_behavior = global::CugemderApp.Droid.Resource.Attribute.layout_behavior;
-			global::Plugin.PushNotification.Resource.Attribute.layout_dodgeInsetEdges = global::CugemderApp.Droid.Resource.Attribute.layout_dodgeInsetEdges;
-			global::Plugin.PushNotification.Resource.Attribute.layout_insetEdge = global::CugemderApp.Droid.Resource.Attribute.layout_insetEdge;
-			global::Plugin.PushNotification.Resource.Attribute.layout_keyline = global::CugemderApp.Droid.Resource.Attribute.layout_keyline;
-			global::Plugin.PushNotification.Resource.Attribute.scopeUris = global::CugemderApp.Droid.Resource.Attribute.scopeUris;
-			global::Plugin.PushNotification.Resource.Attribute.statusBarBackground = global::CugemderApp.Droid.Resource.Attribute.statusBarBackground;
-			global::Plugin.PushNotification.Resource.Attribute.ttcIndex = global::CugemderApp.Droid.Resource.Attribute.ttcIndex;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_dark = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_dark;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_dark_default = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_dark_default;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_dark_disabled = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_dark_disabled;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_dark_focused = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_dark_focused;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_dark_pressed = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_dark_pressed;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_light = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_light;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_light_default = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_light_default;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_light_disabled = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_light_disabled;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_light_focused = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_light_focused;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_text_light_pressed = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_text_light_pressed;
-			global::Plugin.PushNotification.Resource.Color.common_google_signin_btn_tint = global::CugemderApp.Droid.Resource.Color.common_google_signin_btn_tint;
-			global::Plugin.PushNotification.Resource.Color.notification_action_color_filter = global::CugemderApp.Droid.Resource.Color.notification_action_color_filter;
-			global::Plugin.PushNotification.Resource.Color.notification_icon_bg_color = global::CugemderApp.Droid.Resource.Color.notification_icon_bg_color;
-			global::Plugin.PushNotification.Resource.Color.notification_material_background_media_default_color = global::CugemderApp.Droid.Resource.Color.notification_material_background_media_default_color;
-			global::Plugin.PushNotification.Resource.Color.primary_text_default_material_dark = global::CugemderApp.Droid.Resource.Color.primary_text_default_material_dark;
-			global::Plugin.PushNotification.Resource.Color.ripple_material_light = global::CugemderApp.Droid.Resource.Color.ripple_material_light;
-			global::Plugin.PushNotification.Resource.Color.secondary_text_default_material_dark = global::CugemderApp.Droid.Resource.Color.secondary_text_default_material_dark;
-			global::Plugin.PushNotification.Resource.Color.secondary_text_default_material_light = global::CugemderApp.Droid.Resource.Color.secondary_text_default_material_light;
-			global::Plugin.PushNotification.Resource.Dimension.compat_button_inset_horizontal_material = global::CugemderApp.Droid.Resource.Dimension.compat_button_inset_horizontal_material;
-			global::Plugin.PushNotification.Resource.Dimension.compat_button_inset_vertical_material = global::CugemderApp.Droid.Resource.Dimension.compat_button_inset_vertical_material;
-			global::Plugin.PushNotification.Resource.Dimension.compat_button_padding_horizontal_material = global::CugemderApp.Droid.Resource.Dimension.compat_button_padding_horizontal_material;
-			global::Plugin.PushNotification.Resource.Dimension.compat_button_padding_vertical_material = global::CugemderApp.Droid.Resource.Dimension.compat_button_padding_vertical_material;
-			global::Plugin.PushNotification.Resource.Dimension.compat_control_corner_material = global::CugemderApp.Droid.Resource.Dimension.compat_control_corner_material;
-			global::Plugin.PushNotification.Resource.Dimension.compat_notification_large_icon_max_height = global::CugemderApp.Droid.Resource.Dimension.compat_notification_large_icon_max_height;
-			global::Plugin.PushNotification.Resource.Dimension.compat_notification_large_icon_max_width = global::CugemderApp.Droid.Resource.Dimension.compat_notification_large_icon_max_width;
-			global::Plugin.PushNotification.Resource.Dimension.notification_action_icon_size = global::CugemderApp.Droid.Resource.Dimension.notification_action_icon_size;
-			global::Plugin.PushNotification.Resource.Dimension.notification_action_text_size = global::CugemderApp.Droid.Resource.Dimension.notification_action_text_size;
-			global::Plugin.PushNotification.Resource.Dimension.notification_big_circle_margin = global::CugemderApp.Droid.Resource.Dimension.notification_big_circle_margin;
-			global::Plugin.PushNotification.Resource.Dimension.notification_content_margin_start = global::CugemderApp.Droid.Resource.Dimension.notification_content_margin_start;
-			global::Plugin.PushNotification.Resource.Dimension.notification_large_icon_height = global::CugemderApp.Droid.Resource.Dimension.notification_large_icon_height;
-			global::Plugin.PushNotification.Resource.Dimension.notification_large_icon_width = global::CugemderApp.Droid.Resource.Dimension.notification_large_icon_width;
-			global::Plugin.PushNotification.Resource.Dimension.notification_main_column_padding_top = global::CugemderApp.Droid.Resource.Dimension.notification_main_column_padding_top;
-			global::Plugin.PushNotification.Resource.Dimension.notification_media_narrow_margin = global::CugemderApp.Droid.Resource.Dimension.notification_media_narrow_margin;
-			global::Plugin.PushNotification.Resource.Dimension.notification_right_icon_size = global::CugemderApp.Droid.Resource.Dimension.notification_right_icon_size;
-			global::Plugin.PushNotification.Resource.Dimension.notification_right_side_padding_top = global::CugemderApp.Droid.Resource.Dimension.notification_right_side_padding_top;
-			global::Plugin.PushNotification.Resource.Dimension.notification_small_icon_background_padding = global::CugemderApp.Droid.Resource.Dimension.notification_small_icon_background_padding;
-			global::Plugin.PushNotification.Resource.Dimension.notification_small_icon_size_as_large = global::CugemderApp.Droid.Resource.Dimension.notification_small_icon_size_as_large;
-			global::Plugin.PushNotification.Resource.Dimension.notification_subtext_size = global::CugemderApp.Droid.Resource.Dimension.notification_subtext_size;
-			global::Plugin.PushNotification.Resource.Dimension.notification_top_pad = global::CugemderApp.Droid.Resource.Dimension.notification_top_pad;
-			global::Plugin.PushNotification.Resource.Dimension.notification_top_pad_large_text = global::CugemderApp.Droid.Resource.Dimension.notification_top_pad_large_text;
-			global::Plugin.PushNotification.Resource.Dimension.subtitle_corner_radius = global::CugemderApp.Droid.Resource.Dimension.subtitle_corner_radius;
-			global::Plugin.PushNotification.Resource.Dimension.subtitle_outline_width = global::CugemderApp.Droid.Resource.Dimension.subtitle_outline_width;
-			global::Plugin.PushNotification.Resource.Dimension.subtitle_shadow_offset = global::CugemderApp.Droid.Resource.Dimension.subtitle_shadow_offset;
-			global::Plugin.PushNotification.Resource.Dimension.subtitle_shadow_radius = global::CugemderApp.Droid.Resource.Dimension.subtitle_shadow_radius;
-			global::Plugin.PushNotification.Resource.Drawable.common_full_open_on_phone = global::CugemderApp.Droid.Resource.Drawable.common_full_open_on_phone;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_dark = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_dark;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_dark_focused = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_focused;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_dark_normal = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_normal;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_dark_normal_background = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_normal_background;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_disabled = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_disabled;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_light = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_light;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_light_focused = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_light_focused;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_light_normal = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_light_normal;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_icon_light_normal_background = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_icon_light_normal_background;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_dark = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_dark;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_dark_focused = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_dark_focused;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_dark_normal = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_dark_normal;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_dark_normal_background = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_dark_normal_background;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_disabled = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_disabled;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_light = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_light;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_light_focused = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_light_focused;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_light_normal = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_light_normal;
-			global::Plugin.PushNotification.Resource.Drawable.common_google_signin_btn_text_light_normal_background = global::CugemderApp.Droid.Resource.Drawable.common_google_signin_btn_text_light_normal_background;
-			global::Plugin.PushNotification.Resource.Drawable.googleg_disabled_color_18 = global::CugemderApp.Droid.Resource.Drawable.googleg_disabled_color_18;
-			global::Plugin.PushNotification.Resource.Drawable.googleg_standard_color_18 = global::CugemderApp.Droid.Resource.Drawable.googleg_standard_color_18;
-			global::Plugin.PushNotification.Resource.Drawable.notification_action_background = global::CugemderApp.Droid.Resource.Drawable.notification_action_background;
-			global::Plugin.PushNotification.Resource.Drawable.notification_bg = global::CugemderApp.Droid.Resource.Drawable.notification_bg;
-			global::Plugin.PushNotification.Resource.Drawable.notification_bg_low = global::CugemderApp.Droid.Resource.Drawable.notification_bg_low;
-			global::Plugin.PushNotification.Resource.Drawable.notification_bg_low_normal = global::CugemderApp.Droid.Resource.Drawable.notification_bg_low_normal;
-			global::Plugin.PushNotification.Resource.Drawable.notification_bg_low_pressed = global::CugemderApp.Droid.Resource.Drawable.notification_bg_low_pressed;
-			global::Plugin.PushNotification.Resource.Drawable.notification_bg_normal = global::CugemderApp.Droid.Resource.Drawable.notification_bg_normal;
-			global::Plugin.PushNotification.Resource.Drawable.notification_bg_normal_pressed = global::CugemderApp.Droid.Resource.Drawable.notification_bg_normal_pressed;
-			global::Plugin.PushNotification.Resource.Drawable.notification_icon_background = global::CugemderApp.Droid.Resource.Drawable.notification_icon_background;
-			global::Plugin.PushNotification.Resource.Drawable.notification_template_icon_bg = global::CugemderApp.Droid.Resource.Drawable.notification_template_icon_bg;
-			global::Plugin.PushNotification.Resource.Drawable.notification_template_icon_low_bg = global::CugemderApp.Droid.Resource.Drawable.notification_template_icon_low_bg;
-			global::Plugin.PushNotification.Resource.Drawable.notification_tile_bg = global::CugemderApp.Droid.Resource.Drawable.notification_tile_bg;
-			global::Plugin.PushNotification.Resource.Drawable.notify_panel_notification_icon_bg = global::CugemderApp.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
-			global::Plugin.PushNotification.Resource.Id.action0 = global::CugemderApp.Droid.Resource.Id.action0;
-			global::Plugin.PushNotification.Resource.Id.actions = global::CugemderApp.Droid.Resource.Id.actions;
-			global::Plugin.PushNotification.Resource.Id.action_container = global::CugemderApp.Droid.Resource.Id.action_container;
-			global::Plugin.PushNotification.Resource.Id.action_divider = global::CugemderApp.Droid.Resource.Id.action_divider;
-			global::Plugin.PushNotification.Resource.Id.action_image = global::CugemderApp.Droid.Resource.Id.action_image;
-			global::Plugin.PushNotification.Resource.Id.action_text = global::CugemderApp.Droid.Resource.Id.action_text;
-			global::Plugin.PushNotification.Resource.Id.adjust_height = global::CugemderApp.Droid.Resource.Id.adjust_height;
-			global::Plugin.PushNotification.Resource.Id.adjust_width = global::CugemderApp.Droid.Resource.Id.adjust_width;
-			global::Plugin.PushNotification.Resource.Id.all = global::CugemderApp.Droid.Resource.Id.all;
-			global::Plugin.PushNotification.Resource.Id.async = global::CugemderApp.Droid.Resource.Id.async;
-			global::Plugin.PushNotification.Resource.Id.auto = global::CugemderApp.Droid.Resource.Id.auto;
-			global::Plugin.PushNotification.Resource.Id.blocking = global::CugemderApp.Droid.Resource.Id.blocking;
-			global::Plugin.PushNotification.Resource.Id.bottom = global::CugemderApp.Droid.Resource.Id.bottom;
-			global::Plugin.PushNotification.Resource.Id.cancel_action = global::CugemderApp.Droid.Resource.Id.cancel_action;
-			global::Plugin.PushNotification.Resource.Id.center = global::CugemderApp.Droid.Resource.Id.center;
-			global::Plugin.PushNotification.Resource.Id.center_horizontal = global::CugemderApp.Droid.Resource.Id.center_horizontal;
-			global::Plugin.PushNotification.Resource.Id.center_vertical = global::CugemderApp.Droid.Resource.Id.center_vertical;
-			global::Plugin.PushNotification.Resource.Id.chronometer = global::CugemderApp.Droid.Resource.Id.chronometer;
-			global::Plugin.PushNotification.Resource.Id.clip_horizontal = global::CugemderApp.Droid.Resource.Id.clip_horizontal;
-			global::Plugin.PushNotification.Resource.Id.clip_vertical = global::CugemderApp.Droid.Resource.Id.clip_vertical;
-			global::Plugin.PushNotification.Resource.Id.dark = global::CugemderApp.Droid.Resource.Id.dark;
-			global::Plugin.PushNotification.Resource.Id.end = global::CugemderApp.Droid.Resource.Id.end;
-			global::Plugin.PushNotification.Resource.Id.end_padder = global::CugemderApp.Droid.Resource.Id.end_padder;
-			global::Plugin.PushNotification.Resource.Id.fill = global::CugemderApp.Droid.Resource.Id.fill;
-			global::Plugin.PushNotification.Resource.Id.fill_horizontal = global::CugemderApp.Droid.Resource.Id.fill_horizontal;
-			global::Plugin.PushNotification.Resource.Id.fill_vertical = global::CugemderApp.Droid.Resource.Id.fill_vertical;
-			global::Plugin.PushNotification.Resource.Id.forever = global::CugemderApp.Droid.Resource.Id.forever;
-			global::Plugin.PushNotification.Resource.Id.icon = global::CugemderApp.Droid.Resource.Id.icon;
-			global::Plugin.PushNotification.Resource.Id.icon_group = global::CugemderApp.Droid.Resource.Id.icon_group;
-			global::Plugin.PushNotification.Resource.Id.icon_only = global::CugemderApp.Droid.Resource.Id.icon_only;
-			global::Plugin.PushNotification.Resource.Id.info = global::CugemderApp.Droid.Resource.Id.info;
-			global::Plugin.PushNotification.Resource.Id.italic = global::CugemderApp.Droid.Resource.Id.italic;
-			global::Plugin.PushNotification.Resource.Id.left = global::CugemderApp.Droid.Resource.Id.left;
-			global::Plugin.PushNotification.Resource.Id.light = global::CugemderApp.Droid.Resource.Id.light;
-			global::Plugin.PushNotification.Resource.Id.line1 = global::CugemderApp.Droid.Resource.Id.line1;
-			global::Plugin.PushNotification.Resource.Id.line3 = global::CugemderApp.Droid.Resource.Id.line3;
-			global::Plugin.PushNotification.Resource.Id.media_actions = global::CugemderApp.Droid.Resource.Id.media_actions;
-			global::Plugin.PushNotification.Resource.Id.none = global::CugemderApp.Droid.Resource.Id.none;
-			global::Plugin.PushNotification.Resource.Id.normal = global::CugemderApp.Droid.Resource.Id.normal;
-			global::Plugin.PushNotification.Resource.Id.notification_background = global::CugemderApp.Droid.Resource.Id.notification_background;
-			global::Plugin.PushNotification.Resource.Id.notification_main_column = global::CugemderApp.Droid.Resource.Id.notification_main_column;
-			global::Plugin.PushNotification.Resource.Id.notification_main_column_container = global::CugemderApp.Droid.Resource.Id.notification_main_column_container;
-			global::Plugin.PushNotification.Resource.Id.right = global::CugemderApp.Droid.Resource.Id.right;
-			global::Plugin.PushNotification.Resource.Id.right_icon = global::CugemderApp.Droid.Resource.Id.right_icon;
-			global::Plugin.PushNotification.Resource.Id.right_side = global::CugemderApp.Droid.Resource.Id.right_side;
-			global::Plugin.PushNotification.Resource.Id.standard = global::CugemderApp.Droid.Resource.Id.standard;
-			global::Plugin.PushNotification.Resource.Id.start = global::CugemderApp.Droid.Resource.Id.start;
-			global::Plugin.PushNotification.Resource.Id.status_bar_latest_event_content = global::CugemderApp.Droid.Resource.Id.status_bar_latest_event_content;
-			global::Plugin.PushNotification.Resource.Id.tag_transition_group = global::CugemderApp.Droid.Resource.Id.tag_transition_group;
-			global::Plugin.PushNotification.Resource.Id.tag_unhandled_key_event_manager = global::CugemderApp.Droid.Resource.Id.tag_unhandled_key_event_manager;
-			global::Plugin.PushNotification.Resource.Id.tag_unhandled_key_listeners = global::CugemderApp.Droid.Resource.Id.tag_unhandled_key_listeners;
-			global::Plugin.PushNotification.Resource.Id.text = global::CugemderApp.Droid.Resource.Id.text;
-			global::Plugin.PushNotification.Resource.Id.text2 = global::CugemderApp.Droid.Resource.Id.text2;
-			global::Plugin.PushNotification.Resource.Id.time = global::CugemderApp.Droid.Resource.Id.time;
-			global::Plugin.PushNotification.Resource.Id.title = global::CugemderApp.Droid.Resource.Id.title;
-			global::Plugin.PushNotification.Resource.Id.top = global::CugemderApp.Droid.Resource.Id.top;
-			global::Plugin.PushNotification.Resource.Id.wide = global::CugemderApp.Droid.Resource.Id.wide;
-			global::Plugin.PushNotification.Resource.Integer.cancel_button_image_alpha = global::CugemderApp.Droid.Resource.Integer.cancel_button_image_alpha;
-			global::Plugin.PushNotification.Resource.Integer.google_play_services_version = global::CugemderApp.Droid.Resource.Integer.google_play_services_version;
-			global::Plugin.PushNotification.Resource.Integer.status_bar_notification_info_maxnum = global::CugemderApp.Droid.Resource.Integer.status_bar_notification_info_maxnum;
-			global::Plugin.PushNotification.Resource.Layout.notification_action = global::CugemderApp.Droid.Resource.Layout.notification_action;
-			global::Plugin.PushNotification.Resource.Layout.notification_action_tombstone = global::CugemderApp.Droid.Resource.Layout.notification_action_tombstone;
-			global::Plugin.PushNotification.Resource.Layout.notification_media_action = global::CugemderApp.Droid.Resource.Layout.notification_media_action;
-			global::Plugin.PushNotification.Resource.Layout.notification_media_cancel_action = global::CugemderApp.Droid.Resource.Layout.notification_media_cancel_action;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_big_media = global::CugemderApp.Droid.Resource.Layout.notification_template_big_media;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_big_media_custom = global::CugemderApp.Droid.Resource.Layout.notification_template_big_media_custom;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_big_media_narrow = global::CugemderApp.Droid.Resource.Layout.notification_template_big_media_narrow;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_big_media_narrow_custom = global::CugemderApp.Droid.Resource.Layout.notification_template_big_media_narrow_custom;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_custom_big = global::CugemderApp.Droid.Resource.Layout.notification_template_custom_big;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_icon_group = global::CugemderApp.Droid.Resource.Layout.notification_template_icon_group;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_lines_media = global::CugemderApp.Droid.Resource.Layout.notification_template_lines_media;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_media = global::CugemderApp.Droid.Resource.Layout.notification_template_media;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_media_custom = global::CugemderApp.Droid.Resource.Layout.notification_template_media_custom;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_part_chronometer = global::CugemderApp.Droid.Resource.Layout.notification_template_part_chronometer;
-			global::Plugin.PushNotification.Resource.Layout.notification_template_part_time = global::CugemderApp.Droid.Resource.Layout.notification_template_part_time;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_enable_button = global::CugemderApp.Droid.Resource.String.common_google_play_services_enable_button;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_enable_text = global::CugemderApp.Droid.Resource.String.common_google_play_services_enable_text;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_enable_title = global::CugemderApp.Droid.Resource.String.common_google_play_services_enable_title;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_install_button = global::CugemderApp.Droid.Resource.String.common_google_play_services_install_button;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_install_text = global::CugemderApp.Droid.Resource.String.common_google_play_services_install_text;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_install_title = global::CugemderApp.Droid.Resource.String.common_google_play_services_install_title;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_notification_channel_name = global::CugemderApp.Droid.Resource.String.common_google_play_services_notification_channel_name;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_notification_ticker = global::CugemderApp.Droid.Resource.String.common_google_play_services_notification_ticker;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_unknown_issue = global::CugemderApp.Droid.Resource.String.common_google_play_services_unknown_issue;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_unsupported_text = global::CugemderApp.Droid.Resource.String.common_google_play_services_unsupported_text;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_update_button = global::CugemderApp.Droid.Resource.String.common_google_play_services_update_button;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_update_text = global::CugemderApp.Droid.Resource.String.common_google_play_services_update_text;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_update_title = global::CugemderApp.Droid.Resource.String.common_google_play_services_update_title;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_updating_text = global::CugemderApp.Droid.Resource.String.common_google_play_services_updating_text;
-			global::Plugin.PushNotification.Resource.String.common_google_play_services_wear_update_text = global::CugemderApp.Droid.Resource.String.common_google_play_services_wear_update_text;
-			global::Plugin.PushNotification.Resource.String.common_open_on_phone = global::CugemderApp.Droid.Resource.String.common_open_on_phone;
-			global::Plugin.PushNotification.Resource.String.common_signin_button_text = global::CugemderApp.Droid.Resource.String.common_signin_button_text;
-			global::Plugin.PushNotification.Resource.String.common_signin_button_text_long = global::CugemderApp.Droid.Resource.String.common_signin_button_text_long;
-			global::Plugin.PushNotification.Resource.String.fcm_fallback_notification_channel_label = global::CugemderApp.Droid.Resource.String.fcm_fallback_notification_channel_label;
-			global::Plugin.PushNotification.Resource.String.status_bar_notification_info_overflow = global::CugemderApp.Droid.Resource.String.status_bar_notification_info_overflow;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Info = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Info;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Info_Media = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Info_Media;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Line2 = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Line2;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Line2_Media = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Line2_Media;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Media = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Media;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Time = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Time;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Time_Media = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Time_Media;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Title = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Title;
-			global::Plugin.PushNotification.Resource.Style.TextAppearance_Compat_Notification_Title_Media = global::CugemderApp.Droid.Resource.Style.TextAppearance_Compat_Notification_Title_Media;
-			global::Plugin.PushNotification.Resource.Style.Widget_Compat_NotificationActionContainer = global::CugemderApp.Droid.Resource.Style.Widget_Compat_NotificationActionContainer;
-			global::Plugin.PushNotification.Resource.Style.Widget_Compat_NotificationActionText = global::CugemderApp.Droid.Resource.Style.Widget_Compat_NotificationActionText;
-			global::Plugin.PushNotification.Resource.Style.Widget_Support_CoordinatorLayout = global::CugemderApp.Droid.Resource.Style.Widget_Support_CoordinatorLayout;
-			global::Plugin.PushNotification.Resource.Styleable.ColorStateListItem = global::CugemderApp.Droid.Resource.Styleable.ColorStateListItem;
-			global::Plugin.PushNotification.Resource.Styleable.ColorStateListItem_alpha = global::CugemderApp.Droid.Resource.Styleable.ColorStateListItem_alpha;
-			global::Plugin.PushNotification.Resource.Styleable.ColorStateListItem_android_alpha = global::CugemderApp.Droid.Resource.Styleable.ColorStateListItem_android_alpha;
-			global::Plugin.PushNotification.Resource.Styleable.ColorStateListItem_android_color = global::CugemderApp.Droid.Resource.Styleable.ColorStateListItem_android_color;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_keylines = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_keylines;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_Layout = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_Layout;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline;
-			global::Plugin.PushNotification.Resource.Styleable.CoordinatorLayout_statusBarBackground = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamily = global::CugemderApp.Droid.Resource.Styleable.FontFamily;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_android_font = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_android_font;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_android_fontStyle = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_android_fontStyle;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_android_fontVariationSettings = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_android_fontVariationSettings;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_android_fontWeight = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_android_fontWeight;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_android_ttcIndex = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_android_ttcIndex;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_font = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_font;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_fontStyle = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_fontStyle;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_fontVariationSettings = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_fontVariationSettings;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_fontWeight = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_fontWeight;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamilyFont_ttcIndex = global::CugemderApp.Droid.Resource.Styleable.FontFamilyFont_ttcIndex;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamily_fontProviderAuthority = global::CugemderApp.Droid.Resource.Styleable.FontFamily_fontProviderAuthority;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamily_fontProviderCerts = global::CugemderApp.Droid.Resource.Styleable.FontFamily_fontProviderCerts;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamily_fontProviderFetchStrategy = global::CugemderApp.Droid.Resource.Styleable.FontFamily_fontProviderFetchStrategy;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamily_fontProviderFetchTimeout = global::CugemderApp.Droid.Resource.Styleable.FontFamily_fontProviderFetchTimeout;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamily_fontProviderPackage = global::CugemderApp.Droid.Resource.Styleable.FontFamily_fontProviderPackage;
-			global::Plugin.PushNotification.Resource.Styleable.FontFamily_fontProviderQuery = global::CugemderApp.Droid.Resource.Styleable.FontFamily_fontProviderQuery;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor = global::CugemderApp.Droid.Resource.Styleable.GradientColor;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColorItem = global::CugemderApp.Droid.Resource.Styleable.GradientColorItem;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColorItem_android_color = global::CugemderApp.Droid.Resource.Styleable.GradientColorItem_android_color;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColorItem_android_offset = global::CugemderApp.Droid.Resource.Styleable.GradientColorItem_android_offset;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_centerColor = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_centerColor;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_centerX = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_centerX;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_centerY = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_centerY;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_endColor = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_endColor;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_endX = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_endX;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_endY = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_endY;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_gradientRadius = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_gradientRadius;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_startColor = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_startColor;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_startX = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_startX;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_startY = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_startY;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_tileMode = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_tileMode;
-			global::Plugin.PushNotification.Resource.Styleable.GradientColor_android_type = global::CugemderApp.Droid.Resource.Styleable.GradientColor_android_type;
-			global::Plugin.PushNotification.Resource.Styleable.LoadingImageView = global::CugemderApp.Droid.Resource.Styleable.LoadingImageView;
-			global::Plugin.PushNotification.Resource.Styleable.LoadingImageView_circleCrop = global::CugemderApp.Droid.Resource.Styleable.LoadingImageView_circleCrop;
-			global::Plugin.PushNotification.Resource.Styleable.LoadingImageView_imageAspectRatio = global::CugemderApp.Droid.Resource.Styleable.LoadingImageView_imageAspectRatio;
-			global::Plugin.PushNotification.Resource.Styleable.LoadingImageView_imageAspectRatioAdjust = global::CugemderApp.Droid.Resource.Styleable.LoadingImageView_imageAspectRatioAdjust;
-			global::Plugin.PushNotification.Resource.Styleable.SignInButton = global::CugemderApp.Droid.Resource.Styleable.SignInButton;
-			global::Plugin.PushNotification.Resource.Styleable.SignInButton_buttonSize = global::CugemderApp.Droid.Resource.Styleable.SignInButton_buttonSize;
-			global::Plugin.PushNotification.Resource.Styleable.SignInButton_colorScheme = global::CugemderApp.Droid.Resource.Styleable.SignInButton_colorScheme;
-			global::Plugin.PushNotification.Resource.Styleable.SignInButton_scopeUris = global::CugemderApp.Droid.Resource.Styleable.SignInButton_scopeUris;
 			global::Xamarin.Essentials.Resource.Attribute.alpha = global::CugemderApp.Droid.Resource.Attribute.alpha;
 			global::Xamarin.Essentials.Resource.Attribute.coordinatorLayoutStyle = global::CugemderApp.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::CugemderApp.Droid.Resource.Attribute.font;
@@ -3326,6 +3063,39 @@ namespace CugemderApp.Droid
 			global::Xamarin.Essentials.Resource.Drawable.notification_template_icon_low_bg = global::CugemderApp.Droid.Resource.Drawable.notification_template_icon_low_bg;
 			global::Xamarin.Essentials.Resource.Drawable.notification_tile_bg = global::CugemderApp.Droid.Resource.Drawable.notification_tile_bg;
 			global::Xamarin.Essentials.Resource.Drawable.notify_panel_notification_icon_bg = global::CugemderApp.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
+			global::Xamarin.Essentials.Resource.Id.accessibility_action_clickable_span = global::CugemderApp.Droid.Resource.Id.accessibility_action_clickable_span;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_0 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_0;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_1 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_1;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_10 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_10;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_11 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_11;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_12 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_12;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_13 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_13;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_14 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_14;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_15 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_15;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_16 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_16;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_17 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_17;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_18 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_18;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_19 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_19;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_2 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_2;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_20 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_20;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_21 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_21;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_22 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_22;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_23 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_23;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_24 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_24;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_25 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_25;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_26 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_26;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_27 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_27;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_28 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_28;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_29 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_29;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_3 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_3;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_30 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_30;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_31 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_31;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_4 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_4;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_5 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_5;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_6 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_6;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_7 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_7;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_8 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_8;
+			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_9 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_9;
 			global::Xamarin.Essentials.Resource.Id.actions = global::CugemderApp.Droid.Resource.Id.actions;
 			global::Xamarin.Essentials.Resource.Id.action_container = global::CugemderApp.Droid.Resource.Id.action_container;
 			global::Xamarin.Essentials.Resource.Id.action_divider = global::CugemderApp.Droid.Resource.Id.action_divider;
@@ -3346,6 +3116,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Essentials.Resource.Id.chronometer = global::CugemderApp.Droid.Resource.Id.chronometer;
 			global::Xamarin.Essentials.Resource.Id.clip_horizontal = global::CugemderApp.Droid.Resource.Id.clip_horizontal;
 			global::Xamarin.Essentials.Resource.Id.clip_vertical = global::CugemderApp.Droid.Resource.Id.clip_vertical;
+			global::Xamarin.Essentials.Resource.Id.dialog_button = global::CugemderApp.Droid.Resource.Id.dialog_button;
 			global::Xamarin.Essentials.Resource.Id.end = global::CugemderApp.Droid.Resource.Id.end;
 			global::Xamarin.Essentials.Resource.Id.fill = global::CugemderApp.Droid.Resource.Id.fill;
 			global::Xamarin.Essentials.Resource.Id.fill_horizontal = global::CugemderApp.Droid.Resource.Id.fill_horizontal;
@@ -3367,6 +3138,11 @@ namespace CugemderApp.Droid
 			global::Xamarin.Essentials.Resource.Id.right_icon = global::CugemderApp.Droid.Resource.Id.right_icon;
 			global::Xamarin.Essentials.Resource.Id.right_side = global::CugemderApp.Droid.Resource.Id.right_side;
 			global::Xamarin.Essentials.Resource.Id.start = global::CugemderApp.Droid.Resource.Id.start;
+			global::Xamarin.Essentials.Resource.Id.tag_accessibility_actions = global::CugemderApp.Droid.Resource.Id.tag_accessibility_actions;
+			global::Xamarin.Essentials.Resource.Id.tag_accessibility_clickable_spans = global::CugemderApp.Droid.Resource.Id.tag_accessibility_clickable_spans;
+			global::Xamarin.Essentials.Resource.Id.tag_accessibility_heading = global::CugemderApp.Droid.Resource.Id.tag_accessibility_heading;
+			global::Xamarin.Essentials.Resource.Id.tag_accessibility_pane_title = global::CugemderApp.Droid.Resource.Id.tag_accessibility_pane_title;
+			global::Xamarin.Essentials.Resource.Id.tag_screen_reader_focusable = global::CugemderApp.Droid.Resource.Id.tag_screen_reader_focusable;
 			global::Xamarin.Essentials.Resource.Id.tag_transition_group = global::CugemderApp.Droid.Resource.Id.tag_transition_group;
 			global::Xamarin.Essentials.Resource.Id.tag_unhandled_key_event_manager = global::CugemderApp.Droid.Resource.Id.tag_unhandled_key_event_manager;
 			global::Xamarin.Essentials.Resource.Id.tag_unhandled_key_listeners = global::CugemderApp.Droid.Resource.Id.tag_unhandled_key_listeners;
@@ -3378,6 +3154,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Essentials.Resource.Integer.status_bar_notification_info_maxnum = global::CugemderApp.Droid.Resource.Integer.status_bar_notification_info_maxnum;
 			global::Xamarin.Essentials.Resource.Layout.browser_actions_context_menu_page = global::CugemderApp.Droid.Resource.Layout.browser_actions_context_menu_page;
 			global::Xamarin.Essentials.Resource.Layout.browser_actions_context_menu_row = global::CugemderApp.Droid.Resource.Layout.browser_actions_context_menu_row;
+			global::Xamarin.Essentials.Resource.Layout.custom_dialog = global::CugemderApp.Droid.Resource.Layout.custom_dialog;
 			global::Xamarin.Essentials.Resource.Layout.notification_action = global::CugemderApp.Droid.Resource.Layout.notification_action;
 			global::Xamarin.Essentials.Resource.Layout.notification_action_tombstone = global::CugemderApp.Droid.Resource.Layout.notification_action_tombstone;
 			global::Xamarin.Essentials.Resource.Layout.notification_template_custom_big = global::CugemderApp.Droid.Resource.Layout.notification_template_custom_big;
@@ -3455,6 +3232,18 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_slide_out_top = global::CugemderApp.Droid.Resource.Animation.abc_slide_out_top;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_tooltip_enter = global::CugemderApp.Droid.Resource.Animation.abc_tooltip_enter;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_tooltip_exit = global::CugemderApp.Droid.Resource.Animation.abc_tooltip_exit;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_checkbox_to_checked_box_inner_merged_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_checked_box_inner_merged_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_checkbox_to_checked_box_outer_merged_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_checked_box_outer_merged_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_checkbox_to_checked_icon_null_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_checked_icon_null_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_checkbox_to_unchecked_box_inner_merged_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_box_inner_merged_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_checkbox_to_unchecked_check_path_merged_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_check_path_merged_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_checkbox_to_unchecked_icon_null_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_icon_null_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_radio_to_off_mtrl_dot_group_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_dot_group_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_path_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_path_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_radio_to_on_mtrl_dot_group_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_dot_group_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_path_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_path_animation;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.design_bottom_sheet_slide_in = global::CugemderApp.Droid.Resource.Animation.design_bottom_sheet_slide_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.design_bottom_sheet_slide_out = global::CugemderApp.Droid.Resource.Animation.design_bottom_sheet_slide_out;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.design_snackbar_in = global::CugemderApp.Droid.Resource.Animation.design_snackbar_in;
@@ -3554,6 +3343,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.buttonBarNeutralButtonStyle = global::CugemderApp.Droid.Resource.Attribute.buttonBarNeutralButtonStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.buttonBarPositiveButtonStyle = global::CugemderApp.Droid.Resource.Attribute.buttonBarPositiveButtonStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.buttonBarStyle = global::CugemderApp.Droid.Resource.Attribute.buttonBarStyle;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.buttonCompat = global::CugemderApp.Droid.Resource.Attribute.buttonCompat;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.buttonGravity = global::CugemderApp.Droid.Resource.Attribute.buttonGravity;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.buttonIconDimen = global::CugemderApp.Droid.Resource.Attribute.buttonIconDimen;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.buttonPanelSideLayout = global::CugemderApp.Droid.Resource.Attribute.buttonPanelSideLayout;
@@ -3648,7 +3438,15 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.dividerHorizontal = global::CugemderApp.Droid.Resource.Attribute.dividerHorizontal;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.dividerPadding = global::CugemderApp.Droid.Resource.Attribute.dividerPadding;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.dividerVertical = global::CugemderApp.Droid.Resource.Attribute.dividerVertical;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableBottomCompat = global::CugemderApp.Droid.Resource.Attribute.drawableBottomCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableEndCompat = global::CugemderApp.Droid.Resource.Attribute.drawableEndCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableLeftCompat = global::CugemderApp.Droid.Resource.Attribute.drawableLeftCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableRightCompat = global::CugemderApp.Droid.Resource.Attribute.drawableRightCompat;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableSize = global::CugemderApp.Droid.Resource.Attribute.drawableSize;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableStartCompat = global::CugemderApp.Droid.Resource.Attribute.drawableStartCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableTint = global::CugemderApp.Droid.Resource.Attribute.drawableTint;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableTintMode = global::CugemderApp.Droid.Resource.Attribute.drawableTintMode;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawableTopCompat = global::CugemderApp.Droid.Resource.Attribute.drawableTopCompat;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.drawerArrowStyle = global::CugemderApp.Droid.Resource.Attribute.drawerArrowStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.dropdownListPreferredItemHeight = global::CugemderApp.Droid.Resource.Attribute.dropdownListPreferredItemHeight;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.dropDownListViewStyle = global::CugemderApp.Droid.Resource.Attribute.dropDownListViewStyle;
@@ -3755,6 +3553,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.lineHeight = global::CugemderApp.Droid.Resource.Attribute.lineHeight;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.lineSpacing = global::CugemderApp.Droid.Resource.Attribute.lineSpacing;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listChoiceBackgroundIndicator = global::CugemderApp.Droid.Resource.Attribute.listChoiceBackgroundIndicator;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listChoiceIndicatorMultipleAnimated = global::CugemderApp.Droid.Resource.Attribute.listChoiceIndicatorMultipleAnimated;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listChoiceIndicatorSingleAnimated = global::CugemderApp.Droid.Resource.Attribute.listChoiceIndicatorSingleAnimated;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listDividerAlertDialog = global::CugemderApp.Droid.Resource.Attribute.listDividerAlertDialog;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listItemLayout = global::CugemderApp.Droid.Resource.Attribute.listItemLayout;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listLayout = global::CugemderApp.Droid.Resource.Attribute.listLayout;
@@ -3763,8 +3563,10 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listPreferredItemHeight = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemHeight;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listPreferredItemHeightLarge = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemHeightLarge;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listPreferredItemHeightSmall = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemHeightSmall;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listPreferredItemPaddingEnd = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemPaddingEnd;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listPreferredItemPaddingLeft = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemPaddingLeft;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listPreferredItemPaddingRight = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemPaddingRight;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.listPreferredItemPaddingStart = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemPaddingStart;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.logo = global::CugemderApp.Droid.Resource.Attribute.logo;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.logoDescription = global::CugemderApp.Droid.Resource.Attribute.logoDescription;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.materialButtonStyle = global::CugemderApp.Droid.Resource.Attribute.materialButtonStyle;
@@ -3806,6 +3608,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.ratingBarStyle = global::CugemderApp.Droid.Resource.Attribute.ratingBarStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.ratingBarStyleIndicator = global::CugemderApp.Droid.Resource.Attribute.ratingBarStyleIndicator;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.ratingBarStyleSmall = global::CugemderApp.Droid.Resource.Attribute.ratingBarStyleSmall;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.recyclerViewStyle = global::CugemderApp.Droid.Resource.Attribute.recyclerViewStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.reverseLayout = global::CugemderApp.Droid.Resource.Attribute.reverseLayout;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.rippleColor = global::CugemderApp.Droid.Resource.Attribute.rippleColor;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.scrimAnimationDuration = global::CugemderApp.Droid.Resource.Attribute.scrimAnimationDuration;
@@ -3907,6 +3710,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.textColorSearchUrl = global::CugemderApp.Droid.Resource.Attribute.textColorSearchUrl;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.textEndPadding = global::CugemderApp.Droid.Resource.Attribute.textEndPadding;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.textInputStyle = global::CugemderApp.Droid.Resource.Attribute.textInputStyle;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.textLocale = global::CugemderApp.Droid.Resource.Attribute.textLocale;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.textStartPadding = global::CugemderApp.Droid.Resource.Attribute.textStartPadding;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.theme = global::CugemderApp.Droid.Resource.Attribute.theme;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.thickness = global::CugemderApp.Droid.Resource.Attribute.thickness;
@@ -4132,6 +3936,9 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_edit_text_inset_horizontal_material = global::CugemderApp.Droid.Resource.Dimension.abc_edit_text_inset_horizontal_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_edit_text_inset_top_material = global::CugemderApp.Droid.Resource.Dimension.abc_edit_text_inset_top_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_floating_window_z = global::CugemderApp.Droid.Resource.Dimension.abc_floating_window_z;
+			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_list_item_height_large_material = global::CugemderApp.Droid.Resource.Dimension.abc_list_item_height_large_material;
+			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_list_item_height_material = global::CugemderApp.Droid.Resource.Dimension.abc_list_item_height_material;
+			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_list_item_height_small_material = global::CugemderApp.Droid.Resource.Dimension.abc_list_item_height_small_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_list_item_padding_horizontal_material = global::CugemderApp.Droid.Resource.Dimension.abc_list_item_padding_horizontal_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_panel_menu_list_width = global::CugemderApp.Droid.Resource.Dimension.abc_panel_menu_list_width;
 			global::Xamarin.Forms.Platform.Android.Resource.Dimension.abc_progress_bar_height_material = global::CugemderApp.Droid.Resource.Dimension.abc_progress_bar_height_material;
@@ -4307,11 +4114,13 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_action_bar_item_background_material = global::CugemderApp.Droid.Resource.Drawable.abc_action_bar_item_background_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_borderless_material = global::CugemderApp.Droid.Resource.Drawable.abc_btn_borderless_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_check_material = global::CugemderApp.Droid.Resource.Drawable.abc_btn_check_material;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_check_material_anim = global::CugemderApp.Droid.Resource.Drawable.abc_btn_check_material_anim;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_check_to_on_mtrl_000 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_000;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_check_to_on_mtrl_015 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_015;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_colored_material = global::CugemderApp.Droid.Resource.Drawable.abc_btn_colored_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_default_mtrl_shape = global::CugemderApp.Droid.Resource.Drawable.abc_btn_default_mtrl_shape;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_radio_material = global::CugemderApp.Droid.Resource.Drawable.abc_btn_radio_material;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_radio_material_anim = global::CugemderApp.Droid.Resource.Drawable.abc_btn_radio_material_anim;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_radio_to_on_mtrl_000 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_000;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_radio_to_on_mtrl_015 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_015;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001;
@@ -4389,6 +4198,14 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.abc_vector_test = global::CugemderApp.Droid.Resource.Drawable.abc_vector_test;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.avd_hide_password = global::CugemderApp.Droid.Resource.Drawable.avd_hide_password;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.avd_show_password = global::CugemderApp.Droid.Resource.Drawable.avd_show_password;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.btn_checkbox_checked_mtrl = global::CugemderApp.Droid.Resource.Drawable.btn_checkbox_checked_mtrl;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.btn_checkbox_checked_to_unchecked_mtrl_animation = global::CugemderApp.Droid.Resource.Drawable.btn_checkbox_checked_to_unchecked_mtrl_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.btn_checkbox_unchecked_mtrl = global::CugemderApp.Droid.Resource.Drawable.btn_checkbox_unchecked_mtrl;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.btn_checkbox_unchecked_to_checked_mtrl_animation = global::CugemderApp.Droid.Resource.Drawable.btn_checkbox_unchecked_to_checked_mtrl_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.btn_radio_off_mtrl = global::CugemderApp.Droid.Resource.Drawable.btn_radio_off_mtrl;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.btn_radio_off_to_on_mtrl_animation = global::CugemderApp.Droid.Resource.Drawable.btn_radio_off_to_on_mtrl_animation;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.btn_radio_on_mtrl = global::CugemderApp.Droid.Resource.Drawable.btn_radio_on_mtrl;
+			global::Xamarin.Forms.Platform.Android.Resource.Drawable.btn_radio_on_to_off_mtrl_animation = global::CugemderApp.Droid.Resource.Drawable.btn_radio_on_to_off_mtrl_animation;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.design_bottom_navigation_item_background = global::CugemderApp.Droid.Resource.Drawable.design_bottom_navigation_item_background;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.design_fab_background = global::CugemderApp.Droid.Resource.Drawable.design_fab_background;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.design_ic_visibility = global::CugemderApp.Droid.Resource.Drawable.design_ic_visibility;
@@ -4415,6 +4232,39 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.notify_panel_notification_icon_bg = global::CugemderApp.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.tooltip_frame_dark = global::CugemderApp.Droid.Resource.Drawable.tooltip_frame_dark;
 			global::Xamarin.Forms.Platform.Android.Resource.Drawable.tooltip_frame_light = global::CugemderApp.Droid.Resource.Drawable.tooltip_frame_light;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_action_clickable_span = global::CugemderApp.Droid.Resource.Id.accessibility_action_clickable_span;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_0 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_0;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_1 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_1;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_10 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_10;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_11 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_11;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_12 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_12;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_13 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_13;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_14 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_14;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_15 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_15;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_16 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_16;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_17 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_17;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_18 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_18;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_19 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_19;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_2 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_2;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_20 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_20;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_21 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_21;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_22 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_22;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_23 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_23;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_24 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_24;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_25 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_25;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_26 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_26;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_27 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_27;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_28 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_28;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_29 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_29;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_3 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_3;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_30 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_30;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_31 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_31;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_4 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_4;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_5 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_5;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_6 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_6;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_7 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_7;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_8 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_8;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.accessibility_custom_action_9 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_9;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.action0 = global::CugemderApp.Droid.Resource.Id.action0;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.actions = global::CugemderApp.Droid.Resource.Id.actions;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.action_bar = global::CugemderApp.Droid.Resource.Id.action_bar;
@@ -4453,6 +4303,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.center_horizontal = global::CugemderApp.Droid.Resource.Id.center_horizontal;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.center_vertical = global::CugemderApp.Droid.Resource.Id.center_vertical;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.checkbox = global::CugemderApp.Droid.Resource.Id.checkbox;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.@checked = global::CugemderApp.Droid.Resource.Id.@checked;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.chronometer = global::CugemderApp.Droid.Resource.Id.chronometer;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.clip_horizontal = global::CugemderApp.Droid.Resource.Id.clip_horizontal;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.clip_vertical = global::CugemderApp.Droid.Resource.Id.clip_vertical;
@@ -4471,6 +4322,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.design_menu_item_action_area_stub = global::CugemderApp.Droid.Resource.Id.design_menu_item_action_area_stub;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.design_menu_item_text = global::CugemderApp.Droid.Resource.Id.design_menu_item_text;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.design_navigation_view = global::CugemderApp.Droid.Resource.Id.design_navigation_view;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.dialog_button = global::CugemderApp.Droid.Resource.Id.dialog_button;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.disableHome = global::CugemderApp.Droid.Resource.Id.disableHome;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.edit_query = global::CugemderApp.Droid.Resource.Id.edit_query;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.end = global::CugemderApp.Droid.Resource.Id.end;
@@ -4490,6 +4342,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.forever = global::CugemderApp.Droid.Resource.Id.forever;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.FUNCTION = global::CugemderApp.Droid.Resource.Id.FUNCTION;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.ghost_view = global::CugemderApp.Droid.Resource.Id.ghost_view;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.ghost_view_holder = global::CugemderApp.Droid.Resource.Id.ghost_view_holder;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.group_divider = global::CugemderApp.Droid.Resource.Id.group_divider;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.home = global::CugemderApp.Droid.Resource.Id.home;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.homeAsUp = global::CugemderApp.Droid.Resource.Id.homeAsUp;
@@ -4527,6 +4380,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.notification_background = global::CugemderApp.Droid.Resource.Id.notification_background;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.notification_main_column = global::CugemderApp.Droid.Resource.Id.notification_main_column;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.notification_main_column_container = global::CugemderApp.Droid.Resource.Id.notification_main_column_container;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.off = global::CugemderApp.Droid.Resource.Id.off;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.on = global::CugemderApp.Droid.Resource.Id.on;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.outline = global::CugemderApp.Droid.Resource.Id.outline;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.parallax = global::CugemderApp.Droid.Resource.Id.parallax;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.parentPanel = global::CugemderApp.Droid.Resource.Id.parentPanel;
@@ -4539,6 +4394,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.right_icon = global::CugemderApp.Droid.Resource.Id.right_icon;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.right_side = global::CugemderApp.Droid.Resource.Id.right_side;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.save_non_transition_alpha = global::CugemderApp.Droid.Resource.Id.save_non_transition_alpha;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.save_overlay_view = global::CugemderApp.Droid.Resource.Id.save_overlay_view;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.screen = global::CugemderApp.Droid.Resource.Id.screen;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.scroll = global::CugemderApp.Droid.Resource.Id.scroll;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.scrollable = global::CugemderApp.Droid.Resource.Id.scrollable;
@@ -4564,6 +4420,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.showCustom = global::CugemderApp.Droid.Resource.Id.showCustom;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.showHome = global::CugemderApp.Droid.Resource.Id.showHome;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.showTitle = global::CugemderApp.Droid.Resource.Id.showTitle;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.sliding_tabs = global::CugemderApp.Droid.Resource.Id.sliding_tabs;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.smallLabel = global::CugemderApp.Droid.Resource.Id.smallLabel;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.snackbar_action = global::CugemderApp.Droid.Resource.Id.snackbar_action;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.snackbar_text = global::CugemderApp.Droid.Resource.Id.snackbar_text;
@@ -4581,6 +4438,11 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.submit_area = global::CugemderApp.Droid.Resource.Id.submit_area;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.SYM = global::CugemderApp.Droid.Resource.Id.SYM;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.tabMode = global::CugemderApp.Droid.Resource.Id.tabMode;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.tag_accessibility_actions = global::CugemderApp.Droid.Resource.Id.tag_accessibility_actions;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.tag_accessibility_clickable_spans = global::CugemderApp.Droid.Resource.Id.tag_accessibility_clickable_spans;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.tag_accessibility_heading = global::CugemderApp.Droid.Resource.Id.tag_accessibility_heading;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.tag_accessibility_pane_title = global::CugemderApp.Droid.Resource.Id.tag_accessibility_pane_title;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.tag_screen_reader_focusable = global::CugemderApp.Droid.Resource.Id.tag_screen_reader_focusable;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.tag_transition_group = global::CugemderApp.Droid.Resource.Id.tag_transition_group;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.tag_unhandled_key_event_manager = global::CugemderApp.Droid.Resource.Id.tag_unhandled_key_event_manager;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.tag_unhandled_key_listeners = global::CugemderApp.Droid.Resource.Id.tag_unhandled_key_listeners;
@@ -4597,6 +4459,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.title = global::CugemderApp.Droid.Resource.Id.title;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.titleDividerNoCustom = global::CugemderApp.Droid.Resource.Id.titleDividerNoCustom;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.title_template = global::CugemderApp.Droid.Resource.Id.title_template;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.toolbar = global::CugemderApp.Droid.Resource.Id.toolbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.top = global::CugemderApp.Droid.Resource.Id.top;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.topPanel = global::CugemderApp.Droid.Resource.Id.topPanel;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.touch_outside = global::CugemderApp.Droid.Resource.Id.touch_outside;
@@ -4605,6 +4468,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Id.transition_position = global::CugemderApp.Droid.Resource.Id.transition_position;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.transition_scene_layoutid_cache = global::CugemderApp.Droid.Resource.Id.transition_scene_layoutid_cache;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.transition_transform = global::CugemderApp.Droid.Resource.Id.transition_transform;
+			global::Xamarin.Forms.Platform.Android.Resource.Id.@unchecked = global::CugemderApp.Droid.Resource.Id.@unchecked;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.uniform = global::CugemderApp.Droid.Resource.Id.uniform;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.unlabeled = global::CugemderApp.Droid.Resource.Id.unlabeled;
 			global::Xamarin.Forms.Platform.Android.Resource.Id.up = global::CugemderApp.Droid.Resource.Id.up;
@@ -4628,6 +4492,13 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Integer.mtrl_tab_indicator_anim_duration_ms = global::CugemderApp.Droid.Resource.Integer.mtrl_tab_indicator_anim_duration_ms;
 			global::Xamarin.Forms.Platform.Android.Resource.Integer.show_password_duration = global::CugemderApp.Droid.Resource.Integer.show_password_duration;
 			global::Xamarin.Forms.Platform.Android.Resource.Integer.status_bar_notification_info_maxnum = global::CugemderApp.Droid.Resource.Integer.status_bar_notification_info_maxnum;
+			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_0 = global::CugemderApp.Droid.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_1 = global::CugemderApp.Droid.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_1;
+			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_0 = global::CugemderApp.Droid.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_1 = global::CugemderApp.Droid.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_1;
+			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.btn_radio_to_off_mtrl_animation_interpolator_0 = global::CugemderApp.Droid.Resource.Interpolator.btn_radio_to_off_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.btn_radio_to_on_mtrl_animation_interpolator_0 = global::CugemderApp.Droid.Resource.Interpolator.btn_radio_to_on_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.fast_out_slow_in = global::CugemderApp.Droid.Resource.Interpolator.fast_out_slow_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.mtrl_fast_out_linear_in = global::CugemderApp.Droid.Resource.Interpolator.mtrl_fast_out_linear_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.mtrl_fast_out_slow_in = global::CugemderApp.Droid.Resource.Interpolator.mtrl_fast_out_slow_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Interpolator.mtrl_linear = global::CugemderApp.Droid.Resource.Interpolator.mtrl_linear;
@@ -4661,6 +4532,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.abc_select_dialog_material = global::CugemderApp.Droid.Resource.Layout.abc_select_dialog_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.abc_tooltip = global::CugemderApp.Droid.Resource.Layout.abc_tooltip;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.BottomTabLayout = global::CugemderApp.Droid.Resource.Layout.BottomTabLayout;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.custom_dialog = global::CugemderApp.Droid.Resource.Layout.custom_dialog;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_bottom_navigation_item = global::CugemderApp.Droid.Resource.Layout.design_bottom_navigation_item;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_bottom_sheet_dialog = global::CugemderApp.Droid.Resource.Layout.design_bottom_sheet_dialog;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_layout_snackbar = global::CugemderApp.Droid.Resource.Layout.design_layout_snackbar;
@@ -4675,6 +4547,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_navigation_menu = global::CugemderApp.Droid.Resource.Layout.design_navigation_menu;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_navigation_menu_item = global::CugemderApp.Droid.Resource.Layout.design_navigation_menu_item;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_text_input_password_icon = global::CugemderApp.Droid.Resource.Layout.design_text_input_password_icon;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.FallbackTabbarDoNotUse = global::CugemderApp.Droid.Resource.Layout.FallbackTabbarDoNotUse;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.FallbackToolbarDoNotUse = global::CugemderApp.Droid.Resource.Layout.FallbackToolbarDoNotUse;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.FlyoutContent = global::CugemderApp.Droid.Resource.Layout.FlyoutContent;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.mtrl_layout_snackbar = global::CugemderApp.Droid.Resource.Layout.mtrl_layout_snackbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.mtrl_layout_snackbar_include = global::CugemderApp.Droid.Resource.Layout.mtrl_layout_snackbar_include;
@@ -4699,6 +4573,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.select_dialog_singlechoice_material = global::CugemderApp.Droid.Resource.Layout.select_dialog_singlechoice_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.ShellContent = global::CugemderApp.Droid.Resource.Layout.ShellContent;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.support_simple_spinner_dropdown_item = global::CugemderApp.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.Tabbar = global::CugemderApp.Droid.Resource.Layout.Tabbar;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.Toolbar = global::CugemderApp.Droid.Resource.Layout.Toolbar;
 			global::Xamarin.Forms.Platform.Android.Resource.String.abc_action_bar_home_description = global::CugemderApp.Droid.Resource.String.abc_action_bar_home_description;
 			global::Xamarin.Forms.Platform.Android.Resource.String.abc_action_bar_up_description = global::CugemderApp.Droid.Resource.String.abc_action_bar_up_description;
 			global::Xamarin.Forms.Platform.Android.Resource.String.abc_action_menu_overflow_description = global::CugemderApp.Droid.Resource.String.abc_action_menu_overflow_description;
@@ -4930,6 +4806,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Base_Widget_AppCompat_SeekBar_Discrete = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar_Discrete;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Base_Widget_AppCompat_Spinner = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_Spinner;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined;
+			global::Xamarin.Forms.Platform.Android.Resource.Style.Base_Widget_AppCompat_TextView = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_TextView;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Base_Widget_AppCompat_Toolbar = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation;
@@ -5064,6 +4941,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Style.ThemeOverlay_AppCompat_ActionBar = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_ActionBar;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.ThemeOverlay_AppCompat_Dark = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::Xamarin.Forms.Platform.Android.Resource.Style.ThemeOverlay_AppCompat_DayNight = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_DayNight;
+			global::Xamarin.Forms.Platform.Android.Resource.Style.ThemeOverlay_AppCompat_DayNight_ActionBar = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_DayNight_ActionBar;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.ThemeOverlay_AppCompat_Dialog = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dialog;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.ThemeOverlay_AppCompat_Dialog_Alert = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dialog_Alert;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.ThemeOverlay_AppCompat_Light = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Light;
@@ -5196,6 +5075,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_AppCompat_Spinner_DropDown = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_AppCompat_Spinner_Underlined = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Spinner_Underlined;
+			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_AppCompat_TextView = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_TextView;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_AppCompat_TextView_SpinnerItem = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_TextView_SpinnerItem;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_AppCompat_Toolbar = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Toolbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation;
@@ -5357,11 +5237,21 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_autoSizePresetSizes = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_autoSizePresetSizes;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_autoSizeStepGranularity = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_autoSizeStepGranularity;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_autoSizeTextType = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_autoSizeTextType;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_drawableBottomCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableBottomCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_drawableEndCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableEndCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_drawableLeftCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableLeftCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_drawableRightCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableRightCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_drawableStartCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableStartCompat;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_drawableTint = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableTint;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_drawableTintMode = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableTintMode;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_drawableTopCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableTopCompat;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_firstBaselineToTopHeight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_firstBaselineToTopHeight;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_fontFamily = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_fontFamily;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_fontVariationSettings = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_fontVariationSettings;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_lastBaselineToBottomHeight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_lastBaselineToBottomHeight;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_lineHeight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_lineHeight;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_textAllCaps = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_textAllCaps;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTextView_textLocale = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_textLocale;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_actionBarDivider = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_actionBarDivider;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_actionBarItemBackground = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_actionBarItemBackground;
@@ -5435,14 +5325,18 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_homeAsUpIndicator = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_homeAsUpIndicator;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_imageButtonStyle = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_imageButtonStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listChoiceIndicatorMultipleAnimated = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceIndicatorMultipleAnimated;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listChoiceIndicatorSingleAnimated = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceIndicatorSingleAnimated;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listDividerAlertDialog = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listDividerAlertDialog;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listMenuViewStyle = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listMenuViewStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listPopupWindowStyle = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPopupWindowStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listPreferredItemHeight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeight;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingEnd = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingEnd;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingStart = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingStart;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_panelBackground = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_panelBackground;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_panelMenuListTheme = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_panelMenuListTheme;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.AppCompatTheme_panelMenuListWidth = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_panelMenuListWidth;
@@ -5591,6 +5485,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.ColorStateListItem_android_color = global::CugemderApp.Droid.Resource.Styleable.ColorStateListItem_android_color;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.CompoundButton = global::CugemderApp.Droid.Resource.Styleable.CompoundButton;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.CompoundButton_android_button = global::CugemderApp.Droid.Resource.Styleable.CompoundButton_android_button;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.CompoundButton_buttonCompat = global::CugemderApp.Droid.Resource.Styleable.CompoundButton_buttonCompat;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.CompoundButton_buttonTint = global::CugemderApp.Droid.Resource.Styleable.CompoundButton_buttonTint;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.CompoundButton_buttonTintMode = global::CugemderApp.Droid.Resource.Styleable.CompoundButton_buttonTintMode;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.CoordinatorLayout = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout;
@@ -5810,6 +5705,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.RecycleListView_paddingBottomNoButtons = global::CugemderApp.Droid.Resource.Styleable.RecycleListView_paddingBottomNoButtons;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.RecycleListView_paddingTopNoTitle = global::CugemderApp.Droid.Resource.Styleable.RecycleListView_paddingTopNoTitle;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.RecyclerView = global::CugemderApp.Droid.Resource.Styleable.RecyclerView;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.RecyclerView_android_clipToPadding = global::CugemderApp.Droid.Resource.Styleable.RecyclerView_android_clipToPadding;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.RecyclerView_android_descendantFocusability = global::CugemderApp.Droid.Resource.Styleable.RecyclerView_android_descendantFocusability;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.RecyclerView_android_orientation = global::CugemderApp.Droid.Resource.Styleable.RecyclerView_android_orientation;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.RecyclerView_fastScrollEnabled = global::CugemderApp.Droid.Resource.Styleable.RecyclerView_fastScrollEnabled;
@@ -5921,11 +5817,14 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_android_textColor = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textColor;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_android_textColorHint = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textColorHint;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_android_textColorLink = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textColorLink;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_android_textFontWeight = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textFontWeight;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_android_textSize = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textSize;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_android_textStyle = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textStyle;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_android_typeface = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_typeface;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_fontFamily = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_fontFamily;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_fontVariationSettings = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_fontVariationSettings;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_textAllCaps = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_textAllCaps;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextAppearance_textLocale = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_textLocale;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextInputLayout = global::CugemderApp.Droid.Resource.Styleable.TextInputLayout;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextInputLayout_android_hint = global::CugemderApp.Droid.Resource.Styleable.TextInputLayout_android_hint;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.TextInputLayout_android_textColorHint = global::CugemderApp.Droid.Resource.Styleable.TextInputLayout_android_textColorHint;
@@ -5974,6 +5873,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.Toolbar_logo = global::CugemderApp.Droid.Resource.Styleable.Toolbar_logo;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.Toolbar_logoDescription = global::CugemderApp.Droid.Resource.Styleable.Toolbar_logoDescription;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.Toolbar_maxButtonHeight = global::CugemderApp.Droid.Resource.Styleable.Toolbar_maxButtonHeight;
+			global::Xamarin.Forms.Platform.Android.Resource.Styleable.Toolbar_menu = global::CugemderApp.Droid.Resource.Styleable.Toolbar_menu;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.Toolbar_navigationContentDescription = global::CugemderApp.Droid.Resource.Styleable.Toolbar_navigationContentDescription;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.Toolbar_navigationIcon = global::CugemderApp.Droid.Resource.Styleable.Toolbar_navigationIcon;
 			global::Xamarin.Forms.Platform.Android.Resource.Styleable.Toolbar_popupTheme = global::CugemderApp.Droid.Resource.Styleable.Toolbar_popupTheme;
@@ -6015,6 +5915,18 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Animation.abc_slide_out_top = global::CugemderApp.Droid.Resource.Animation.abc_slide_out_top;
 			global::Xamarin.Forms.Platform.Resource.Animation.abc_tooltip_enter = global::CugemderApp.Droid.Resource.Animation.abc_tooltip_enter;
 			global::Xamarin.Forms.Platform.Resource.Animation.abc_tooltip_exit = global::CugemderApp.Droid.Resource.Animation.abc_tooltip_exit;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_checkbox_to_checked_box_inner_merged_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_checked_box_inner_merged_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_checkbox_to_checked_box_outer_merged_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_checked_box_outer_merged_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_checkbox_to_checked_icon_null_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_checked_icon_null_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_checkbox_to_unchecked_box_inner_merged_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_box_inner_merged_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_checkbox_to_unchecked_check_path_merged_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_check_path_merged_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_checkbox_to_unchecked_icon_null_animation = global::CugemderApp.Droid.Resource.Animation.btn_checkbox_to_unchecked_icon_null_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_radio_to_off_mtrl_dot_group_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_dot_group_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_path_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_off_mtrl_ring_outer_path_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_radio_to_on_mtrl_dot_group_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_dot_group_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_animation;
+			global::Xamarin.Forms.Platform.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_path_animation = global::CugemderApp.Droid.Resource.Animation.btn_radio_to_on_mtrl_ring_outer_path_animation;
 			global::Xamarin.Forms.Platform.Resource.Animation.design_bottom_sheet_slide_in = global::CugemderApp.Droid.Resource.Animation.design_bottom_sheet_slide_in;
 			global::Xamarin.Forms.Platform.Resource.Animation.design_bottom_sheet_slide_out = global::CugemderApp.Droid.Resource.Animation.design_bottom_sheet_slide_out;
 			global::Xamarin.Forms.Platform.Resource.Animation.design_snackbar_in = global::CugemderApp.Droid.Resource.Animation.design_snackbar_in;
@@ -6114,6 +6026,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Attribute.buttonBarNeutralButtonStyle = global::CugemderApp.Droid.Resource.Attribute.buttonBarNeutralButtonStyle;
 			global::Xamarin.Forms.Platform.Resource.Attribute.buttonBarPositiveButtonStyle = global::CugemderApp.Droid.Resource.Attribute.buttonBarPositiveButtonStyle;
 			global::Xamarin.Forms.Platform.Resource.Attribute.buttonBarStyle = global::CugemderApp.Droid.Resource.Attribute.buttonBarStyle;
+			global::Xamarin.Forms.Platform.Resource.Attribute.buttonCompat = global::CugemderApp.Droid.Resource.Attribute.buttonCompat;
 			global::Xamarin.Forms.Platform.Resource.Attribute.buttonGravity = global::CugemderApp.Droid.Resource.Attribute.buttonGravity;
 			global::Xamarin.Forms.Platform.Resource.Attribute.buttonIconDimen = global::CugemderApp.Droid.Resource.Attribute.buttonIconDimen;
 			global::Xamarin.Forms.Platform.Resource.Attribute.buttonPanelSideLayout = global::CugemderApp.Droid.Resource.Attribute.buttonPanelSideLayout;
@@ -6208,7 +6121,15 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Attribute.dividerHorizontal = global::CugemderApp.Droid.Resource.Attribute.dividerHorizontal;
 			global::Xamarin.Forms.Platform.Resource.Attribute.dividerPadding = global::CugemderApp.Droid.Resource.Attribute.dividerPadding;
 			global::Xamarin.Forms.Platform.Resource.Attribute.dividerVertical = global::CugemderApp.Droid.Resource.Attribute.dividerVertical;
+			global::Xamarin.Forms.Platform.Resource.Attribute.drawableBottomCompat = global::CugemderApp.Droid.Resource.Attribute.drawableBottomCompat;
+			global::Xamarin.Forms.Platform.Resource.Attribute.drawableEndCompat = global::CugemderApp.Droid.Resource.Attribute.drawableEndCompat;
+			global::Xamarin.Forms.Platform.Resource.Attribute.drawableLeftCompat = global::CugemderApp.Droid.Resource.Attribute.drawableLeftCompat;
+			global::Xamarin.Forms.Platform.Resource.Attribute.drawableRightCompat = global::CugemderApp.Droid.Resource.Attribute.drawableRightCompat;
 			global::Xamarin.Forms.Platform.Resource.Attribute.drawableSize = global::CugemderApp.Droid.Resource.Attribute.drawableSize;
+			global::Xamarin.Forms.Platform.Resource.Attribute.drawableStartCompat = global::CugemderApp.Droid.Resource.Attribute.drawableStartCompat;
+			global::Xamarin.Forms.Platform.Resource.Attribute.drawableTint = global::CugemderApp.Droid.Resource.Attribute.drawableTint;
+			global::Xamarin.Forms.Platform.Resource.Attribute.drawableTintMode = global::CugemderApp.Droid.Resource.Attribute.drawableTintMode;
+			global::Xamarin.Forms.Platform.Resource.Attribute.drawableTopCompat = global::CugemderApp.Droid.Resource.Attribute.drawableTopCompat;
 			global::Xamarin.Forms.Platform.Resource.Attribute.drawerArrowStyle = global::CugemderApp.Droid.Resource.Attribute.drawerArrowStyle;
 			global::Xamarin.Forms.Platform.Resource.Attribute.dropdownListPreferredItemHeight = global::CugemderApp.Droid.Resource.Attribute.dropdownListPreferredItemHeight;
 			global::Xamarin.Forms.Platform.Resource.Attribute.dropDownListViewStyle = global::CugemderApp.Droid.Resource.Attribute.dropDownListViewStyle;
@@ -6315,6 +6236,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Attribute.lineHeight = global::CugemderApp.Droid.Resource.Attribute.lineHeight;
 			global::Xamarin.Forms.Platform.Resource.Attribute.lineSpacing = global::CugemderApp.Droid.Resource.Attribute.lineSpacing;
 			global::Xamarin.Forms.Platform.Resource.Attribute.listChoiceBackgroundIndicator = global::CugemderApp.Droid.Resource.Attribute.listChoiceBackgroundIndicator;
+			global::Xamarin.Forms.Platform.Resource.Attribute.listChoiceIndicatorMultipleAnimated = global::CugemderApp.Droid.Resource.Attribute.listChoiceIndicatorMultipleAnimated;
+			global::Xamarin.Forms.Platform.Resource.Attribute.listChoiceIndicatorSingleAnimated = global::CugemderApp.Droid.Resource.Attribute.listChoiceIndicatorSingleAnimated;
 			global::Xamarin.Forms.Platform.Resource.Attribute.listDividerAlertDialog = global::CugemderApp.Droid.Resource.Attribute.listDividerAlertDialog;
 			global::Xamarin.Forms.Platform.Resource.Attribute.listItemLayout = global::CugemderApp.Droid.Resource.Attribute.listItemLayout;
 			global::Xamarin.Forms.Platform.Resource.Attribute.listLayout = global::CugemderApp.Droid.Resource.Attribute.listLayout;
@@ -6323,8 +6246,10 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Attribute.listPreferredItemHeight = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemHeight;
 			global::Xamarin.Forms.Platform.Resource.Attribute.listPreferredItemHeightLarge = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemHeightLarge;
 			global::Xamarin.Forms.Platform.Resource.Attribute.listPreferredItemHeightSmall = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemHeightSmall;
+			global::Xamarin.Forms.Platform.Resource.Attribute.listPreferredItemPaddingEnd = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemPaddingEnd;
 			global::Xamarin.Forms.Platform.Resource.Attribute.listPreferredItemPaddingLeft = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemPaddingLeft;
 			global::Xamarin.Forms.Platform.Resource.Attribute.listPreferredItemPaddingRight = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemPaddingRight;
+			global::Xamarin.Forms.Platform.Resource.Attribute.listPreferredItemPaddingStart = global::CugemderApp.Droid.Resource.Attribute.listPreferredItemPaddingStart;
 			global::Xamarin.Forms.Platform.Resource.Attribute.logo = global::CugemderApp.Droid.Resource.Attribute.logo;
 			global::Xamarin.Forms.Platform.Resource.Attribute.logoDescription = global::CugemderApp.Droid.Resource.Attribute.logoDescription;
 			global::Xamarin.Forms.Platform.Resource.Attribute.materialButtonStyle = global::CugemderApp.Droid.Resource.Attribute.materialButtonStyle;
@@ -6366,6 +6291,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Attribute.ratingBarStyle = global::CugemderApp.Droid.Resource.Attribute.ratingBarStyle;
 			global::Xamarin.Forms.Platform.Resource.Attribute.ratingBarStyleIndicator = global::CugemderApp.Droid.Resource.Attribute.ratingBarStyleIndicator;
 			global::Xamarin.Forms.Platform.Resource.Attribute.ratingBarStyleSmall = global::CugemderApp.Droid.Resource.Attribute.ratingBarStyleSmall;
+			global::Xamarin.Forms.Platform.Resource.Attribute.recyclerViewStyle = global::CugemderApp.Droid.Resource.Attribute.recyclerViewStyle;
 			global::Xamarin.Forms.Platform.Resource.Attribute.reverseLayout = global::CugemderApp.Droid.Resource.Attribute.reverseLayout;
 			global::Xamarin.Forms.Platform.Resource.Attribute.rippleColor = global::CugemderApp.Droid.Resource.Attribute.rippleColor;
 			global::Xamarin.Forms.Platform.Resource.Attribute.scrimAnimationDuration = global::CugemderApp.Droid.Resource.Attribute.scrimAnimationDuration;
@@ -6467,6 +6393,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Attribute.textColorSearchUrl = global::CugemderApp.Droid.Resource.Attribute.textColorSearchUrl;
 			global::Xamarin.Forms.Platform.Resource.Attribute.textEndPadding = global::CugemderApp.Droid.Resource.Attribute.textEndPadding;
 			global::Xamarin.Forms.Platform.Resource.Attribute.textInputStyle = global::CugemderApp.Droid.Resource.Attribute.textInputStyle;
+			global::Xamarin.Forms.Platform.Resource.Attribute.textLocale = global::CugemderApp.Droid.Resource.Attribute.textLocale;
 			global::Xamarin.Forms.Platform.Resource.Attribute.textStartPadding = global::CugemderApp.Droid.Resource.Attribute.textStartPadding;
 			global::Xamarin.Forms.Platform.Resource.Attribute.theme = global::CugemderApp.Droid.Resource.Attribute.theme;
 			global::Xamarin.Forms.Platform.Resource.Attribute.thickness = global::CugemderApp.Droid.Resource.Attribute.thickness;
@@ -6692,6 +6619,9 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Dimension.abc_edit_text_inset_horizontal_material = global::CugemderApp.Droid.Resource.Dimension.abc_edit_text_inset_horizontal_material;
 			global::Xamarin.Forms.Platform.Resource.Dimension.abc_edit_text_inset_top_material = global::CugemderApp.Droid.Resource.Dimension.abc_edit_text_inset_top_material;
 			global::Xamarin.Forms.Platform.Resource.Dimension.abc_floating_window_z = global::CugemderApp.Droid.Resource.Dimension.abc_floating_window_z;
+			global::Xamarin.Forms.Platform.Resource.Dimension.abc_list_item_height_large_material = global::CugemderApp.Droid.Resource.Dimension.abc_list_item_height_large_material;
+			global::Xamarin.Forms.Platform.Resource.Dimension.abc_list_item_height_material = global::CugemderApp.Droid.Resource.Dimension.abc_list_item_height_material;
+			global::Xamarin.Forms.Platform.Resource.Dimension.abc_list_item_height_small_material = global::CugemderApp.Droid.Resource.Dimension.abc_list_item_height_small_material;
 			global::Xamarin.Forms.Platform.Resource.Dimension.abc_list_item_padding_horizontal_material = global::CugemderApp.Droid.Resource.Dimension.abc_list_item_padding_horizontal_material;
 			global::Xamarin.Forms.Platform.Resource.Dimension.abc_panel_menu_list_width = global::CugemderApp.Droid.Resource.Dimension.abc_panel_menu_list_width;
 			global::Xamarin.Forms.Platform.Resource.Dimension.abc_progress_bar_height_material = global::CugemderApp.Droid.Resource.Dimension.abc_progress_bar_height_material;
@@ -6867,11 +6797,13 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_action_bar_item_background_material = global::CugemderApp.Droid.Resource.Drawable.abc_action_bar_item_background_material;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_borderless_material = global::CugemderApp.Droid.Resource.Drawable.abc_btn_borderless_material;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_check_material = global::CugemderApp.Droid.Resource.Drawable.abc_btn_check_material;
+			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_check_material_anim = global::CugemderApp.Droid.Resource.Drawable.abc_btn_check_material_anim;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_check_to_on_mtrl_000 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_000;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_check_to_on_mtrl_015 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_015;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_colored_material = global::CugemderApp.Droid.Resource.Drawable.abc_btn_colored_material;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_default_mtrl_shape = global::CugemderApp.Droid.Resource.Drawable.abc_btn_default_mtrl_shape;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_radio_material = global::CugemderApp.Droid.Resource.Drawable.abc_btn_radio_material;
+			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_radio_material_anim = global::CugemderApp.Droid.Resource.Drawable.abc_btn_radio_material_anim;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_radio_to_on_mtrl_000 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_000;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_radio_to_on_mtrl_015 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_015;
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001 = global::CugemderApp.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001;
@@ -6949,6 +6881,14 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Drawable.abc_vector_test = global::CugemderApp.Droid.Resource.Drawable.abc_vector_test;
 			global::Xamarin.Forms.Platform.Resource.Drawable.avd_hide_password = global::CugemderApp.Droid.Resource.Drawable.avd_hide_password;
 			global::Xamarin.Forms.Platform.Resource.Drawable.avd_show_password = global::CugemderApp.Droid.Resource.Drawable.avd_show_password;
+			global::Xamarin.Forms.Platform.Resource.Drawable.btn_checkbox_checked_mtrl = global::CugemderApp.Droid.Resource.Drawable.btn_checkbox_checked_mtrl;
+			global::Xamarin.Forms.Platform.Resource.Drawable.btn_checkbox_checked_to_unchecked_mtrl_animation = global::CugemderApp.Droid.Resource.Drawable.btn_checkbox_checked_to_unchecked_mtrl_animation;
+			global::Xamarin.Forms.Platform.Resource.Drawable.btn_checkbox_unchecked_mtrl = global::CugemderApp.Droid.Resource.Drawable.btn_checkbox_unchecked_mtrl;
+			global::Xamarin.Forms.Platform.Resource.Drawable.btn_checkbox_unchecked_to_checked_mtrl_animation = global::CugemderApp.Droid.Resource.Drawable.btn_checkbox_unchecked_to_checked_mtrl_animation;
+			global::Xamarin.Forms.Platform.Resource.Drawable.btn_radio_off_mtrl = global::CugemderApp.Droid.Resource.Drawable.btn_radio_off_mtrl;
+			global::Xamarin.Forms.Platform.Resource.Drawable.btn_radio_off_to_on_mtrl_animation = global::CugemderApp.Droid.Resource.Drawable.btn_radio_off_to_on_mtrl_animation;
+			global::Xamarin.Forms.Platform.Resource.Drawable.btn_radio_on_mtrl = global::CugemderApp.Droid.Resource.Drawable.btn_radio_on_mtrl;
+			global::Xamarin.Forms.Platform.Resource.Drawable.btn_radio_on_to_off_mtrl_animation = global::CugemderApp.Droid.Resource.Drawable.btn_radio_on_to_off_mtrl_animation;
 			global::Xamarin.Forms.Platform.Resource.Drawable.design_bottom_navigation_item_background = global::CugemderApp.Droid.Resource.Drawable.design_bottom_navigation_item_background;
 			global::Xamarin.Forms.Platform.Resource.Drawable.design_fab_background = global::CugemderApp.Droid.Resource.Drawable.design_fab_background;
 			global::Xamarin.Forms.Platform.Resource.Drawable.design_ic_visibility = global::CugemderApp.Droid.Resource.Drawable.design_ic_visibility;
@@ -6975,6 +6915,39 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Drawable.notify_panel_notification_icon_bg = global::CugemderApp.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
 			global::Xamarin.Forms.Platform.Resource.Drawable.tooltip_frame_dark = global::CugemderApp.Droid.Resource.Drawable.tooltip_frame_dark;
 			global::Xamarin.Forms.Platform.Resource.Drawable.tooltip_frame_light = global::CugemderApp.Droid.Resource.Drawable.tooltip_frame_light;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_action_clickable_span = global::CugemderApp.Droid.Resource.Id.accessibility_action_clickable_span;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_0 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_0;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_1 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_1;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_10 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_10;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_11 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_11;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_12 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_12;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_13 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_13;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_14 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_14;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_15 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_15;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_16 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_16;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_17 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_17;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_18 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_18;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_19 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_19;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_2 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_2;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_20 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_20;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_21 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_21;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_22 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_22;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_23 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_23;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_24 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_24;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_25 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_25;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_26 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_26;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_27 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_27;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_28 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_28;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_29 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_29;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_3 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_3;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_30 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_30;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_31 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_31;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_4 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_4;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_5 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_5;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_6 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_6;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_7 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_7;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_8 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_8;
+			global::Xamarin.Forms.Platform.Resource.Id.accessibility_custom_action_9 = global::CugemderApp.Droid.Resource.Id.accessibility_custom_action_9;
 			global::Xamarin.Forms.Platform.Resource.Id.action0 = global::CugemderApp.Droid.Resource.Id.action0;
 			global::Xamarin.Forms.Platform.Resource.Id.actions = global::CugemderApp.Droid.Resource.Id.actions;
 			global::Xamarin.Forms.Platform.Resource.Id.action_bar = global::CugemderApp.Droid.Resource.Id.action_bar;
@@ -7013,6 +6986,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.center_horizontal = global::CugemderApp.Droid.Resource.Id.center_horizontal;
 			global::Xamarin.Forms.Platform.Resource.Id.center_vertical = global::CugemderApp.Droid.Resource.Id.center_vertical;
 			global::Xamarin.Forms.Platform.Resource.Id.checkbox = global::CugemderApp.Droid.Resource.Id.checkbox;
+			global::Xamarin.Forms.Platform.Resource.Id.@checked = global::CugemderApp.Droid.Resource.Id.@checked;
 			global::Xamarin.Forms.Platform.Resource.Id.chronometer = global::CugemderApp.Droid.Resource.Id.chronometer;
 			global::Xamarin.Forms.Platform.Resource.Id.clip_horizontal = global::CugemderApp.Droid.Resource.Id.clip_horizontal;
 			global::Xamarin.Forms.Platform.Resource.Id.clip_vertical = global::CugemderApp.Droid.Resource.Id.clip_vertical;
@@ -7031,6 +7005,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.design_menu_item_action_area_stub = global::CugemderApp.Droid.Resource.Id.design_menu_item_action_area_stub;
 			global::Xamarin.Forms.Platform.Resource.Id.design_menu_item_text = global::CugemderApp.Droid.Resource.Id.design_menu_item_text;
 			global::Xamarin.Forms.Platform.Resource.Id.design_navigation_view = global::CugemderApp.Droid.Resource.Id.design_navigation_view;
+			global::Xamarin.Forms.Platform.Resource.Id.dialog_button = global::CugemderApp.Droid.Resource.Id.dialog_button;
 			global::Xamarin.Forms.Platform.Resource.Id.disableHome = global::CugemderApp.Droid.Resource.Id.disableHome;
 			global::Xamarin.Forms.Platform.Resource.Id.edit_query = global::CugemderApp.Droid.Resource.Id.edit_query;
 			global::Xamarin.Forms.Platform.Resource.Id.end = global::CugemderApp.Droid.Resource.Id.end;
@@ -7050,6 +7025,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.forever = global::CugemderApp.Droid.Resource.Id.forever;
 			global::Xamarin.Forms.Platform.Resource.Id.FUNCTION = global::CugemderApp.Droid.Resource.Id.FUNCTION;
 			global::Xamarin.Forms.Platform.Resource.Id.ghost_view = global::CugemderApp.Droid.Resource.Id.ghost_view;
+			global::Xamarin.Forms.Platform.Resource.Id.ghost_view_holder = global::CugemderApp.Droid.Resource.Id.ghost_view_holder;
 			global::Xamarin.Forms.Platform.Resource.Id.group_divider = global::CugemderApp.Droid.Resource.Id.group_divider;
 			global::Xamarin.Forms.Platform.Resource.Id.home = global::CugemderApp.Droid.Resource.Id.home;
 			global::Xamarin.Forms.Platform.Resource.Id.homeAsUp = global::CugemderApp.Droid.Resource.Id.homeAsUp;
@@ -7087,6 +7063,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.notification_background = global::CugemderApp.Droid.Resource.Id.notification_background;
 			global::Xamarin.Forms.Platform.Resource.Id.notification_main_column = global::CugemderApp.Droid.Resource.Id.notification_main_column;
 			global::Xamarin.Forms.Platform.Resource.Id.notification_main_column_container = global::CugemderApp.Droid.Resource.Id.notification_main_column_container;
+			global::Xamarin.Forms.Platform.Resource.Id.off = global::CugemderApp.Droid.Resource.Id.off;
+			global::Xamarin.Forms.Platform.Resource.Id.on = global::CugemderApp.Droid.Resource.Id.on;
 			global::Xamarin.Forms.Platform.Resource.Id.outline = global::CugemderApp.Droid.Resource.Id.outline;
 			global::Xamarin.Forms.Platform.Resource.Id.parallax = global::CugemderApp.Droid.Resource.Id.parallax;
 			global::Xamarin.Forms.Platform.Resource.Id.parentPanel = global::CugemderApp.Droid.Resource.Id.parentPanel;
@@ -7099,6 +7077,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.right_icon = global::CugemderApp.Droid.Resource.Id.right_icon;
 			global::Xamarin.Forms.Platform.Resource.Id.right_side = global::CugemderApp.Droid.Resource.Id.right_side;
 			global::Xamarin.Forms.Platform.Resource.Id.save_non_transition_alpha = global::CugemderApp.Droid.Resource.Id.save_non_transition_alpha;
+			global::Xamarin.Forms.Platform.Resource.Id.save_overlay_view = global::CugemderApp.Droid.Resource.Id.save_overlay_view;
 			global::Xamarin.Forms.Platform.Resource.Id.screen = global::CugemderApp.Droid.Resource.Id.screen;
 			global::Xamarin.Forms.Platform.Resource.Id.scroll = global::CugemderApp.Droid.Resource.Id.scroll;
 			global::Xamarin.Forms.Platform.Resource.Id.scrollable = global::CugemderApp.Droid.Resource.Id.scrollable;
@@ -7124,6 +7103,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.showCustom = global::CugemderApp.Droid.Resource.Id.showCustom;
 			global::Xamarin.Forms.Platform.Resource.Id.showHome = global::CugemderApp.Droid.Resource.Id.showHome;
 			global::Xamarin.Forms.Platform.Resource.Id.showTitle = global::CugemderApp.Droid.Resource.Id.showTitle;
+			global::Xamarin.Forms.Platform.Resource.Id.sliding_tabs = global::CugemderApp.Droid.Resource.Id.sliding_tabs;
 			global::Xamarin.Forms.Platform.Resource.Id.smallLabel = global::CugemderApp.Droid.Resource.Id.smallLabel;
 			global::Xamarin.Forms.Platform.Resource.Id.snackbar_action = global::CugemderApp.Droid.Resource.Id.snackbar_action;
 			global::Xamarin.Forms.Platform.Resource.Id.snackbar_text = global::CugemderApp.Droid.Resource.Id.snackbar_text;
@@ -7141,6 +7121,11 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.submit_area = global::CugemderApp.Droid.Resource.Id.submit_area;
 			global::Xamarin.Forms.Platform.Resource.Id.SYM = global::CugemderApp.Droid.Resource.Id.SYM;
 			global::Xamarin.Forms.Platform.Resource.Id.tabMode = global::CugemderApp.Droid.Resource.Id.tabMode;
+			global::Xamarin.Forms.Platform.Resource.Id.tag_accessibility_actions = global::CugemderApp.Droid.Resource.Id.tag_accessibility_actions;
+			global::Xamarin.Forms.Platform.Resource.Id.tag_accessibility_clickable_spans = global::CugemderApp.Droid.Resource.Id.tag_accessibility_clickable_spans;
+			global::Xamarin.Forms.Platform.Resource.Id.tag_accessibility_heading = global::CugemderApp.Droid.Resource.Id.tag_accessibility_heading;
+			global::Xamarin.Forms.Platform.Resource.Id.tag_accessibility_pane_title = global::CugemderApp.Droid.Resource.Id.tag_accessibility_pane_title;
+			global::Xamarin.Forms.Platform.Resource.Id.tag_screen_reader_focusable = global::CugemderApp.Droid.Resource.Id.tag_screen_reader_focusable;
 			global::Xamarin.Forms.Platform.Resource.Id.tag_transition_group = global::CugemderApp.Droid.Resource.Id.tag_transition_group;
 			global::Xamarin.Forms.Platform.Resource.Id.tag_unhandled_key_event_manager = global::CugemderApp.Droid.Resource.Id.tag_unhandled_key_event_manager;
 			global::Xamarin.Forms.Platform.Resource.Id.tag_unhandled_key_listeners = global::CugemderApp.Droid.Resource.Id.tag_unhandled_key_listeners;
@@ -7157,6 +7142,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.title = global::CugemderApp.Droid.Resource.Id.title;
 			global::Xamarin.Forms.Platform.Resource.Id.titleDividerNoCustom = global::CugemderApp.Droid.Resource.Id.titleDividerNoCustom;
 			global::Xamarin.Forms.Platform.Resource.Id.title_template = global::CugemderApp.Droid.Resource.Id.title_template;
+			global::Xamarin.Forms.Platform.Resource.Id.toolbar = global::CugemderApp.Droid.Resource.Id.toolbar;
 			global::Xamarin.Forms.Platform.Resource.Id.top = global::CugemderApp.Droid.Resource.Id.top;
 			global::Xamarin.Forms.Platform.Resource.Id.topPanel = global::CugemderApp.Droid.Resource.Id.topPanel;
 			global::Xamarin.Forms.Platform.Resource.Id.touch_outside = global::CugemderApp.Droid.Resource.Id.touch_outside;
@@ -7165,6 +7151,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Id.transition_position = global::CugemderApp.Droid.Resource.Id.transition_position;
 			global::Xamarin.Forms.Platform.Resource.Id.transition_scene_layoutid_cache = global::CugemderApp.Droid.Resource.Id.transition_scene_layoutid_cache;
 			global::Xamarin.Forms.Platform.Resource.Id.transition_transform = global::CugemderApp.Droid.Resource.Id.transition_transform;
+			global::Xamarin.Forms.Platform.Resource.Id.@unchecked = global::CugemderApp.Droid.Resource.Id.@unchecked;
 			global::Xamarin.Forms.Platform.Resource.Id.uniform = global::CugemderApp.Droid.Resource.Id.uniform;
 			global::Xamarin.Forms.Platform.Resource.Id.unlabeled = global::CugemderApp.Droid.Resource.Id.unlabeled;
 			global::Xamarin.Forms.Platform.Resource.Id.up = global::CugemderApp.Droid.Resource.Id.up;
@@ -7188,6 +7175,13 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Integer.mtrl_tab_indicator_anim_duration_ms = global::CugemderApp.Droid.Resource.Integer.mtrl_tab_indicator_anim_duration_ms;
 			global::Xamarin.Forms.Platform.Resource.Integer.show_password_duration = global::CugemderApp.Droid.Resource.Integer.show_password_duration;
 			global::Xamarin.Forms.Platform.Resource.Integer.status_bar_notification_info_maxnum = global::CugemderApp.Droid.Resource.Integer.status_bar_notification_info_maxnum;
+			global::Xamarin.Forms.Platform.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_0 = global::CugemderApp.Droid.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.Platform.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_1 = global::CugemderApp.Droid.Resource.Interpolator.btn_checkbox_checked_mtrl_animation_interpolator_1;
+			global::Xamarin.Forms.Platform.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_0 = global::CugemderApp.Droid.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.Platform.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_1 = global::CugemderApp.Droid.Resource.Interpolator.btn_checkbox_unchecked_mtrl_animation_interpolator_1;
+			global::Xamarin.Forms.Platform.Resource.Interpolator.btn_radio_to_off_mtrl_animation_interpolator_0 = global::CugemderApp.Droid.Resource.Interpolator.btn_radio_to_off_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.Platform.Resource.Interpolator.btn_radio_to_on_mtrl_animation_interpolator_0 = global::CugemderApp.Droid.Resource.Interpolator.btn_radio_to_on_mtrl_animation_interpolator_0;
+			global::Xamarin.Forms.Platform.Resource.Interpolator.fast_out_slow_in = global::CugemderApp.Droid.Resource.Interpolator.fast_out_slow_in;
 			global::Xamarin.Forms.Platform.Resource.Interpolator.mtrl_fast_out_linear_in = global::CugemderApp.Droid.Resource.Interpolator.mtrl_fast_out_linear_in;
 			global::Xamarin.Forms.Platform.Resource.Interpolator.mtrl_fast_out_slow_in = global::CugemderApp.Droid.Resource.Interpolator.mtrl_fast_out_slow_in;
 			global::Xamarin.Forms.Platform.Resource.Interpolator.mtrl_linear = global::CugemderApp.Droid.Resource.Interpolator.mtrl_linear;
@@ -7221,6 +7215,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Layout.abc_select_dialog_material = global::CugemderApp.Droid.Resource.Layout.abc_select_dialog_material;
 			global::Xamarin.Forms.Platform.Resource.Layout.abc_tooltip = global::CugemderApp.Droid.Resource.Layout.abc_tooltip;
 			global::Xamarin.Forms.Platform.Resource.Layout.BottomTabLayout = global::CugemderApp.Droid.Resource.Layout.BottomTabLayout;
+			global::Xamarin.Forms.Platform.Resource.Layout.custom_dialog = global::CugemderApp.Droid.Resource.Layout.custom_dialog;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_bottom_navigation_item = global::CugemderApp.Droid.Resource.Layout.design_bottom_navigation_item;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_bottom_sheet_dialog = global::CugemderApp.Droid.Resource.Layout.design_bottom_sheet_dialog;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_layout_snackbar = global::CugemderApp.Droid.Resource.Layout.design_layout_snackbar;
@@ -7235,6 +7230,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Layout.design_navigation_menu = global::CugemderApp.Droid.Resource.Layout.design_navigation_menu;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_navigation_menu_item = global::CugemderApp.Droid.Resource.Layout.design_navigation_menu_item;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_text_input_password_icon = global::CugemderApp.Droid.Resource.Layout.design_text_input_password_icon;
+			global::Xamarin.Forms.Platform.Resource.Layout.FallbackTabbarDoNotUse = global::CugemderApp.Droid.Resource.Layout.FallbackTabbarDoNotUse;
+			global::Xamarin.Forms.Platform.Resource.Layout.FallbackToolbarDoNotUse = global::CugemderApp.Droid.Resource.Layout.FallbackToolbarDoNotUse;
 			global::Xamarin.Forms.Platform.Resource.Layout.FlyoutContent = global::CugemderApp.Droid.Resource.Layout.FlyoutContent;
 			global::Xamarin.Forms.Platform.Resource.Layout.mtrl_layout_snackbar = global::CugemderApp.Droid.Resource.Layout.mtrl_layout_snackbar;
 			global::Xamarin.Forms.Platform.Resource.Layout.mtrl_layout_snackbar_include = global::CugemderApp.Droid.Resource.Layout.mtrl_layout_snackbar_include;
@@ -7259,6 +7256,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Layout.select_dialog_singlechoice_material = global::CugemderApp.Droid.Resource.Layout.select_dialog_singlechoice_material;
 			global::Xamarin.Forms.Platform.Resource.Layout.ShellContent = global::CugemderApp.Droid.Resource.Layout.ShellContent;
 			global::Xamarin.Forms.Platform.Resource.Layout.support_simple_spinner_dropdown_item = global::CugemderApp.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::Xamarin.Forms.Platform.Resource.Layout.Tabbar = global::CugemderApp.Droid.Resource.Layout.Tabbar;
+			global::Xamarin.Forms.Platform.Resource.Layout.Toolbar = global::CugemderApp.Droid.Resource.Layout.Toolbar;
 			global::Xamarin.Forms.Platform.Resource.String.abc_action_bar_home_description = global::CugemderApp.Droid.Resource.String.abc_action_bar_home_description;
 			global::Xamarin.Forms.Platform.Resource.String.abc_action_bar_up_description = global::CugemderApp.Droid.Resource.String.abc_action_bar_up_description;
 			global::Xamarin.Forms.Platform.Resource.String.abc_action_menu_overflow_description = global::CugemderApp.Droid.Resource.String.abc_action_menu_overflow_description;
@@ -7490,6 +7489,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Style.Base_Widget_AppCompat_SeekBar_Discrete = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar_Discrete;
 			global::Xamarin.Forms.Platform.Resource.Style.Base_Widget_AppCompat_Spinner = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_Spinner;
 			global::Xamarin.Forms.Platform.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined;
+			global::Xamarin.Forms.Platform.Resource.Style.Base_Widget_AppCompat_TextView = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_TextView;
 			global::Xamarin.Forms.Platform.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem;
 			global::Xamarin.Forms.Platform.Resource.Style.Base_Widget_AppCompat_Toolbar = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar;
 			global::Xamarin.Forms.Platform.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation = global::CugemderApp.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation;
@@ -7624,6 +7624,8 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Style.ThemeOverlay_AppCompat_ActionBar = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_ActionBar;
 			global::Xamarin.Forms.Platform.Resource.Style.ThemeOverlay_AppCompat_Dark = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark;
 			global::Xamarin.Forms.Platform.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::Xamarin.Forms.Platform.Resource.Style.ThemeOverlay_AppCompat_DayNight = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_DayNight;
+			global::Xamarin.Forms.Platform.Resource.Style.ThemeOverlay_AppCompat_DayNight_ActionBar = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_DayNight_ActionBar;
 			global::Xamarin.Forms.Platform.Resource.Style.ThemeOverlay_AppCompat_Dialog = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dialog;
 			global::Xamarin.Forms.Platform.Resource.Style.ThemeOverlay_AppCompat_Dialog_Alert = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Dialog_Alert;
 			global::Xamarin.Forms.Platform.Resource.Style.ThemeOverlay_AppCompat_Light = global::CugemderApp.Droid.Resource.Style.ThemeOverlay_AppCompat_Light;
@@ -7756,6 +7758,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Style.Widget_AppCompat_Spinner_DropDown = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown;
 			global::Xamarin.Forms.Platform.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar;
 			global::Xamarin.Forms.Platform.Resource.Style.Widget_AppCompat_Spinner_Underlined = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Spinner_Underlined;
+			global::Xamarin.Forms.Platform.Resource.Style.Widget_AppCompat_TextView = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_TextView;
 			global::Xamarin.Forms.Platform.Resource.Style.Widget_AppCompat_TextView_SpinnerItem = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_TextView_SpinnerItem;
 			global::Xamarin.Forms.Platform.Resource.Style.Widget_AppCompat_Toolbar = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Toolbar;
 			global::Xamarin.Forms.Platform.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation = global::CugemderApp.Droid.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation;
@@ -7917,11 +7920,21 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_autoSizePresetSizes = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_autoSizePresetSizes;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_autoSizeStepGranularity = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_autoSizeStepGranularity;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_autoSizeTextType = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_autoSizeTextType;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_drawableBottomCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableBottomCompat;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_drawableEndCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableEndCompat;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_drawableLeftCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableLeftCompat;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_drawableRightCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableRightCompat;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_drawableStartCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableStartCompat;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_drawableTint = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableTint;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_drawableTintMode = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableTintMode;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_drawableTopCompat = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_drawableTopCompat;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_firstBaselineToTopHeight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_firstBaselineToTopHeight;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_fontFamily = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_fontFamily;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_fontVariationSettings = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_fontVariationSettings;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_lastBaselineToBottomHeight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_lastBaselineToBottomHeight;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_lineHeight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_lineHeight;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_textAllCaps = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_textAllCaps;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTextView_textLocale = global::CugemderApp.Droid.Resource.Styleable.AppCompatTextView_textLocale;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_actionBarDivider = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_actionBarDivider;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_actionBarItemBackground = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_actionBarItemBackground;
@@ -7995,14 +8008,18 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_homeAsUpIndicator = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_homeAsUpIndicator;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_imageButtonStyle = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_imageButtonStyle;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listChoiceIndicatorMultipleAnimated = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceIndicatorMultipleAnimated;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listChoiceIndicatorSingleAnimated = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listChoiceIndicatorSingleAnimated;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listDividerAlertDialog = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listDividerAlertDialog;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listMenuViewStyle = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listMenuViewStyle;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listPopupWindowStyle = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPopupWindowStyle;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listPreferredItemHeight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeight;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingEnd = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingEnd;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight;
+			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingStart = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingStart;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_panelBackground = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_panelBackground;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_panelMenuListTheme = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_panelMenuListTheme;
 			global::Xamarin.Forms.Platform.Resource.Styleable.AppCompatTheme_panelMenuListWidth = global::CugemderApp.Droid.Resource.Styleable.AppCompatTheme_panelMenuListWidth;
@@ -8151,6 +8168,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Styleable.ColorStateListItem_android_color = global::CugemderApp.Droid.Resource.Styleable.ColorStateListItem_android_color;
 			global::Xamarin.Forms.Platform.Resource.Styleable.CompoundButton = global::CugemderApp.Droid.Resource.Styleable.CompoundButton;
 			global::Xamarin.Forms.Platform.Resource.Styleable.CompoundButton_android_button = global::CugemderApp.Droid.Resource.Styleable.CompoundButton_android_button;
+			global::Xamarin.Forms.Platform.Resource.Styleable.CompoundButton_buttonCompat = global::CugemderApp.Droid.Resource.Styleable.CompoundButton_buttonCompat;
 			global::Xamarin.Forms.Platform.Resource.Styleable.CompoundButton_buttonTint = global::CugemderApp.Droid.Resource.Styleable.CompoundButton_buttonTint;
 			global::Xamarin.Forms.Platform.Resource.Styleable.CompoundButton_buttonTintMode = global::CugemderApp.Droid.Resource.Styleable.CompoundButton_buttonTintMode;
 			global::Xamarin.Forms.Platform.Resource.Styleable.CoordinatorLayout = global::CugemderApp.Droid.Resource.Styleable.CoordinatorLayout;
@@ -8370,6 +8388,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Styleable.RecycleListView_paddingBottomNoButtons = global::CugemderApp.Droid.Resource.Styleable.RecycleListView_paddingBottomNoButtons;
 			global::Xamarin.Forms.Platform.Resource.Styleable.RecycleListView_paddingTopNoTitle = global::CugemderApp.Droid.Resource.Styleable.RecycleListView_paddingTopNoTitle;
 			global::Xamarin.Forms.Platform.Resource.Styleable.RecyclerView = global::CugemderApp.Droid.Resource.Styleable.RecyclerView;
+			global::Xamarin.Forms.Platform.Resource.Styleable.RecyclerView_android_clipToPadding = global::CugemderApp.Droid.Resource.Styleable.RecyclerView_android_clipToPadding;
 			global::Xamarin.Forms.Platform.Resource.Styleable.RecyclerView_android_descendantFocusability = global::CugemderApp.Droid.Resource.Styleable.RecyclerView_android_descendantFocusability;
 			global::Xamarin.Forms.Platform.Resource.Styleable.RecyclerView_android_orientation = global::CugemderApp.Droid.Resource.Styleable.RecyclerView_android_orientation;
 			global::Xamarin.Forms.Platform.Resource.Styleable.RecyclerView_fastScrollEnabled = global::CugemderApp.Droid.Resource.Styleable.RecyclerView_fastScrollEnabled;
@@ -8481,11 +8500,14 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_android_textColor = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textColor;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_android_textColorHint = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textColorHint;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_android_textColorLink = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textColorLink;
+			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_android_textFontWeight = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textFontWeight;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_android_textSize = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textSize;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_android_textStyle = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_textStyle;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_android_typeface = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_android_typeface;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_fontFamily = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_fontFamily;
+			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_fontVariationSettings = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_fontVariationSettings;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_textAllCaps = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_textAllCaps;
+			global::Xamarin.Forms.Platform.Resource.Styleable.TextAppearance_textLocale = global::CugemderApp.Droid.Resource.Styleable.TextAppearance_textLocale;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextInputLayout = global::CugemderApp.Droid.Resource.Styleable.TextInputLayout;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextInputLayout_android_hint = global::CugemderApp.Droid.Resource.Styleable.TextInputLayout_android_hint;
 			global::Xamarin.Forms.Platform.Resource.Styleable.TextInputLayout_android_textColorHint = global::CugemderApp.Droid.Resource.Styleable.TextInputLayout_android_textColorHint;
@@ -8534,6 +8556,7 @@ namespace CugemderApp.Droid
 			global::Xamarin.Forms.Platform.Resource.Styleable.Toolbar_logo = global::CugemderApp.Droid.Resource.Styleable.Toolbar_logo;
 			global::Xamarin.Forms.Platform.Resource.Styleable.Toolbar_logoDescription = global::CugemderApp.Droid.Resource.Styleable.Toolbar_logoDescription;
 			global::Xamarin.Forms.Platform.Resource.Styleable.Toolbar_maxButtonHeight = global::CugemderApp.Droid.Resource.Styleable.Toolbar_maxButtonHeight;
+			global::Xamarin.Forms.Platform.Resource.Styleable.Toolbar_menu = global::CugemderApp.Droid.Resource.Styleable.Toolbar_menu;
 			global::Xamarin.Forms.Platform.Resource.Styleable.Toolbar_navigationContentDescription = global::CugemderApp.Droid.Resource.Styleable.Toolbar_navigationContentDescription;
 			global::Xamarin.Forms.Platform.Resource.Styleable.Toolbar_navigationIcon = global::CugemderApp.Droid.Resource.Styleable.Toolbar_navigationIcon;
 			global::Xamarin.Forms.Platform.Resource.Styleable.Toolbar_popupTheme = global::CugemderApp.Droid.Resource.Styleable.Toolbar_popupTheme;
@@ -11983,70 +12006,67 @@ namespace CugemderApp.Droid
 			public const int ic_arrow_down_24dp = 2131165313;
 			
 			// aapt resource value: 0x7F070082
-			public const int ic_launcher = 2131165314;
+			public const int ic_mtrl_chip_checked_black = 2131165314;
 			
 			// aapt resource value: 0x7F070083
-			public const int ic_mtrl_chip_checked_black = 2131165315;
+			public const int ic_mtrl_chip_checked_circle = 2131165315;
 			
 			// aapt resource value: 0x7F070084
-			public const int ic_mtrl_chip_checked_circle = 2131165316;
+			public const int ic_mtrl_chip_close_circle = 2131165316;
 			
 			// aapt resource value: 0x7F070085
-			public const int ic_mtrl_chip_close_circle = 2131165317;
+			public const int mtrl_snackbar_background = 2131165317;
 			
 			// aapt resource value: 0x7F070086
-			public const int mtrl_snackbar_background = 2131165318;
+			public const int mtrl_tabs_default_indicator = 2131165318;
 			
 			// aapt resource value: 0x7F070087
-			public const int mtrl_tabs_default_indicator = 2131165319;
+			public const int navigation_empty_icon = 2131165319;
 			
 			// aapt resource value: 0x7F070088
-			public const int navigation_empty_icon = 2131165320;
+			public const int notification_action_background = 2131165320;
 			
 			// aapt resource value: 0x7F070089
-			public const int notification_action_background = 2131165321;
+			public const int notification_bg = 2131165321;
 			
 			// aapt resource value: 0x7F07008A
-			public const int notification_bg = 2131165322;
+			public const int notification_bg_low = 2131165322;
 			
 			// aapt resource value: 0x7F07008B
-			public const int notification_bg_low = 2131165323;
+			public const int notification_bg_low_normal = 2131165323;
 			
 			// aapt resource value: 0x7F07008C
-			public const int notification_bg_low_normal = 2131165324;
+			public const int notification_bg_low_pressed = 2131165324;
 			
 			// aapt resource value: 0x7F07008D
-			public const int notification_bg_low_pressed = 2131165325;
+			public const int notification_bg_normal = 2131165325;
 			
 			// aapt resource value: 0x7F07008E
-			public const int notification_bg_normal = 2131165326;
+			public const int notification_bg_normal_pressed = 2131165326;
 			
 			// aapt resource value: 0x7F07008F
-			public const int notification_bg_normal_pressed = 2131165327;
+			public const int notification_icon_background = 2131165327;
 			
 			// aapt resource value: 0x7F070090
-			public const int notification_icon_background = 2131165328;
+			public const int notification_template_icon_bg = 2131165328;
 			
 			// aapt resource value: 0x7F070091
-			public const int notification_template_icon_bg = 2131165329;
+			public const int notification_template_icon_low_bg = 2131165329;
 			
 			// aapt resource value: 0x7F070092
-			public const int notification_template_icon_low_bg = 2131165330;
+			public const int notification_tile_bg = 2131165330;
 			
 			// aapt resource value: 0x7F070093
-			public const int notification_tile_bg = 2131165331;
+			public const int notify_panel_notification_icon_bg = 2131165331;
 			
 			// aapt resource value: 0x7F070094
-			public const int notify_panel_notification_icon_bg = 2131165332;
+			public const int preference_list_divider_material = 2131165332;
 			
 			// aapt resource value: 0x7F070095
-			public const int preference_list_divider_material = 2131165333;
+			public const int tooltip_frame_dark = 2131165333;
 			
 			// aapt resource value: 0x7F070096
-			public const int tooltip_frame_dark = 2131165334;
-			
-			// aapt resource value: 0x7F070097
-			public const int tooltip_frame_light = 2131165335;
+			public const int tooltip_frame_light = 2131165334;
 			
 			static Drawable()
 			{
@@ -13118,133 +13138,139 @@ namespace CugemderApp.Droid
 			public const int expand_button = 2131427374;
 			
 			// aapt resource value: 0x7F0B002F
-			public const int FlyoutContent = 2131427375;
+			public const int FallbackTabbarDoNotUse = 2131427375;
 			
 			// aapt resource value: 0x7F0B0030
-			public const int image_frame = 2131427376;
+			public const int FallbackToolbarDoNotUse = 2131427376;
 			
 			// aapt resource value: 0x7F0B0031
-			public const int mtrl_layout_snackbar = 2131427377;
+			public const int FlyoutContent = 2131427377;
 			
 			// aapt resource value: 0x7F0B0032
-			public const int mtrl_layout_snackbar_include = 2131427378;
+			public const int image_frame = 2131427378;
 			
 			// aapt resource value: 0x7F0B0033
-			public const int notification_action = 2131427379;
+			public const int mtrl_layout_snackbar = 2131427379;
 			
 			// aapt resource value: 0x7F0B0034
-			public const int notification_action_tombstone = 2131427380;
+			public const int mtrl_layout_snackbar_include = 2131427380;
 			
 			// aapt resource value: 0x7F0B0035
-			public const int notification_media_action = 2131427381;
+			public const int notification_action = 2131427381;
 			
 			// aapt resource value: 0x7F0B0036
-			public const int notification_media_cancel_action = 2131427382;
+			public const int notification_action_tombstone = 2131427382;
 			
 			// aapt resource value: 0x7F0B0037
-			public const int notification_template_big_media = 2131427383;
+			public const int notification_media_action = 2131427383;
 			
 			// aapt resource value: 0x7F0B0038
-			public const int notification_template_big_media_custom = 2131427384;
+			public const int notification_media_cancel_action = 2131427384;
 			
 			// aapt resource value: 0x7F0B0039
-			public const int notification_template_big_media_narrow = 2131427385;
+			public const int notification_template_big_media = 2131427385;
 			
 			// aapt resource value: 0x7F0B003A
-			public const int notification_template_big_media_narrow_custom = 2131427386;
+			public const int notification_template_big_media_custom = 2131427386;
 			
 			// aapt resource value: 0x7F0B003B
-			public const int notification_template_custom_big = 2131427387;
+			public const int notification_template_big_media_narrow = 2131427387;
 			
 			// aapt resource value: 0x7F0B003C
-			public const int notification_template_icon_group = 2131427388;
+			public const int notification_template_big_media_narrow_custom = 2131427388;
 			
 			// aapt resource value: 0x7F0B003D
-			public const int notification_template_lines_media = 2131427389;
+			public const int notification_template_custom_big = 2131427389;
 			
 			// aapt resource value: 0x7F0B003E
-			public const int notification_template_media = 2131427390;
+			public const int notification_template_icon_group = 2131427390;
 			
 			// aapt resource value: 0x7F0B003F
-			public const int notification_template_media_custom = 2131427391;
+			public const int notification_template_lines_media = 2131427391;
 			
 			// aapt resource value: 0x7F0B0040
-			public const int notification_template_part_chronometer = 2131427392;
+			public const int notification_template_media = 2131427392;
 			
 			// aapt resource value: 0x7F0B0041
-			public const int notification_template_part_time = 2131427393;
+			public const int notification_template_media_custom = 2131427393;
 			
 			// aapt resource value: 0x7F0B0042
-			public const int preference = 2131427394;
+			public const int notification_template_part_chronometer = 2131427394;
 			
 			// aapt resource value: 0x7F0B0043
-			public const int preference_category = 2131427395;
+			public const int notification_template_part_time = 2131427395;
 			
 			// aapt resource value: 0x7F0B0044
-			public const int preference_category_material = 2131427396;
+			public const int preference = 2131427396;
 			
 			// aapt resource value: 0x7F0B0045
-			public const int preference_dialog_edittext = 2131427397;
+			public const int preference_category = 2131427397;
 			
 			// aapt resource value: 0x7F0B0046
-			public const int preference_dropdown = 2131427398;
+			public const int preference_category_material = 2131427398;
 			
 			// aapt resource value: 0x7F0B0047
-			public const int preference_dropdown_material = 2131427399;
+			public const int preference_dialog_edittext = 2131427399;
 			
 			// aapt resource value: 0x7F0B0048
-			public const int preference_information = 2131427400;
+			public const int preference_dropdown = 2131427400;
 			
 			// aapt resource value: 0x7F0B0049
-			public const int preference_information_material = 2131427401;
+			public const int preference_dropdown_material = 2131427401;
 			
 			// aapt resource value: 0x7F0B004A
-			public const int preference_list_fragment = 2131427402;
+			public const int preference_information = 2131427402;
 			
 			// aapt resource value: 0x7F0B004B
-			public const int preference_material = 2131427403;
+			public const int preference_information_material = 2131427403;
 			
 			// aapt resource value: 0x7F0B004C
-			public const int preference_recyclerview = 2131427404;
+			public const int preference_list_fragment = 2131427404;
 			
 			// aapt resource value: 0x7F0B004D
-			public const int preference_widget_checkbox = 2131427405;
+			public const int preference_material = 2131427405;
 			
 			// aapt resource value: 0x7F0B004E
-			public const int preference_widget_seekbar = 2131427406;
+			public const int preference_recyclerview = 2131427406;
 			
 			// aapt resource value: 0x7F0B004F
-			public const int preference_widget_seekbar_material = 2131427407;
+			public const int preference_widget_checkbox = 2131427407;
 			
 			// aapt resource value: 0x7F0B0050
-			public const int preference_widget_switch = 2131427408;
+			public const int preference_widget_seekbar = 2131427408;
 			
 			// aapt resource value: 0x7F0B0051
-			public const int preference_widget_switch_compat = 2131427409;
+			public const int preference_widget_seekbar_material = 2131427409;
 			
 			// aapt resource value: 0x7F0B0052
-			public const int RootLayout = 2131427410;
+			public const int preference_widget_switch = 2131427410;
 			
 			// aapt resource value: 0x7F0B0053
-			public const int select_dialog_item_material = 2131427411;
+			public const int preference_widget_switch_compat = 2131427411;
 			
 			// aapt resource value: 0x7F0B0054
-			public const int select_dialog_multichoice_material = 2131427412;
+			public const int RootLayout = 2131427412;
 			
 			// aapt resource value: 0x7F0B0055
-			public const int select_dialog_singlechoice_material = 2131427413;
+			public const int select_dialog_item_material = 2131427413;
 			
 			// aapt resource value: 0x7F0B0056
-			public const int ShellContent = 2131427414;
+			public const int select_dialog_multichoice_material = 2131427414;
 			
 			// aapt resource value: 0x7F0B0057
-			public const int support_simple_spinner_dropdown_item = 2131427415;
+			public const int select_dialog_singlechoice_material = 2131427415;
 			
 			// aapt resource value: 0x7F0B0058
-			public const int Tabbar = 2131427416;
+			public const int ShellContent = 2131427416;
 			
 			// aapt resource value: 0x7F0B0059
-			public const int Toolbar = 2131427417;
+			public const int support_simple_spinner_dropdown_item = 2131427417;
+			
+			// aapt resource value: 0x7F0B005A
+			public const int Tabbar = 2131427418;
+			
+			// aapt resource value: 0x7F0B005B
+			public const int Toolbar = 2131427419;
 			
 			static Layout()
 			{
@@ -13362,164 +13388,155 @@ namespace CugemderApp.Droid
 			// aapt resource value: 0x7F0D001A
 			public const int abc_toolbar_collapse_description = 2131558426;
 			
-			// aapt resource value: 0x7F0D001C
-			public const int appbar_scrolling_view_behavior = 2131558428;
-			
 			// aapt resource value: 0x7F0D001B
-			public const int app_name = 2131558427;
+			public const int appbar_scrolling_view_behavior = 2131558427;
+			
+			// aapt resource value: 0x7F0D001C
+			public const int bottom_sheet_behavior = 2131558428;
 			
 			// aapt resource value: 0x7F0D001D
-			public const int bottom_sheet_behavior = 2131558429;
+			public const int character_counter_content_description = 2131558429;
 			
 			// aapt resource value: 0x7F0D001E
-			public const int character_counter_content_description = 2131558430;
+			public const int character_counter_pattern = 2131558430;
 			
 			// aapt resource value: 0x7F0D001F
-			public const int character_counter_pattern = 2131558431;
+			public const int common_google_play_services_enable_button = 2131558431;
 			
 			// aapt resource value: 0x7F0D0020
-			public const int common_google_play_services_enable_button = 2131558432;
+			public const int common_google_play_services_enable_text = 2131558432;
 			
 			// aapt resource value: 0x7F0D0021
-			public const int common_google_play_services_enable_text = 2131558433;
+			public const int common_google_play_services_enable_title = 2131558433;
 			
 			// aapt resource value: 0x7F0D0022
-			public const int common_google_play_services_enable_title = 2131558434;
+			public const int common_google_play_services_install_button = 2131558434;
 			
 			// aapt resource value: 0x7F0D0023
-			public const int common_google_play_services_install_button = 2131558435;
+			public const int common_google_play_services_install_text = 2131558435;
 			
 			// aapt resource value: 0x7F0D0024
-			public const int common_google_play_services_install_text = 2131558436;
+			public const int common_google_play_services_install_title = 2131558436;
 			
 			// aapt resource value: 0x7F0D0025
-			public const int common_google_play_services_install_title = 2131558437;
+			public const int common_google_play_services_notification_channel_name = 2131558437;
 			
 			// aapt resource value: 0x7F0D0026
-			public const int common_google_play_services_notification_channel_name = 2131558438;
+			public const int common_google_play_services_notification_ticker = 2131558438;
 			
 			// aapt resource value: 0x7F0D0027
-			public const int common_google_play_services_notification_ticker = 2131558439;
+			public const int common_google_play_services_unknown_issue = 2131558439;
 			
 			// aapt resource value: 0x7F0D0028
-			public const int common_google_play_services_unknown_issue = 2131558440;
+			public const int common_google_play_services_unsupported_text = 2131558440;
 			
 			// aapt resource value: 0x7F0D0029
-			public const int common_google_play_services_unsupported_text = 2131558441;
+			public const int common_google_play_services_update_button = 2131558441;
 			
 			// aapt resource value: 0x7F0D002A
-			public const int common_google_play_services_update_button = 2131558442;
+			public const int common_google_play_services_update_text = 2131558442;
 			
 			// aapt resource value: 0x7F0D002B
-			public const int common_google_play_services_update_text = 2131558443;
+			public const int common_google_play_services_update_title = 2131558443;
 			
 			// aapt resource value: 0x7F0D002C
-			public const int common_google_play_services_update_title = 2131558444;
+			public const int common_google_play_services_updating_text = 2131558444;
 			
 			// aapt resource value: 0x7F0D002D
-			public const int common_google_play_services_updating_text = 2131558445;
+			public const int common_google_play_services_wear_update_text = 2131558445;
 			
 			// aapt resource value: 0x7F0D002E
-			public const int common_google_play_services_wear_update_text = 2131558446;
+			public const int common_open_on_phone = 2131558446;
 			
 			// aapt resource value: 0x7F0D002F
-			public const int common_open_on_phone = 2131558447;
+			public const int common_signin_button_text = 2131558447;
 			
 			// aapt resource value: 0x7F0D0030
-			public const int common_signin_button_text = 2131558448;
+			public const int common_signin_button_text_long = 2131558448;
 			
 			// aapt resource value: 0x7F0D0031
-			public const int common_signin_button_text_long = 2131558449;
+			public const int copy = 2131558449;
 			
 			// aapt resource value: 0x7F0D0032
-			public const int copy = 2131558450;
+			public const int default_web_client_id = 2131558450;
 			
 			// aapt resource value: 0x7F0D0033
-			public const int default_web_client_id = 2131558451;
+			public const int expand_button_title = 2131558451;
 			
 			// aapt resource value: 0x7F0D0034
-			public const int expand_button_title = 2131558452;
+			public const int fab_transformation_scrim_behavior = 2131558452;
 			
 			// aapt resource value: 0x7F0D0035
-			public const int fab_transformation_scrim_behavior = 2131558453;
+			public const int fab_transformation_sheet_behavior = 2131558453;
 			
 			// aapt resource value: 0x7F0D0036
-			public const int fab_transformation_sheet_behavior = 2131558454;
+			public const int fcm_fallback_notification_channel_label = 2131558454;
 			
 			// aapt resource value: 0x7F0D0037
-			public const int fcm_fallback_notification_channel_label = 2131558455;
+			public const int firebase_database_url = 2131558455;
 			
 			// aapt resource value: 0x7F0D0038
-			public const int firebase_database_url = 2131558456;
+			public const int gcm_defaultSenderId = 2131558456;
 			
 			// aapt resource value: 0x7F0D0039
-			public const int firebase_preference_file_key = 2131558457;
+			public const int google_api_key = 2131558457;
 			
 			// aapt resource value: 0x7F0D003A
-			public const int gcm_defaultSenderId = 2131558458;
+			public const int google_app_id = 2131558458;
 			
 			// aapt resource value: 0x7F0D003B
-			public const int google_api_key = 2131558459;
+			public const int google_crash_reporting_api_key = 2131558459;
 			
 			// aapt resource value: 0x7F0D003C
-			public const int google_app_id = 2131558460;
+			public const int google_storage_bucket = 2131558460;
 			
 			// aapt resource value: 0x7F0D003D
-			public const int google_crash_reporting_api_key = 2131558461;
+			public const int hide_bottom_view_on_scroll_behavior = 2131558461;
 			
 			// aapt resource value: 0x7F0D003E
-			public const int google_storage_bucket = 2131558462;
+			public const int mtrl_chip_close_icon_content_description = 2131558462;
 			
 			// aapt resource value: 0x7F0D003F
-			public const int hide_bottom_view_on_scroll_behavior = 2131558463;
+			public const int not_set = 2131558463;
 			
 			// aapt resource value: 0x7F0D0040
-			public const int installation_enrichment_file_key = 2131558464;
+			public const int overflow_tab_title = 2131558464;
 			
 			// aapt resource value: 0x7F0D0041
-			public const int mtrl_chip_close_icon_content_description = 2131558465;
+			public const int password_toggle_content_description = 2131558465;
 			
 			// aapt resource value: 0x7F0D0042
-			public const int not_set = 2131558466;
+			public const int path_password_eye = 2131558466;
 			
 			// aapt resource value: 0x7F0D0043
-			public const int overflow_tab_title = 2131558467;
+			public const int path_password_eye_mask_strike_through = 2131558467;
 			
 			// aapt resource value: 0x7F0D0044
-			public const int password_toggle_content_description = 2131558468;
+			public const int path_password_eye_mask_visible = 2131558468;
 			
 			// aapt resource value: 0x7F0D0045
-			public const int path_password_eye = 2131558469;
+			public const int path_password_strike_through = 2131558469;
 			
 			// aapt resource value: 0x7F0D0046
-			public const int path_password_eye_mask_strike_through = 2131558470;
+			public const int preference_copied = 2131558470;
 			
 			// aapt resource value: 0x7F0D0047
-			public const int path_password_eye_mask_visible = 2131558471;
+			public const int project_id = 2131558471;
 			
 			// aapt resource value: 0x7F0D0048
-			public const int path_password_strike_through = 2131558472;
+			public const int search_menu_title = 2131558472;
 			
 			// aapt resource value: 0x7F0D0049
-			public const int preference_copied = 2131558473;
+			public const int status_bar_notification_info_overflow = 2131558473;
 			
 			// aapt resource value: 0x7F0D004A
-			public const int project_id = 2131558474;
+			public const int summary_collapsed_preference_list = 2131558474;
 			
 			// aapt resource value: 0x7F0D004B
-			public const int search_menu_title = 2131558475;
+			public const int v7_preference_off = 2131558475;
 			
 			// aapt resource value: 0x7F0D004C
-			public const int status_bar_notification_info_overflow = 2131558476;
-			
-			// aapt resource value: 0x7F0D004D
-			public const int summary_collapsed_preference_list = 2131558477;
-			
-			// aapt resource value: 0x7F0D004E
-			public const int v7_preference_off = 2131558478;
-			
-			// aapt resource value: 0x7F0D004F
-			public const int v7_preference_on = 2131558479;
+			public const int v7_preference_on = 2131558476;
 			
 			static String()
 			{

@@ -29,7 +29,7 @@
     <div class="form-group">
         <label>Profil Fotoğrafı :</label>
         <div>
-            <button class="btn btn-info" type="button" @onclick="@SelecFiles">Dosya Seç</button>
+            <button class="btn btn-info" type="button" @onclick="@SelectFiles">Dosya Seç</button>
         </div>
     </div>
     <div class="form-group">
@@ -204,34 +204,24 @@
     </button>
 </EditForm>
 
-<br/>
+<br />
 
 @code {
 
-    private AspNetUsers user;
-    private string _userId;
-    private string newPassword;
+    AspNetUsers user = new AspNetUsers();
+    string newPassword;
 
-    DateTime time = DateTime.UtcNow;
-    private int groupId = 0;
-    private int positionId = 0;
-    private int genderId = 0;
-    private int jobTitleId = 0;
-    private int relationshipId = 0;
-    private int cityId = 0;
-
-
-    private List<Groups> groups;
-    private List<Positions> positions;
-    private List<Genders> genders;
-    private List<JobTitles> jobTitles;
-    private List<Relationship> relationships;
-    private List<Cities> cities;
-
-
-    private JobTitles selectedTitle;
-
+    int groupId = 0, positionId = 0, genderId = 0, jobTitleId = 0, relationshipId = 0, cityId = 0;
     FileResult item;
+
+    List<Groups> groups = new List<Groups>();
+    List<Positions> positions = new List<Positions>();
+    List<Genders> genders = new List<Genders>();
+    List<JobTitles> jobTitles = new List<JobTitles>();
+    List<Relationship> relationships = new List<Relationship>();
+    List<Cities> cities = new List<Cities>();
+
+
 
 
     protected override async Task OnInitializedAsync()
@@ -293,7 +283,7 @@
         }
     }
 
-    async void SelecFiles()
+    async void SelectFiles()
     {
         item = await FilePicker.PickAsync();
     }
