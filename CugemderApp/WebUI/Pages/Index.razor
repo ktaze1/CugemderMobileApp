@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject AspNetUsersDAL userDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
 
 <style>
     .emp-profile {
@@ -130,6 +131,8 @@
 }
 else
 {
+
+
     <div class="container emp-profile">
         <div class="row">
             <div class="col-md-4">

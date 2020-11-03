@@ -9,7 +9,7 @@ using System;
 using Microsoft.MobileBlazorBindings.WebView.Android;
 using Android.Runtime;
 using CugemderApp.WebUI.Pages;
-using Plugin.PushNotification;
+//using Plugin.PushNotification;
 using System.Net.Http;
 using System.Text;
 using System.Globalization;
@@ -27,6 +27,8 @@ namespace CugemderApp.Droid
         {
             BlazorHybridAndroid.Init();
 
+            var fileProvider = new AssetFileProvider(Assets, "wwwroot");
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -34,7 +36,8 @@ namespace CugemderApp.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+
+            LoadApplication(new App(fileProvider));
 
 
             WebUI.Pages.Index.topicSubscribed += OnSubscribeTopic;
