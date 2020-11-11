@@ -11,6 +11,8 @@ using Google.Apis.Auth.OAuth2;
 using FirebaseAdmin.Messaging;
 using System.Text;
 using System.Globalization;
+using Microsoft.Extensions.Options;
+using System.Diagnostics;
 
 namespace CugemderApp.Server.Controllers
 {
@@ -19,10 +21,8 @@ namespace CugemderApp.Server.Controllers
     public class NotificationsController : ControllerBase
     {
         private readonly CugemderMobileAppDbContext _context;
-        private FirebaseApp _firebaseApp = FirebaseApp.DefaultInstance == null ? FirebaseApp.Create(new AppOptions()
-        {
-            Credential = GoogleCredential.FromFile("C:\\Users\\Kaan\\Downloads\\cugemdermobile-firebase-adminsdk-wgo74-9dc80b63a3.json"),
-        }) : FirebaseApp.DefaultInstance;
+        private readonly FirebaseApp firebaseApp = FirebaseSingleton._firebaseApp;
+        
         public NotificationsController(CugemderMobileAppDbContext context)
         {
             _context = context;
@@ -136,6 +136,7 @@ namespace CugemderApp.Server.Controllers
             // Send a message to the devices subscribed to the provided topic.
             string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
             // Response is a message ID string.
+            Debug.WriteLine("Successfully sent message: " + response);
             Console.WriteLine("Successfully sent message: " + response);
         }
 
@@ -162,6 +163,7 @@ namespace CugemderApp.Server.Controllers
 
         private static string RemoveDiacritics(string text)
         {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             Encoding srcEncoding = Encoding.UTF8;
             Encoding destEncoding = Encoding.GetEncoding(1252); // Latin alphabet
 

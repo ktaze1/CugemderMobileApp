@@ -1,6 +1,8 @@
 ﻿@page "/groups"
 @inject GroupsDAL groupDAL
 @inject AspNetUsersDAL userDAL
+@inject NavigationManager uriHelper
+
 
 <h3>Grup Ekle</h3>
 <br />
@@ -34,7 +36,7 @@ else
         <thead>
             <tr>
                 <th>Grup adı</th>
-                <th  class="d-flex justify-content-center">İşlemler</th>
+                <th class="d-flex justify-content-center">İşlemler</th>
             </tr>
         </thead>
         <tbody>
@@ -52,8 +54,8 @@ else
     </table>
 }
 @code {
-    List<Groups> groups;
-    List<AspNetUsers> users;
+    List<Groups> groups = new List<Groups>();
+    List<AspNetUsers> users = new List<AspNetUsers>();
     Groups newGroup = new Groups();
 
 
@@ -72,10 +74,20 @@ else
             userDAL.PutUser(user.Id, user);
         }
         groupDAL.DeleteGroups(groupsId);
+        RefreshPageContent();
     }
 
     void CreateGroup()
     {
         groupDAL.PostGroups(newGroup);
+        RefreshPageContent();
+    }
+
+    async void RefreshPageContent()
+    {
+        groups = await groupDAL.GetGroupsAsync();
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("redirect/documents");
+        await OnInitializedAsync();
     }
 }

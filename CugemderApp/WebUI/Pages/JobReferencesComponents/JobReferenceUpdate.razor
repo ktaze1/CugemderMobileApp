@@ -1,0 +1,82 @@
+﻿@page "/jobreferenceUpdate/{referenceId:int}"
+@inject NavigationManager uriHelper
+@inject JobReferencesDAL jobReferenceDAL
+
+
+<EditForm Model="@values" OnValidSubmit="@Update">
+
+    <h6>Görüşme Gerçekleşti Mi?</h6>
+    <div class="form-group">
+        <select class="form-control"
+                @bind="values.meetingdone">
+            <option selected value="1">Evet, Gerçekleşti</option>
+            <option value="0">Hayır, Gerçekleşmedi</option>
+        </select>
+    </div> 
+    <h6>Görüşme Olumlu Geçti Mi?</h6>
+    <div class="form-group">
+        <select class="form-control"
+                @bind="values.meetingproductive">
+            <option selected value="1">Evet, Olumluydu</option>
+            <option value="0">Hayır, Olumlu Değildi</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-dark">Cevapla</button>
+</EditForm>
+
+
+
+@code {
+    [Parameter] public int referenceId { get; set; }
+    JobReferences reference = new JobReferences();
+    Values values = new Values();
+
+    protected override async Task OnInitializedAsync()
+    {
+        reference = await jobReferenceDAL.GetJobReference(referenceId);
+    }
+
+    void Update()
+    {
+        switch (values.meetingdone)
+        {
+            case 0:
+                reference.IsMeetingDone = false;
+                break;
+            case 1:
+                reference.IsMeetingDone = true;
+                break;
+            default:
+                break;
+        }
+        switch (values.meetingproductive)
+        {
+            case 0:
+                reference.IsProductive = false;
+                break;
+            case 1:
+                reference.IsProductive = true;
+                break;
+            default:
+                break;
+        }
+        jobReferenceDAL.PutJobReferences(referenceId, reference);
+        RefreshPageContent();
+    }
+
+
+    async void RefreshPageContent()
+    {
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("redirect/jobreferences");
+        await OnInitializedAsync();
+    }
+
+    public class Values
+    {
+        public int meetingdone { get; set; }
+        public int meetingproductive { get; set; }
+    }
+
+}

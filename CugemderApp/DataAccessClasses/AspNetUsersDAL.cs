@@ -18,6 +18,11 @@ namespace CugemderApp.DataAccessClasses
             return await _http.GetFromJsonAsync<List<AspNetUsers>>("api/AspNetUsers");
         }
 
+        public async Task<string> GetUserFullname(string id)
+        {
+            return await _http.GetFromJsonAsync<string>("api/AspNetUsers/userFullname/{id}");
+        }
+
         public async Task<List<AspNetUsers>> GetUsersNoNull()
         {
             return await _http.GetFromJsonAsync<List<AspNetUsers>>("api/AspNetUsers/NoNull");

@@ -3,6 +3,7 @@
 @inject AspNetUsersDAL userDAL
 @inject MeetingsDAL meetingDAL
 @inject MeetingPointsDAL meetingPointDAL
+@inject NavigationManager uriHelper
 @using System.ComponentModel.DataAnnotations;
 
 <div class="simple-form">
@@ -204,6 +205,8 @@
         meetingPointDAL.PostMeetinPoints(meetingPoint);
 
         meetingDAL.PutMeetings(meetingId, meeting);
+
+        uriHelper.NavigateTo("meetingRequests");
     }
 
     void Cancel()

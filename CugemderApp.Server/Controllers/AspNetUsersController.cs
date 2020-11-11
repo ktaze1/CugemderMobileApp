@@ -45,6 +45,24 @@ namespace CugemderApp.Server.Controllers
         }
 
         [HttpGet]
+        [Route("userFullname/{id}")]
+        public async Task<ActionResult<string>> GetUserFullname(string id)
+        {
+            var user = await _context.AspNetUsers.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var fullname = user.FirstName + " " + user.LastName;
+
+            return fullname;
+
+
+        }
+
+        [HttpGet]
         [Route("NoNull")]
         public async Task<ActionResult<IEnumerable<AspNetUsers>>> GetAspNetUsersNoNull()
         {

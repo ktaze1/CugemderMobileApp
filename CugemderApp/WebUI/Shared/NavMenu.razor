@@ -32,6 +32,11 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
+            <NavLink class="nav-link" href="jobreferences">
+                <span class="oi oi-task" aria-hidden="true"></span> İş Kişi Yönlendirme
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
             <NavLink class="nav-link" href="documents">
                 <span class="oi oi-file" aria-hidden="true"></span> Dökümanlar
             </NavLink>
@@ -55,8 +60,8 @@
             </li>
         }
         <li class="nav-item px-3">
-            <div class="nav-link" style="color: lightgrey;">
-                <span  class="oi oi-account-logout" aria-hidden="true" @onclick="@( () => customStateProvider.Logout())"></span> Çıkış Yap
+            <div @onclick="@( () => Logout())" class="nav-link" style="color: lightgrey;">
+                <span class="oi oi-account-logout" aria-hidden="true" ></span> Çıkış Yap
             </div>
         </li>
     </ul>
@@ -84,5 +89,10 @@
         {
             loggedUser = await userDAL.GetUsername(user.Identity.Name);
         }
+    }
+
+    protected async void Logout()
+    {
+       await customStateProvider.Logout();
     }
 }

@@ -39,6 +39,7 @@ namespace CugemderApp
                     services.AddSingleton<DataAccessClasses.GendersDAL>();
                     services.AddSingleton<DataAccessClasses.GroupsDAL>();
                     services.AddSingleton<DataAccessClasses.JobTitlesDAL>();
+                    services.AddSingleton<DataAccessClasses.JobReferencesDAL>();
                     services.AddSingleton<DataAccessClasses.MeetingsDAL>();
                     services.AddSingleton<DataAccessClasses.MeetingPointsDAL>();
                     services.AddSingleton<DataAccessClasses.NetworkingMeetingPointDAL>();

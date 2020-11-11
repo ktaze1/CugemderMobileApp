@@ -14,6 +14,11 @@ using System.Net.Http;
 using System.Text;
 using System.Globalization;
 using System.Linq;
+using Android.Widget;
+using Android.Graphics;
+using Android.Views;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using Xamarin.Forms.Platform.Android;
 
 namespace CugemderApp.Droid
 {
@@ -28,6 +33,7 @@ namespace CugemderApp.Droid
             BlazorHybridAndroid.Init();
 
             var fileProvider = new AssetFileProvider(Assets, "wwwroot");
+
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;

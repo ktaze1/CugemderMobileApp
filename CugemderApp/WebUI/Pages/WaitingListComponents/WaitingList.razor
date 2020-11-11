@@ -4,6 +4,7 @@
 @inject PointsDAL pointDAL
 @inject NavigationManager  uriHelper
 @inject NotificationsDAL notifications
+@inject MeetingPointsDAL meetingPointDAL
 
 @if (waitingUsers == null)
 {
@@ -55,10 +56,10 @@ else
     <button type="submit" class="btn btn-primary" @onclick="@Update"> Guncelle </button>
 }
 @code {
-    List<AspNetUsers> waitingUsers;
+    List<AspNetUsers> waitingUsers = new List<AspNetUsers>();
     public int groupId = 0;
-    List<Groups> groups;
-    List<Points> points;
+    List<Groups> groups = new List<Groups>();
+    List<Points> points = new List<Points>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,13 +72,23 @@ else
 
     async void Update()
     {
+
         List<string> GroupsWithNewUsers = new List<string>();
-        foreach (AspNetUsers user in waitingUsers)
+        foreach (var user in waitingUsers)
         {
-            user.EmailConfirmed = true;
-            user.LastGroupName = groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName;
-            user.Points = points.Where(c => c.UserId == user.Id).FirstOrDefault().Id;
-            userDAL.PutUser(user.Id, user);
+            try
+            {
+                user.EmailConfirmed = true;
+                userDAL.PutUser(user.Id, user);
+                user.LastGroupName = groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName;
+                user.Points = points.Where(c => c.UserId == user.Id).First().Id;
+                userDAL.PutUser(user.Id, user);
+
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
             if (!GroupsWithNewUsers.Contains(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName))
             {
                 GroupsWithNewUsers.Add(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName);
@@ -94,7 +105,18 @@ else
     async Task Delete(string userId)
     {
         var user = waitingUsers.First(x => x.Id == userId);
+        meetingPointDAL.DeleteMeetinPoints(userId);
         pointDAL.DeletePoints(userId);
         userDAL.DeleteUser(userId);
+        RefreshPageContent();
+    }
+
+
+    async void RefreshPageContent()
+    {
+        waitingUsers = await userDAL.GetUsersNoGroup();
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("redirect/waitinglist");
+        await OnInitializedAsync();
     }
 }
