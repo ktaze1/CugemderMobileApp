@@ -17,7 +17,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidCommandLineToolsVersion>latest</AndroidCommandLineToolsVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -52,6 +52,19 @@
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <LangVersion>8.0</LangVersion>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidLinkTool>r8</AndroidLinkTool>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidDexTool>d8</AndroidDexTool>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidSigningKeyStore>C:\Users\Kaan\AppData\Local\Xamarin\Mono for Android\Keystore\Cugemder\Cugemder.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>12345678Be-</AndroidSigningStorePass>
+    <AndroidHttpClientHandlerType>System.Net.Http.HttpClientHandler</AndroidHttpClientHandlerType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -72,8 +85,11 @@
       <Version>4.3.4</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
+    <PackageReference Include="Xamarin.Android.Support.Annotations">
+      <Version>28.0.0.3</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Collections">
-      <Version>28.0.0.1</Version>
+      <Version>28.0.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0-pre2" />
     <PackageReference Include="Xamarin.Firebase.Messaging">
@@ -88,7 +104,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <GoogleServicesJson Include="google-services.json" />
     <Compile Include="MyFirebaseIIDService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
@@ -98,6 +113,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <GoogleServicesJson Include="google-services.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

@@ -2,6 +2,7 @@
 @inject DocumentsDAL documentDAL
 @inject AspNetUsersDAL userDAL
 @inject FileUpload fileDAL
+@inject NavigationManager uriHelper
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 @if (loggedUser != null)
@@ -91,6 +92,8 @@
         {
             fileDAL.DeleteDocument(filetoDelete);
             documentDAL.DeleteDocuments(id);
+
+            RefreshPageContent();
         }
     }
 
@@ -110,6 +113,8 @@
 
             documentDAL.PostDocuments(document);
             document = new Documents();
+
+            RefreshPageContent();
         }
     }
 
@@ -136,6 +141,14 @@
     {
 
         pickResults = await FilePicker.PickAsync();
+    }
+
+    async void RefreshPageContent()
+    {
+        documentList = await documentDAL.GetDocuments();
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("redirect/documents");
+        await OnInitializedAsync();
     }
 
 }

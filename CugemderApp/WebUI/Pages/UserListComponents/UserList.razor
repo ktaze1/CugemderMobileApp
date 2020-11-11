@@ -267,7 +267,7 @@ else
                                     <div class="li-text">
                                         <h6 @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-head" style="color: red;"> @user.FirstName @user.LastName.ToUpper()</h6>
                                         <div class="li-sub">
-                                            <p style="color:grey;">
+                                            <p style="color:grey; font-size:small;">
                                                 Firma: <span><em>@user.Company</em></span> <span class="br"></span>
                                                 Uzmanlık Alanı: <span><em>@user.Speciality</em></span> <span class="br"></span>
                                                 Grup: <span><em>@user.GroupNavigation.GroupName</em></span> <span class="br"></span>
@@ -290,12 +290,12 @@ else
 
 
 @code {
-    private AspNetUsers user;
-    private List<AspNetUsers> userlist, tempList, usersInGroup;
-    private List<Groups> groups;
-    private List<Genders> genders;
-    private List<JobTitles> jobTitles;
-    private List<Cities> cities;
+    private AspNetUsers user = new AspNetUsers();
+    private List<AspNetUsers> userlist = new List<AspNetUsers>(), tempList = new List<AspNetUsers>(), usersInGroup = new List<AspNetUsers>();
+    private List<Groups> groups = new List<Groups>();
+    private List<Genders> genders = new List<Genders>();
+    private List<JobTitles> jobTitles = new List<JobTitles>();
+    private List<Cities> cities = new List<Cities>();
     Dictionary<string, int> standings = new Dictionary<string, int>();
     Dictionary<string, int> groupStandings = new Dictionary<string, int>();
     int standingNo = 1, groupStandingNo = 1;

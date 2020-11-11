@@ -5,69 +5,71 @@
 @inject GroupsDAL groupDAL
 @inject NotificationsDAL notifications
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager uriHelper
 
 
 
 @if (loggedUser != null)
 {
-    @if (loggedUser.IsAdmin.Value.Equals(true))
+    @if (loggedUser.IsAdmin.Value)
     {
 
-<div>
-    <h4>Yeni Etkinlik Ekle: <span @onclick="@( () => isOpen = !isOpen)" class="oi oi-@arrowPosition()"></span></h4>
-    @if (isOpen)
-    {
-        <div class="simple-form col-sm-3">
-            <EditForm Model="newEvent" OnValidSubmit="CreateEvent">
-                <DataAnnotationsValidator />
-                <div class="form-group">
-                    <label>Başlık</label>
-                    <InputText @bind-Value="newEvent.Title" class="form-control" placeholder="Başlık Giriniz" />
-                    <ValidationMessage For="@(() => newEvent.Title)" />
-                </div>
-                <div class="form-group">
-                    <label>Lokasyon</label>
-                    <InputText @bind-Value="newEvent.Location" class="form-control" placeholder="Adres Giriniz" />
-                    <ValidationMessage For="@(() => newEvent.Location)" />
-                </div>
-                <div class="form-group">
-                    <label>Açıklama</label>
-                    <InputTextArea @bind-Value="newEvent.Summary" class="form-control" placeholder="Açıklama Giriniz" />
-                    <ValidationMessage For="@(() => newEvent.Summary)" />
-                </div>
-                <div class="form-group">
-                    <label for="createdDate">Tarih ve Saat</label>
-                    <InputDateTime class="form-control" @bind-Value="newEvent.Date" />
-                    <ValidationMessage For="@(() => newEvent.Date)" />
-                </div>
-                <div class="form-group">
-                    <label>Grup</label>
-                    @if (groupList != null)
-                    {
-                        <select class="form-control"
-                                @bind="newEvent.RelatedGroup">
-                            <option value="0">Seç</option>
-                            @foreach (var group in groupList)
+        <div>
+            <button class="btn btn-dark" @onclick="@( () => isOpen = !isOpen)">Yeni Etkinlik Ekle</button>
+            @if (isOpen)
+            {
+                <br />
+                <div class="simple-form col-sm-3">
+                    <EditForm Model="newEvent" OnValidSubmit="CreateEvent">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <label>Başlık</label>
+                            <InputText @bind-Value="newEvent.Title" class="form-control" placeholder="Başlık Giriniz" />
+                            <ValidationMessage For="@(() => newEvent.Title)" />
+                        </div>
+                        <div class="form-group">
+                            <label>Lokasyon</label>
+                            <InputText @bind-Value="newEvent.Location" class="form-control" placeholder="Adres Giriniz" />
+                            <ValidationMessage For="@(() => newEvent.Location)" />
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama</label>
+                            <InputTextArea @bind-Value="newEvent.Summary" class="form-control" placeholder="Açıklama Giriniz" />
+                            <ValidationMessage For="@(() => newEvent.Summary)" />
+                        </div>
+                        <div class="form-group">
+                            <label for="createdDate">Tarih ve Saat</label>
+                            <InputDateTime class="form-control" @bind-Value="newEvent.Date" />
+                            <ValidationMessage For="@(() => newEvent.Date)" />
+                        </div>
+                        <div class="form-group">
+                            <label>Grup</label>
+                            @if (groupList != null)
                             {
-                                @if (group.Id == groupId)
-                                {
-                                    <option selected value="@group.Id">@group.GroupName</option>
-                                }
-                                else
-                                {
-                                    <option value="@group.Id">@group.GroupName</option>
-                                }
+                                <select class="form-control"
+                                        @bind="newEvent.RelatedGroup">
+                                    <option value="0">Seç</option>
+                                    @foreach (var group in groupList)
+                                    {
+                                        @if (group.Id == groupId)
+                                        {
+                                            <option selected value="@group.Id">@group.GroupName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@group.Id">@group.GroupName</option>
+                                        }
 
+                                    }
+                                </select>
                             }
-                        </select>
-                    }
-                </div>
+                        </div>
 
-                <button type="submit" class="btn btn-dark">Ekle</button>
-            </EditForm>
+                        <button type="submit" class="btn btn-dark">Ekle</button>
+                    </EditForm>
+                </div>
+            }
         </div>
-    }
-</div>
     }
 }
 
@@ -149,13 +151,13 @@ else
 @code {
     private AspNetUsers loggedUser;
     private string _userId;
-    List<Groups> groupList;
+    List<Groups> groupList = new List<Groups>();
     public int groupId = 0;
     [Parameter] public int id { get; set; }
     bool isOpen = false;
 
     Events newEvent = new Events();
-    List<Events> events { get; set; }
+    List<Events> events = new List<Events>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -174,6 +176,7 @@ else
     {
         eventDAL.DeleteEvents(eventID);
         notifications.DeleteNotification(eventID);
+        RefreshPageContent();
     }
 
     void CreateEvent()
@@ -206,13 +209,15 @@ else
         }
 
         eventDAL.PostEvents(newEvent);
+        RefreshPageContent();
         newEvent = new Events();
     }
 
-    string arrowPosition()
+    async void RefreshPageContent()
     {
-        if (!isOpen)
-            return "arrow-thick-bottom";
-        return "arrow-thick-top";
+        events = await eventDAL.GetEvents();
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("redirect/events");
+        await OnInitializedAsync();
     }
 }

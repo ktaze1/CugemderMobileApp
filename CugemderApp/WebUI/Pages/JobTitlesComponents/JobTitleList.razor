@@ -1,6 +1,7 @@
 ﻿@page "/jobtitles"
 @inject JobTitlesDAL jobDAL
 @inject AspNetUsersDAL userDAL
+@inject NavigationManager uriHelper
 
 <h3>Meslek Listesi</h3>
 
@@ -69,5 +70,15 @@
             userDAL.PutUser(user.Id, user);
         }
         jobDAL.DeleteJobTitles(jobId);
+        RefreshPageContent();
+    }
+
+
+    async void RefreshPageContent()
+    {
+        jobTitlesList = await jobDAL.GetJobTitles();
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("redirect/jobtitles");
+        await OnInitializedAsync();
     }
 }

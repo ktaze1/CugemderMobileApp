@@ -1,0 +1,12 @@
+﻿@page "/redirect/{link}"
+@inject NavigationManager uriHelper
+
+@code {
+
+    [Parameter] public string link { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        uriHelper.NavigateTo($"{link}");
+    }
+}

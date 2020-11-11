@@ -1,0 +1,296 @@
+﻿@page "/jobreferences"
+@inject AspNetUsersDAL userDAL
+@inject JobReferencesDAL jobReferenceDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
+@inject NavigationManager uriHelper
+
+<button class="btn btn-dark" @onclick="@( () => isOpen = !isOpen)">İş Kişi Yönlendir</button>
+
+@if (isOpen)
+{
+<br />
+    <div>
+        <EditForm Model="sc" OnValidSubmit="Filter">
+            <div>
+                İsim: <InputText class="form-control" @bind-Value="sc.name" />
+            </div>
+
+            <div>
+                Soyisim: <InputText class="form-control" @bind-Value="sc.surname" />
+            </div>
+
+            <br />
+            <button class="btn btn-dark"> Filtrele</button>
+        </EditForm>
+
+        <br />
+        @if (tempUserList != null && tempUserList.Count > 0)
+        {
+            <div class="table-responsive-sm">
+                <table class="table table-striped">
+                    <thead>
+                    <th>İsim</th>
+                    <th>E-Mail</th>
+                    <th>Seç</th>
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (var item in tempUserList)
+                        {
+                            <tr>
+                                <td>@item.FirstName &nbsp; @item.LastName.ToUpper()</td>
+                                <td>@item.Email</td>
+                                <td>
+                                    <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(true, item.Id, item))" type="button"> Uzman Olarak </button>
+                                    <button style="margin-top: 4px;" @onclick="@( () => SelectUserForReference(false, item.Id, item))" class="btn btn-secondary" type="button"> Referans Olarak </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <div class="table-responsive-sm">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="d-flex">
+                        <th class="col-6" style="justify-content: start;">Uzman</th>
+                        <th class="col-6" style="text-align:left; justify-content: start;">Yönlendirilecek Kişi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="d-flex">
+                        <td class="col-6">
+                            @if (expert != null)
+                            {
+                                <p> @expert.FirstName &nbsp;@expert.LastName.ToUpper()</p>
+
+                            }
+                            else if (expert == null)
+                            {
+                                <p>Uzman Seçin</p>
+                            }
+                        </td>
+                        <td class="col-6">
+                            @if (referenced != null)
+                            {
+                                <p> @referenced.FirstName &nbsp;@referenced.LastName.ToUpper()</p>
+                            }
+                            else if (referenced == null)
+                            {
+                                <p>Yönlendirilecek Kişi Seçin</p>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button @onclick="@( () => SendJobReference())" style="margin-left: 0;" class="btn btn-dark" type="button">Yönlendir</button>
+
+    </div>
+
+
+    <br />
+
+
+}
+
+<br />
+
+<hr />
+
+<h3>Yönlendirme Geçmişi</h3>
+
+<div class="container">
+
+    <h5> Gelen Yönlendirmeler</h5>
+    @if (jobReferencesUserReferenced == null)
+    {
+        <p><em>Yükleniyor</em></p>
+    }
+    else if (jobReferencesUserReferenced.Count() == 0)
+    {
+        <p> Kayıt Bulunamadı!</p>
+        <br />
+    }
+    else
+    {
+        <div class="table-responsive align-content-start" style="padding-left: 1em;">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr class="row">
+                        <th class="col">Detay</th>
+                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var meeting in jobReferencesUserReferenced)
+                    {
+                        <tr class="row">
+                            <td class="col-8">
+                                <p style="margin-bottom: 0; color: grey;"><strong>Referans Eden</strong>:   @getFullname(meeting.ReferencerId) </p> <span class="br"></span>
+                                <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>: @getFullname(meeting.ExpertId)</p> <span class="br"></span>
+                                <p style="margin-bottom: 0; color: grey;"><strong>Durum</strong>:  @jobReferenceStatusName(meeting)</p>
+                            </td>
+                            <td class="col-4">
+                                @if (meeting.IsMeetingDone && meeting.IsProductive.HasValue)
+                                {
+
+                                    <p>&nbsp;</p>
+                                }
+                                else
+                                {
+                                    <button @onclick="@( () => UpdateStatus(meeting.Id))" class="btn btn-primary" type="button">Cevapla</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+
+
+    <h5>Yönlendirdiklerim</h5>
+
+    @if (jobReferencesUserReferencer == null)
+    {
+        <p><em>Yükleniyor</em></p>
+    }
+    else if (jobReferencesUserReferencer.Count() == 0)
+    {
+        <p> Kayıt Bulunamadı!</p>
+        <br />
+    }
+    else
+    {
+        <div class="table-responsive align-content-start" style="padding-left: 1em;">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr class="row">
+                        <th class="col">Detay</th>
+                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var meeting in jobReferencesUserReferencer)
+                    {
+                        <tr class="row">
+                            <td class="col-8">
+                                <p style="margin-bottom: 0; color: grey;"><strong>Referans Edilen Kişi</strong>:   @getFullname(meeting.ReferencedId) </p> <span class="br"></span>
+                                <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>:  @getFullname(meeting.ExpertId)</p> <span class="br"></span>
+                                <p style="margin-bottom: 0; color: grey;"><strong>Durum</strong>:  @jobReferenceStatusName(meeting)</p>
+                            </td>
+                            <td class="col-4">
+                                <p>&nbsp;</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+    <br />
+</div>
+
+
+@code {
+
+
+    bool isOpen = false;
+    AspNetUsers expert, referenced;
+    SearchForm sc = new SearchForm();
+    AspNetUsers loggedUser = new AspNetUsers();
+    JobReferences jobReference = new JobReferences();
+    List<AspNetUsers> users = new List<AspNetUsers>(), tempUserList = new List<AspNetUsers>();
+    List<JobReferences> jobReferencesUserReferencer = new List<JobReferences>(), jobReferencesUserReferenced = new List<JobReferences>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
+            users = await userDAL.GetUsers();
+            jobReferencesUserReferenced = await jobReferenceDAL.GetJobReferencesReferenced(loggedUser.Id);
+            jobReferencesUserReferencer = await jobReferenceDAL.GetJobReferencesReferencer(loggedUser.Id);
+        }
+        users = await userDAL.GetUsers();
+    }
+
+    public class SearchForm
+    {
+        public string? name { get; set; }
+
+        public string? surname { get; set; }
+    }
+
+    async void Filter()
+    {
+        if (users != null)
+        {
+            tempUserList = users;
+            if (sc.name != null)
+                tempUserList = tempUserList.Where(c => c.FirstName.ToLower().Contains(sc.name.ToLower())).ToList();
+            if (sc.surname != null)
+                tempUserList = tempUserList.Where(c => c.LastName.ToLower().Contains(sc.surname.ToLower())).ToList();
+        }
+    }
+
+    void SelectUserForReference(bool option, string id, AspNetUsers user)
+    {
+        if (option)
+        {
+            jobReference.ExpertId = id;
+            expert = user;
+        }
+        else
+        {
+            jobReference.ReferencedId = id;
+            referenced = user;
+        }
+    }
+
+    void SendJobReference()
+    {
+        if (jobReference.ExpertId != null && jobReference.ReferencedId != null)
+        {
+            jobReference.ReferencerId = loggedUser.Id;
+            jobReferenceDAL.PostJobReferences(jobReference);
+        }
+    }
+
+    string getFullname(string id)
+    {
+        var fullname = users.Where(c => c.Id == id).FirstOrDefault().FirstName + " " + users.Where(c => c.Id == id).FirstOrDefault().LastName;
+        return fullname;
+    }
+
+    async void UpdateStatus(int referenceId)
+    {
+        uriHelper.NavigateTo($"jobReferenceUpdate/{referenceId}");
+    }
+
+    string jobReferenceStatusName(JobReferences reference)
+    {
+        if (reference.IsMeetingDone)
+        {
+            if (reference.IsProductive != null && reference.IsProductive.Value)
+                return "Görüşme Yapıldı ve Olumlu Geçti";
+            else if (reference.IsProductive != null && !reference.IsProductive.Value)
+                return "Görüşme Yapıldı fakat Olumlu Geçmedi";
+
+            return "Görüşme Yapıldı";
+        }
+        else
+            return "Görüşme Yapılmadı";
+    }
+
+}

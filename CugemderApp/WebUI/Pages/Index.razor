@@ -389,7 +389,7 @@ else
             loggedUser = await userDAL.GetUsername(user.Identity.Name);
             if (loggedUser.GroupNavigation != null)
             {
-                if (loggedUser.IsTopicSubscribed.GetValueOrDefault() && loggedUser.LastGroupName != loggedUser.GroupNavigation.GroupName)
+                if (loggedUser.IsTopicSubscribed.GetValueOrDefault() && loggedUser.LastGroupName != loggedUser.GroupNavigation.GroupName && loggedUser.LastGroupName != null)
                 {
                     Unsubscribe(loggedUser.LastGroupName);
                     Subscribe(loggedUser.GroupNavigation.GroupName, "");

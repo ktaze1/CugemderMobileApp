@@ -22,7 +22,7 @@ namespace CugemderApp.Droid
     {
         private Context mContext;
         private NotificationManager mNotificationManager;
-        private NotificationCompat.Builder mBuilder;
+        private Android.Support.V4.App.NotificationCompat.Builder mBuilder;
         public static String NOTIFICATION_CHANNEL_ID = "10023";
 
         public NotificationHelper()
@@ -40,7 +40,7 @@ namespace CugemderApp.Droid
 
            
 
-                mBuilder = new NotificationCompat.Builder(mContext);
+                mBuilder = new Android.Support.V4.App.NotificationCompat.Builder(mContext);
                 mBuilder.SetSmallIcon(Resource.Drawable.notification_action_background);
                 mBuilder.SetContentTitle(title)
                         .SetAutoCancel(true)

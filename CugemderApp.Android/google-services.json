@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "185740890093",
-    "firebase_url": "https://cugemdermobile.firebaseio.com",
-    "project_id": "cugemdermobile",
-    "storage_bucket": "cugemdermobile.appspot.com"
+    "project_number": "258237166508",
+    "firebase_url": "https://beeport-mobileandroid.firebaseio.com",
+    "project_id": "beeport-mobileandroid",
+    "storage_bucket": "beeport-mobileandroid.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:185740890093:android:bea69380633bcd12bba1e4",
+        "mobilesdk_app_id": "1:258237166508:android:0928f61a7089887b8ac009",
         "android_client_info": {
-          "package_name": "com.cugemder.cugemdercms"
+          "package_name": "com.cugemder.beeport"
         }
       },
       "oauth_client": [
         {
-          "client_id": "185740890093-e3mac0h4gc455gn72ihjc86aur4a8p67.apps.googleusercontent.com",
+          "client_id": "258237166508-m5hk8h349ae0ht89sk5tbh0btic8tn22.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAIPlEY-nondAjdhoNlbjAzORDuFURTKDA"
+          "current_key": "AIzaSyBtd3THECOP0Bub_SPBm5MUrznagnzOAGg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "185740890093-e3mac0h4gc455gn72ihjc86aur4a8p67.apps.googleusercontent.com",
+              "client_id": "258237166508-m5hk8h349ae0ht89sk5tbh0btic8tn22.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

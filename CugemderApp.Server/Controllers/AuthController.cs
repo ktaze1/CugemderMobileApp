@@ -75,15 +75,15 @@ namespace CugemderApp.Server.Controllers
             using (var message = new MailMessage())
             {
                 message.To.Add(new MailAddress($"{user.Email}", $"{user.FirstName} { user.LastName}"));
-                message.From = new MailAddress("bkaantaze@gmail.com", "CUGEMDER");
-                message.Subject = "Sifre degisikligi";
-                message.Body = $"yeni bir sifre almak icin linke tiklayin: <a href=\"{link}\">{link}</a> ";
+                message.From = new MailAddress("beeportsifre@gmail.com", "BeePort");
+                message.Subject = "Sifre Değişikliği";
+                message.Body = $"Yeni bir şifre almak için linke tıklayın: <a href=\"{link}\">{link}</a> ";
                 message.IsBodyHtml = true;
 
                 using (var client = new SmtpClient("smtp.gmail.com", 587))
                 {
                     client.UseDefaultCredentials = false;
-                    client.Credentials = new NetworkCredential("bkaantaze@gmail.com", "Ingrid.12"); // TODO ÇÜGEMDER Mail Gir
+                    client.Credentials = new NetworkCredential("beeportsifre@gmail.com", "184589Be-"); // TODO ÇÜGEMDER Mail Gir
                     client.EnableSsl = true;
                     client.Send(message);
                 }
@@ -113,15 +113,15 @@ namespace CugemderApp.Server.Controllers
                 using (var message = new MailMessage())
                 {
                     message.To.Add(new MailAddress($"{user.Email}", $"{user.FirstName} { user.LastName}"));
-                    message.From = new MailAddress("bkaantaze@gmail.com", "CUGEMDER");
-                    message.Subject = "Sifre degisikligi";
+                    message.From = new MailAddress("beeportsifre@gmail.com", "BeePort");
+                    message.Subject = "Yeni Şifreniz";
                     message.Body = $"Yeni şifreniz: {newPassword} ";
                     message.IsBodyHtml = true;
 
                     using (var client = new SmtpClient("smtp.gmail.com", 587))
                     {
                         client.UseDefaultCredentials = false;
-                        client.Credentials = new NetworkCredential("bkaantaze@gmail.com", "Ingrid.12"); // TODO : ÇÜGEMDER Mail gir
+                        client.Credentials = new NetworkCredential("beeportsifre@gmail.com", "184589Be-"); // TODO : ÇÜGEMDER Mail gir
                         client.EnableSsl = true;
                         client.Send(message);
                     }
@@ -162,6 +162,7 @@ namespace CugemderApp.Server.Controllers
 
             _dbContext.Points.Add(new Points { AddedBy = "Yeni Kullanici", TotalPoints = 0, UserId = user.Id, UpdatedAt = DateTime.Now });
             await _dbContext.SaveChangesAsync();
+
 
             return Ok();
         }

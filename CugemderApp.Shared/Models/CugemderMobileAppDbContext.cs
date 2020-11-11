@@ -29,6 +29,7 @@ namespace CugemderApp.Shared.Models
         public virtual DbSet<ForgotPasswordRequests> ForgotPasswordRequests { get; set; }
         public virtual DbSet<Genders> Genders { get; set; }
         public virtual DbSet<Groups> Groups { get; set; }
+        public virtual DbSet<JobReferences> JobReferences { get; set; }
         public virtual DbSet<JobTitles> JobTitles { get; set; }
         public virtual DbSet<MeetingPoints> MeetingPoints { get; set; }
         public virtual DbSet<Meetings> Meetings { get; set; }
@@ -263,6 +264,21 @@ namespace CugemderApp.Shared.Models
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<JobReferences>(entity =>
+            {
+                entity.Property(e => e.ExpertId)
+                    .IsRequired()
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.ReferencedId)
+                    .IsRequired()
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.ReferencerId)
+                    .IsRequired()
+                    .HasMaxLength(300);
             });
 
             modelBuilder.Entity<MeetingPoints>(entity =>

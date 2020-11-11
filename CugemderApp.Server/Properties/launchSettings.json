@@ -15,7 +15,8 @@
       "launchUrl": "weatherforecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "ancmHostingModel": "InProcess"
     },
     "CugemderApp.Server": {
       "commandName": "Project",
