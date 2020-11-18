@@ -2,4 +2,4 @@
 */obj/
 *.v2
 .vs/CugemderApp/v16/.suo
-CugemderApp.Server/google-services.json
+CugemderApp.Android/google-services.json
