@@ -1,4 +1,4 @@
-﻿@page "/userlist"
+﻿@page "/userlistfilter"
 @using Microsoft.AspNetCore.Authorization
 @inject AspNetUsersDAL userDAL
 @inject GroupsDAL groupDAL
@@ -68,7 +68,7 @@
     .br {
         display: block;
         margin-bottom: 0;
-    } 
+    }
 
     @@media all and (min-width: 45em) {
         .list li {
@@ -119,18 +119,133 @@
     }
 </style>
 
-<button class="btn btn-dark" @onclick="( () => ToFilterPage())"> Üye Arama ve Filtreleme </button>
+    @if (groups != null && jobTitles != null && genders != null && cities != null)
+    {
+        <br />
+        <EditForm Model="sc" OnValidSubmit="Filter">
+            <div>
+                <div>
+                    <label>Ad: </label>
+                    <InputText class="form-control" @bind-Value="sc.name" />
+                </div>
+                <br />
+                <div>
+                    <label>Soyad: </label>
+                    <InputText class="form-control" @bind-Value="sc.surname" />
+                </div>
+            </div>
+            <br />
+            <div>
+                <label>Cinsiyet :</label>
+                <div>
+                    <select class="form-control" @bind="sc.genderId">
+                        <option value="0">Seç</option>
+                        @foreach (var gender in genders)
+                        {
+                            @if (gender.Id == genderId)
+                            {
+                                <option selected value="@gender.Id">@gender.GenderName</option>
+                            }
+                            else
+                            {
+                                <option value="@gender.Id">@gender.GenderName</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div>
+                <label>Grup :</label>
+                <div>
+                    <select class="form-control" @bind="sc.groupId">
+                        <option value="0">Seç</option>
+                        <option value="0">Hepsi</option>
+                        @foreach (var group in groups)
+                        {
+                            @if (group.Id == groupId)
+                            {
+                                <option selected value="@group.Id">@group.GroupName</option>
+                            }
+                            else
+                            {
+                                <option value="@group.Id">@group.GroupName</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div>
+                <label>Meslek :</label>
+                <div>
+                    <select class="form-control" @bind="sc.jobId">
+                        <option value="0">Seç</option>
+                        @foreach (var jobTitle in jobTitles)
+                        {
+                            @if (jobTitle.Id == jobTitleId)
+                            {
+                                <option selected value="@jobTitle.Id">@jobTitle.TitleName</option>
+                            }
+                            else
+                            {
+                                <option value="@jobTitle.Id">@jobTitle.TitleName</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div>
+                <label>Şehir :</label>
+                <div>
+                    <select class="form-control" @bind="sc.cityId">
+                        <option value="0">Seç</option>
+                        @foreach (var city in cities)
+                        {
+                            @if (city.Id == citiesId)
+                            {
+                                <option selected value="@city.Id">@city.CityName</option>
+                            }
+                            else
+                            {
+                                <option value="@city.Id">@city.CityName</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <label class="col-3">Yaş: </label>
+                <div class="d-flex col-3 offset-3">
+                    <InputNumber placeholder="Min" style="width: 4.5em;" class="form-group" @bind-Value="sc.minAge" /> &emsp;
+                    <InputNumber placeholder="Max" style="width: 4.5em;" class="form-group" @bind-Value="sc.maxAge" />
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary"> Filtrele</button>
+            <button class="btn btn-secondary" type="button" @onclick="ClearFilter"> Filtreleri Temizle</button>
+            <button class="btn btn-dark" type="button" @onclick="GoBack"> Geri Dön </button>
+        </EditForm>
+
+    }
+
 <br />
-<br />
+
 @if (tempList == null)
 {
-<center>
-    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+    <center>
+        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
 
-    <p><em>Y&uuml;kleniyor</em></p>
-</center>
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
 }
-else if(tempList.Count == 0)
+else if (tempList.Count == 0)
 {
     <p>Üye Bulunamadı</p>
 }
@@ -139,7 +254,7 @@ else
     <table class="table table-striped">
         <thead>
             <tr style="text-align: center;">
-                <th style="font-size: large"> GRUP ÜYELERİ </th>
+                <th style="font-size: large"> ÜYELER </th>
             </tr>
         </thead>
         <tbody>
@@ -149,20 +264,20 @@ else
                     {
                         <tr>
                             <td class="inner">
-                                    <div @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-img">
-                                        <img src="@user.PhotoUrl" />
+                                <div @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-img">
+                                    <img src="@user.PhotoUrl" />
+                                </div>
+                                <div class="li-text">
+                                    <h6 @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-head" style="color: red;"> @user.FirstName @user.LastName.ToUpper()</h6>
+                                    <div class="li-sub">
+                                        <p style="color:grey; font-size:small;">
+                                            Firma: <span><em>@user.Company</em></span> <span class="br"></span>
+                                            Uzmanlık Alanı: <span><em>@user.Speciality</em></span> <span class="br"></span>
+                                            Grup: <span><em>@user.GroupNavigation.GroupName</em></span> <span class="br"></span>
+                                            Puan: <span><em>@user.PointsNavigation.TotalPoints</em></span>
+                                        </p>
                                     </div>
-                                    <div class="li-text">
-                                        <h6 @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-head" style="color: red;"> @user.FirstName @user.LastName.ToUpper()</h6>
-                                        <div class="li-sub">
-                                            <p style="color:grey; font-size:small;">
-                                                Firma: <span><em>@user.Company</em></span> <span class="br"></span>
-                                                Uzmanlık Alanı: <span><em>@user.Speciality</em></span> <span class="br"></span>
-                                                Grup: <span><em>@user.GroupNavigation.GroupName</em></span> <span class="br"></span>
-                                                Puan: <span><em>@user.PointsNavigation.TotalPoints</em></span>
-                                            </p>
-                                        </div>
-                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }
@@ -207,7 +322,6 @@ else
             user = await userDAL.GetUsername(userAuth.Identity.Name);
         }
         userlist = await userDAL.GetUsersNoNull();
-        tempList = userlist.Where(c => c.Group == user.Group).ToList();
         foreach (var user in userlist)
         {
             standings.Add(user.Email, standingNo++);
@@ -271,6 +385,11 @@ else
         sc = new SearchForm();
     }
 
+    void GoBack()
+    {
+        uriHelper.NavigateTo("userlist");
+    }
+
     async void Filter()
     {
         if (userlist != null)
@@ -292,11 +411,6 @@ else
                 tempList = tempList.Where(c => c.DateOfBirth.GetValueOrDefault().Year < (DateTime.Today.Year - sc.minAge) &&
                 c.DateOfBirth.GetValueOrDefault().Year > (DateTime.Today.Year - sc.maxAge)).ToList();
         }
-    }
-
-    void ToFilterPage()
-    {
-        uriHelper.NavigateTo("userlistfilter");
     }
 
 }

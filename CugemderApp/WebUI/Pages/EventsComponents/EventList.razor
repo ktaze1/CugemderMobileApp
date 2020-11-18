@@ -77,7 +77,11 @@
 <br>
 @if (events == null)
 {
-    <p> Yukleniyor</p>
+    <center>
+        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
 }
 else if (events.Count == 0)
 {
@@ -101,7 +105,7 @@ else
                             <p style="color: red"> <b>Saat</b>: <span style="color: black;"> @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </span></p>
                             <p style="color: red"> <b>Açıklama</b>: <span style="color: black;"> @eachEvent.Summary </span></p>
                             @if (eachEvent.RelatedGroupNavigation != null)
-                            {<p style="color: red"> <b>Grup</b>: @eachEvent.RelatedGroupNavigation.GroupName</p>}
+                            {<p style="color: red"> <b>Grup</b>: <span style="color: black;">@eachEvent.RelatedGroupNavigation.GroupName</span></p>}
                             @if (loggedUser.IsAdmin.Value.Equals(true))
                             {
                                 <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
@@ -130,7 +134,7 @@ else
                             <p style="color: red"> <b>Saat</b>: <span style="color: black;"> @eachEvent.Date.GetValueOrDefault().ToShortTimeString() </span></p>
                             <p style="color: red"> <b>Açıklama</b>: <span style="color: black;"> @eachEvent.Summary </span></p>
                             @if (eachEvent.RelatedGroupNavigation != null)
-                            {<p style="color: red"> <b>Grup</b>: @eachEvent.RelatedGroupNavigation.GroupName</p>}
+                            {<p style="color: red"> <b>Grup</b>:<span style="color: black;">@eachEvent.RelatedGroupNavigation.GroupName</span></p>}
                             @if (loggedUser.IsAdmin.Value.Equals(true))
                             {
                                 <a class="btn btn-success" href="events/edit/@eachEvent.Id">Düzenle</a>
@@ -186,11 +190,11 @@ else
             newEvent.RelatedGroup = null;
             foreach (var item in groupList)
             {
-                notifications.SendNotification($"{newEvent.Date.Value.ToLongDateString()} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", item.GroupName);
+                notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", item.GroupName);
                 notifications.AddNotificaiton(new Notifications()
                 {
                     Title = "Etkinlik",
-                    Body = $"Bugün olacak etkinliğin saati: {newEvent.Date.Value.ToShortTimeString()} ",
+                    Body = $"Bugün olacak etkinliğin saati: {newEvent.Date.Value.ToString("t", AppState.trTR)} ",
                     Time = newEvent.Date.Value,
                     Receiver = item.GroupName
                 });
@@ -198,11 +202,11 @@ else
         }
         else if (newEvent.RelatedGroup != 0)
         {
-            notifications.SendNotification($"{newEvent.Date.Value.ToLongDateString()} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
+            notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
             notifications.AddNotificaiton(new Notifications()
             {
                 Title = "Etkinlik",
-                Body = $"Bugün olacak etkinliğin saati: {newEvent.Date.Value.ToShortTimeString()} ",
+                Body = $"Bugün olacak etkinliğin saati: {newEvent.Date.Value.ToString("t", AppState.trTR)} ",
                 Time = newEvent.Date.Value,
                 Receiver = groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName
             });

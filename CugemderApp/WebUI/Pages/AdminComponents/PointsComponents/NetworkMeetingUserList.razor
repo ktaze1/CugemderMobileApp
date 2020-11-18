@@ -37,7 +37,11 @@ else
 
 @if (userlist == null)
 {
-    <p><em>Loading...</em></p>
+<center>
+    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+    <p><em>Y&uuml;kleniyor</em></p>
+</center>
 }
 else
 {
@@ -54,7 +58,7 @@ else
                 <th>Ad Soyad</th>
                 <th>Güncel Puan</th>
                 <th>Son Puan Veriliş Tarihi</th>
-                <th>Kullanıcı Ayarlarını Değiştir</th>
+                <th>İşlem</th>
             </tr>
         </thead>
         <tbody>
@@ -72,9 +76,6 @@ else
                     }
                     <td>
                         <a href="/addpointsnetworkmeeting/@user.Id">Puan Ver</a>
-                        <br />
-                        <br />
-                        <a href="/adminaccessuser/@user.Id">Ayar Değiştir</a>
                     </td>
                 </tr>
             }
@@ -142,11 +143,6 @@ else
         pointDAL.DeletePoints(userId);
         userDAL.DeleteUser(userId);
     }
-
-    //Points GetLatestPoint(string id)
-    //{
-    //    return pointlist.Where(c => c.UserId == id).OrderBy(c => c.UpdatedAt).FirstOrDefault();
-    //}
 
     void Navigate(int option)
     {

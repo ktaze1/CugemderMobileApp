@@ -24,7 +24,11 @@
 <br />
 @if (groups == null)
 {
-    <text>Yükleniyor...</text>
+    <center>
+        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
 }
 else if (groups.Count == 0)
 {
@@ -86,8 +90,8 @@ else
     async void RefreshPageContent()
     {
         groups = await groupDAL.GetGroupsAsync();
-        System.Threading.Thread.Sleep(100);
-        uriHelper.NavigateTo("redirect/documents");
+        System.Threading.Thread.Sleep(200);
+        uriHelper.NavigateTo("redirect/groups");
         await OnInitializedAsync();
     }
 }

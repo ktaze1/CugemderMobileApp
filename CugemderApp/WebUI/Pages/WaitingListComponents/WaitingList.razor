@@ -8,7 +8,11 @@
 
 @if (waitingUsers == null)
 {
-    <p> Loading</p>
+    <center>
+        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
 }
 else
 {
@@ -53,7 +57,7 @@ else
         </table>
     </div>
     <br />
-    <button type="submit" class="btn btn-primary" @onclick="@Update"> Guncelle </button>
+    <button type="submit" class="btn btn-primary" @onclick="@Update"> Güncelle </button>
 }
 @code {
     List<AspNetUsers> waitingUsers = new List<AspNetUsers>();

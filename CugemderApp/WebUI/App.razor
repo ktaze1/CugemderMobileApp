@@ -1,6 +1,14 @@
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
-        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" >
+            <Authorizing>
+                <center>
+                    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+                    <p><em>Y&uuml;kleniyor</em></p>
+                </center>
+            </Authorizing>
+        </AuthorizeRouteView>
     </Found>
     <NotFound>
         <CascadingAuthenticationState>

@@ -1,0 +1,189 @@
+﻿@page "/jobreferenceadd"
+
+@inject AspNetUsersDAL userDAL
+@inject JobReferencesDAL jobReferenceDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
+@inject NavigationManager uriHelper
+
+<div>
+    <EditForm Model="sc" OnValidSubmit="Filter">
+        <div>
+            İsim: <InputText class="form-control" @bind-Value="sc.name" />
+        </div>
+
+        <div>
+            Soyisim: <InputText class="form-control" @bind-Value="sc.surname" />
+        </div>
+
+        <br />
+        <button class="btn btn-dark"> Filtrele</button>
+    </EditForm>
+
+    <br />
+    @if (tempUserList != null && tempUserList.Count > 0)
+    {
+        <div class="table-responsive-sm">
+            <table class="table table-striped">
+                <thead>
+                <th>İsim</th>
+                <th>E-Mail</th>
+                <th>Seç</th>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in tempUserList)
+                    {
+                        <tr>
+                            <td>@item.FirstName &nbsp; @item.LastName.ToUpper()</td>
+                            <td>@item.Email</td>
+                            <td>
+                                <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(true, item.Id, item))" type="button"> Uzman Olarak </button>
+                                <button style="margin-top: 4px;" @onclick="@( () => SelectUserForReference(false, item.Id, item))" class="btn btn-secondary" type="button"> Referans Olarak </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="table-responsive-sm">
+        <table class="table table-striped">
+            <thead>
+                <tr class="d-flex">
+                    <th class="col-6" style="justify-content: start;">Uzman</th>
+                    <th class="col-6" style="text-align:left; justify-content: start;">Yönlendirilecek Kişi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="d-flex">
+                    <td class="col-6">
+                        @if (expert != null)
+                        {
+                            <p> @expert.FirstName &nbsp;@expert.LastName.ToUpper()</p>
+
+                        }
+                        else if (expert == null)
+                        {
+                            <p>Uzman Seçin</p>
+                        }
+                    </td>
+                    <td class="col-6">
+                        @if (referenced != null)
+                        {
+                            <p> @referenced.FirstName &nbsp;@referenced.LastName.ToUpper()</p>
+                        }
+                        else if (referenced == null)
+                        {
+                            <p>Yönlendirilecek Kişi Seçin</p>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button @onclick="@( () => SendJobReference())" style="margin-left: 0;" class="btn btn-dark" type="button">Yönlendir</button>
+
+    <button @onclick="@( () => uriHelper.NavigateTo("jobreferences"))" style="margin-left: 0;" class="btn btn-dark" type="button">Geri Dön</button>
+
+
+</div>
+
+
+<br />
+
+
+@code {
+    AspNetUsers expert, referenced;
+    SearchForm sc = new SearchForm();
+    AspNetUsers loggedUser = new AspNetUsers();
+    JobReferences jobReference = new JobReferences();
+    List<AspNetUsers> users = new List<AspNetUsers>(), tempUserList = new List<AspNetUsers>();
+    List<JobReferences> jobReferencesUserReferencer = new List<JobReferences>(), jobReferencesUserReferenced = new List<JobReferences>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
+            users = await userDAL.GetUsers();
+            jobReferencesUserReferenced = await jobReferenceDAL.GetJobReferencesReferenced(loggedUser.Id);
+            jobReferencesUserReferencer = await jobReferenceDAL.GetJobReferencesReferencer(loggedUser.Id);
+        }
+        users = await userDAL.GetUsers();
+    }
+
+    public class SearchForm
+    {
+        public string? name { get; set; }
+
+        public string? surname { get; set; }
+    }
+
+    async void Filter()
+    {
+        if (users != null)
+        {
+            tempUserList = users;
+            if (sc.name != null)
+                tempUserList = tempUserList.Where(c => c.FirstName.ToLower().Contains(sc.name.ToLower())).ToList();
+            if (sc.surname != null)
+                tempUserList = tempUserList.Where(c => c.LastName.ToLower().Contains(sc.surname.ToLower())).ToList();
+        }
+    }
+
+    void SelectUserForReference(bool option, string id, AspNetUsers user)
+    {
+        if (option)
+        {
+            jobReference.ExpertId = id;
+            expert = user;
+        }
+        else
+        {
+            jobReference.ReferencedId = id;
+            referenced = user;
+        }
+    }
+
+    void SendJobReference()
+    {
+        if (jobReference.ExpertId != null && jobReference.ReferencedId != null)
+        {
+            jobReference.ReferencerId = loggedUser.Id;
+            jobReferenceDAL.PostJobReferences(jobReference);
+        }
+    }
+
+    string getFullname(string id)
+    {
+        var fullname = users.Where(c => c.Id == id).FirstOrDefault().FirstName + " " + users.Where(c => c.Id == id).FirstOrDefault().LastName;
+        return fullname;
+    }
+
+    async void UpdateStatus(int referenceId)
+    {
+        uriHelper.NavigateTo($"jobReferenceUpdate/{referenceId}");
+    }
+
+    string jobReferenceStatusName(JobReferences reference)
+    {
+        if (reference.IsMeetingDone)
+        {
+            if (reference.IsProductive != null && reference.IsProductive.Value)
+                return "Görüşme Yapıldı ve Olumlu Geçti";
+            else if (reference.IsProductive != null && !reference.IsProductive.Value)
+                return "Görüşme Yapıldı Fakat Olumlu Geçmedi";
+
+            return "Görüşme Yapıldı";
+        }
+        else
+            return "Görüşme Yapılmadı";
+    }
+
+}

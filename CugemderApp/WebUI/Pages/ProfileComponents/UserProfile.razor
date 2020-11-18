@@ -6,414 +6,424 @@
 @inject MeetingsDAL meetingDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-    <style>
-        .emp-profile {
-            padding: 3%;
-            margin-top: 3%;
-            margin-bottom: 3%;
+<style>
+    .emp-profile {
+        padding: 3%;
+        margin-top: 3%;
+        margin-bottom: 3%;
+    }
+
+    .nav-link-active {
+        background-color: red !important;
+    }
+
+    .navbar-light .navbar-nav .nav-link:hover {
+        color: red !important;
+    }
+
+    .profile-img {
+        text-align: center;
+    }
+
+        .profile-img img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
         }
 
-        .nav-link-active {
-            background-color: red !important;
-        }
-
-        .navbar-light .navbar-nav .nav-link:hover {
-            color: red !important;
-        }
-
-        .profile-img {
-            text-align: center;
-        }
-
-            .profile-img img {
-                width: 200px;
-                height: 200px;
-                border-radius: 50%;
-            }
-
-            .profile-img .file {
-                position: relative;
-                overflow: hidden;
-                margin-top: -20%;
-                width: 70%;
-                border: none;
-                border-radius: 0;
-                font-size: 15px;
-                background: #212529b8;
-            }
-
-                .profile-img .file input {
-                    position: absolute;
-                    opacity: 0;
-                    right: 0;
-                    top: 0;
-                }
-
-        .profile-head h5 {
-            color: #333;
-        }
-
-        .profile-head h6 {
-            color: #0062cc;
-        }
-
-        .profile-edit-btn {
-            border: none;
-            border-radius: 1.5rem;
+        .profile-img .file {
+            position: relative;
+            overflow: hidden;
+            margin-top: -20%;
             width: 70%;
-            padding: 2%;
-            font-weight: 600;
-            color: #6c757d;
-            cursor: pointer;
+            border: none;
+            border-radius: 0;
+            font-size: 15px;
+            background: #212529b8;
         }
 
-        .proile-rating {
+            .profile-img .file input {
+                position: absolute;
+                opacity: 0;
+                right: 0;
+                top: 0;
+            }
+
+    .profile-head h5 {
+        color: #333;
+    }
+
+    .profile-head h6 {
+        color: #0062cc;
+    }
+
+    .profile-edit-btn {
+        border: none;
+        border-radius: 1.5rem;
+        width: 70%;
+        padding: 2%;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        background-color: dodgerblue;
+    }
+
+    .proile-rating {
+        font-size: 12px;
+        color: #818182;
+        margin-top: 5%;
+    }
+
+        .proile-rating span {
+            color: #495057;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+    .profile-head .nav-tabs {
+        margin-bottom: 5%;
+        margin-right: 3px;
+    }
+
+        .profile-head .nav-tabs .nav-link {
+            font-weight: 600;
+            border: none;
+        }
+
+            .profile-head .nav-tabs .nav-link.active {
+                border: none;
+                border-bottom: 2px solid red;
+            }
+
+    .profile-work {
+        padding: 14%;
+        padding-top: 5%;
+        margin-top: -15%;
+    }
+
+        .profile-work p {
             font-size: 12px;
             color: #818182;
-            margin-top: 5%;
-        }
-
-            .proile-rating span {
-                color: #495057;
-                font-size: 15px;
-                font-weight: 600;
-            }
-
-        .profile-head .nav-tabs {
-            margin-bottom: 5%;
-            margin-right: 3px;
-        }
-
-            .profile-head .nav-tabs .nav-link {
-                font-weight: 600;
-                border: none;
-            }
-
-                .profile-head .nav-tabs .nav-link.active {
-                    border: none;
-                    border-bottom: 2px solid red;
-                }
-
-        .profile-work {
-            padding: 14%;
-            padding-top: 5%;
-            margin-top: -15%;
-        }
-
-            .profile-work p {
-                font-size: 12px;
-                color: #818182;
-                font-weight: 600;
-                margin-top: 10%;
-            }
-
-            .profile-work a {
-                text-decoration: none;
-                color: #495057;
-                font-weight: 600;
-                font-size: 14px;
-            }
-
-            .profile-work ul {
-                list-style: none;
-            }
-
-        .profile-tab label {
             font-weight: 600;
+            margin-top: 10%;
         }
 
-        .profile-tab p {
+        .profile-work a {
+            text-decoration: none;
+            color: #495057;
             font-weight: 600;
-            color: #0062cc;
+            font-size: 14px;
         }
-    </style>
 
-    @if (currentUser == null)
-    {
-        <p> Yükleniyor...</p>
+        .profile-work ul {
+            list-style: none;
+        }
+
+    .profile-tab label {
+        font-weight: 600;
     }
-    else
-    {
-        <div class="container emp-profile">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-img">
-                        <img src="@currentUser.PhotoUrl" alt="" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="profile-head">
-                        <br />
-                        <h4 class="d-flex justify-content-center">
-                            @currentUser.FirstName @currentUser.LastName
-                        </h4>
-                        <br />
-                        @{
-                            if (currentUser.Company != null)
-                            {
-                                <h6 style="color:red">Şirket Adı: <span style="font-size:16px;" class="proile-rating">@currentUser.Company</span></h6>
-                            }
-                        }
-                        @{
-                            if (currentUser.Speciality != null)
-                            {
-                                <h6 style="color:red">Uzmanlık Alanı: <span style="font-size:16px;" class="proile-rating">@currentUser.Speciality</span></h6>
-                            }
-                        }
 
-                        <br />
-                        @if (currentUser.Summary != null)
-                        {
-                            <h6 style="color: red;">Hakkında:</h6>
-                            <p>@currentUser.Summary</p>
-                        }
+    .profile-tab p {
+        font-weight: 600;
+        color: #0062cc;
+    }
+</style>
 
-                        <br />
-                        @if (currentUser.PointsNavigation != null)
-                        {
-                            <h6 style="color:red;">BeePort Puanı:</h6>
+@if (currentUser == null)
+{
+    <center>
+        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
 
-                            <div>
-                                <div class="progress">
-                                    <div class="progress-bar-striped progress-bar progress-bar-animated @progressBarColor((int)currentUser.PointsNavigation.TotalPoints)"
-                                         style="width: @((int)currentUser.PointsNavigation.TotalPoints)%"
-                                         aria-valuemin="0" aria-valuemax="100" aria-valuenow="@((int)currentUser.PointsNavigation.TotalPoints)">%@((int)currentUser.PointsNavigation.TotalPoints)</div>
-                                </div>
-                                <h6 class="proile-rating" style="margin-top: 7px;">
-                                    <span style="font-size:16px;" class="proile-rating">
-                                        Grup Sıralaması :      @if (standings[currentUser.Email] != null)
-                                        {
-                                            @standings[currentUser.Email];
-                                        }
-                                    </span>
-                                </h6>
-                            </div>
-                        }
-                        <ul class="nav nav-tabs d-flex justify-content-between" id="myTab" role="tablist">
-                            <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
-                                <p class="@(isTabActive(tab1))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel</p>
-                            </li>
-                            <li @onclick="@( () => ChangeTabs(2))" class="nav-item">
-                                <p class="@(isTabActive(tab2))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İş Bilgileri</p>
-                            </li>
-                            <li @onclick="@( () => ChangeTabs(3))" class="nav-item">
-                                <p class="@(isTabActive(tab3))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    @if (currentUser.Id != loggedUser.Id)
-                    {
-                        <input type="button" class="profile-edit-btn" @onclick="@( () => SendMeetingRequest(currentUser.Id))" value="Görüşme Ayarla" />
-                    }
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
+}
+else
+{
+    <div class="container emp-profile">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="@currentUser.PhotoUrl" alt="" />
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-8">
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <!-- Tab 1 Stars-->
-                        <div hidden="@tab1" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <br />
-                            @if (currentUser.GenderNavigation != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Cinsiyet: <span style="font-size:16px;" class="proile-rating">@currentUser.GenderNavigation.GenderName</span></h6>
-                                </div>
-                            }
-                            @if (currentUser.DateOfBirth != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Yaş: <span style="font-size:16px;" class="proile-rating">@(calculateAge(currentUser.DateOfBirth.GetValueOrDefault()))</span></h6>
-                                </div>
-                            }
-                            @if (currentUser.LocatedCityNavigation != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Şehir: <span style="font-size:16px;" class="proile-rating">@currentUser.LocatedCityNavigation.CityName</span></h6>
-                                </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <br />
+                    <h4 class="d-flex justify-content-center">
+                        @currentUser.FirstName @currentUser.LastName
+                    </h4>
+                    <br />
+                    @{
+                        if (currentUser.Company != null)
+                        {
+                            <h6 style="color:red">Şirket Adı: <span style="font-size:16px;" class="proile-rating">@currentUser.Company</span></h6>
+                        }
+                    }
+                    @{
+                        if (currentUser.Speciality != null)
+                        {
+                            <h6 style="color:red">Uzmanlık Alanı: <span style="font-size:16px;" class="proile-rating">@currentUser.Speciality</span></h6>
+                        }
+                    }
 
-                            }
-                            @if (currentUser.RelationshipNavigation != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Medeni Hali: <span style="font-size:16px;" class="proile-rating">@currentUser.RelationshipNavigation.RelationshipStatus</span></h6>
-                                </div>
-                            }
-                        </div>
-                        <!-- Tab 1 Ends-->
-                        <!-- Tab 2 Start -->
-                        <div hidden="@tab2" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <br />
-                            @if (currentUser.GroupNavigation != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Grup: <span style="font-size:16px;" class="proile-rating">@currentUser.GroupNavigation.GroupName</span></h6>
-                                </div>
-                            }
-                            @if (currentUser.JobTitleNavigation != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Meslek: <span style="font-size:16px;" class="proile-rating">@currentUser.JobTitleNavigation.TitleName</span></h6>
-                                </div>
-                            }
+                    <br />
+                    @if (currentUser.Summary != null)
+                    {
+                        <h6 style="color: red;">Hakkında:</h6>
+                        <p>@currentUser.Summary</p>
+                    }
 
-                            @if (currentUser.PositionNavigation != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Pozisyon: <span style="font-size:16px;" class="proile-rating">@currentUser.PositionNavigation.Position</span></h6>
-                                </div>
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">
-                                        @if (currentUser.PositionNavigation.Id == 4)
-                                        {
-                                            @if (currentUser.Year != null)
-                                            {
-                                                <h6>
-                                                    Mezuniyet Yılı: <span style="font-size:16px;" class="proile-rating">@currentUser.Year</span>
-                                                </h6>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            @if (currentUser.Year != null)
-                                            {
-                                                <h6>
-                                                    Firma Kuruluş Yılı: <span style="font-size:16px;" class="proile-rating">@currentUser.Year</span>
-                                                </h6>
-                                            }
-                                        }
-                                    </h6>
-                                </div>
+                    <br />
+                    @if (currentUser.PointsNavigation != null)
+                    {
+                        <h6 style="color:red;">BeePort Puanı:</h6>
 
-                            }
-                        </div>
-                        <!-- Tab 2 Ends-->
-                        <!-- Tab 3 Starts-->
-                        <div hidden="@tab3" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <br />
-                            <div class="row">
-                                <h6 class="col-md-6" style="color:red">E-mail: <span style="font-size:16px;" class="proile-rating">@currentUser.Email</span></h6>
+                        <div>
+                            <div class="progress">
+                                <div class="progress-bar-striped progress-bar progress-bar-animated @progressBarColor((int)currentUser.PointsNavigation.TotalPoints)"
+                                     style="width: @((int)currentUser.PointsNavigation.TotalPoints)%"
+                                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="@((int)currentUser.PointsNavigation.TotalPoints)">%@((int)currentUser.PointsNavigation.TotalPoints)</div>
                             </div>
-                            @if (currentUser.PhoneNumber != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Telefon: <span @onclick="@( () => DialNumber(currentUser.PhoneNumber))" style="font-size:16px;" class="proile-rating">@currentUser.PhoneNumber</span></h6>
-                                </div>
-                            }
-                            @if (currentUser.Website != null)
-                            {
-                                <div class="row">
-                                    <h6 class="col-md-6" style="color:red">Web Sitesi: <span @onclick="@( () => GoToWebsite(currentUser.Website))" style="font-size:16px;" class="proile-rating">@currentUser.Website</span></h6>
-                                </div>
-                            }
+                            <h6 class="proile-rating" style="margin-top: 7px;">
+                                <span style="font-size:16px;" class="proile-rating">
+                                    Grup Sıralaması :      @if (standings[currentUser.Email] != null)
+                                    {
+                                        @standings[currentUser.Email];
+                                    }
+                                </span>
+                            </h6>
                         </div>
-                        <!-- Tab 3 Ends-->
+                    }
+                    <ul class="nav nav-tabs d-flex justify-content-between" id="myTab" role="tablist">
+                        <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
+                            <p class="@(isTabActive(tab1))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel</p>
+                        </li>
+                        <li @onclick="@( () => ChangeTabs(2))" class="nav-item">
+                            <p class="@(isTabActive(tab2))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İş Bilgileri</p>
+                        </li>
+                        <li @onclick="@( () => ChangeTabs(3))" class="nav-item">
+                            <p class="@(isTabActive(tab3))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <!-- Tab 1 Stars-->
+                    <div hidden="@tab1" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <br />
+                        @if (currentUser.GenderNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Cinsiyet: <span style="font-size:16px;" class="proile-rating">@currentUser.GenderNavigation.GenderName</span></h6>
+                            </div>
+                        }
+                        @if (currentUser.DateOfBirth != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Yaş: <span style="font-size:16px;" class="proile-rating">@(calculateAge(currentUser.DateOfBirth.GetValueOrDefault()))</span></h6>
+                            </div>
+                        }
+                        @if (currentUser.LocatedCityNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Şehir: <span style="font-size:16px;" class="proile-rating">@currentUser.LocatedCityNavigation.CityName</span></h6>
+                            </div>
+
+                        }
+                        @if (currentUser.RelationshipNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Medeni Hali: <span style="font-size:16px;" class="proile-rating">@currentUser.RelationshipNavigation.RelationshipStatus</span></h6>
+                            </div>
+                        }
                     </div>
+                    <!-- Tab 1 Ends-->
+                    <!-- Tab 2 Start -->
+                    <div hidden="@tab2" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <br />
+                        @if (currentUser.GroupNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Grup: <span style="font-size:16px;" class="proile-rating">@currentUser.GroupNavigation.GroupName</span></h6>
+                            </div>
+                        }
+                        @if (currentUser.JobTitleNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Meslek: <span style="font-size:16px;" class="proile-rating">@currentUser.JobTitleNavigation.TitleName</span></h6>
+                            </div>
+                        }
+
+                        @if (currentUser.PositionNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Pozisyon: <span style="font-size:16px;" class="proile-rating">@currentUser.PositionNavigation.Position</span></h6>
+                            </div>
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">
+                                    @if (currentUser.PositionNavigation.Id == 4)
+                                    {
+                                        @if (currentUser.Year != null)
+                                        {
+                                            <h6>
+                                                Mezuniyet Yılı: <span style="font-size:16px;" class="proile-rating">@currentUser.Year</span>
+                                            </h6>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @if (currentUser.Year != null)
+                                        {
+                                            <h6>
+                                                Firma Kuruluş Yılı: <span style="font-size:16px;" class="proile-rating">@currentUser.Year</span>
+                                            </h6>
+                                        }
+                                    }
+                                </h6>
+                            </div>
+
+                        }
+                    </div>
+                    <!-- Tab 2 Ends-->
+                    <!-- Tab 3 Starts-->
+                    <div hidden="@tab3" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <br />
+                        <div class="row">
+                            <h6 class="col-md-6" style="color:red">E-mail: <span style="font-size:16px;" class="proile-rating">@currentUser.Email</span></h6>
+                        </div>
+                        @if (currentUser.PhoneNumber != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Telefon: <span @onclick="@( () => DialNumber(currentUser.PhoneNumber))" style="font-size:16px; color:dodgerblue" class="proile-rating">@currentUser.PhoneNumber</span></h6>
+                            </div>
+                        }
+                        @if (currentUser.Website != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Web Sitesi: <span @onclick="@( () => GoToWebsite(currentUser.Website))" style="font-size:16px; color:dodgerblue; text-decoration:underline;" class="proile-rating">@currentUser.Website</span></h6>
+                            </div>
+                        }
+                    </div>
+                    <!-- Tab 3 Ends-->
                 </div>
             </div>
         </div>
+    </div>
+
+    @if (currentUser.Id != loggedUser.Id)
+    {
+<center>
+    <input type="button" class="profile-edit-btn" @onclick="@( () => SendMeetingRequest(currentUser.Id))" value="Görüşme Ayarla" />
+    <br />
+    <br />
+</center>
+    }
+}
+
+
+@code {
+    [Parameter] public string id { get; set; }
+
+    private AspNetUsers currentUser, loggedUser;
+    private string _userId;
+    bool tab1 = false, tab2 = true, tab3 = true;
+
+    int standingNo = 1;
+
+    Dictionary<string, int> standings = new Dictionary<string, int>();
+
+    private List<AspNetUsers> userlist, tempList;
+
+    void ChangeTabs(int tab)
+    {
+        switch (tab)
+        {
+            case 1:
+                tab1 = false;
+                tab2 = true;
+                tab3 = true;
+                break;
+            case 2:
+                tab1 = true;
+                tab2 = false;
+                tab3 = true;
+                break;
+            case 3:
+                tab1 = true;
+                tab2 = true;
+                tab3 = false;
+                break;
+        }
 
     }
 
+    protected override async Task OnParametersSetAsync()
+    {
+        currentUser = await userDAL.GetUsers(id);
 
-    @code {
-        [Parameter] public string id { get; set; }
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
 
-        private AspNetUsers currentUser, loggedUser;
-        private string _userId;
-        bool tab1 = false, tab2 = true, tab3 = true;
-
-        int standingNo = 1;
-
-        Dictionary<string, int> standings = new Dictionary<string, int>();
-
-        private List<AspNetUsers> userlist, tempList;
-
-        void ChangeTabs(int tab)
+        if (user.Identity.IsAuthenticated)
         {
-            switch (tab)
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
+            userlist = await userDAL.GetUsersNoNull();
+            userlist = userlist.Where(c => c.Group == currentUser.Group).ToList();
+            foreach (var users in userlist)
             {
-                case 1:
-                    tab1 = false;
-                    tab2 = true;
-                    tab3 = true;
-                    break;
-                case 2:
-                    tab1 = true;
-                    tab2 = false;
-                    tab3 = true;
-                    break;
-                case 3:
-                    tab1 = true;
-                    tab2 = true;
-                    tab3 = false;
-                    break;
+                standings.Add(users.Email, standingNo++);
             }
-
-        }
-
-        protected override async Task OnParametersSetAsync()
-        {
-            currentUser = await userDAL.GetUsers(id);
-
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-
-            if (user.Identity.IsAuthenticated)
-            {
-                loggedUser = await userDAL.GetUsername(user.Identity.Name);
-                userlist = await userDAL.GetUsersNoNull();
-                userlist = userlist.Where(c => c.Group == currentUser.Group).ToList();
-                foreach (var users in userlist)
-                {
-                    standings.Add(users.Email, standingNo++);
-                }
-            }
-        }
-
-        public async void GoToWebsite(string link)
-        {
-            await Browser.OpenAsync(link);
-        }
-
-        int calculateAge(DateTime date)
-        {
-            var age = DateTime.Today.Year - date.Year;
-
-            if (date.Date > DateTime.Today.AddYears(-age)) age--;
-            return age;
-        }
-
-        void SendMeetingRequest(string id)
-        {
-            uriHelper.NavigateTo($"createMeeting/{id}");
-        }
-
-        string isTabActive(bool isActive)
-        {
-            if (!isActive)
-                return "nav-link active";
-            else
-                return "nav-link";
-        }
-
-        string progressBarColor(int pointValue)
-        {
-            if (pointValue < 25)
-                return "bg-danger";
-            else if (pointValue >= 25 && pointValue < 50)
-                return "bg-warning";
-            else if (pointValue >= 50 && pointValue < 75)
-                return "bg-info";
-            else
-                return "bg-success";
-        }
-
-        void DialNumber(string number)
-        {
-            PhoneDialer.Open(number);
         }
     }
+
+    public async void GoToWebsite(string link)
+    {
+        await Browser.OpenAsync(link);
+    }
+
+    int calculateAge(DateTime date)
+    {
+        var age = DateTime.Today.Year - date.Year;
+
+        if (date.Date > DateTime.Today.AddYears(-age)) age--;
+        return age;
+    }
+
+    void SendMeetingRequest(string id)
+    {
+        uriHelper.NavigateTo($"createMeeting/{id}");
+    }
+
+    string isTabActive(bool isActive)
+    {
+        if (!isActive)
+            return "nav-link active";
+        else
+            return "nav-link";
+    }
+
+    string progressBarColor(int pointValue)
+    {
+        if (pointValue < 25)
+            return "bg-danger";
+        else if (pointValue >= 25 && pointValue < 50)
+            return "bg-warning";
+        else if (pointValue >= 50 && pointValue < 75)
+            return "bg-info";
+        else
+            return "bg-success";
+    }
+
+    void DialNumber(string number)
+    {
+        PhoneDialer.Open(number);
+    }
+}

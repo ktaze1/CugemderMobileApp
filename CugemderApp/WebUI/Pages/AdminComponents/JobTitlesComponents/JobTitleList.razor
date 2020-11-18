@@ -19,7 +19,15 @@
     </div>
 </EditForm>
 
-@if (jobTitlesList != null)
+@if (jobTitlesList == null)
+{
+    <center>
+        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
+}
+else if (jobTitlesList != null)
 {
     <table class="table table-striped">
         <thead>
@@ -59,6 +67,7 @@
     {
         jobDAL.PostJobTitles(jobTitles);
         jobTitles = new JobTitles();
+        RefreshPageContent();
     }
 
     void Delete(int jobId)

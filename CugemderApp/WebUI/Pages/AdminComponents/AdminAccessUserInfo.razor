@@ -230,24 +230,19 @@
 
 @code {
     [Parameter] public string id { get; set; }
-    private AspNetUsers user;
+    private AspNetUsers user = new AspNetUsers();
     private string _userId;
 
     DateTime time = DateTime.UtcNow;
-    private int groupId = 0;
-    private int positionId = 0;
-    private int genderId = 0;
-    private int jobTitleId = 0;
-    private int relationshipId = 0;
-    private int cityId = 0;
+    private int groupId = 0, positionId = 0, genderId = 0, jobTitleId = 0, relationshipId = 0, cityId = 0;
     private string newPassword;
 
-    private List<Groups> groups;
-    private List<Positions> positions;
-    private List<Genders> genders;
-    private List<JobTitles> jobTitles;
-    private List<Relationship> relationships;
-    private List<Cities> cities;
+    private List<Groups> groups = new List<Groups>();
+    private List<Positions> positions = new List<Positions>();
+    private List<Genders> genders = new List<Genders>();
+    private List<JobTitles> jobTitles = new List<JobTitles>();
+    private List<Relationship> relationships = new List<Relationship>();
+    private List<Cities> cities = new List<Cities>();
 
 
     private JobTitles selectedTitle;

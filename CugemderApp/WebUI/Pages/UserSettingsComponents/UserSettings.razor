@@ -9,6 +9,9 @@
 @inject FileUpload fileDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject CugemderApp.Security.CustomStateProvider customStateProvider
+@inject NavigationManager uriHelper
+
+@inject IJSRuntime js
 
 <EditForm Model="@user" OnValidSubmit="@EditUser">
     <DataAnnotationsValidator />
@@ -202,6 +205,11 @@
     <button type="submit" class="btn btn-success">
         Güncelle
     </button>
+
+
+    <button @onclick="(() => Discard())" type="button" class="btn btn-dark">
+        Vazgeç
+    </button>
 </EditForm>
 
 <br />
@@ -272,7 +280,14 @@
             user.PhotoUrl = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Images/{filename}";
         }
 
-        userDAL.PutUser(user.Id, user);
+        try
+        {
+            userDAL.PutUser(user.Id, user);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+        }
 
         if (newPassword != null)
         {
@@ -281,6 +296,24 @@
             passwordChange.newPassword = newPassword;
             await customStateProvider.ResetPassword(passwordChange);
         }
+
+
+        js.InvokeVoidAsync("swal", "Guncellendi", " ", "success");
+
+        uriHelper.NavigateTo("/");
+
+    }
+
+    void Discard()
+    {
+        RefreshPageContent();
+    }
+
+    async void RefreshPageContent()
+    {
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("setting");
+        await OnInitializedAsync();
     }
 
     async void SelectFiles()

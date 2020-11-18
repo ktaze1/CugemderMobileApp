@@ -5,100 +5,14 @@
 @inject IJSRuntime js
 @inject NavigationManager uriHelper
 
-<button class="btn btn-dark" @onclick="@( () => isOpen = !isOpen)">İş Kişi Yönlendir</button>
+<style>
+   p > span {
+       font-size: 15px;
+   }
+</style>
 
-@if (isOpen)
-{
-<br />
-    <div>
-        <EditForm Model="sc" OnValidSubmit="Filter">
-            <div>
-                İsim: <InputText class="form-control" @bind-Value="sc.name" />
-            </div>
+<button class="btn btn-dark" @onclick="@( () => uriHelper.NavigateTo("jobreferenceadd"))">İş Kişi Yönlendir</button>
 
-            <div>
-                Soyisim: <InputText class="form-control" @bind-Value="sc.surname" />
-            </div>
-
-            <br />
-            <button class="btn btn-dark"> Filtrele</button>
-        </EditForm>
-
-        <br />
-        @if (tempUserList != null && tempUserList.Count > 0)
-        {
-            <div class="table-responsive-sm">
-                <table class="table table-striped">
-                    <thead>
-                    <th>İsim</th>
-                    <th>E-Mail</th>
-                    <th>Seç</th>
-                    </thead>
-                    <tbody>
-
-
-                        @foreach (var item in tempUserList)
-                        {
-                            <tr>
-                                <td>@item.FirstName &nbsp; @item.LastName.ToUpper()</td>
-                                <td>@item.Email</td>
-                                <td>
-                                    <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(true, item.Id, item))" type="button"> Uzman Olarak </button>
-                                    <button style="margin-top: 4px;" @onclick="@( () => SelectUserForReference(false, item.Id, item))" class="btn btn-secondary" type="button"> Referans Olarak </button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-
-        <div class="table-responsive-sm">
-            <table class="table table-striped">
-                <thead>
-                    <tr class="d-flex">
-                        <th class="col-6" style="justify-content: start;">Uzman</th>
-                        <th class="col-6" style="text-align:left; justify-content: start;">Yönlendirilecek Kişi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="d-flex">
-                        <td class="col-6">
-                            @if (expert != null)
-                            {
-                                <p> @expert.FirstName &nbsp;@expert.LastName.ToUpper()</p>
-
-                            }
-                            else if (expert == null)
-                            {
-                                <p>Uzman Seçin</p>
-                            }
-                        </td>
-                        <td class="col-6">
-                            @if (referenced != null)
-                            {
-                                <p> @referenced.FirstName &nbsp;@referenced.LastName.ToUpper()</p>
-                            }
-                            else if (referenced == null)
-                            {
-                                <p>Yönlendirilecek Kişi Seçin</p>
-                            }
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <button @onclick="@( () => SendJobReference())" style="margin-left: 0;" class="btn btn-dark" type="button">Yönlendir</button>
-
-    </div>
-
-
-    <br />
-
-
-}
-
-<br />
 
 <hr />
 
@@ -109,49 +23,54 @@
     <h5> Gelen Yönlendirmeler</h5>
     @if (jobReferencesUserReferenced == null)
     {
-        <p><em>Yükleniyor</em></p>
+        <center>
+            <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+            <p><em>Y&uuml;kleniyor</em></p>
+        </center>
     }
     else if (jobReferencesUserReferenced.Count() == 0)
     {
-        <p> Kayıt Bulunamadı!</p>
+        <center>
+            <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+            <p><em>Y&uuml;kleniyor</em></p>
+        </center>
         <br />
     }
     else
     {
-        <div class="table-responsive align-content-start" style="padding-left: 1em;">
-            <table class="table">
-                <thead class="thead-light">
+        <table class="table">
+            <thead class="thead-light">
+                <tr class="row">
+                    <th class="col">Detay</th>
+                    <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var meeting in jobReferencesUserReferenced)
+                {
                     <tr class="row">
-                        <th class="col">Detay</th>
-                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                        <td class="col-8">
+                            <p style="margin-bottom: 0; color: red;"><strong>Referans Eden</strong>:  <span style="color: black;"> @getFullname(meeting.ReferencerId) </span> </p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Uzman Kişi</strong>:<span style="color: black;"> @getFullname(meeting.ExpertId) </span></p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Durum</strong>: <span style="color: black;"> @jobReferenceStatusName(meeting) </span></p>
+                        </td>
+                        <td class="col-4">
+                            @if (meeting.IsMeetingDone && meeting.IsProductive.HasValue)
+                            {
+
+                                <p>&nbsp;</p>
+                            }
+                            else
+                            {
+                                <button @onclick="@( () => UpdateStatus(meeting.Id))" class="btn btn-primary" type="button">Cevapla</button>
+                            }
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var meeting in jobReferencesUserReferenced)
-                    {
-                        <tr class="row">
-                            <td class="col-8">
-                                <p style="margin-bottom: 0; color: grey;"><strong>Referans Eden</strong>:   @getFullname(meeting.ReferencerId) </p> <span class="br"></span>
-                                <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>: @getFullname(meeting.ExpertId)</p> <span class="br"></span>
-                                <p style="margin-bottom: 0; color: grey;"><strong>Durum</strong>:  @jobReferenceStatusName(meeting)</p>
-                            </td>
-                            <td class="col-4">
-                                @if (meeting.IsMeetingDone && meeting.IsProductive.HasValue)
-                                {
-
-                                    <p>&nbsp;</p>
-                                }
-                                else
-                                {
-                                    <button @onclick="@( () => UpdateStatus(meeting.Id))" class="btn btn-primary" type="button">Cevapla</button>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-        </div>
+                }
+            </tbody>
+        </table>
     }
 
 
@@ -168,32 +87,29 @@
     }
     else
     {
-        <div class="table-responsive align-content-start" style="padding-left: 1em;">
-            <table class="table">
-                <thead class="thead-light">
+        <table class="table">
+            <thead class="thead-light">
+                <tr class="row">
+                    <th class="col">Detay</th>
+                    <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var meeting in jobReferencesUserReferencer)
+                {
                     <tr class="row">
-                        <th class="col">Detay</th>
-                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                        <td class="col-8">
+                            <p style="margin-bottom: 0; color: red;"><strong>Referans Edilen Kişi</strong>:  <span style="color: black;"> @getFullname(meeting.ReferencedId) </span></p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Uzman Kişi</strong>:<span style="color: black;">  @getFullname(meeting.ExpertId)</span></p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Durum</strong>: <span style="color: black;"> @jobReferenceStatusName(meeting)</span></p>
+                        </td>
+                        <td class="col-4">
+                            <p>&nbsp;</p>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var meeting in jobReferencesUserReferencer)
-                    {
-                        <tr class="row">
-                            <td class="col-8">
-                                <p style="margin-bottom: 0; color: grey;"><strong>Referans Edilen Kişi</strong>:   @getFullname(meeting.ReferencedId) </p> <span class="br"></span>
-                                <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>:  @getFullname(meeting.ExpertId)</p> <span class="br"></span>
-                                <p style="margin-bottom: 0; color: grey;"><strong>Durum</strong>:  @jobReferenceStatusName(meeting)</p>
-                            </td>
-                            <td class="col-4">
-                                <p>&nbsp;</p>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-        </div>
+                }
+            </tbody>
+        </table>
     }
     <br />
 </div>
@@ -201,8 +117,6 @@
 
 @code {
 
-
-    bool isOpen = false;
     AspNetUsers expert, referenced;
     SearchForm sc = new SearchForm();
     AspNetUsers loggedUser = new AspNetUsers();
@@ -285,7 +199,7 @@
             if (reference.IsProductive != null && reference.IsProductive.Value)
                 return "Görüşme Yapıldı ve Olumlu Geçti";
             else if (reference.IsProductive != null && !reference.IsProductive.Value)
-                return "Görüşme Yapıldı fakat Olumlu Geçmedi";
+                return "Görüşme Yapıldı Fakat Olumlu Geçmedi";
 
             return "Görüşme Yapıldı";
         }

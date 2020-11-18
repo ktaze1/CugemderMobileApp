@@ -7,16 +7,17 @@
 @inject AspNetUsersDAL userDAL
 @inject NavigationManager uriHelper
 @inject NotificationsDAL notifications
-@inject MeetingPointsDAL meetingPointDAL
-@inject NetworkingMeetingPointDAL networkingMeetingDAL
-@inject NetworkingActivityPointDAL networkingActivityDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 
 
 @if (groups == null)
 {
-    <p><em>Yükleniyor...</em></p>
+    <center>
+        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
 }
 else
 {
@@ -38,24 +39,21 @@ else
 
 @if (userlist == null)
 {
-    <p><em>Loading...</em></p>
+<center>
+    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+
+    <p><em>Y&uuml;kleniyor</em></p>
+</center>
 }
 else
 {
-
-    <button class="btn btn-dark" @onclick="@UpdatePoints"> Puanları Güncelle</button>
-
-    <br />
-    <br />
     <br />
 
     <table class="table">
         <thead>
             <tr>
                 <th>Ad Soyad</th>
-                <th>Güncel Puan</th>
-                <th>Son Puan Veriliş Tarihi</th>
-                <th>Kullanıcı Ayarlarını Değiştir</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -66,16 +64,8 @@ else
                     <td>
                         <a href="/profile/@user.Id">@user.FirstName @user.LastName</a>
                     </td>
-                    @if (user.PointsNavigation != null)
-                    {
-                        <td>@user.PointsNavigation.TotalPoints</td>
-                        <td>@user.PointsNavigation.UpdatedAt.ToShortDateString()</td>
-                    }
                     <td>
-                        <a href="/addpoints/@user.Id">Puan Ver</a>
-                        <br />
-                        <br />
-                        <a href="/adminaccessuser/@user.Id">Ayar Değiştir</a>
+                        <button class="btn btn-dark" @onclick="@( () => uriHelper.NavigateTo("adminaccessuser/@user.Id"))">Hakkında</button>
                     </td>
                 </tr>
             }
@@ -90,17 +80,12 @@ else
 
     [Parameter] public int? id { get; set; }
 
-    private List<AspNetUsers> userlist;
-    private List<Groups> groups;
-    private List<Points> pointlist;
+    private List<AspNetUsers> userlist = new List<AspNetUsers>();
+    private List<Groups> groups = new List<Groups>();
+    private List<Points> pointlist = new List<Points>();
 
 
     private AspNetUsers loggedUser;
-
-    List<Points> pointsOfUser;
-    List<MeetingPoints> meetingPoints;
-    List<NetworkingActivityPoint> networkingActivityPoints;
-    List<NetworkingMeetingPoints> networkingMeetingPoints;
 
 
     private int option = 0;
@@ -123,9 +108,6 @@ else
             pointlist = await pointDAL.GetPoints();
             groups = await groupDAL.GetGroupsAsync();
             userlist = await userDAL.GetUsersNoNull();
-            meetingPoints = await meetingPointDAL.GetMeetingPoints();
-            networkingMeetingPoints = await networkingMeetingDAL.GetNetworkingMeetingPoints();
-            networkingActivityPoints = await networkingActivityDAL.GetNetworkingActivityPoint();
         }
         catch (Exception ex)
         {
@@ -138,17 +120,6 @@ else
         option = id.GetValueOrDefault();
     }
 
-    void Delete(string userId)
-    {
-        meetingPointDAL.DeleteMeetinPoints(userId);
-        pointDAL.DeletePoints(userId);
-        userDAL.DeleteUser(userId);
-    }
-
-    //Points GetLatestPoint(string id)
-    //{
-    //    return pointlist.Where(c => c.UserId == id).OrderBy(c => c.UpdatedAt).FirstOrDefault();
-    //}
 
     void Navigate(int option)
     {
@@ -158,38 +129,4 @@ else
             uriHelper.NavigateTo($"/adminaccessuserlist/{option}");
     }
 
-
-    void UpdatePoints()
-    {
-        var tempUserList = id.HasValue ? userlist.Where(x => x.Group == id) : userlist;
-
-        var pointList = new List<Points>();
-
-        foreach (var user in tempUserList)
-        {
-            var meetingPointsOfUserList = meetingPoints.Where(c => c.ReceiverUserId == user.Id);
-            var networkingMeetingPointsOfUserList = networkingMeetingPoints.Where(c => c.ReceiverUserId == user.Id);
-            var networkingActivityPointsOfUserList = networkingActivityPoints.Where(c => c.ReceiverUserId == user.Id);
-
-
-            var avgActivityPoint = networkingActivityPointsOfUserList.Any() ? networkingActivityPointsOfUserList.Average(c => c.TotalPoints) : 0;
-            var avgNetworkMeetingPoint = networkingMeetingPointsOfUserList.Any() ? networkingMeetingPointsOfUserList.Average(c => c.TotalPoints) : 0;
-            var avgMeetingPoint = meetingPointsOfUserList.Any() ? meetingPointsOfUserList.Average(c => c.TotalPoints) : 0;
-
-
-            var pointToAdd = new Points()
-            {
-                UpdatedAt = DateTime.Now,
-                AddedBy = $"{loggedUser.FirstName} {loggedUser.LastName}",
-                UserId = user.Id,
-                TotalPoints = Convert.ToInt32((avgMeetingPoint * 30 / 100) + (avgNetworkMeetingPoint * 20 / 100) + (avgActivityPoint * 50 / 100)),
-            };
-
-            pointList.Add(pointToAdd);
-            notifications.SendNotification($"Puanınız güncellenmiştir, Yeni Puanınız: {pointToAdd.TotalPoints}", "Puan Değişikliği!", user.Id);
-        }
-
-        pointDAL.PostPoints(pointList);
-        uriHelper.NavigateTo("adminsettings");
-    }
 }
