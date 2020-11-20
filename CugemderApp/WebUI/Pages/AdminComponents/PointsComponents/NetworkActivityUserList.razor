@@ -11,18 +11,17 @@
 @inject NetworkingActivityPointDAL networkingActivityDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-
-
-@if (groups == null)
+@if (groups == null && userlist == null)
 {
-<center>
-    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
 
-    <p><em>Y&uuml;kleniyor</em></p>
-</center>
+    <center>
+        <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
+
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
 }
 else
-{
+{ 
     <form @onsubmit="@( () => Navigate(option))">
         <div>
             <select class="form-control" @bind="option">
@@ -37,18 +36,6 @@ else
         </div>
         <br />
     </form>
-}
-
-@if (userlist == null)
-{
-<center>
-    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
-
-    <p><em>Y&uuml;kleniyor</em></p>
-</center>
-}
-else
-{
 
     <button class="btn btn-dark" @onclick="@UpdatePoints"> Puanları Güncelle</button>
 
@@ -60,8 +47,7 @@ else
         <thead>
             <tr>
                 <th>Ad Soyad</th>
-                <th>Güncel Puan</th>
-                <th>Son Puan Veriliş Tarihi</th>
+                <th>Puan ve Son Güncelleme</th>
                 <th>İşlem</th>
             </tr>
         </thead>
@@ -75,10 +61,12 @@ else
                     </td>
                     @if (user.PointsNavigation != null)
                     {
-                        <td>@user.PointsNavigation.TotalPoints</td>
-                        <td>@user.PointsNavigation.UpdatedAt.ToShortDateString()</td>
-                    }
-                    <td>
+                        <td>
+                    <tr>@user.PointsNavigation.TotalPoints</tr>
+                    <tr> @user.PointsNavigation.UpdatedAt.ToShortDateString()</tr>
+                    </td>
+                }
+<td>
                         <a href="/addpointsnetworkactivity/@user.Id">Puan Ver</a>
                     </td>
                 </tr>
@@ -86,7 +74,6 @@ else
         </tbody>
     </table>
 }
-
 
 
 @code {

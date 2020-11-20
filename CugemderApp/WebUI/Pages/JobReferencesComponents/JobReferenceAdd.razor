@@ -26,9 +26,8 @@
         <div class="table-responsive-sm">
             <table class="table table-striped">
                 <thead>
-                <th>İsim</th>
-                <th>E-Mail</th>
-                <th>Seç</th>
+                <th class="col-8">İsim</th>
+                <th class="col-4">Seç&emsp;</th>
                 </thead>
                 <tbody>
 
@@ -37,10 +36,9 @@
                     {
                         <tr>
                             <td>@item.FirstName &nbsp; @item.LastName.ToUpper()</td>
-                            <td>@item.Email</td>
                             <td>
-                                <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(true, item.Id, item))" type="button"> Uzman Olarak </button>
-                                <button style="margin-top: 4px;" @onclick="@( () => SelectUserForReference(false, item.Id, item))" class="btn btn-secondary" type="button"> Referans Olarak </button>
+                                <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(true, item.Id, item))" type="button"> &nbsp;Uzman&nbsp;&nbsp;</button>
+                                <button style="margin-top: 4px;" @onclick="@( () => SelectUserForReference(false, item.Id, item))" class="btn btn-secondary" type="button"> Referans</button>
                             </td>
                         </tr>
                     }

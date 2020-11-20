@@ -68,7 +68,7 @@ namespace CugemderApp.Server.Controllers
 
             await _dbContext.SaveChangesAsync();
 
-            var link = $"http://192.168.1.22:3000/api/auth/ResetPassword?id={newID}";
+            var link = $"http://api.cugemder.com/api/auth/ResetPassword?id={newID}";
 
             //TODO Send email
 

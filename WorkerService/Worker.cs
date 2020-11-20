@@ -50,7 +50,7 @@ namespace WorkerService
     public class NotificaitonDAL
     {
 
-        HttpClient http = new HttpClient() { BaseAddress = new Uri("http://api.cugemder.com:3000/") };
+        HttpClient http = new HttpClient() { BaseAddress = new Uri("http://api.cugemder.com/") };
 
 
         public async Task<List<Notifications>> GetNotifications()

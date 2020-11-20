@@ -7,34 +7,35 @@ namespace CugemderApp.Shared.Models
 {
     public class RegisterRequest
     {
-        [Required]
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         public string FirstName { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         [Phone]
         public string PhoneNo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DateofBirth { get; set; }
 
 
         [EmailAddress]
-        [Required]
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         public string Email { get; set; }
 
         public string photoUrl { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         [StringLength(100, ErrorMessage = "{0} en az {2} ve en fazla {1} karakter uzunluğunda; en az bir büyük, bir küçük ve bir adet özel karakter içermeli.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Şifre")]
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         [Compare(nameof(Password), ErrorMessage = "Şifreler uyuşmuyor!")]
         public string PasswordConfirm { get; set; }
     }

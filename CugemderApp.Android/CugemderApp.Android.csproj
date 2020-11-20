@@ -65,6 +65,7 @@
     <AndroidSigningKeyStore>C:\Users\Kaan\AppData\Local\Xamarin\Mono for Android\Keystore\Cugemder\Cugemder.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>12345678Be-</AndroidSigningStorePass>
     <AndroidHttpClientHandlerType>System.Net.Http.HttpClientHandler</AndroidHttpClientHandlerType>
+    <MandroidI18n />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />

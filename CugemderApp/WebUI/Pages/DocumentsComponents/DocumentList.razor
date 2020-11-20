@@ -4,151 +4,158 @@
 @inject FileUpload fileDAL
 @inject NavigationManager uriHelper
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
 
-@if (loggedUser != null)
-{
-    @if (loggedUser.IsAdmin.Value.Equals(true))
+
+    @if (loggedUser != null)
     {
-        <h4> Yeni Döküman Ekle</h4>
-        <EditForm Model="@document" OnValidSubmit="@UploadFiles">
-            <div>
+        @if (loggedUser.IsAdmin.Value.Equals(true))
+        {
+            <h4> Yeni Döküman Ekle</h4>
+            <EditForm Model="@document" OnValidSubmit="@UploadFiles">
                 <div>
-                    <label>Döküman Adı</label>
-                    <InputText class="form-control" @bind-Value="@document.Title" />
+                    <div>
+                        <label>Döküman Adı</label>
+                        <InputText class="form-control" @bind-Value="@document.Title" />
+                    </div>
+                    <br />
+                    <div>
+                        <label>Döküman Açıklaması</label>
+                        <InputText class="form-control" @bind-Value="@document.Summary" />
+                    </div>
+                    <br />
+                    <button class="btn btn-secondary" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
+                    <button class="btn btn-dark">Dosyayı Ekle</button>
                 </div>
                 <br />
-                <div>
-                    <label>Döküman Açıklaması</label>
-                    <InputText class="form-control" @bind-Value="@document.Summary" />
-                </div>
-                <br />
-                <button class="btn btn-secondary" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
-                <button class="btn btn-dark">Dosyayı Ekle</button>
-            </div>
-            <br />
-        </EditForm>
+            </EditForm>
+        }
     }
-}
 
-@if (documentList != null)
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th class="col-8">Dosya Bilgileri</th>
-                <th class="col-4">İşlemler&emsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in documentList)
-            {
+    @if (documentList != null)
+    {
+        <table class="table table-striped">
+            <thead class="table-secondary">
                 <tr>
-                    <td>
-                        <p><strong>Başlık</strong>: @item.Title </p>
-                        <p><strong>Açıklama</strong>: @item.Summary</p>
-                    </td>
-                    <td>
-                        <button @onclick="@( () => Launcher.OpenAsync(item.Url))" class="btn btn-primary" type="button"> Dosyayı Aç</button>
-                        @if (loggedUser != null && loggedUser.IsAdmin == true)
-                        {
-                            <button style="margin-top: 4px;" class="btn btn-danger" @onclick="@( () => DeleteFile(item.Url, item.Id))" type="button"> Dosyayı Sil </button>
-                        }
-                    </td>
+                    <th class="col-8">Dosya Bilgileri</th>
+                    <th class="col-4">İşlemler&emsp;</th>
                 </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in documentList)
+                {
+                    <tr>
+                        <td>
+                            <p><strong>Başlık</strong>: @item.Title </p>
+                            <p><strong>Açıklama</strong>: @item.Summary</p>
+                        </td>
+                        <td>
+                            <button @onclick="@( () => Launcher.OpenAsync(item.Url))" class="btn btn-primary" type="button"> Dosyayı Aç</button>
+                            @if (loggedUser != null && loggedUser.IsAdmin == true)
+                            {
+                                <button style="margin-top: 4px;" class="btn btn-danger" @onclick="@( () => DeleteFile(item.Url, item.Id))" type="button"> Dosyayı Sil </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @code {
+
+        private AspNetUsers loggedUser;
+
+        List<Documents> documentList;
+
+        FileResult item;
+
+        FileResult pickResults;
+
+        Documents document = new Documents();
+
+        protected override async Task OnInitializedAsync()
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            documentList = await documentDAL.GetDocuments();
+
+            if (user.Identity.IsAuthenticated)
+            {
+                loggedUser = await userDAL.GetUsername(user.Identity.Name);
             }
-        </tbody>
-    </table>
-}
-
-@code {
-
-    private AspNetUsers loggedUser;
-
-    List<Documents> documentList;
-
-    FileResult item;
-
-    FileResult pickResults;
-
-    Documents document = new Documents();
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        documentList = await documentDAL.GetDocuments();
-
-        if (user.Identity.IsAuthenticated)
-        {
-            loggedUser = await userDAL.GetUsername(user.Identity.Name);
         }
-    }
 
-    async void DeleteFile(string url, int id)
-    {
-        var filetoDelete = System.IO.Path.GetFileName(url);
-        if (filetoDelete != null)
+        async void DeleteFile(string url, int id)
         {
-            fileDAL.DeleteDocument(filetoDelete);
-            documentDAL.DeleteDocuments(id);
+            var filetoDelete = System.IO.Path.GetFileName(url);
+            if (filetoDelete != null)
+            {
+                fileDAL.DeleteDocument(filetoDelete);
+                documentDAL.DeleteDocuments(id);
 
-            RefreshPageContent();
+                RefreshPageContent();
+            }
         }
-    }
 
-    async void UploadFiles()
-    {
-        if (pickResults != null)
+        async void UploadFiles()
         {
-            System.IO.FileInfo fi = new System.IO.FileInfo(pickResults.FileName);
-            string encodedStr = string.Format(@"{0}", Guid.NewGuid());
-            var filename = $"{encodedStr}{fi.Extension}";
-            var stream = await pickResults.OpenReadAsync();
-            var content = new StreamContent(stream);
-            var multi = new MultipartFormDataContent();
-            multi.Add(content, filename, filename);
-            fileDAL.UploadDocument(multi);
-            document.Url = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Contents/{filename}";
+            if (pickResults != null)
+            {
+                System.IO.FileInfo fi = new System.IO.FileInfo(pickResults.FileName);
+                string encodedStr = string.Format(@"{0}", Guid.NewGuid());
+                var filename = $"{encodedStr}{fi.Extension}";
+                var stream = await pickResults.OpenReadAsync();
+                var content = new StreamContent(stream);
+                var multi = new MultipartFormDataContent();
+                multi.Add(content, filename, filename);
+                fileDAL.UploadDocument(multi);
+                document.Url = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Contents/{filename}";
 
-            documentDAL.PostDocuments(document);
-            document = new Documents();
+                documentDAL.PostDocuments(document);
+                document = new Documents();
 
-            RefreshPageContent();
+                js.InvokeVoidAsync("swal", "Dosya Yüklendi", "", "success");
+                RefreshPageContent();
+            }
+            else if (pickResults == null && document.Summary == null && document.Title == null)
+            {
+                js.InvokeVoidAsync("swal", "Dosya seçip formu doldurduğunuzdan emin olun!", "", "error");
+            }
         }
+
+
+        //async void Test()
+        //{
+        //    var pickResult = await FilePicker.PickMultipleAsync();
+        //    if (pickResult != null)
+        //    {
+        //        var fileList = new List<FileBase>();
+        //        foreach (var item in pickResult)
+        //        {
+        //            var stream = await item.OpenReadAsync();
+        //            var content = new StreamContent(stream);
+        //            var multi = new MultipartFormDataContent();
+        //            multi.Add(content, item.FileName, item.FileName);
+        //            fileDAL.UploadDocument(multi);
+        //        }
+
+        //    }
+        //}
+
+        async void SelectFiles()
+        {
+
+            pickResults = await FilePicker.PickAsync();
+        }
+
+        async void RefreshPageContent()
+        {
+            documentList = await documentDAL.GetDocuments();
+            System.Threading.Thread.Sleep(100);
+            uriHelper.NavigateTo("redirect/documents");
+            await OnInitializedAsync();
+        }
+
     }
-
-
-    //async void Test()
-    //{
-    //    var pickResult = await FilePicker.PickMultipleAsync();
-    //    if (pickResult != null)
-    //    {
-    //        var fileList = new List<FileBase>();
-    //        foreach (var item in pickResult)
-    //        {
-    //            var stream = await item.OpenReadAsync();
-    //            var content = new StreamContent(stream);
-    //            var multi = new MultipartFormDataContent();
-    //            multi.Add(content, item.FileName, item.FileName);
-    //            fileDAL.UploadDocument(multi);
-    //        }
-
-    //    }
-    //}
-
-    async void SelectFiles()
-    {
-
-        pickResults = await FilePicker.PickAsync();
-    }
-
-    async void RefreshPageContent()
-    {
-        documentList = await documentDAL.GetDocuments();
-        System.Threading.Thread.Sleep(100);
-        uriHelper.NavigateTo("redirect/documents");
-        await OnInitializedAsync();
-    }
-
-}

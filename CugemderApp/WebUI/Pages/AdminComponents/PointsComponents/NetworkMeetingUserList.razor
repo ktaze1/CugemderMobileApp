@@ -37,11 +37,11 @@ else
 
 @if (userlist == null)
 {
-<center>
-    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+    <center>
+        <img src="_content/CugemderApp/beeport.pbg" style="height: 200px; width: 200px;" />
 
-    <p><em>Y&uuml;kleniyor</em></p>
-</center>
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
 }
 else
 {
@@ -56,8 +56,7 @@ else
         <thead>
             <tr>
                 <th>Ad Soyad</th>
-                <th>Güncel Puan</th>
-                <th>Son Puan Veriliş Tarihi</th>
+                <th>Puan ve Son Güncelleme</th>
                 <th>İşlem</th>
             </tr>
         </thead>
@@ -71,17 +70,19 @@ else
                     </td>
                     @if (user.PointsNavigation != null)
                     {
-                        <td>@user.PointsNavigation.TotalPoints</td>
-                        <td>@user.PointsNavigation.UpdatedAt.ToShortDateString()</td>
-                    }
-                    <td>
-                        <a href="/addpointsnetworkmeeting/@user.Id">Puan Ver</a>
+                        <td>
+                    <tr>@user.PointsNavigation.TotalPoints</tr>
+                    <tr> @user.PointsNavigation.UpdatedAt.ToShortDateString()</tr>
                     </td>
+                }
+                <td>
+                    <a href="/addpointsnetworkmeeting/@user.Id">Puan Ver</a>
+                </td>
                 </tr>
             }
-        </tbody>
-    </table>
-}
+            </tbody>
+        </table>
+    }
 
 
 

@@ -7,9 +7,9 @@ namespace CugemderApp.Shared.Models
 {
     public class LoginRequest
     {
-        [Required]
+        [Required(ErrorMessage = "E-mail alanı boş bırakılamaz.")]
         public string UserName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Şifre boş bırakılamaz.")]
         public string Password { get; set; }
         public bool RememberMe { get; set; }
     }

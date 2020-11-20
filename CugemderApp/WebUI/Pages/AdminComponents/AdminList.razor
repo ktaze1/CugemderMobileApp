@@ -25,26 +25,24 @@
         <div>
             <table class="table">
                 <thead>
-                <th>İsim</th>
-                <th>E-Mail</th>
-                <th>İşlem</th>
+                <th class="col-8">İsim</th>
+                <th class="col-4">İşlem</th>
                 </thead>
                 <tbody>
 
-                    <tr>
-                        @foreach (var item in tempUserList)
-                        {
+                    @foreach (var item in tempUserList)
+                    {
+                        <tr>
                             <td>@item.FirstName @item.LastName</td>
-                            <td>@item.Email</td>
                             <td><button class="btn btn-dark" @onclick="@( () => MakeAdmin(item.Id))">Yönetici Yap</button></td>
 
-                        }
-                    </tr>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
     }
-    </div>
+</div>
 @if (users != null)
 {
     <table class="table table-striped">
@@ -85,6 +83,7 @@
         AspNetUsers user = await userDAL.GetUserID(id);
         user.IsAdmin = false;
         userDAL.PutUser(id, user);
+        RefreshPageContent();
     }
 
     async void MakeAdmin(string id)
@@ -92,6 +91,7 @@
         AspNetUsers user = await userDAL.GetUserID(id);
         user.IsAdmin = true;
         userDAL.PutUser(id, user);
+        RefreshPageContent();
     }
 
     public class SearchForm

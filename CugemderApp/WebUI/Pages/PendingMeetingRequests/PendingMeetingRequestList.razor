@@ -6,11 +6,6 @@
 @inject NotificationsDAL notification
 @inject NavigationManager uriHelper
 
-<table class="table">
-    <thead>
-    <th>Puanlama Bekleyen Görüşme Talepleri</th>
-    </thead>
-</table>
 
 <style>
     .br {
@@ -23,15 +18,27 @@
     }
 </style>
 
-@if (givePoints == null)
+
+@if (givePoints == null && meetingList == null)
 {
+
     <center>
-        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+        <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
 
         <p><em>Y&uuml;kleniyor</em></p>
     </center>
 }
-else if (givePoints.Where(c => c.IsApproved == true).Count() == 0)
+else
+{
+
+
+<table class="table">
+    <thead class="table-secondary">
+    <th>Puanlama Bekleyen Görüşme Talepleri</th>
+    </thead>
+</table>
+
+@if (givePoints.Where(c => c.IsApproved == true).Count() == 0)
 {
     <p> Kayıt Bulunamadı!</p>
 }
@@ -84,16 +91,12 @@ else
 
 
 <table class="table">
-    <thead>
+    <thead class="table-secondary">
     <th>Onay Bekleyen Gelen Görüşme Talepleri</th>
     </thead>
 </table>
 
-@if (meetingList == null)
-{
-    <p><em>Yükleniyor</em></p>
-}
-else if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
+@if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
 {
     <p> Kayıt Bulunamadı!</p>
 }
@@ -131,16 +134,12 @@ else
 
 
 <table class="table">
-    <thead>
+    <thead class="table-secondary">
     <th>Onay Bekleyen Gönderilen Görüşme Talepleri</th>
     </thead>
 </table>
 
-@if (meetingList == null)
-{
-    <p><em>Yükleniyor</em></p>
-}
-else if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
+@if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
 {
     <p> Kayıt Bulunamadı!</p>
 }
@@ -175,6 +174,10 @@ else
 
     </div>
 }
+
+}
+
+
 @code{
 
 

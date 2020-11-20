@@ -6,9 +6,9 @@
 @inject NavigationManager uriHelper
 
 <style>
-   p > span {
-       font-size: 15px;
-   }
+    p > span {
+        font-size: 15px;
+    }
 </style>
 
 <button class="btn btn-dark" @onclick="@( () => uriHelper.NavigateTo("jobreferenceadd"))">İş Kişi Yönlendir</button>
@@ -16,27 +16,17 @@
 
 <hr />
 
-<h3>Yönlendirme Geçmişi</h3>
-
 <div class="container">
-
-    <h5> Gelen Yönlendirmeler</h5>
-    @if (jobReferencesUserReferenced == null)
+    <table class="table" style="margin-bottom: 0px">
+        <thead class="thead-light">
+            <tr class="row">
+                <th style="text-align: center" class="col">Gelen Yönlendirmeler</th>
+            </tr>
+        </thead>
+    </table>
+    @if (jobReferencesUserReferenced.Count() == 0)
     {
-        <center>
-            <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
-
-            <p><em>Y&uuml;kleniyor</em></p>
-        </center>
-    }
-    else if (jobReferencesUserReferenced.Count() == 0)
-    {
-        <center>
-            <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
-
-            <p><em>Y&uuml;kleniyor</em></p>
-        </center>
-        <br />
+        <p> Kayıt Bulunamadı!</p>
     }
     else
     {
@@ -48,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var meeting in jobReferencesUserReferenced)
+                @foreach (var meeting in jobReferencesUserReferenced.Take(15))
                 {
                     <tr class="row">
                         <td class="col-8">
@@ -74,13 +64,15 @@
     }
 
 
-    <h5>Yönlendirdiklerim</h5>
 
-    @if (jobReferencesUserReferencer == null)
-    {
-        <p><em>Yükleniyor</em></p>
-    }
-    else if (jobReferencesUserReferencer.Count() == 0)
+    <table class="table" style="margin-bottom: 0px">
+        <thead class="thead-light">
+            <tr class="row">
+                <th style="text-align: center" class="col">Yönlendirdiklerim</th>
+            </tr>
+        </thead>
+    </table>
+    @if (jobReferencesUserReferencer.Count() == 0)
     {
         <p> Kayıt Bulunamadı!</p>
         <br />
@@ -95,7 +87,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var meeting in jobReferencesUserReferencer)
+                @foreach (var meeting in jobReferencesUserReferencer.Take(15))
                 {
                     <tr class="row">
                         <td class="col-8">
