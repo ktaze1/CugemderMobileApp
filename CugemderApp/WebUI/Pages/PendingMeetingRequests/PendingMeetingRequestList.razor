@@ -22,158 +22,160 @@
 @if (givePoints == null && meetingList == null)
 {
 
-    <center>
-        <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <center style="margin-top: 200px;">
+            <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
 
-        <p><em>Y&uuml;kleniyor</em></p>
-    </center>
+            <p><em>Y&uuml;kleniyor</em></p>
+        </center>
+    </div>
 }
 else
 {
 
 
-<table class="table">
-    <thead class="table-secondary">
-    <th>Puanlama Bekleyen Görüşme Talepleri</th>
-    </thead>
-</table>
+    <table class="table">
+        <thead class="table-secondary">
+        <th>Puanlama Bekleyen Görüşme Talepleri</th>
+        </thead>
+    </table>
 
-@if (givePoints.Where(c => c.IsApproved == true).Count() == 0)
-{
-    <p> Kayıt Bulunamadı!</p>
-}
-else
-{
-    <div class="table-responsive align-content-start" style="padding-left: 1em;">
-        <table class="table">
-            <thead class="thead-light">
-                <tr class="row">
-                    <th class="col">Gonderen Uye</th>
-                    <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var meeting in givePoints.Where(c => c.IsApproved == true))
-                {
+    @if (givePoints.Where(c => c.IsApproved == true).Count() == 0)
+    {
+        <p> Kayıt Bulunamadı!</p>
+    }
+    else
+    {
+        <div class="table-responsive align-content-start" style="padding-left: 1em;">
+            <table class="table">
+                <thead class="thead-light">
                     <tr class="row">
-                        @if (meeting.Sender.Id == loggedUser.Id)
-                        {
+                        <th class="col">Gonderen Uye</th>
+                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var meeting in givePoints.Where(c => c.IsApproved == true))
+                    {
+                        <tr class="row">
+                            @if (meeting.Sender.Id == loggedUser.Id)
+                            {
+                                <td class="col-8">
+                                    <a style="color: red;" href="/profile/@meeting.ReceiverId">@meeting.Receiver.FirstName @meeting.Receiver.LastName.ToUpper()</a>
+                                    <br />
+                                    <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
+                                    <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
+                                    <p style="margin-bottom: 0; color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
+                                </td>
+
+                            }
+                            else
+                            {
+                                <td class="col-8">
+                                    <a style="color: red;" href="/profile/@meeting.SenderId">@meeting.Sender.FirstName @meeting.Sender.LastName.ToUpper()</a>
+                                    <br />
+                                    <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
+                                    <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
+                                    <p style="margin-bottom: 0; color: grey;color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
+                                </td>
+                            }
+                            <td class="col-4">
+                                <button @onclick="@( () => uriHelper.NavigateTo($"givemeetingpoint/{meeting.Id}"))" class="btn btn-primary" type="button"> Puanla</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+
+
+
+    <table class="table">
+        <thead class="table-secondary">
+        <th>Onay Bekleyen Gelen Görüşme Talepleri</th>
+        </thead>
+    </table>
+
+    @if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
+    {
+        <p> Kayıt Bulunamadı!</p>
+    }
+    else
+    {
+        <div class="table-responsive align-content-start" style="padding-left: 1em;">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr class="row">
+                        <th class="col"> Gonderen Uye</th>
+                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId != loggedUser.Id))
+                    {
+                        <tr class="row">
+
                             <td class="col-8">
-                                <a style="color: red;" href="/profile/@meeting.ReceiverId">@meeting.Receiver.FirstName @meeting.Receiver.LastName.ToUpper()</a>
-                                <br />
+                                <a style="color: red;" href="/profile/@meeting.SenderId">@meeting.Sender.FirstName @meeting.Sender.LastName</a>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
                             </td>
+                            <td class="col-4">
+                                <button class="btn btn-info" type="button" @onclick="@(() => Approve(meeting.Id))"> Onayla</button>
+                                <button class="btn btn-danger" type="button" @onclick="@(() => Delete(meeting.Id))"> Reddet</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 
-                        }
-                        else
-                        {
+
+    <table class="table">
+        <thead class="table-secondary">
+        <th>Onay Bekleyen Gönderilen Görüşme Talepleri</th>
+        </thead>
+    </table>
+
+    @if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
+    {
+        <p> Kayıt Bulunamadı!</p>
+    }
+    else
+    {
+
+        <div class="table-responsive align-content-start" style="padding-left: 1em;">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr class="row">
+                        <th class="col"> Gonderen Uye</th>
+                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId == loggedUser.Id))
+                    {
+                        <tr class="row">
                             <td class="col-8">
-                                <a style="color: red;" href="/profile/@meeting.SenderId">@meeting.Sender.FirstName @meeting.Sender.LastName.ToUpper()</a>
-                                <br />
+                                <a style="color: red; font-size: 16px;" href="/profile/@meeting.ReceiverId">@meeting.Receiver.FirstName @meeting.Receiver.LastName.ToUpper() <span style="margin-bottom: 0; color: grey;"> tarafından onay bekleniyor.</span></a>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
-                                <p style="margin-bottom: 0; color: grey;color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
+                                <p style="margin-bottom: 0; color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
                             </td>
-                        }
-                        <td class="col-4">
-                            <button @onclick="@( () => uriHelper.NavigateTo($"givemeetingpoint/{meeting.Id}"))" class="btn btn-primary" type="button"> Puanla</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            <td class="col-4">
+                                <button class="btn btn-danger" type="button" @onclick="@(() => Delete(meeting.Id))"> İptal Et</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-    </div>
-}
-
-
-
-<table class="table">
-    <thead class="table-secondary">
-    <th>Onay Bekleyen Gelen Görüşme Talepleri</th>
-    </thead>
-</table>
-
-@if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
-{
-    <p> Kayıt Bulunamadı!</p>
-}
-else
-{
-    <div class="table-responsive align-content-start" style="padding-left: 1em;">
-        <table class="table">
-            <thead class="thead-light">
-                <tr class="row">
-                    <th class="col"> Gonderen Uye</th>
-                    <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId != loggedUser.Id))
-                {
-                    <tr class="row">
-
-                        <td class="col-8">
-                            <a style="color: red;" href="/profile/@meeting.SenderId">@meeting.Sender.FirstName @meeting.Sender.LastName</a>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
-                        </td>
-                        <td class="col-4">
-                            <button class="btn btn-info" type="button" @onclick="@(() => Approve(meeting.Id))"> Onayla</button>
-                            <button class="btn btn-danger" type="button" @onclick="@(() => Delete(meeting.Id))"> Reddet</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-}
-
-
-<table class="table">
-    <thead class="table-secondary">
-    <th>Onay Bekleyen Gönderilen Görüşme Talepleri</th>
-    </thead>
-</table>
-
-@if (meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now).Count() == 0)
-{
-    <p> Kayıt Bulunamadı!</p>
-}
-else
-{
-
-    <div class="table-responsive align-content-start" style="padding-left: 1em;">
-        <table class="table">
-            <thead class="thead-light">
-                <tr class="row">
-                    <th class="col"> Gonderen Uye</th>
-                    <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId == loggedUser.Id))
-                {
-                    <tr class="row">
-                        <td class="col-8">
-                            <a style="color: red; font-size: 16px;" href="/profile/@meeting.ReceiverId">@meeting.Receiver.FirstName @meeting.Receiver.LastName.ToUpper() <span style="margin-bottom: 0; color: grey;"> tarafından onay bekleniyor.</span></a>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
-                        </td>
-                        <td class="col-4">
-                            <button class="btn btn-danger" type="button" @onclick="@(() => Delete(meeting.Id))"> İptal Et</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-    </div>
-}
+        </div>
+    }
 
 }
 

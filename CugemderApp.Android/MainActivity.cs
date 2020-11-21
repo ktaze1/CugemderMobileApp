@@ -62,18 +62,32 @@ namespace CugemderApp.Droid
         {
             var normalizedGroupName = String.Join("", groupname.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
                 .Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)).Replace("ı", "i");
-            Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(normalizedGroupName);
-            if(username != "")
-                Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(username);
+            try
+            {
+                Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(normalizedGroupName);
+                if (username != "")
+                    Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(username);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
 
         }
 
         public void OnUnsubscribeTopic(string groupname)
         {
-
-            var normalizedGroupName = String.Join("", groupname.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+            try
+            {
+                var normalizedGroupName = String.Join("", groupname.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
                 .Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)).Replace("ı", "i");
-            Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(normalizedGroupName);
+                Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(normalizedGroupName);
+
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
         }
 
         public static string RemoveDiacritics(string text)
