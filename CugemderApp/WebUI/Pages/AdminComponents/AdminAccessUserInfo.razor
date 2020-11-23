@@ -73,7 +73,7 @@
         <div>
             <select class="form-control"
                     @bind="user.Group">
-                <option value="0">---Cinsiyet Seçin---</option>
+                <option value="0">---Grup Seçin---</option>
                 @foreach (var group in groups)
                 {
                     @if (group.Id == groupId)
@@ -177,7 +177,7 @@
         <div>
             <select class="form-control"
                     @bind="user.JobTitle">
-                <option value="0">---Cinsiyet Secin---</option>
+                <option value="0">---Meslek Secin---</option>
                 @foreach (var jobTitle in jobTitles)
                 {
                     @if (jobTitle.Id == jobTitleId)

@@ -93,6 +93,7 @@
 
     protected async void Logout()
     {
-       await customStateProvider.Logout();
+        Xamarin.Essentials.SecureStorage.RemoveAll();
+        await customStateProvider.Logout();
     }
 }

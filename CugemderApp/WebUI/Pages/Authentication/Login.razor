@@ -41,11 +41,29 @@
     LoginRequest loginRequest { get; set; } = new LoginRequest();
     string error { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(Xamarin.Essentials.SecureStorage.GetAsync("loginmail").Result)
+            && !string.IsNullOrEmpty(Xamarin.Essentials.SecureStorage.GetAsync("loginpass").Result))
+        {
+            loginRequest.UserName = Xamarin.Essentials.SecureStorage.GetAsync("loginmail").Result;
+            loginRequest.Password = Xamarin.Essentials.SecureStorage.GetAsync("loginpass").Result;
+            await authStateProvider.Login(loginRequest);
+            navigationManager.NavigateTo("");
+        }
+    }
+
     async Task OnSubmit()
     {
         error = null;
         try
         {
+            @if (loginRequest.RememberMe)
+            {
+                await Xamarin.Essentials.SecureStorage.SetAsync("loginmail", loginRequest.UserName);
+                await Xamarin.Essentials.SecureStorage.SetAsync("loginpass", loginRequest.Password);
+            }
+
             await authStateProvider.Login(loginRequest);
             navigationManager.NavigateTo("");
         }
