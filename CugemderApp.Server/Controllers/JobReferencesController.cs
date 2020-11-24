@@ -69,19 +69,7 @@ namespace CugemderApp.Server.Controllers
             return jobReferences;
         }
 
-        [HttpGet]
-        [Route("expert/{id}")]
-        public async Task<ActionResult<List<JobReferences>>> GetJobReferencesExpert(string id)
-        {
-            var jobReferences = await _context.JobReferences.Where(c => c.ExpertId == id).ToListAsync();
 
-            if (jobReferences == null)
-            {
-                return NotFound();
-            }
-
-            return jobReferences;
-        }
 
         // PUT: api/JobReferences/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

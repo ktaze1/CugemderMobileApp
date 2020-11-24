@@ -2,15 +2,16 @@
 @inject AspNetUsersDAL userDAL
 @inject JobReferencesDAL jobReferenceDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager uriHelper
 @inject IJSRuntime js
 
 @if (jobReferences == null)
 {
-<center>
-    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
+    <center>
+        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
 
-    <p><em>Y&uuml;kleniyor</em></p>
-</center>
+        <p><em>Y&uuml;kleniyor</em></p>
+    </center>
 }
 else if (jobReferences.Count() == 0)
 {
@@ -32,7 +33,7 @@ else
                     <tr class="row">
                         <td class="col-8">
                             <p style="margin-bottom: 0; color: grey;"><strong>Referans Eden</strong>:   @getFullname(meeting.ReferencerId) </p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>: @getFullname(meeting.ExpertId)</p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>: @meeting.ExpertName</p> <span class="br"></span>
                             <p style="margin-bottom: 0; color: grey;"><strong>Durum</strong>:  @jobReferenceStatusName(meeting)</p>
                         </td>
                     </tr>
@@ -42,6 +43,10 @@ else
 
     </div>
 }
+
+<br />
+
+<button @onclick="@( () => uriHelper.NavigateTo("adminsettings"))" type="button" class="btn btn-secondary">Geri Dön</button>
 
 
 @code {

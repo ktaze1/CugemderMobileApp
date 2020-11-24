@@ -34,10 +34,6 @@ namespace CugemderApp.DataAccessClasses
             return await _http.GetFromJsonAsync<List<JobReferences>>($"api/JobReferences/referenced/{id}");
         }
 
-        public async Task<List<JobReferences>> GetJobReferencesExpert(string id)
-        {
-            return await _http.GetFromJsonAsync<List<JobReferences>>($"api/JobReferences/expert/{id}");
-        }
 
         public async void PutJobReferences(int id, JobReferences jobReference)
         {

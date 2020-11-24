@@ -7,7 +7,19 @@
 @inject NavigationManager uriHelper
 
 <div>
+    <EditForm Model="jobReference">
+        <div>
+            Kim Yönlendirilecek:  <InputText class="form-control" @bind-Value="jobReference.ExpertName" />
+        </div>
+        <div>
+            Telefon Numarası:  <InputText class="form-control" @bind-Value="jobReference.ExpertContact" />
+        </div>
+    </EditForm>
     <EditForm Model="sc" OnValidSubmit="Filter">
+
+        <br />
+        <h6>Kime Yönlendirilecek:</h6>
+        <br />
         <div>
             İsim: <InputText class="form-control" @bind-Value="sc.name" />
         </div>
@@ -37,8 +49,7 @@
                         <tr>
                             <td>@item.FirstName &nbsp; @item.LastName.ToUpper()</td>
                             <td>
-                                <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(true, item.Id, item))" type="button"> &nbsp;Uzman&nbsp;&nbsp;</button>
-                                <button style="margin-top: 4px;" @onclick="@( () => SelectUserForReference(false, item.Id, item))" class="btn btn-secondary" type="button"> Referans</button>
+                                <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(item.Id))" type="button"> &nbsp;Seç&nbsp;&nbsp;</button>
                             </td>
                         </tr>
                     }
@@ -47,41 +58,6 @@
         </div>
     }
 
-    <div class="table-responsive-sm">
-        <table class="table table-striped">
-            <thead>
-                <tr class="d-flex">
-                    <th class="col-6" style="justify-content: start;">Uzman</th>
-                    <th class="col-6" style="text-align:left; justify-content: start;">Yönlendirilecek Kişi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="d-flex">
-                    <td class="col-6">
-                        @if (expert != null)
-                        {
-                            <p> @expert.FirstName &nbsp;@expert.LastName.ToUpper()</p>
-
-                        }
-                        else if (expert == null)
-                        {
-                            <p>Uzman Seçin</p>
-                        }
-                    </td>
-                    <td class="col-6">
-                        @if (referenced != null)
-                        {
-                            <p> @referenced.FirstName &nbsp;@referenced.LastName.ToUpper()</p>
-                        }
-                        else if (referenced == null)
-                        {
-                            <p>Yönlendirilecek Kişi Seçin</p>
-                        }
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
     <button @onclick="@( () => SendJobReference())" style="margin-left: 0;" class="btn btn-dark" type="button">Yönlendir</button>
 
     <button @onclick="@( () => uriHelper.NavigateTo("jobreferences"))" style="margin-left: 0;" class="btn btn-dark" type="button">Geri Dön</button>
@@ -135,23 +111,14 @@
         }
     }
 
-    void SelectUserForReference(bool option, string id, AspNetUsers user)
+    void SelectUserForReference(string id)
     {
-        if (option)
-        {
-            jobReference.ExpertId = id;
-            expert = user;
-        }
-        else
-        {
-            jobReference.ReferencedId = id;
-            referenced = user;
-        }
+        jobReference.ReferencedId = id;
     }
 
     void SendJobReference()
     {
-        if (jobReference.ExpertId != null && jobReference.ReferencedId != null)
+        if (jobReference.ExpertName != null && jobReference.ExpertContact != null && jobReference.ReferencedId != null)
         {
             jobReference.ReferencerId = loggedUser.Id;
             jobReferenceDAL.PostJobReferences(jobReference);

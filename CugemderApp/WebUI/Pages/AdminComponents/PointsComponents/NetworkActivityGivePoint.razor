@@ -60,7 +60,8 @@
         <hr />
         <br />
         <button type="submit" class="btn btn-primary">Puanla</button>
-        <button @onclick="@( () => { form = new PointCriteria(); })" type="button" class="btn btn-secondary">Vazgeç</button>
+        <button @onclick="@( () => { form = new PointCriteria(); })" type="button" class="btn btn-danger">Vazgeç</button>
+        <button @onclick="@( () => uriHelper.NavigateTo("networkactivityuserlist"))" type="button" class="btn btn-secondary">Geri Dön</button>
         <br />
         <br />
     </EditForm>
@@ -116,7 +117,7 @@
         networkingActivityDAL.PostNetworkingActivityPoint(networkingActivity);
 
 
-        uriHelper.NavigateTo("adminaccessuserlist");
+        uriHelper.NavigateTo("networkactivityuserlist");
     }
 
 

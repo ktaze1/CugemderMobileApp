@@ -42,8 +42,9 @@
                 {
                     <tr class="row">
                         <td class="col-8">
-                            <p style="margin-bottom: 0; color: red;"><strong>Referans Eden</strong>:  <span style="color: black;"> @getFullname(meeting.ReferencerId) </span> </p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: red;"><strong>Uzman Kişi</strong>:<span style="color: black;"> @getFullname(meeting.ExpertId) </span></p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Yönlendiren Üye</strong>:  <span style="color: black;"> @getFullname(meeting.ReferencerId) </span> </p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Kimi</strong>:<span style="color: black;"> @meeting.ExpertName </span></p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Telefon Numarası</strong>:<span style="color: black;">  @meeting.ExpertContact</span></p> <span class="br"></span>
                             <p style="margin-bottom: 0; color: red;"><strong>Durum</strong>: <span style="color: black;"> @jobReferenceStatusName(meeting) </span></p>
                         </td>
                         <td class="col-4">
@@ -91,8 +92,9 @@
                 {
                     <tr class="row">
                         <td class="col-8">
-                            <p style="margin-bottom: 0; color: red;"><strong>Referans Edilen Kişi</strong>:  <span style="color: black;"> @getFullname(meeting.ReferencedId) </span></p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: red;"><strong>Uzman Kişi</strong>:<span style="color: black;">  @getFullname(meeting.ExpertId)</span></p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Kime</strong>:  <span style="color: black;"> @getFullname(meeting.ReferencedId) </span></p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Kimi</strong>:<span style="color: black;">  @meeting.ExpertName</span></p> <span class="br"></span>
+                            <p style="margin-bottom: 0; color: red;"><strong>Telefon Numarası</strong>:<span style="color: black;">  @meeting.ExpertContact</span></p> <span class="br"></span>
                             <p style="margin-bottom: 0; color: red;"><strong>Durum</strong>: <span style="color: black;"> @jobReferenceStatusName(meeting)</span></p>
                         </td>
                         <td class="col-4">
@@ -147,29 +149,6 @@
                 tempUserList = tempUserList.Where(c => c.FirstName.ToLower().Contains(sc.name.ToLower())).ToList();
             if (sc.surname != null)
                 tempUserList = tempUserList.Where(c => c.LastName.ToLower().Contains(sc.surname.ToLower())).ToList();
-        }
-    }
-
-    void SelectUserForReference(bool option, string id, AspNetUsers user)
-    {
-        if (option)
-        {
-            jobReference.ExpertId = id;
-            expert = user;
-        }
-        else
-        {
-            jobReference.ReferencedId = id;
-            referenced = user;
-        }
-    }
-
-    void SendJobReference()
-    {
-        if (jobReference.ExpertId != null && jobReference.ReferencedId != null)
-        {
-            jobReference.ReferencerId = loggedUser.Id;
-            jobReferenceDAL.PostJobReferences(jobReference);
         }
     }
 

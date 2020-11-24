@@ -126,6 +126,7 @@ else
             userlist = await userDAL.GetUsersNoNull();
             meetingPoints = await meetingPointDAL.GetMeetingPoints();
             networkingMeetingPoints = await networkingMeetingDAL.GetNetworkingMeetingPoints();
+            networkingActivityPoints = await networkingActivityDAL.GetNetworkingActivityPoint();
         }
         catch (Exception ex)
         {

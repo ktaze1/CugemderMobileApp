@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -269,7 +268,11 @@ namespace CugemderApp.Shared.Models
 
             modelBuilder.Entity<JobReferences>(entity =>
             {
-                entity.Property(e => e.ExpertId)
+                entity.Property(e => e.ExpertContact)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.ExpertName)
                     .IsRequired()
                     .HasMaxLength(300);
 
