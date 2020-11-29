@@ -8,11 +8,7 @@
 
 @if (waitingUsers == null)
 {
-    <center>
-        <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
-
         <p><em>Y&uuml;kleniyor</em></p>
-    </center>
 }
 else
 {
@@ -78,7 +74,7 @@ else
     {
 
         List<string> GroupsWithNewUsers = new List<string>();
-        foreach (var user in waitingUsers)
+        foreach (var user in waitingUsers.Where(c => c.Group != null))
         {
             try
             {

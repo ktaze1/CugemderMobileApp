@@ -32,7 +32,7 @@
     <div class="form-group">
         <label>Profil Fotoğrafı :</label>
         <div>
-            <button class="btn btn-info" type="button" @onclick="@SelectFiles">Dosya Seç</button>
+            <button class="btn btn-primary" type="button" @onclick="@SelectFiles">Fotoğraf Seç</button>
         </div>
     </div>
     <div class="form-group">
@@ -184,7 +184,7 @@
     <div class="form-group">
         <label>Hakkında Özet :</label>
         <div>
-            <InputTextArea row="6" class="form-control" @bind-Value="@user.Summary" />
+            <InputTextArea multiline="true" rows="5" class="form-control" @bind-Value="@user.Summary" />
             <ValidationMessage For="@(() => user.Summary)" />
         </div>
     </div>
@@ -198,22 +198,28 @@
     <div class="form-group">
         <label>Mezuniyet/Firma Kuruluş Yılı :</label>
         <div>
-            <InputNumber class="form-control" @bind-Value="@user.Year" />
+            <InputNumber  class="form-control" @bind-Value="@user.Year" />
             <ValidationMessage For="@(() => user.Year)" />
         </div>
     </div>
-    <button type="submit" class="btn btn-success">
+    <button type="submit" class="btn btn-dark">
         Güncelle
     </button>
 
 
-    <button @onclick="(() => Discard())" type="button" class="btn btn-dark">
+    <button @onclick="(() => Discard())" type="button" class="btn btn-danger">
         Vazgeç
     </button>
 </EditForm>
 
 <br />
 
+<div  style="height: 300px; width: 300px;">
+    <center>
+
+        <img hidden src="_content/CugemderApp/beeport.png" />
+    </center>
+</div>
 @code {
 
     AspNetUsers user = new AspNetUsers();
@@ -254,16 +260,15 @@
             jobTitleId = user.JobTitle.HasValue ? (int)user.JobTitle : 0;
             cityId = user.LocatedCity.HasValue ? (int)user.LocatedCity : 0;
             relationshipId = user.Relationship.HasValue ? (int)user.Relationship : 0;
+            UnicodeToEnglish();
         }
     }
 
     async Task EditUser()
     {
         user.UpdatedAt = DateTime.UtcNow;
-        //if (user.Company.Trim() == "") user.Company = null;
-        //if (user.Position == 0) user.Position = null;
-        //if (user.Speciality.Trim() == "") user.Speciality = null;
-        //if (user.Summary.Trim() == "") user.Summary = null;
+        EnglishToTurkish();
+
 
         var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
         if (filetoDelete != null && item != null)
@@ -321,4 +326,36 @@
         item = await FilePicker.PickAsync();
     }
 
+
+    void EnglishToTurkish()
+    {
+        user.Summary = user.Summary.Replace("Ç", "&#199;");
+        user.Summary = user.Summary.Replace("Ğ", "&#286;");
+        user.Summary = user.Summary.Replace("İ", "&#304;");
+        user.Summary = user.Summary.Replace("Ö", "&#214;");
+        user.Summary = user.Summary.Replace("Ş", "&#350;");
+        user.Summary = user.Summary.Replace("Ü", "&#220;");
+        user.Summary = user.Summary.Replace("ç", "&#231;");
+        user.Summary = user.Summary.Replace("ğ", "&#287;");
+        user.Summary = user.Summary.Replace("ı", "&#305;");
+        user.Summary = user.Summary.Replace("ö", "&#246;");
+        user.Summary = user.Summary.Replace("ş", "&#351;");
+        user.Summary = user.Summary.Replace("ü", "&#252;");
+    }
+
+    void UnicodeToEnglish()
+    {
+        user.Summary = user.Summary.Replace("&#199;", "Ç");
+        user.Summary = user.Summary.Replace("&#286;", "Ğ");
+        user.Summary = user.Summary.Replace("&#304;", "İ");
+        user.Summary = user.Summary.Replace("&#214;", "Ö");
+        user.Summary = user.Summary.Replace("&#350;", "Ş");
+        user.Summary = user.Summary.Replace("&#220;", "Ü");
+        user.Summary = user.Summary.Replace("&#231;", "ç");
+        user.Summary = user.Summary.Replace("&#287;", "ğ");
+        user.Summary = user.Summary.Replace("&#305;", "ı");
+        user.Summary = user.Summary.Replace("&#246;", "ö");
+        user.Summary = user.Summary.Replace("&#351;", "ş");
+        user.Summary = user.Summary.Replace("&#252;", "ü");
+    }
 }

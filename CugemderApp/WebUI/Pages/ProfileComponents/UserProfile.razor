@@ -28,6 +28,8 @@
         .profile-img img {
             width: 200px;
             height: 200px;
+            background-size: cover;
+            background-position: center;
             border-radius: 50%;
         }
 
@@ -131,11 +133,7 @@
 
 @if (currentUser == null)
 {
-    <center>
-        <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
-
         <p><em>Y&uuml;kleniyor</em></p>
-    </center>
 }
 else
 {
@@ -150,7 +148,7 @@ else
                 <div class="profile-head">
                     <br />
                     <h4 class="d-flex justify-content-center">
-                        @currentUser.FirstName @currentUser.LastName
+                        @currentUser.FirstName @currentUser.LastName.ToUpper()
                     </h4>
                     <br />
                     @{
@@ -169,8 +167,10 @@ else
                     <br />
                     @if (currentUser.Summary != null)
                     {
-                        <h6 style="color: red;">Hakkında:</h6>
-                        <p>@currentUser.Summary</p>
+                        <h6 style="color: red;">Hakkında</h6>
+                        <p style="font-size:16px; margin-top: 0; white-space: pre-line; font-weight:500" class="proile-rating">
+                            @currentUser.Summary
+                        </p>
                     }
 
                     <br />

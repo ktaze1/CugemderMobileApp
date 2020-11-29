@@ -25,6 +25,8 @@
         .profile-img img {
             width: 200px;
             height: 200px;
+            background-size: cover;
+            background-position: center;
             border-radius: 50%;
         }
 
@@ -164,7 +166,10 @@ else
                     @if (loggedUser.Summary != null)
                     {
                         <h6 style="color: red;">Hakkında</h6>
-                        <p style="font-size:16px; font-weight:500" class="proile-rating">@loggedUser.Summary</p>
+                        <p style="font-size:16px; margin-top: 0; white-space: pre-line; font-weight:500" class="proile-rating">
+                            @System.Web.HttpUtility.HtmlDecode(loggedUser.Summary)
+                            
+                        </p>
                     }
 
                     <br />

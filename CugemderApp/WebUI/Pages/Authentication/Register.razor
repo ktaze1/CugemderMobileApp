@@ -4,6 +4,7 @@
 @inject CugemderApp.Security.CustomStateProvider authStateProvider
 @inject FileUpload fileDAL
 @inject AspNetUsersDAL userDAL
+@inject IJSRuntime js
 
 <h1 class="h2 font-weight-normal login-title">
     Üye Ol
@@ -29,8 +30,8 @@
     <ValidationMessage For="@(() => registerRequest.DateofBirth)" />
     <br />
     <label for="inputPhone">Telefon:</label>
-    <InputText id="inputPhone" class="form-control" placeholder="Telefon" autofocus @bind-Value="@registerRequest.PhoneNo" />
-    <ValidationMessage For="@(() => registerRequest.Email)" />
+    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 olmadan giriniz: 5551112233" autofocus @bind-Value="@registerRequest.PhoneNo" />
+    <ValidationMessage For="@(() => registerRequest.PhoneNo)" />
     <br />
     <label for="inputPassword">Şifre:</label>
     <InputText type="password" id="inputPassword" class="form-control" placeholder="Şifreniz" @bind-Value="@registerRequest.Password" />
@@ -77,6 +78,7 @@
             UploadFiles();
             await authStateProvider.Register(registerRequest);
 
+            js.InvokeVoidAsync("swal", "Üyelik Kaydı Başarılı", "Sistem Yöneticisi tarafından onaylanması sonrasında programı kullanabileceksiniz", "info");
         }
         catch (Exception ex)
         {

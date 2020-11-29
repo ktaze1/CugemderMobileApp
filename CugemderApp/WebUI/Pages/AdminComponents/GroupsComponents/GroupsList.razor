@@ -24,11 +24,7 @@
 <br />
 @if (groups == null)
 {
-    <center>
-        <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
-
         <p><em>Y&uuml;kleniyor</em></p>
-    </center>
 }
 else if (groups.Count == 0)
 {
@@ -49,7 +45,7 @@ else
                 <tr>
                     <td>@group.GroupName</td>
                     <td class="d-flex justify-content-end">
-                        <a class="btn btn-success" href="groups/edit/@group.Id">Düzenle</a>
+                        <a class="btn btn-primary" href="groups/edit/@group.Id">Düzenle</a> &nbsp;
                         <button class="btn btn-danger" @onclick="@(() => Delete(group.Id))">Sil</button>
                     </td>
                 </tr>

@@ -1,5 +1,4 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.Gms.Common;
@@ -9,7 +8,6 @@ using System;
 using Microsoft.MobileBlazorBindings.WebView.Android;
 using Android.Runtime;
 using CugemderApp.WebUI.Pages;
-//using Plugin.PushNotification;
 using System.Net.Http;
 using System.Text;
 using System.Globalization;
@@ -22,7 +20,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace CugemderApp.Droid
 {
-    [Activity(Label = "CugemderApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
+    [Activity(Label = "BeePort", Icon = "@mipmap/beeport", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
 

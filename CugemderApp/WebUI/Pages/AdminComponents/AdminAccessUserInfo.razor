@@ -1,15 +1,23 @@
 ﻿@page "/adminaccessuser/{id}"
+
+@inject IJSRuntime js
+
+@inject CitiesDAL cityDAL
+@inject GroupsDAL groupDAL
+@inject FileUpload fileDAL
+@inject PointsDAL pointDAL
+@inject GendersDAL genderDAL
 @inject AspNetUsersDAL userDAL
 @inject JobTitlesDAL jobTitleDAL
-@inject GroupsDAL groupDAL
 @inject PositionsDAL positionDAL
-@inject GendersDAL genderDAL
+@inject NavigationManager uriHelper
 @inject RelationshipsDAL relationshipDAL
-@inject CitiesDAL cityDAL
-@inject FileUpload fileDAL
+@inject MeetingPointsDAL meetingPointDAL
+@inject NetworkingMeetingPointDAL networkMeetingDAL
+@inject NetworkingActivityPointDAL networkActivityDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject CugemderApp.Security.CustomStateProvider customStateProvider
-@inject NavigationManager uriHelper
+
 
 <EditForm Model="@user" OnValidSubmit="@EditUser">
     <DataAnnotationsValidator />
@@ -221,11 +229,18 @@
             <ValidationMessage For="@(() => user.Year)" />
         </div>
     </div>
-    <div class="form-group"></div>
-    <button type="submit" class="btn btn-success">
+    <button type="submit" class="btn btn-primary">
         Güncelle
     </button>
+    <button @onclick="@( () => Delete(user.Id))" type="button" class="btn btn-danger">
+        Kullanıcıyı sil
+    </button>
+    <button type="button" class="btn btn-danger">
+        Vazgeç
+    </button>
 </EditForm>
+
+
 
 
 @code {
@@ -238,11 +253,13 @@
     private string newPassword;
 
     private List<Groups> groups = new List<Groups>();
-    private List<Positions> positions = new List<Positions>();
+    private List<Cities> cities = new List<Cities>();
     private List<Genders> genders = new List<Genders>();
+    private List<Positions> positions = new List<Positions>();
     private List<JobTitles> jobTitles = new List<JobTitles>();
     private List<Relationship> relationships = new List<Relationship>();
-    private List<Cities> cities = new List<Cities>();
+    private List<NetworkingMeetingPoints> networkingMeetingPoints = new List<NetworkingMeetingPoints>();
+    private List<NetworkingActivityPoint> networkingActivityPoints = new List<NetworkingActivityPoint>();
 
 
     private JobTitles selectedTitle;
@@ -261,6 +278,8 @@
         jobTitles = await jobTitleDAL.GetJobTitles();
         cities = await cityDAL.GetCities();
         relationships = await relationshipDAL.GetRelationships();
+        networkingActivityPoints = await networkActivityDAL.GetNetworkingActivityPoint();
+        networkingMeetingPoints = await networkMeetingDAL.GetNetworkingMeetingPoints();
 
 
         if (userAuth.Identity.IsAuthenticated)
@@ -308,6 +327,39 @@
         }
 
         uriHelper.NavigateTo("adminaccessuserlist");
+    }
+
+    async Task Delete(string userId)
+    {
+
+        if (await js.InvokeAsync<bool>("swal", "Kullanıcıyı silmek istediğinizden emin misiniz?", "", "error"))
+        {
+            var networkingActivitiesOfUser = networkingActivityPoints.Where(c => c.ReceiverUserId == userId);
+            foreach (var item in networkingActivitiesOfUser)
+            {
+                networkActivityDAL.DeleteNetworkingActivityPoint(item.Id);
+            }
+            var networkingMeetingsOfUser = networkingMeetingPoints.Where(c => c.ReceiverUserId == userId);
+            foreach (var item in networkingMeetingsOfUser)
+            {
+                networkActivityDAL.DeleteNetworkingActivityPoint(item.Id);
+            }
+            meetingPointDAL.DeleteMeetinPoints(userId);
+            pointDAL.DeletePoints(userId);
+            userDAL.DeleteUser(userId);
+        }
+        else {
+            RefreshPageContent();
+        }
+
+    }
+
+    async void RefreshPageContent()
+    {
+        user = await userDAL.GetUsers(id);
+        System.Threading.Thread.Sleep(200);
+        uriHelper.NavigateTo($"redirect/adminaccessuser/{id}");
+        await OnInitializedAsync();
     }
 
     async void SelectFiles()

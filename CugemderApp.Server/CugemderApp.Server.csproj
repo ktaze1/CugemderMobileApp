@@ -33,8 +33,4 @@
   <ItemGroup>
     <ProjectReference Include="..\CugemderApp.Shared\CugemderApp.Shared.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="StaticFiles\Images\" />
-  </ItemGroup>
 </Project>

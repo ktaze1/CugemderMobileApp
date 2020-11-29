@@ -33,12 +33,12 @@
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="jobreferences">
-                <span class="oi oi-task" aria-hidden="true"></span> İş Kişi Yönlendirme
+                <span class="oi oi-task" aria-hidden="true"></span> İş/Kişi Yönlendirme
             </NavLink>
         </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="documents">
-                <span class="oi oi-file" aria-hidden="true"></span> Dökümanlar
+                <span class="oi oi-file" aria-hidden="true"></span> Dokümanlar
             </NavLink>
         </li>
         <li class="nav-item px-3">
@@ -93,6 +93,8 @@
 
     protected async void Logout()
     {
+        loggedUser.IsTopicSubscribed = false;
+        userDAL.PutUser(loggedUser.Id, loggedUser);
         Xamarin.Essentials.SecureStorage.RemoveAll();
         await customStateProvider.Logout();
     }

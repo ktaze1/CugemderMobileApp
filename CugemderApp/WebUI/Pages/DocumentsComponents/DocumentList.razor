@@ -11,16 +11,16 @@
     {
         @if (loggedUser.IsAdmin.Value.Equals(true))
         {
-            <h4> Yeni Döküman Ekle</h4>
+            <h4> Yeni Doküman Ekle</h4>
             <EditForm Model="@document" OnValidSubmit="@UploadFiles">
                 <div>
                     <div>
-                        <label>Döküman Adı</label>
+                        <label>Doküman Adı</label>
                         <InputText class="form-control" @bind-Value="@document.Title" />
                     </div>
                     <br />
                     <div>
-                        <label>Döküman Açıklaması</label>
+                        <label>Doküman Açıklaması</label>
                         <InputText class="form-control" @bind-Value="@document.Summary" />
                     </div>
                     <br />

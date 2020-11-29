@@ -21,11 +21,7 @@
 
 @if (jobTitlesList == null)
 {
-    <center>
-        <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
-
         <p><em>Y&uuml;kleniyor</em></p>
-    </center>
 }
 else if (jobTitlesList != null)
 {
@@ -42,7 +38,8 @@ else if (jobTitlesList != null)
                 <tr>
                     <td>@job.TitleName</td>
                     <td>
-                        <a class="btn btn-success" href="groups/edit/@job.Id">Düzenle</a>
+                        <a style="margin-bottom: 3px;" class="btn btn-primary" href="groups/edit/@job.Id">Düzenle</a>
+                        <br />
                         <button class="btn btn-danger" @onclick="@(() => Delete(job.Id))">Sil</button>
                     </td>
                 </tr>

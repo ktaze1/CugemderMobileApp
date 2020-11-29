@@ -39,21 +39,26 @@
         display: table-cell;
         vertical-align: middle;
         border-radius: 50%;
-        width: 30%;
+        width: 80px;
+        height: 80px;
         padding-right: 1em;
+        overflow: hidden;
     }
 
         .li-img img {
             display: block;
+            height: 80px;
+            width: 80px;
+            background-size: cover;
+            background-position: center;
             border-radius: 50%;
-            width: 100%;
-            height: auto;
         }
 
     .li-text {
         display: table-cell;
         vertical-align: middle;
         width: 70%;
+        margin-left: 10px;
     }
 
     .li-head {
@@ -124,11 +129,7 @@
 <br />
 @if (tempList == null)
 {
-<center>
-    <img src="_content/CugemderApp/beeport.png" style="height: 200px; width: 200px;" />
-
     <p><em>Y&uuml;kleniyor</em></p>
-</center>
 }
 else if(tempList.Count == 0)
 {
