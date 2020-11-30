@@ -39,21 +39,26 @@
         display: table-cell;
         vertical-align: middle;
         border-radius: 50%;
-        width: 30%;
+        width: 80px;
+        height: 80px;
         padding-right: 1em;
+        overflow: hidden;
     }
 
         .li-img img {
             display: block;
+            height: 80px;
+            width: 80px;
+            background-size: cover;
+            background-position: center;
             border-radius: 50%;
-            width: 100%;
-            height: auto;
         }
 
     .li-text {
         display: table-cell;
         vertical-align: middle;
         width: 70%;
+        margin-left: 10px;
     }
 
     .li-head {
@@ -230,7 +235,7 @@
             <br />
             <button type="submit" class="btn btn-primary"> Filtrele</button>
             <button class="btn btn-secondary" type="button" @onclick="ClearFilter"> Filtreleri Temizle</button>
-            <button class="btn btn-dark" type="button" @onclick="GoBack"> Geri Dön </button>
+            <button class="btn btn-danger" type="button" @onclick="GoBack"> Geri Dön </button>
         </EditForm>
 
     }
@@ -379,6 +384,7 @@ else
     void ClearFilter()
     {
         sc = new SearchForm();
+        tempList = new List<AspNetUsers>();
     }
 
     void GoBack()

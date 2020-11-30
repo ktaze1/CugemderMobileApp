@@ -29,7 +29,7 @@ else
                 }
             </select>
             <br />
-            <button class="btn btn-info" type="submit">Grup Seç</button>
+            <button class="btn btn-primary" type="submit">Grup Seç</button>
         </div>
         <br />
     </form>
@@ -47,6 +47,8 @@ else
 {
 
     <button class="btn btn-dark" @onclick="@UpdatePoints"> Puanları Güncelle</button>
+
+    <button class="btn btn-danger" @onclick="@(() => uriHelper.NavigateTo("adminsettings"))">Geri Dön</button>
 
     <br />
     <br />

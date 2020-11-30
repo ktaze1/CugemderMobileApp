@@ -117,7 +117,7 @@ else
                                 <p style="margin-bottom: 0; color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
                             </td>
                             <td class="col-4">
-                                <button class="btn btn-info" type="button" @onclick="@(() => Approve(meeting.Id))"> Onayla</button>
+                                <button class="btn btn-primary" type="button" @onclick="@(() => Approve(meeting.Id))"> Onayla</button>
                                 <button class="btn btn-danger" type="button" @onclick="@(() => Delete(meeting.Id))"> Reddet</button>
                             </td>
                         </tr>

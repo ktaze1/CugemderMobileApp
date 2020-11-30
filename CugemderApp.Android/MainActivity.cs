@@ -24,7 +24,6 @@ namespace CugemderApp.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
 
-        HttpClient http = AppState._http;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

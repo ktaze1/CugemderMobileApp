@@ -38,7 +38,7 @@
     <div class="form-group">
         <label>Profil Fotoğrafı :</label>
         <div>
-            <button class="btn btn-info" type="button" @onclick="@SelectFiles">Dosya Seç</button>
+            <button class="btn btn-primary" type="button" @onclick="@SelectFiles">Fotoğraf Seç</button>
         </div>
     </div>
     <div class="form-group">
@@ -232,13 +232,19 @@
     <button type="submit" class="btn btn-primary">
         Güncelle
     </button>
-    <button @onclick="@( () => Delete(user.Id))" type="button" class="btn btn-danger">
-        Kullanıcıyı sil
-    </button>
-    <button type="button" class="btn btn-danger">
+
+    <button @onclick="@(() => uriHelper.NavigateTo("adminaccessuserlist"))" type="button" class="btn btn-danger">
         Vazgeç
     </button>
 </EditForm>
+
+
+<div style="height: 300px; width: 300px;">
+    <center>
+
+        <img hidden src="_content/CugemderApp/beeport.png" />
+    </center>
+</div>
 
 
 
@@ -297,10 +303,6 @@
     async Task EditUser()
     {
         user.UpdatedAt = DateTime.UtcNow;
-        //if (user.Company.Trim() == "") user.Company = null;
-        //if (user.Position == 0) user.Position = null;
-        //if (user.Speciality.Trim() == "") user.Speciality = null;
-        //if (user.Summary.Trim() == "") user.Summary = null;
 
         var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
         if (filetoDelete != null && item != null)
@@ -348,7 +350,8 @@
             pointDAL.DeletePoints(userId);
             userDAL.DeleteUser(userId);
         }
-        else {
+        else
+        {
             RefreshPageContent();
         }
 

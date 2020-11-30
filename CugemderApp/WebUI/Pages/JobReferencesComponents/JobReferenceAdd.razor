@@ -5,62 +5,89 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJSRuntime js
 @inject NavigationManager uriHelper
+@inject NotificationsDAL notifications
+
+@using System.ComponentModel.DataAnnotations;
 
 <div>
-    <EditForm Model="jobReference">
-        <div>
-            Kim Yönlendirilecek:  <InputText class="form-control" @bind-Value="jobReference.ExpertName" />
-        </div>
-        <div>
-            Telefon Numarası:  <InputText class="form-control" @bind-Value="jobReference.ExpertContact" />
-        </div>
-    </EditForm>
-    <EditForm Model="sc" OnValidSubmit="Filter">
-
-        <br />
-        <h6>Kime Yönlendirilecek:</h6>
-        <br />
-        <div>
-            İsim: <InputText class="form-control" @bind-Value="sc.name" />
-        </div>
-
-        <div>
-            Soyisim: <InputText class="form-control" @bind-Value="sc.surname" />
-        </div>
-
-        <br />
-        <button class="btn btn-dark"> Filtrele</button>
-    </EditForm>
 
     <br />
-    @if (tempUserList != null && tempUserList.Count > 0)
-    {
-        <div class="table-responsive-sm">
-            <table class="table table-striped">
-                <thead>
-                <th class="col-8">İsim</th>
-                <th class="col-4">Seç&emsp;</th>
-                </thead>
-                <tbody>
-
-
-                    @foreach (var item in tempUserList)
-                    {
-                        <tr>
-                            <td>@item.FirstName &nbsp; @item.LastName.ToUpper()</td>
-                            <td>
-                                <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(item.Id))" type="button"> &nbsp;Seç&nbsp;&nbsp;</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+    <h6>Kim Yönlendirilecek:</h6>
+    <EditForm Model="ef" OnValidSubmit="ExpertFormAssing">
+        <DataAnnotationsValidator />
+        <div>
+            İsim Soyisim :  <InputText class="form-control" @bind-Value="ef.name" />
+            <ValidationMessage For="@(() => ef.name)" />
         </div>
+        <div>
+            Telefon Numarası:  <InputText class="form-control" @bind-Value="ef.phone" />
+            <ValidationMessage For="@(() => ef.phone)" />
+        </div>
+        @message
+        <br />
+        <br />
+        <button class="btn btn-primary">Kaydet</button>
+    </EditForm>
+
+
+    <br />
+    <h6>Kime Yönlendirilecek:</h6>
+    <br />
+    @if (showFilter)
+    {
+        <EditForm Model="sc" OnValidSubmit="Filter">
+            <div>
+                İsim: <InputText class="form-control" @bind-Value="sc.name" />
+            </div>
+
+            <div>
+                Soyisim: <InputText class="form-control" @bind-Value="sc.surname" />
+            </div>
+
+            <br />
+
+            <div style="display: flex; justify-content: flex-end">
+                <button class="btn btn-dark"> Filtrele</button>
+            </div>
+        </EditForm>
+
+        <br />
+        @if (tempUserList != null && tempUserList.Count > 0)
+        {
+            <div class="table-responsive-sm">
+                <table class="table table-striped">
+                    <thead>
+                    <th class="col-8">İsim</th>
+                    <th class="col-4">Seç&emsp;</th>
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (var item in tempUserList)
+                        {
+                            <tr>
+                                <td>@item.FirstName &nbsp; @item.LastName.ToUpper()</td>
+                                <td>
+                                    <button class="btn btn-dark" @onclick="@( () => SelectUserForReference(item.Id))" type="button"> &nbsp;Seç&nbsp;&nbsp;</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
     }
+    else
+    {
+<div>
+    <text style="float: left">Seçilen üye:  @referenced.FirstName @referenced.LastName.ToUpper() </text>
+    <div  style="display: flex; justify-content: flex-end"><button class="btn btn-danger" @onclick="(() => Cancel())">Vazgeç</button></div>
+</div>
+        <br />
+    }
+    <button @onclick="@( () => SendJobReference())" style="margin-left: 0;" class="btn btn-primary" type="button">Yönlendir</button>
 
-    <button @onclick="@( () => SendJobReference())" style="margin-left: 0;" class="btn btn-dark" type="button">Yönlendir</button>
-
-    <button @onclick="@( () => uriHelper.NavigateTo("jobreferences"))" style="margin-left: 0;" class="btn btn-dark" type="button">Geri Dön</button>
+    <button @onclick="@( () => uriHelper.NavigateTo("jobreferences"))" style="margin-left: 0;" class="btn btn-danger" type="button">Geri Dön</button>
 
 
 </div>
@@ -70,12 +97,15 @@
 
 
 @code {
-    AspNetUsers expert, referenced;
-    SearchForm sc = new SearchForm();
-    AspNetUsers loggedUser = new AspNetUsers();
-    JobReferences jobReference = new JobReferences();
-    List<AspNetUsers> users = new List<AspNetUsers>(), tempUserList = new List<AspNetUsers>();
-    List<JobReferences> jobReferencesUserReferencer = new List<JobReferences>(), jobReferencesUserReferenced = new List<JobReferences>();
+        AspNetUsers expert, referenced = new AspNetUsers();
+        ExpertForm ef = new ExpertForm();
+        SearchForm sc = new SearchForm();
+        AspNetUsers loggedUser = new AspNetUsers();
+        JobReferences jobReference = new JobReferences();
+        List<AspNetUsers> users = new List<AspNetUsers>(), tempUserList = new List<AspNetUsers>();
+        List<JobReferences> jobReferencesUserReferencer = new List<JobReferences>(), jobReferencesUserReferenced = new List<JobReferences>();
+        bool showFilter = true;
+        string message { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -94,9 +124,33 @@
 
     public class SearchForm
     {
+
         public string? name { get; set; }
 
         public string? surname { get; set; }
+    }
+
+    public class ExpertForm
+    {
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        public string name { get; set; }
+
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        public string phone { get; set; }
+    }
+
+    void ExpertFormAssing()
+    {
+        jobReference.ExpertName = ef.name;
+        jobReference.ExpertContact = ef.phone;
+        message = "Kaydedildi.";
+    }
+
+    void Cancel()
+    {
+        showFilter = true;
     }
 
     async void Filter()
@@ -113,7 +167,9 @@
 
     void SelectUserForReference(string id)
     {
+        referenced = users.Where(c => c.Id == id).First();
         jobReference.ReferencedId = id;
+        showFilter = false;
     }
 
     void SendJobReference()
@@ -122,33 +178,21 @@
         {
             jobReference.ReferencerId = loggedUser.Id;
             jobReferenceDAL.PostJobReferences(jobReference);
+            notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Yeni Bir İş/Kişi Yönlendirmiştir.", "İş/Kişi Yönlendirme", referenced.Id);
+            RefreshPageContent();
         }
+    }
+
+    async void RefreshPageContent()
+    {
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("redirect/jobreferences");
     }
 
     string getFullname(string id)
     {
         var fullname = users.Where(c => c.Id == id).FirstOrDefault().FirstName + " " + users.Where(c => c.Id == id).FirstOrDefault().LastName;
         return fullname;
-    }
-
-    async void UpdateStatus(int referenceId)
-    {
-        uriHelper.NavigateTo($"jobReferenceUpdate/{referenceId}");
-    }
-
-    string jobReferenceStatusName(JobReferences reference)
-    {
-        if (reference.IsMeetingDone)
-        {
-            if (reference.IsProductive != null && reference.IsProductive.Value)
-                return "Görüşme Yapıldı ve Olumlu Geçti";
-            else if (reference.IsProductive != null && !reference.IsProductive.Value)
-                return "Görüşme Yapıldı Fakat Olumlu Geçmedi";
-
-            return "Görüşme Yapıldı";
-        }
-        else
-            return "Görüşme Yapılmadı";
     }
 
 }

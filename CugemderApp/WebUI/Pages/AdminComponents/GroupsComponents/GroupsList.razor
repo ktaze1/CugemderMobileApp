@@ -10,15 +10,24 @@
     <DataAnnotationsValidator />
     <div class="form-group">
         <div>
-            <InputText @bind-Value="@newGroup.GroupName" />
+            <InputText class="form-control"  @bind-Value="@newGroup.GroupName" />
             <ValidationMessage For="@(() => newGroup.GroupName)" />
 
-            <button type="submit" class="btn btn-success">
-                Kaydet
-            </button>
+
+            <br />
+
+            <div style="float: left">
+                <button type="submit" class="btn btn-primary">
+                    Kaydet
+                </button>
+            </div>
+            <div style="display: flex; justify-content: flex-end">
+                <button type="button" class="btn btn-danger" @onclick="@(() => uriHelper.NavigateTo("adminsettings"))">Geri Dön</button>
+            </div>
         </div>
     </div>
 </EditForm>
+
 
 <h3>Grup Listesi</h3>
 <br />

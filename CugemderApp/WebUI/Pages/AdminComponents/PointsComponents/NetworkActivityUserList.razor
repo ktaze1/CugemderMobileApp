@@ -13,10 +13,10 @@
 
 @if (groups == null && userlist == null)
 {
-        <p><em>Y&uuml;kleniyor</em></p>
+    <p><em>Y&uuml;kleniyor</em></p>
 }
 else
-{ 
+{
     <form @onsubmit="@( () => Navigate(option))">
         <div>
             <select class="form-control" @bind="option">
@@ -27,12 +27,14 @@ else
                 }
             </select>
             <br />
-            <button class="btn btn-info" type="submit">Grup Seç</button>
+            <button class="btn btn-primary" type="submit">Grup Seç</button>
         </div>
         <br />
     </form>
 
     <button class="btn btn-dark" @onclick="@UpdatePoints"> Puanları Güncelle</button>
+
+    <button class="btn btn-danger" @onclick="@(() => uriHelper.NavigateTo("adminsettings"))">Geri Dön</button>
 
     <br />
     <br />
@@ -61,14 +63,14 @@ else
                     <tr> @user.PointsNavigation.UpdatedAt.ToShortDateString()</tr>
                     </td>
                 }
-<td>
-                        <a href="/addpointsnetworkactivity/@user.Id">Puan Ver</a>
-                    </td>
+                <td>
+                    <a href="/addpointsnetworkactivity/@user.Id">Puan Ver</a>
+                </td>
                 </tr>
             }
-        </tbody>
-    </table>
-}
+            </tbody>
+        </table>
+    }
 
 
 @code {

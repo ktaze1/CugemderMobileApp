@@ -2,18 +2,25 @@
 @page "/adminaccessuserlist/{id:int}"
 
 
+@inject IJSRuntime js
+
+@using System.Text.Json.Serialization
+
 @inject GroupsDAL groupDAL
 @inject PointsDAL pointDAL
 @inject AspNetUsersDAL userDAL
 @inject NavigationManager uriHelper
 @inject NotificationsDAL notifications
+@inject MeetingPointsDAL meetingPointDAL
+@inject NetworkingMeetingPointDAL networkMeetingDAL
+@inject NetworkingActivityPointDAL networkActivityDAL
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 
 
 @if (groups == null)
 {
-        <p><em>Y&uuml;kleniyor</em></p>
+    <p><em>Y&uuml;kleniyor</em></p>
 }
 else
 {
@@ -27,19 +34,19 @@ else
                 }
             </select>
             <br />
-            <button class="btn btn-info" type="submit">Grup Seç</button>
+            <button class="btn btn-primary" type="submit">Grup Seç</button>
+
+            <button type="button" class="btn btn-danger" @onclick="@(() => uriHelper.NavigateTo("adminsettings"))">Geri Dön</button>
         </div>
         <br />
     </form>
 }
 
+
+
 @if (userlist == null)
 {
-<center>
-    <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
-
     <p><em>Y&uuml;kleniyor</em></p>
-</center>
 }
 else
 {
@@ -61,7 +68,10 @@ else
                         <a href="/profile/@user.Id">@user.FirstName @user.LastName</a>
                     </td>
                     <td>
-                        <button class="btn btn-dark" @onclick="@( () => uriHelper.NavigateTo($"adminaccessuser/{user.Id}"))">Hakkında</button>
+                        <button class="btn btn-dark" @onclick="@( () => uriHelper.NavigateTo($"adminaccessuser/{user.Id}"))">Düzenle</button>
+                        <button @onclick="@( () => Delete(user.Id))" type="button" class="btn btn-danger">
+                            Sil
+                        </button>
                     </td>
                 </tr>
             }
@@ -79,36 +89,36 @@ else
     private List<AspNetUsers> userlist = new List<AspNetUsers>();
     private List<Groups> groups = new List<Groups>();
     private List<Points> pointlist = new List<Points>();
+    private List<NetworkingMeetingPoints> networkingMeetingPoints = new List<NetworkingMeetingPoints>();
+    private List<NetworkingActivityPoint> networkingActivityPoints = new List<NetworkingActivityPoint>();
 
+    private string Result { get; set; }
 
     private AspNetUsers loggedUser;
 
+    JsonResponse responsee = new JsonResponse();
 
     private int option = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        try
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userobj = authState.User;
+
+        if (userobj.Identity.IsAuthenticated)
         {
+            loggedUser = await userDAL.GetUsername(userobj.Identity.Name);
 
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var userobj = authState.User;
-
-            if (userobj.Identity.IsAuthenticated)
-            {
-                loggedUser = await userDAL.GetUsername(userobj.Identity.Name);
-
-            }
-
-
-            pointlist = await pointDAL.GetPoints();
-            groups = await groupDAL.GetGroupsAsync();
-            userlist = await userDAL.GetUsersNoNull();
         }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine(ex.Message);
-        }
+
+
+        pointlist = await pointDAL.GetPoints();
+        groups = await groupDAL.GetGroupsAsync();
+        userlist = await userDAL.GetUsersNoNull();
+
+        networkingActivityPoints = await networkActivityDAL.GetNetworkingActivityPoint();
+        networkingMeetingPoints = await networkMeetingDAL.GetNetworkingMeetingPoints();
     }
 
     protected override void OnParametersSet()
@@ -125,4 +135,62 @@ else
             uriHelper.NavigateTo($"/adminaccessuserlist/{option}");
     }
 
+
+    async Task Delete(string userId)
+    {
+        var boolval = false;
+
+        var modalresponse = await js.InvokeAsync<object>("swal", "Kullanıcıyı silmek istediğinizden emin misiniz?", "", "error", new { buttons = true });
+
+        if(modalresponse == null)
+        {
+            boolval = false;
+        }
+        else if (modalresponse.GetType().IsValueType)
+        {
+            boolval = true;
+        }
+
+        if (boolval)
+        {
+            var networkingActivitiesOfUser = networkingActivityPoints.Where(c => c.ReceiverUserId == userId);
+            foreach (var item in networkingActivitiesOfUser)
+            {
+                networkActivityDAL.DeleteNetworkingActivityPoint(item.Id);
+            }
+            var networkingMeetingsOfUser = networkingMeetingPoints.Where(c => c.ReceiverUserId == userId);
+            foreach (var item in networkingMeetingsOfUser)
+            {
+                networkActivityDAL.DeleteNetworkingActivityPoint(item.Id);
+            }
+            meetingPointDAL.DeleteMeetinPoints(userId);
+            pointDAL.DeletePoints(userId);
+            userDAL.DeleteUser(userId);
+            RefreshPageContent();
+        }
+        else
+        {
+            RefreshPageContent();
+        }
+
+    }
+
+
+    public class JsonResponse
+    {
+        [JsonPropertyName("dismiss")]
+        public string Dismiss { get; set; }
+
+        [JsonPropertyName("value")]
+        public bool Value { get; set; } = false;
+    }
+
+
+    async void RefreshPageContent()
+    {
+        userlist = await userDAL.GetUsersNoNull();
+        System.Threading.Thread.Sleep(200);
+        uriHelper.NavigateTo("redirect/adminaccessuserlist");
+        await OnInitializedAsync();
+    }
 }

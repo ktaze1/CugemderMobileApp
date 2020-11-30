@@ -18,10 +18,8 @@
         <p><em>Y&uuml;kleniyor</em></p>
     </div>
 }
-else if (events.Count == 0)
+else
 {
-    <p>Etkinlik Bulunamadı</p>
-
 
     @if (loggedUser != null)
     {
@@ -86,73 +84,6 @@ else if (events.Count == 0)
             </div>
         }
     }
-}
-else
-{
-
-    @if (loggedUser != null)
-    {
-        @if (loggedUser.IsAdmin.Value)
-        {
-
-<div>
-    <button style="margin-bottom: 10px;" class="btn btn-dark" @onclick="@( () => isOpen = !isOpen)">Yeni Etkinlik Ekle</button>
-    @if (isOpen)
-    {
-
-        <div style="margin-top: 10px;" class="simple-form col-sm-3">
-            <EditForm Model="newEvent" OnValidSubmit="CreateEvent">
-                <DataAnnotationsValidator />
-                <div class="form-group">
-                    <label>Başlık</label>
-                    <InputText @bind-Value="newEvent.Title" class="form-control" placeholder="Başlık Giriniz" />
-                    <ValidationMessage For="@(() => newEvent.Title)" />
-                </div>
-                <div class="form-group">
-                    <label>Lokasyon</label>
-                    <InputText @bind-Value="newEvent.Location" class="form-control" placeholder="Adres Giriniz" />
-                    <ValidationMessage For="@(() => newEvent.Location)" />
-                </div>
-                <div class="form-group">
-                    <label>Açıklama</label>
-                    <InputTextArea @bind-Value="newEvent.Summary" class="form-control" placeholder="Açıklama Giriniz" />
-                    <ValidationMessage For="@(() => newEvent.Summary)" />
-                </div>
-                <div class="form-group">
-                    <label for="createdDate">Tarih ve Saat</label>
-                    <InputDateTime class="form-control" @bind-Value="newEvent.Date" />
-                    <ValidationMessage For="@(() => newEvent.Date)" />
-                </div>
-                <div class="form-group">
-                    <label>Grup</label>
-                    @if (groupList != null)
-                    {
-                        <select class="form-control"
-                                @bind="newEvent.RelatedGroup">
-                            <option value="0">Seç</option>
-                            @foreach (var group in groupList)
-                            {
-                                @if (group.Id == groupId)
-                                {
-                                    <option selected value="@group.Id">@group.GroupName</option>
-                                }
-                                else
-                                {
-                                    <option value="@group.Id">@group.GroupName</option>
-                                }
-
-                            }
-                        </select>
-                    }
-                </div>
-
-                <button type="submit" class="btn btn-dark">Ekle</button>
-            </EditForm>
-        </div>
-    }
-</div>
-        }
-    }
     <br />
     <table class="table table-striped">
         <tbody>
@@ -208,7 +139,9 @@ else
             @if (events.Where(c => c.Date.GetValueOrDefault() < DateTime.Now).Count() == 0)
             {
                 <div style="margin-top: 10px;">
-                    <p>Geçmiş Etkinlik Bulunamadı</p>
+                    <center>
+                        <p>Geçmiş Etkinlik Bulunamadı</p>
+                    </center>
                 </div>
             }
             else
@@ -282,11 +215,11 @@ else
                 newEvent.RelatedGroup = null;
                 foreach (var item in groupList)
                 {
-                    notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", item.GroupName);
+                    notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", item.GroupName);
                     notifications.AddNotificaiton(new Notifications()
                     {
                         Title = "Etkinlik",
-                        Body = $"Bugün olacak etkinliğin saati: {newEvent.Date.Value.ToString("t", AppState.trTR)} ",
+                        Body = $"Bugün Olacak Etkinliğin Saati: {newEvent.Date.Value.ToString("t", AppState.trTR)}. ",
                         Time = newEvent.Date.Value,
                         Receiver = item.GroupName
                     });
@@ -294,11 +227,11 @@ else
             }
             else if (newEvent.RelatedGroup != 0)
             {
-                notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik olacaktır", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
+                notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
                 notifications.AddNotificaiton(new Notifications()
                 {
                     Title = "Etkinlik",
-                    Body = $"Bugün olacak etkinliğin saati: {newEvent.Date.Value.ToString("t", AppState.trTR)} ",
+                    Body = $"Bugün Olacak Etkinliğin Saati: {newEvent.Date.Value.ToString("t", AppState.trTR)}. ",
                     Time = newEvent.Date.Value,
                     Receiver = groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName
                 });

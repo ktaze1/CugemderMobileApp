@@ -1,4 +1,4 @@
-﻿@page "/jobTitles/edit/{id}"
+﻿@page "/jobTitles/edit/{id:int}"
 @inject NavigationManager uriHelper
 @inject JobTitlesDAL jobDal
 
@@ -8,12 +8,20 @@
     <DataAnnotationsValidator />
     <div class="form-group">
         <div>
-            <InputText @bind-Value="@job.TitleName" />
+            <InputText class="form-control" @bind-Value="@job.TitleName" />
             <ValidationMessage For="@(() => job.TitleName)" />
 
-            <button type="submit" class="btn btn-success">
-                Kaydet
-            </button>
+
+            <br />
+
+            <div style="float: left">
+                <button type="submit" class="btn btn-primary">
+                    Kaydet
+                </button>
+            </div>
+            <div style="display: flex; justify-content: flex-end">
+                <button type="button" class="btn btn-danger" @onclick="@(() => uriHelper.NavigateTo("jobtitles"))">Geri Dön</button>
+            </div>
         </div>
     </div>
 </EditForm>
