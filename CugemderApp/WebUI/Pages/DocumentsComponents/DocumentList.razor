@@ -25,7 +25,7 @@
                     </div>
                     <br />
                     <button class="btn btn-secondary" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
-                    <button class="btn btn-dark">Dosyayı Ekle</button>
+                    <button class="btn btn-primary">Dosyayı Ekle</button>
                 </div>
                 <br />
             </EditForm>
@@ -50,10 +50,10 @@
                             <p><strong>Açıklama</strong>: @item.Summary</p>
                         </td>
                         <td>
-                            <button @onclick="@( () => Launcher.OpenAsync(item.Url))" class="btn btn-primary" type="button"> Dosyayı Aç</button>
+                            <button @onclick="@( () => Launcher.OpenAsync(item.Url))" class="btn btn-primary" type="button"> Aç</button>
                             @if (loggedUser != null && loggedUser.IsAdmin == true)
                             {
-                                <button style="margin-top: 4px;" class="btn btn-danger" @onclick="@( () => DeleteFile(item.Url, item.Id))" type="button"> Dosyayı Sil </button>
+                                <button style="margin-top: 4px;" class="btn btn-danger" @onclick="@( () => DeleteFile(item.Url, item.Id))" type="button"> Sil </button>
                             }
                         </td>
                     </tr>

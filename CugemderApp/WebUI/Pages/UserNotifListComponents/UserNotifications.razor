@@ -1,0 +1,62 @@
+﻿@page "/userNotifications"
+@inject UserNotifListDAL userNotifDAL
+
+@inject AspNetUsersDAL userDAL
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="col">Detay</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (notificationList == null || notificationList.Count == 0)
+        {
+            <br />
+            <p><em>Bildirim Bulunamadı.</em></p>
+        }
+        @if (notificationList != null)
+        {
+
+            @foreach (var notification in notificationList)
+            {
+                <tr>
+                    <td>
+                        <p style="margin-bottom: 0; color: red;"><strong>Başlık</strong>:  <span style="color: black;">@notification.Title </span> </p> <span class="br"></span>
+                        <p style="margin-bottom: 0; color: red;"><strong>İçerik</strong>:  <span style="color: black;">@notification.Body</span> </p> <span class="br"></span>
+                        <p style="margin-bottom: 0; color: red;"><strong>Tarih</strong>:  <span style="color: black;"> @notification.Date.ToString("D", AppState.trTR)</span> </p> <span class="br"></span>
+                    </td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+
+@code {
+
+
+    private List<UserNotificationList> notificationList = new List<UserNotificationList>();
+    private List<UserNotificationList> notificationListofUser = new List<UserNotificationList>();
+    private List<UserNotificationList> notificationListofGroup = new List<UserNotificationList>();
+    private AspNetUsers loggedUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            loggedUser = await userDAL.GetUsername(user.Identity.Name);
+            notificationListofUser = await userNotifDAL.GetNotifListOfUser(loggedUser.Id);
+            notificationListofGroup = await userNotifDAL.GetNotifListOfUser(loggedUser.GroupNavigation.GroupName);
+            notificationList = notificationListofUser.Concat(notificationListofGroup).ToList();
+        }
+
+
+    }
+}

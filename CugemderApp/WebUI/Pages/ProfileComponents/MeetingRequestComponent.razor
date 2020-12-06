@@ -4,6 +4,8 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager  uriHelper
 
+@inject UserNotifListDAL userNotifDAL
+@inject NotificationsDAL notifications
 
 <h3>Görüşme Detaylarını Giriniz</h3>
 
@@ -32,10 +34,10 @@
 @code {
 
 
-        [Parameter] public string id { get; set; }
+    [Parameter] public string id { get; set; }
 
-        int totalPoints;
-        Meetings meeting = new Meetings() { Date = DateTime.Today};
+    int totalPoints;
+    Meetings meeting = new Meetings() { Date = DateTime.Today };
 
 
     private AspNetUsers loggedUser;
@@ -62,6 +64,18 @@
         meeting.IsResultedbyReceiver = false;
         meeting.IsResultedbySender = false;
         meetingDAL.PostMeetings(meeting);
+
+        notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size {meeting.Date.ToString("F", AppState.trTR)} Tarihinde Birebir Görüşme Talebinde Bulunmuştur.", "Yeni Birebir Görüşme Talebi!", meeting.ReceiverId);
+
+        userNotifDAL.PostUserNotifications(new UserNotificationList()
+        {
+            Title = "Birebir Görüşme Talebi",
+            Body = $" {loggedUser.FirstName} {loggedUser.LastName.ToUpper()} size birebir görüşme Talebi yollamıştır.",
+            Date = DateTime.Now,
+            Receiver = meeting.ReceiverId
+        });
+
+
         uriHelper.NavigateTo($"profile/{id}");
     }
 

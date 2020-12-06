@@ -5,10 +5,11 @@
 @inject NavigationManager  uriHelper
 @inject NotificationsDAL notifications
 @inject MeetingPointsDAL meetingPointDAL
+@inject UserNotifListDAL userNotifDAL
 
 @if (waitingUsers == null)
 {
-        <p><em>Y&uuml;kleniyor</em></p>
+    <p><em>Y&uuml;kleniyor</em></p>
 }
 else
 {
@@ -83,6 +84,14 @@ else
                 user.LastGroupName = groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName;
                 user.Points = points.Where(c => c.UserId == user.Id).First().Id;
                 userDAL.PutUser(user.Id, user);
+                userNotifDAL.PostUserNotifications(new UserNotificationList()
+                {
+                    Title = "Yeni Üye",
+                    Body = $" {user.FirstName} {user.LastName.ToUpper()} Grubunuza Katılmıştır!",
+                    Date = DateTime.Now,
+                    Receiver = user.GroupNavigation.GroupName
+                });
+
 
             }
             catch (Exception ex)

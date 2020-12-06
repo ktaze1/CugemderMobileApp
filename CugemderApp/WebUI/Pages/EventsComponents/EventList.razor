@@ -1,11 +1,14 @@
 ﻿@page "/events"
 @page "/events/{id:int}"
+
+
 @inject EventsDAL eventDAL
 @inject AspNetUsersDAL userDAL
 @inject GroupsDAL groupDAL
 @inject NotificationsDAL notifications
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager uriHelper
+@inject UserNotifListDAL userNotifDAL
 
 @inject IJSRuntime js
 
@@ -27,7 +30,7 @@ else
         {
 
             <div>
-                <button style="margin-bottom: 10px;" class="btn btn-dark" @onclick="@( () => isOpen = !isOpen)">Yeni Etkinlik Ekle</button>
+                <button style="margin-bottom: 10px;" class="btn btn-primary" @onclick="@( () => isOpen = !isOpen)">Yeni Etkinlik Ekle</button>
                 @if (isOpen)
                 {
 
@@ -77,7 +80,7 @@ else
                                 }
                             </div>
 
-                            <button type="submit" class="btn btn-dark">Ekle</button>
+                            <button type="submit" class="btn btn-primary">Ekle</button>
                         </EditForm>
                     </div>
                 }
@@ -97,7 +100,7 @@ else
             {
                 <div style="margin-top: 10px;">
                     <center>
-                        <p>Yaklaşan Etkinlik Bulunamadı</p>
+                        <p>Yaklaşan Etkinlik Bulunamadı.</p>
                     </center>
                 </div>
 
@@ -140,7 +143,7 @@ else
             {
                 <div style="margin-top: 10px;">
                     <center>
-                        <p>Geçmiş Etkinlik Bulunamadı</p>
+                        <p>Geçmiş Etkinlik Bulunamadı.</p>
                     </center>
                 </div>
             }
@@ -221,6 +224,13 @@ else
                         Title = "Etkinlik",
                         Body = $"Bugün Olacak Etkinliğin Saati: {newEvent.Date.Value.ToString("t", AppState.trTR)}. ",
                         Time = newEvent.Date.Value,
+                        Receiver = item.GroupName
+                    });
+
+                    userNotifDAL.PostUserNotifications(new UserNotificationList(){
+                        Title = "Etkinlik",
+                        Body = $"Bugün Olacak Etkinliğin Saati: {newEvent.Date.Value.ToString("t", AppState.trTR)}. ",
+                        Date = DateTime.Now,
                         Receiver = item.GroupName
                     });
                 }

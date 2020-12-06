@@ -62,7 +62,7 @@
     <AndroidDexTool>d8</AndroidDexTool>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <AndroidKeyStore>false</AndroidKeyStore>
-    <AndroidSigningKeyStore>C:\Users\Kaan\AppData\Local\Xamarin\Mono for Android\Keystore\Cugemder\Cugemder.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>C:\Users\Kaan\Downloads\client_secret_1022179774249-6oaickfal8g6c0jqsaso65c8ofup81ph.apps.googleusercontent.com.json</AndroidSigningKeyStore>
     <AndroidSigningStorePass>12345678Be-</AndroidSigningStorePass>
     <AndroidHttpClientHandlerType>System.Net.Http.HttpClientHandler</AndroidHttpClientHandlerType>
     <MandroidI18n />

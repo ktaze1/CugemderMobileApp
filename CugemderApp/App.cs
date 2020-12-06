@@ -47,6 +47,7 @@ namespace CugemderApp
                     services.AddSingleton<DataAccessClasses.NotificationsDAL>();
                     services.AddSingleton<DataAccessClasses.PointsDAL>();
                     services.AddSingleton<DataAccessClasses.PositionsDAL>();
+                    services.AddSingleton<DataAccessClasses.UserNotifListDAL>();
                     services.AddSingleton<DataAccessClasses.RelationshipsDAL>();
                 })
                  .UseWebRoot("wwwroot");

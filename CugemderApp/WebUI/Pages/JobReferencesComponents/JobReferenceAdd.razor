@@ -7,6 +7,7 @@
 @inject NavigationManager uriHelper
 @inject NotificationsDAL notifications
 
+@inject UserNotifListDAL userNotifDAL
 @using System.ComponentModel.DataAnnotations;
 
 <div>
@@ -79,10 +80,10 @@
     }
     else
     {
-<div>
-    <text style="float: left">Seçilen üye:  @referenced.FirstName @referenced.LastName.ToUpper() </text>
-    <div  style="display: flex; justify-content: flex-end"><button class="btn btn-danger" @onclick="(() => Cancel())">Vazgeç</button></div>
-</div>
+        <div>
+            <text style="float: left">Seçilen üye:  @referenced.FirstName @referenced.LastName.ToUpper() </text>
+            <div style="display: flex; justify-content: flex-end"><button class="btn btn-danger" @onclick="(() => Cancel())">Vazgeç</button></div>
+        </div>
         <br />
     }
     <button @onclick="@( () => SendJobReference())" style="margin-left: 0;" class="btn btn-primary" type="button">Yönlendir</button>
@@ -93,19 +94,25 @@
 </div>
 
 
-<br />
+<div style="height: 300px; width: 300px;">
+    <center>
+
+        <img hidden src="_content/CugemderApp/beeport.png" />
+    </center>
+</div>
+
 
 
 @code {
-        AspNetUsers expert, referenced = new AspNetUsers();
-        ExpertForm ef = new ExpertForm();
-        SearchForm sc = new SearchForm();
-        AspNetUsers loggedUser = new AspNetUsers();
-        JobReferences jobReference = new JobReferences();
-        List<AspNetUsers> users = new List<AspNetUsers>(), tempUserList = new List<AspNetUsers>();
-        List<JobReferences> jobReferencesUserReferencer = new List<JobReferences>(), jobReferencesUserReferenced = new List<JobReferences>();
-        bool showFilter = true;
-        string message { get; set; }
+    AspNetUsers expert, referenced = new AspNetUsers();
+    ExpertForm ef = new ExpertForm();
+    SearchForm sc = new SearchForm();
+    AspNetUsers loggedUser = new AspNetUsers();
+    JobReferences jobReference = new JobReferences();
+    List<AspNetUsers> users = new List<AspNetUsers>(), tempUserList = new List<AspNetUsers>();
+    List<JobReferences> jobReferencesUserReferencer = new List<JobReferences>(), jobReferencesUserReferenced = new List<JobReferences>();
+    bool showFilter = true;
+    string message { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -179,6 +186,16 @@
             jobReference.ReferencerId = loggedUser.Id;
             jobReferenceDAL.PostJobReferences(jobReference);
             notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Yeni Bir İş/Kişi Yönlendirmiştir.", "İş/Kişi Yönlendirme", referenced.Id);
+            userNotifDAL.PostUserNotifications(new UserNotificationList()
+            {
+                Title = "İş / Kişi Yönlendirme",
+                Body = $" {loggedUser.FirstName} {loggedUser.LastName.ToUpper()} İş / Kişi Yönlendirmiştir!.",
+                Date = DateTime.Now,
+                Receiver = jobReference.ReferencedId
+            });
+
+
+            js.InvokeVoidAsync("swal", "Başarılı", "İş / Kişi Yönlendirildi!", "success");
             RefreshPageContent();
         }
     }

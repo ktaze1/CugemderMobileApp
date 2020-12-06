@@ -5,11 +5,16 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
+
+
+<div style="display: flex; justify-content: flex-end">
+    <button @onclick="@( () => uriHelper.NavigateTo("adminsettings"))" type="button" class="btn btn-danger">Geri Dön</button>
+    <br />
+</div>
+
 @if (jobReferences == null)
 {
     <center>
-        <img src="_content/CugemderApp/beeport.jpg" style="height: 200px; width: 200px;" />
-
         <p><em>Y&uuml;kleniyor</em></p>
     </center>
 }
@@ -20,33 +25,29 @@ else if (jobReferences.Count() == 0)
 }
 else
 {
-    <div class="table-responsive align-content-start" style="padding-left: 1em;">
-        <table class="table">
-            <thead class="thead-light">
-                <tr class="row">
-                    <th class="col">Detay</th>
+    <table class="table" style="margin-top: 10px;">
+        <thead>
+            <tr>
+                <th class="col">Detay</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meeting in jobReferences)
+            {
+                <tr>
+                    <td>
+                        <p style="margin-bottom: 0; color: grey;"><strong>Referans Eden</strong>:   @getFullname(meeting.ReferencerId) </p> <span class="br"></span>
+                        <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>: @meeting.ExpertName</p> <span class="br"></span>
+                        <p style="margin-bottom: 0; color: grey;"><strong>Durum</strong>:  @jobReferenceStatusName(meeting)</p>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var meeting in jobReferences)
-                {
-                    <tr class="row">
-                        <td class="col-8">
-                            <p style="margin-bottom: 0; color: grey;"><strong>Referans Eden</strong>:   @getFullname(meeting.ReferencerId) </p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>: @meeting.ExpertName</p> <span class="br"></span>
-                            <p style="margin-bottom: 0; color: grey;"><strong>Durum</strong>:  @jobReferenceStatusName(meeting)</p>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
 
-    </div>
 }
 
 <br />
-
-<button @onclick="@( () => uriHelper.NavigateTo("adminsettings"))" type="button" class="btn btn-secondary">Geri Dön</button>
 
 
 @code {

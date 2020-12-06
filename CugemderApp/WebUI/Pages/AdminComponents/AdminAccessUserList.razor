@@ -140,7 +140,13 @@ else
     {
         var boolval = false;
 
-        var modalresponse = await js.InvokeAsync<object>("swal", "Kullanıcıyı silmek istediğinizden emin misiniz?", "", "error", new { buttons = true });
+        var modalresponse = await js.InvokeAsync<object>("swal", "Kullanıcıyı silmek istediğinizden emin misiniz?", "", "error",
+            new { buttons =
+            new{
+                cancel = "Hayır",
+                accept = "Evet"
+            }
+            });
 
         if(modalresponse == null)
         {

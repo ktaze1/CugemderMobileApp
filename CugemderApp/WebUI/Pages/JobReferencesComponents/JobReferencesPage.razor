@@ -11,7 +11,7 @@
     }
 </style>
 
-<button class="btn btn-dark" @onclick="@( () => uriHelper.NavigateTo("jobreferenceadd"))">İş/Kişi Yönlendir</button>
+<button class="btn btn-primary" @onclick="@( () => uriHelper.NavigateTo("jobreferenceadd"))">İş/Kişi Yönlendir</button>
 
 
 <hr />
@@ -31,12 +31,6 @@
     else
     {
         <table class="table">
-            <thead class="thead-light">
-                <tr class="row">
-                    <th class="col">Detay</th>
-                    <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
-                </tr>
-            </thead>
             <tbody>
                 @foreach (var meeting in jobReferencesUserReferenced.Take(15))
                 {
@@ -81,12 +75,6 @@
     else
     {
         <table class="table">
-            <thead class="thead-light">
-                <tr class="row">
-                    <th class="col">Detay</th>
-                    <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
-                </tr>
-            </thead>
             <tbody>
                 @foreach (var meeting in jobReferencesUserReferencer.Take(15))
                 {

@@ -39,13 +39,14 @@ namespace CugemderApp.Shared.Models
         public virtual DbSet<Points> Points { get; set; }
         public virtual DbSet<Positions> Positions { get; set; }
         public virtual DbSet<Relationship> Relationship { get; set; }
+        public virtual DbSet<UserNotificationList> UserNotificationList { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                throw new NotImplementedException();
+                optionsBuilder.UseSqlServer("Server=(localdb)\\cugemder;Database=CugemderMobileAppDb;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 
@@ -164,7 +165,7 @@ namespace CugemderApp.Shared.Models
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
-                entity.Property(e => e.Summary).HasColumnType("text");
+                entity.Property(e => e.Summary).HasColumnType("ntext");
 
                 entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
 
@@ -268,6 +269,8 @@ namespace CugemderApp.Shared.Models
 
             modelBuilder.Entity<JobReferences>(entity =>
             {
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
                 entity.Property(e => e.ExpertContact)
                     .IsRequired()
                     .HasMaxLength(100);
@@ -413,6 +416,21 @@ namespace CugemderApp.Shared.Models
             modelBuilder.Entity<Relationship>(entity =>
             {
                 entity.Property(e => e.RelationshipStatus)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<UserNotificationList>(entity =>
+            {
+                entity.Property(e => e.Body)
+                    .IsRequired()
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Receiver).IsRequired();
+
+                entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(50);
             });

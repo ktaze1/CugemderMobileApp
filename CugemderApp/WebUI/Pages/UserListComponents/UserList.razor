@@ -37,21 +37,17 @@
 
     .li-img {
         display: table-cell;
-        vertical-align: middle;
-        border-radius: 50%;
-        width: 80px;
-        height: 80px;
-        padding-right: 1em;
+        text-align: center;
+        width: 90px;
+        height: 90px;
         overflow: hidden;
+        border-radius: 50%;
     }
 
         .li-img img {
-            display: block;
-            height: 80px;
-            width: 80px;
+            width: 100%;
             background-size: cover;
             background-position: center;
-            border-radius: 50%;
         }
 
     .li-text {
@@ -124,7 +120,7 @@
     }
 </style>
 
-<button class="btn btn-dark" @onclick="( () => ToFilterPage())"> Üye Arama ve Filtreleme </button>
+<button class="btn btn-primary" @onclick="( () => ToFilterPage())"> Üye Arama ve Filtreleme </button>
 <br />
 <br />
 @if (tempList == null)

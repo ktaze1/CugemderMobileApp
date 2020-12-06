@@ -6,6 +6,7 @@
 @inject NotificationsDAL notification
 @inject NavigationManager uriHelper
 
+@inject UserNotifListDAL userNotifDAL
 
 <style>
     .br {
@@ -21,7 +22,7 @@
 
 @if (givePoints == null && meetingList == null)
 {
-            <p><em>Y&uuml;kleniyor</em></p>
+    <p><em>Y&uuml;kleniyor</em></p>
 }
 else
 {
@@ -41,12 +42,6 @@ else
     {
         <div class="table-responsive align-content-start" style="padding-left: 1em;">
             <table class="table">
-                <thead class="thead-light">
-                    <tr class="row">
-                        <th class="col">Gonderen Uye</th>
-                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
-                    </tr>
-                </thead>
                 <tbody>
                     @foreach (var meeting in givePoints.Where(c => c.IsApproved == true))
                     {
@@ -99,12 +94,6 @@ else
     {
         <div class="table-responsive align-content-start" style="padding-left: 1em;">
             <table class="table">
-                <thead class="thead-light">
-                    <tr class="row">
-                        <th class="col"> Gonderen Uye</th>
-                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
-                    </tr>
-                </thead>
                 <tbody>
                     @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId != loggedUser.Id))
                     {
@@ -143,12 +132,6 @@ else
 
         <div class="table-responsive align-content-start" style="padding-left: 1em;">
             <table class="table">
-                <thead class="thead-light">
-                    <tr class="row">
-                        <th class="col"> Gonderen Uye</th>
-                        <th class="d-flex justify-content-end">İşlem &emsp;  &emsp; </th>
-                    </tr>
-                </thead>
                 <tbody>
                     @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId == loggedUser.Id))
                     {
@@ -220,8 +203,8 @@ else
         recepientNotif.Title = "Görüşme Talebi";
         senderNotif.Title = "Görüşme Talebi";
 
-        recepientNotif.Body = $"Bugün içerisinde {recepientNotifName} ile saat {meeting.Date.ToShortTimeString()} görüşmeniz var";
-        senderNotif.Body = $"Bugün içerisinde {senderNotifName} ile saat {meeting.Date.ToShortTimeString()} görüşmeniz var";
+        recepientNotif.Body = $"Bugün İçerisinde {recepientNotifName} İle Birebir Görüşme Saati: {meeting.Date.ToString("t", AppState.trTR)} ";
+        senderNotif.Body = $"Bugün İçerisinde {senderNotifName} İle Birebir Görüşme Saati:  {meeting.Date.ToString("t", AppState.trTR)} ";
 
         recepientNotif.Time = meeting.Date;
         senderNotif.Time = meeting.Date;
@@ -231,6 +214,22 @@ else
 
         notification.AddNotificaiton(recepientNotif);
         notification.AddNotificaiton(senderNotif);
+
+        userNotifDAL.PostUserNotifications(new UserNotificationList()
+        {
+            Title = "Birebir Görüşme",
+            Body = $" {recepientNotifName} İle Birebir Görüşme Tarihi: {meeting.Date.ToString("F", AppState.trTR)} ",
+            Date = DateTime.Now,
+            Receiver = meeting.SenderId
+        });
+
+        userNotifDAL.PostUserNotifications(new UserNotificationList()
+        {
+            Title = "Birebir Görüşme",
+            Body = $" {senderNotifName} İle Birebir Görüşme Tarihi:  {meeting.Date.ToString("F", AppState.trTR)}",
+            Date = DateTime.Now,
+            Receiver = meeting.ReceiverId
+        });
 
     }
 }

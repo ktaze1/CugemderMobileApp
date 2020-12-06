@@ -23,14 +23,16 @@
 
     .profile-img {
         text-align: center;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 50%;
     }
 
         .profile-img img {
-            width: 200px;
-            height: 200px;
+            width: 100%;
             background-size: cover;
             background-position: center;
-            border-radius: 50%;
         }
 
         .profile-img .file {
@@ -73,7 +75,6 @@
     .proile-rating {
         font-size: 12px;
         color: #818182;
-        margin-top: 5%;
     }
 
         .proile-rating span {
@@ -140,9 +141,11 @@ else
     <div class="container emp-profile">
         <div class="row">
             <div class="col-md-4">
-                <div class="profile-img">
-                    <img src="@currentUser.PhotoUrl" alt="" />
-                </div>
+                <center>
+                    <div class="profile-img">
+                        <img src="@currentUser.PhotoUrl" alt="" />
+                    </div>
+                </center>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
@@ -167,11 +170,14 @@ else
                     <br />
                     @if (currentUser.Summary != null)
                     {
-                        <h6 style="color: red;">Hakkında</h6>
-                        <p style="font-size:16px; margin-top: 0; white-space: pre-line; font-weight:500" class="proile-rating">
-                            @currentUser.Summary
-                        </p>
+                        <div style="margin-top: 5px;">
+                            <h6 style="color: red; margin-bottom: 0px; float:left;">Hakkında</h6>
+                            <div style="font-size:16px; padding-top: 10px; white-space: pre-line; font-weight:500" class="proile-rating">
+                                @System.Web.HttpUtility.HtmlDecode(currentUser.Summary)
+                            </div>
+                        </div>
                     }
+
 
                     <br />
                     @if (currentUser.PointsNavigation != null)
@@ -194,12 +200,13 @@ else
                             </h6>
                         </div>
                     }
+                    <br />
                     <ul class="nav nav-tabs d-flex justify-content-between" id="myTab" role="tablist">
                         <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
-                            <p class="@(isTabActive(tab1))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel</p>
+                            <p class="@(isTabActive(tab1))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İş Bilgileri</p>
                         </li>
                         <li @onclick="@( () => ChangeTabs(2))" class="nav-item">
-                            <p class="@(isTabActive(tab2))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İş Bilgileri</p>
+                            <p class="@(isTabActive(tab2))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel</p>
                         </li>
                         <li @onclick="@( () => ChangeTabs(3))" class="nav-item">
                             <p class="@(isTabActive(tab3))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İletişim</p>
@@ -217,38 +224,8 @@ else
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <!-- Tab 1 Stars-->
-                    <div hidden="@tab1" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <br />
-                        @if (currentUser.GenderNavigation != null)
-                        {
-                            <div class="row">
-                                <h6 class="col-md-6" style="color:red">Cinsiyet: <span style="font-size:16px;" class="proile-rating">@currentUser.GenderNavigation.GenderName</span></h6>
-                            </div>
-                        }
-                        @if (currentUser.DateOfBirth != null)
-                        {
-                            <div class="row">
-                                <h6 class="col-md-6" style="color:red">Yaş: <span style="font-size:16px;" class="proile-rating">@(calculateAge(currentUser.DateOfBirth.GetValueOrDefault()))</span></h6>
-                            </div>
-                        }
-                        @if (currentUser.LocatedCityNavigation != null)
-                        {
-                            <div class="row">
-                                <h6 class="col-md-6" style="color:red">Şehir: <span style="font-size:16px;" class="proile-rating">@currentUser.LocatedCityNavigation.CityName</span></h6>
-                            </div>
 
-                        }
-                        @if (currentUser.RelationshipNavigation != null)
-                        {
-                            <div class="row">
-                                <h6 class="col-md-6" style="color:red">Medeni Hali: <span style="font-size:16px;" class="proile-rating">@currentUser.RelationshipNavigation.RelationshipStatus</span></h6>
-                            </div>
-                        }
-                    </div>
-                    <!-- Tab 1 Ends-->
-                    <!-- Tab 2 Start -->
                     <div hidden="@tab2" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <br />
                         @if (currentUser.GroupNavigation != null)
                         {
                             <div class="row">
@@ -292,17 +269,47 @@ else
 
                         }
                     </div>
+
+                    <!-- Tab 1 Ends-->
+                    <!-- Tab 2 Start -->
+
+                    <div hidden="@tab1" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        @if (currentUser.GenderNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Cinsiyet: <span style="font-size:16px;" class="proile-rating">@currentUser.GenderNavigation.GenderName</span></h6>
+                            </div>
+                        }
+                        @if (currentUser.DateOfBirth != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Yaş: <span style="font-size:16px;" class="proile-rating">@(calculateAge(currentUser.DateOfBirth.GetValueOrDefault()))</span></h6>
+                            </div>
+                        }
+                        @if (currentUser.LocatedCityNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Şehir: <span style="font-size:16px;" class="proile-rating">@currentUser.LocatedCityNavigation.CityName</span></h6>
+                            </div>
+
+                        }
+                        @if (currentUser.RelationshipNavigation != null)
+                        {
+                            <div class="row">
+                                <h6 class="col-md-6" style="color:red">Medeni Hali: <span style="font-size:16px;" class="proile-rating">@currentUser.RelationshipNavigation.RelationshipStatus</span></h6>
+                            </div>
+                        }
+                    </div>
                     <!-- Tab 2 Ends-->
                     <!-- Tab 3 Starts-->
                     <div hidden="@tab3" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <br />
                         <div class="row">
                             <h6 class="col-md-6" style="color:red">E-mail: <span style="font-size:16px;" class="proile-rating">@currentUser.Email</span></h6>
                         </div>
                         @if (currentUser.PhoneNumber != null)
                         {
                             <div class="row">
-                                <h6 class="col-md-6" style="color:red">Telefon: <span @onclick="@( () => DialNumber(currentUser.PhoneNumber))" style="font-size:16px; color:dodgerblue" class="proile-rating">@currentUser.PhoneNumber</span></h6>
+                                <h6 class="col-md-6" style="color:red">Telefon: <span @onclick="@( () => DialNumber(currentUser.PhoneNumber))" style="font-size:16px; color:dodgerblue" class="proile-rating">@String.Format("{0:0(###) ### ####}", Convert.ToInt64(currentUser.PhoneNumber))</span></h6>
                             </div>
                         }
                         @if (currentUser.Website != null)
@@ -386,7 +393,9 @@ else
 
     public async void GoToWebsite(string link)
     {
-        await Browser.OpenAsync(link);
+
+        var uri = new UriBuilder(link).Uri;
+        await Browser.OpenAsync(uri);
     }
 
     int calculateAge(DateTime date)

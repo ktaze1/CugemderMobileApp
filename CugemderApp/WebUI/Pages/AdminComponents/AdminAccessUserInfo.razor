@@ -19,6 +19,9 @@
 @inject CugemderApp.Security.CustomStateProvider customStateProvider
 
 
+
+@using System.ComponentModel.DataAnnotations
+
 <EditForm Model="@user" OnValidSubmit="@EditUser">
     <DataAnnotationsValidator />
     <div class="form-group">
@@ -170,7 +173,7 @@
         <label>Telefon :</label>
         <div>
             <InputText class="form-control" @bind-Value="@user.PhoneNumber" />
-            <ValidationMessage For="@(() => user.PhoneNumber)" />
+            <ValidationMessage For="@(() => phoneNo.PhoneNo)" />
         </div>
     </div>
     <div class="form-group">
@@ -211,7 +214,7 @@
     <div class="form-group">
         <label>Hakkında Özet :</label>
         <div>
-            <InputTextArea row="6" class="form-control" @bind-Value="@user.Summary" />
+            <InputTextArea multiline="true" rows="5" class="form-control" @bind-Value="@user.Summary" />
             <ValidationMessage For="@(() => user.Summary)" />
         </div>
     </div>
@@ -297,12 +300,15 @@
             jobTitleId = user.JobTitle.HasValue ? (int)user.JobTitle : 0;
             cityId = user.LocatedCity.HasValue ? (int)user.LocatedCity : 0;
             relationshipId = user.Relationship.HasValue ? (int)user.Relationship : 0;
+            UnicodeToEnglish();
         }
     }
 
     async Task EditUser()
     {
         user.UpdatedAt = DateTime.UtcNow;
+        EnglishToTurkish();
+
 
         var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
         if (filetoDelete != null && item != null)
@@ -328,6 +334,7 @@
             await customStateProvider.ResetPassword(passwordChange);
         }
 
+        js.InvokeVoidAsync("swal", "Güncellendi", " ", "success");
         uriHelper.NavigateTo("adminaccessuserlist");
     }
 
@@ -370,4 +377,54 @@
         item = await FilePicker.PickAsync();
     }
 
+    void EnglishToTurkish()
+    {
+        if (user.Summary != null)
+        {
+            user.Summary = user.Summary.Replace("Ç", "&#199;");
+            user.Summary = user.Summary.Replace("Ğ", "&#286;");
+            user.Summary = user.Summary.Replace("İ", "&#304;");
+            user.Summary = user.Summary.Replace("Ö", "&#214;");
+            user.Summary = user.Summary.Replace("Ş", "&#350;");
+            user.Summary = user.Summary.Replace("Ü", "&#220;");
+            user.Summary = user.Summary.Replace("ç", "&#231;");
+            user.Summary = user.Summary.Replace("ğ", "&#287;");
+            user.Summary = user.Summary.Replace("ı", "&#305;");
+            user.Summary = user.Summary.Replace("ö", "&#246;");
+            user.Summary = user.Summary.Replace("ş", "&#351;");
+            user.Summary = user.Summary.Replace("ü", "&#252;");
+        }
+    }
+
+    void UnicodeToEnglish()
+    {
+        if (user.Summary != null)
+        {
+            user.Summary = user.Summary.Replace("&#199;", "Ç");
+            user.Summary = user.Summary.Replace("&#286;", "Ğ");
+            user.Summary = user.Summary.Replace("&#304;", "İ");
+            user.Summary = user.Summary.Replace("&#214;", "Ö");
+            user.Summary = user.Summary.Replace("&#350;", "Ş");
+            user.Summary = user.Summary.Replace("&#220;", "Ü");
+            user.Summary = user.Summary.Replace("&#231;", "ç");
+            user.Summary = user.Summary.Replace("&#287;", "ğ");
+            user.Summary = user.Summary.Replace("&#305;", "ı");
+            user.Summary = user.Summary.Replace("&#246;", "ö");
+            user.Summary = user.Summary.Replace("&#351;", "ş");
+            user.Summary = user.Summary.Replace("&#252;", "ü");
+        }
+    }
+
+
+    phoneNoValidation phoneNo = new phoneNoValidation();
+
+    public class phoneNoValidation
+    {
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        [RegularExpression(@"^\(?([0-9]{4})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$", ErrorMessage = "Geçerli bir telefon numarası giriniz")]
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNo { get; set; }
+    }
 }

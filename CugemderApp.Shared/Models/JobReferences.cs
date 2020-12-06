@@ -12,5 +12,6 @@ namespace CugemderApp.Shared.Models
         public string ReferencedId { get; set; }
         public bool IsMeetingDone { get; set; }
         public bool? IsProductive { get; set; }
+        public DateTime? Date { get; set; }
     }
 }
