@@ -30,7 +30,7 @@
     <ValidationMessage For="@(() => registerRequest.DateofBirth)" />
     <br />
     <label for="inputPhone">Telefon:</label>
-    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 ile giriniz: 05551112233" autofocus @bind-Value="@registerRequest.PhoneNo" />
+    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 olmadan giriniz: 5551112233" autofocus @bind-Value="@registerRequest.PhoneNo" />
     <ValidationMessage For="@(() => registerRequest.PhoneNo)" />
     <br />
     <label for="inputPassword">Şifre:</label>

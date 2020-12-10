@@ -54,7 +54,7 @@
             loggedUser = await userDAL.GetUsername(user.Identity.Name);
             notificationListofUser = await userNotifDAL.GetNotifListOfUser(loggedUser.Id);
             notificationListofGroup = await userNotifDAL.GetNotifListOfUser(loggedUser.GroupNavigation.GroupName);
-            notificationList = notificationListofUser.Concat(notificationListofGroup).ToList();
+            notificationList = notificationListofUser.Concat(notificationListofGroup).OrderByDescending(c => c.Date).ToList();
         }
 
 

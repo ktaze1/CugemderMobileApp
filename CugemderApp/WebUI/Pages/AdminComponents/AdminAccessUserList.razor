@@ -20,7 +20,7 @@
 
 @if (groups == null)
 {
-    <p><em>Y&uuml;kleniyor</em></p>
+    <p><em>Y&uuml;kleniyor...</em></p>
 }
 else
 {
@@ -35,6 +35,7 @@ else
             </select>
             <br />
             <button class="btn btn-primary" type="submit">Grup Seç</button>
+            <button class="btn btn-secondary" type="submit">Kullanıcıları Güncelle</button>
 
             <button type="button" class="btn btn-danger" @onclick="@(() => uriHelper.NavigateTo("adminsettings"))">Geri Dön</button>
         </div>
@@ -46,7 +47,7 @@ else
 
 @if (userlist == null)
 {
-    <p><em>Y&uuml;kleniyor</em></p>
+    <p><em>Y&uuml;kleniyor...</em></p>
 }
 else
 {
@@ -87,6 +88,7 @@ else
     [Parameter] public int? id { get; set; }
 
     private List<AspNetUsers> userlist = new List<AspNetUsers>();
+    private List<AspNetUsers> userlistwithNull = new List<AspNetUsers>();
     private List<Groups> groups = new List<Groups>();
     private List<Points> pointlist = new List<Points>();
     private List<NetworkingMeetingPoints> networkingMeetingPoints = new List<NetworkingMeetingPoints>();
@@ -116,6 +118,8 @@ else
         pointlist = await pointDAL.GetPoints();
         groups = await groupDAL.GetGroupsAsync();
         userlist = await userDAL.GetUsersNoNull();
+
+        userlistwithNull = await userDAL.GetUsers();
 
         networkingActivityPoints = await networkActivityDAL.GetNetworkingActivityPoint();
         networkingMeetingPoints = await networkMeetingDAL.GetNetworkingMeetingPoints();
@@ -198,5 +202,15 @@ else
         System.Threading.Thread.Sleep(200);
         uriHelper.NavigateTo("redirect/adminaccessuserlist");
         await OnInitializedAsync();
+    }
+
+    void UpdateUserList()
+    {
+        var tempList = userlistwithNull.Where(c => c.EmailConfirmed == true).Where(c => c.Points == null).ToList();
+
+        foreach (var user in tempList)
+        {
+            user.Points = pointlist.Where(c => c.UserId == user.Id).First().Id;
+        }
     }
 }

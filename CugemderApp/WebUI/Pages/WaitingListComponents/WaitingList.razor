@@ -9,7 +9,7 @@
 
 @if (waitingUsers == null)
 {
-    <p><em>Y&uuml;kleniyor</em></p>
+    <p><em>Y&uuml;kleniyor...</em></p>
 }
 else
 {
@@ -105,9 +105,9 @@ else
         }
         foreach (var item in GroupsWithNewUsers)
         {
-            notifications.SendNotification("Grubunuza Yeni Bir Üye Katıldı!", "Yeni Üye", item);
+         //   notifications.SendNotification("Grubunuza Yeni Bir Üye Katıldı!", "Yeni Üye", item);
         }
-        uriHelper.NavigateTo("/");
+        RefreshPageContent();
     }
 
 
@@ -125,7 +125,7 @@ else
     {
         waitingUsers = await userDAL.GetUsersNoGroup();
         System.Threading.Thread.Sleep(100);
-        uriHelper.NavigateTo("redirect/waitinglist");
+        uriHelper.NavigateTo("redirect/adminsettings");
         await OnInitializedAsync();
     }
 }

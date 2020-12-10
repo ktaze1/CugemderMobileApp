@@ -62,7 +62,7 @@ namespace CugemderApp
             }
             var host = hostBuilder.Build();
 
-            MainPage = new ContentPage { Title = "My Application" };
+            MainPage = new ContentPage { Title = "BeePort" };
             host.AddComponent<Main>(parent: MainPage);
         }
 

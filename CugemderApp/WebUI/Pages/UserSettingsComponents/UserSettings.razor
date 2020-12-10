@@ -13,8 +13,6 @@
 
 @inject IJSRuntime js
 
-@using System.ComponentModel.DataAnnotations
-
 <EditForm Model="@user" OnValidSubmit="@EditUser">
     <DataAnnotationsValidator />
     <div class="form-group">
@@ -145,7 +143,7 @@
         <label>Telefon :</label>
         <div>
             <InputText class="form-control" @bind-Value="@user.PhoneNumber" />
-            <ValidationMessage For="@(() => phoneNo.PhoneNo)" />
+            <ValidationMessage For="@(() => user.PhoneNumber)" />
         </div>
     </div>
     <div class="form-group">
@@ -209,7 +207,7 @@
     </button>
 
 
-    <button @onclick="(() => Discard())" type="button" class="btn btn-primary">
+    <button @onclick="(() => Discard())" type="button" class="btn btn-danger">
         Vazgeç
     </button>
 </EditForm>
@@ -226,8 +224,6 @@
 
     AspNetUsers user = new AspNetUsers();
     string newPassword;
-
-    phoneNoValidation phoneNo = new phoneNoValidation();
 
     int groupId = 0, positionId = 0, genderId = 0, jobTitleId = 0, relationshipId = 0, cityId = 0;
     FileResult item;
@@ -367,15 +363,5 @@
             user.Summary = user.Summary.Replace("&#351;", "ş");
             user.Summary = user.Summary.Replace("&#252;", "ü");
         }
-    }
-
-    public class phoneNoValidation
-    {
-
-        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
-        [RegularExpression(@"^\(?([0-9]{4})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$", ErrorMessage = "Geçerli bir telefon numarası giriniz")]
-        [Phone]
-        [DataType(DataType.PhoneNumber)]
-        public string PhoneNo { get; set; }
     }
 }
