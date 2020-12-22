@@ -15,7 +15,7 @@ namespace CugemderApp.Shared.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$", ErrorMessage = "Geçerli bir telefon numarası giriniz")]
+        [RegularExpression(@"05\d{9}$", ErrorMessage = "Geçerli bir telefon numarası giriniz")]
         public string PhoneNo { get; set; }
 
         [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]

@@ -171,7 +171,7 @@ else
             var networkingMeetingsOfUser = networkingMeetingPoints.Where(c => c.ReceiverUserId == userId);
             foreach (var item in networkingMeetingsOfUser)
             {
-                networkActivityDAL.DeleteNetworkingActivityPoint(item.Id);
+                networkMeetingDAL.DeleteNetworkingMeetingPoints(item.Id);
             }
             meetingPointDAL.DeleteMeetinPoints(userId);
             pointDAL.DeletePoints(userId);
@@ -206,11 +206,24 @@ else
 
     void UpdateUserList()
     {
+
+
+        List<string> GroupsWithNewUsers = new List<string>();
         var tempList = userlistwithNull.Where(c => c.EmailConfirmed == true).Where(c => c.Points == null).ToList();
 
         foreach (var user in tempList)
         {
             user.Points = pointlist.Where(c => c.UserId == user.Id).First().Id;
+
+            if (!GroupsWithNewUsers.Contains(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName))
+            {
+                GroupsWithNewUsers.Add(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName);
+            }
+        }
+
+        foreach (var item in GroupsWithNewUsers)
+        {
+            notifications.SendNotification("Grubunuza Yeni Bir Üye Katıldı!", "Yeni Üye", item);
         }
     }
 }

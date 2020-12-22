@@ -41,7 +41,7 @@ namespace CugemderApp.Droid
            
 
                 mBuilder = new Android.Support.V4.App.NotificationCompat.Builder(mContext);
-                mBuilder.SetSmallIcon(Resource.Drawable.abc_btn_check_material);
+                mBuilder.SetSmallIcon(Resource.Drawable.notification_icon_background);
                 mBuilder.SetContentTitle(title)
                         .SetAutoCancel(true)
                         .SetContentTitle(title)

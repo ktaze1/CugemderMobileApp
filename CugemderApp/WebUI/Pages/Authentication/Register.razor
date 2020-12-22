@@ -25,10 +25,9 @@
     <InputText id="inputMail" class="form-control" placeholder="E-mail" autofocus @bind-Value="@registerRequest.Email" />
     <ValidationMessage For="@(() => registerRequest.Email)" />
     <br />
-    <label for="inputdob">Doğum Tarihi:</label>
+    @*<label for="inputdob">Doğum Tarihi:</label>
     <InputDate id="inputdob" class="form-control" autofocus @bind-Value="@registerRequest.DateofBirth" />
-    <ValidationMessage For="@(() => registerRequest.DateofBirth)" />
-    <br />
+    <br />*@
     <label for="inputPhone">Telefon:</label>
     <InputText id="inputPhone" class="form-control" placeholder="Başta 0 olmadan giriniz: 5551112233" autofocus @bind-Value="@registerRequest.PhoneNo" />
     <ValidationMessage For="@(() => registerRequest.PhoneNo)" />
@@ -61,7 +60,7 @@
 </center>
 @code{
 
-    RegisterRequest registerRequest { get; set; } = new RegisterRequest() { DateofBirth = new DateTime(1970, 01, 01) };
+    RegisterRequest registerRequest { get; set; } = new RegisterRequest() { DateofBirth = new DateTime(DateTime.Today.Year, 01, 01) };
     string error { get; set; }
 
     FileResult pickResult;
@@ -73,12 +72,15 @@
         {
             if (pickResult == null)
             {
-                throw new NullReferenceException("Lütfen Fotoğraf Ekleyiniz.");
+                js.InvokeVoidAsync("swal", "Fotoğraf Ekleyin!", "Lütfen Fotoğraf ekleyiniz", "error");
             }
-            UploadFiles();
-            await authStateProvider.Register(registerRequest);
+            else if(pickResult != null)
+            {
+                UploadFiles();
+                await authStateProvider.Register(registerRequest);
 
-            js.InvokeVoidAsync("swal", "Üyelik Kaydı Başarılı", "Sistem Yöneticisi tarafından onaylanması sonrasında programı kullanabileceksiniz", "info");
+                js.InvokeVoidAsync("swal", "Üyelik Kaydı Başarılı", "Sistem Yöneticisi tarafından onaylanması sonrasında programı kullanabileceksiniz", "info");
+            }
         }
         catch (Exception ex)
         {

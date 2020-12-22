@@ -33,9 +33,9 @@
 	<key>MinimumOSVersion</key>
 	<string>12.4</string>
 	<key>CFBundleDisplayName</key>
-	<string>CugemderApp</string>
+	<string>BeePort</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.cugemder.beeport</string>
+	<string>com.beeport.beeport</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>

@@ -11,7 +11,7 @@ namespace CugemderApp.Server
     {
         public static readonly FirebaseApp _firebaseApp = FirebaseApp.DefaultInstance == null ? FirebaseApp.Create(new AppOptions()
         {
-            Credential = GoogleCredential.FromFile("./StaticFiles/Contents/beeport-mobileandroid-firebase-adminsdk-g46jt-269c6b9f1d.json"),
+            Credential = GoogleCredential.FromFile("./StaticFiles/Contents/beeportandroid-firebase-adminsdk-6or1y-cad1225bc9.json"),
         }) : FirebaseApp.DefaultInstance;
     }
 }

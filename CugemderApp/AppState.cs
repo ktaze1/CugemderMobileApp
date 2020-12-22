@@ -13,8 +13,5 @@ namespace CugemderApp
 
         public static CultureInfo trTR = new CultureInfo("tr-TR");
 
-        public event Func<Task> OnChange;
-        private async Task NotifyStateChanged() => await OnChange?.Invoke();
-
     }
 }

@@ -133,6 +133,31 @@ namespace CugemderApp.Server.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SendConfirmationEmail([FromQuery] string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            using (var message = new MailMessage())
+            {
+                message.To.Add(new MailAddress($"{user.Email}", $"{user.FirstName} { user.LastName}"));
+                message.From = new MailAddress("beeportsifre@gmail.com", "BeePort");
+                message.Subject = "Hesap Onayı";
+                message.Body = $"Hesabınız onaylanmıştır. BeePort uygulamasına giriş yapabilirsiniz.";
+                message.IsBodyHtml = true;
+
+                using (var client = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("beeportsifre@gmail.com", "184589Be-"); // TODO : ÇÜGEMDER Mail gir
+                    client.EnableSsl = true;
+                    client.Send(message);
+                }
+            }
+
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<IActionResult> ChangePassword(PasswordChangeModel passwordChange)
         {

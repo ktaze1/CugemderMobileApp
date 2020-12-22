@@ -194,7 +194,7 @@ else
                 }
 
                 <br />
-                <ul class="nav nav-tabs d-flex justify-content-between" id="myTab" role="tablist">
+                <ul class="nav nav-tabs d-flex justify-content-sm-around justify-content-between" id="myTab" role="tablist">
                     <li @onclick="@( () => ChangeTabs(1))" class="nav-item">
                         <p class="@(isTabActive(tab1))" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">İş Bilgileri</p>
                     </li>
@@ -277,9 +277,12 @@ else
                         }
                     @if (loggedUser.DateOfBirth != null)
                         {
-                    <div class="row">
+                <div class="row">
+                    @if (calculateAge(loggedUser.DateOfBirth.GetValueOrDefault()) > 18)
+                    {
                         <h6 class="col-md-6" style="color:red">Yaş: <span style="font-size:16px;" class="proile-rating">@(calculateAge(loggedUser.DateOfBirth.GetValueOrDefault()))</span></h6>
-                    </div>
+                    }
+                </div>
                         }
                     @if (loggedUser.RelationshipNavigation != null)
                         {

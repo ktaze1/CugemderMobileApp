@@ -79,6 +79,19 @@ namespace CugemderApp.Server.Controllers
         }
 
         [HttpGet]
+        [Route("NoNull/UserList")]
+        public async Task<ActionResult<IEnumerable<AspNetUsers>>> GetAspNetUsersNoNullUserList()
+        {
+            return await _context.AspNetUsers
+                .Include(c => c.GroupNavigation)
+                .Include(c => c.PointsNavigation)
+                .Where(c => c.Points != null)
+                .Where(c => c.Group != null)
+                .OrderByDescending(c => c.PointsNavigation.TotalPoints)
+                .ToListAsync();
+        }
+
+        [HttpGet]
         [Route("noGroup")]
         public async Task<ActionResult<IEnumerable<AspNetUsers>>> GetAspNetUsersWithoutGroups()
         {

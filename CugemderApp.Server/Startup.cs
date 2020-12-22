@@ -43,6 +43,7 @@ namespace CugemderApp.Server
             services.AddSingleton<FirebaseSingleton>();
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                .AddRoles<IdentityRole>()
+               .AddErrorDescriber<TurkishErrorMessages>()
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.ConfigureApplicationCookie(options =>
