@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" package="com.beeport.beeport" android:installLocation="internalOnly" android:versionName="1.0.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="6" package="com.beeport.beeport" android:installLocation="internalOnly" android:versionName="1.0.6">
 	<uses-sdk android:minSdkVersion="18" android:targetSdkVersion="29" />
 	<application android:label="BeePort" android:icon="@mipmap/beeport">
 		<uses-library android:name="org.apache.http.legacy" android:required="false" />
@@ -12,6 +12,9 @@
 			</intent-filter>
 		</receiver>
 	</application>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACTION_OPEN_DOCUMENT" />
 	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

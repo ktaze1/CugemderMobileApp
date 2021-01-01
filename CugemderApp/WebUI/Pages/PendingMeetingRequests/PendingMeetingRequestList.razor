@@ -192,7 +192,6 @@ else
         Notifications recepientNotif = new Notifications();
         Notifications senderNotif = new Notifications();
 
-        // TODO notification edit for receivers
 
         string recepientNotifName = meeting.ReceiverId == loggedUser.Id ? $"{meeting.Sender.FirstName} {meeting.Sender.LastName}" :
         $"{meeting.Receiver.FirstName} {meeting.Receiver.LastName}";

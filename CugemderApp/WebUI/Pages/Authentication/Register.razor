@@ -6,6 +6,8 @@
 @inject AspNetUsersDAL userDAL
 @inject IJSRuntime js
 
+
+
 <h1 class="h2 font-weight-normal login-title">
     Üye Ol
 </h1>
@@ -26,10 +28,10 @@
     <ValidationMessage For="@(() => registerRequest.Email)" />
     <br />
     @*<label for="inputdob">Doğum Tarihi:</label>
-    <InputDate id="inputdob" class="form-control" autofocus @bind-Value="@registerRequest.DateofBirth" />
-    <br />*@
+        <InputDate id="inputdob" class="form-control" autofocus @bind-Value="@registerRequest.DateofBirth" />
+        <br />*@
     <label for="inputPhone">Telefon:</label>
-    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 olmadan giriniz: 5551112233" autofocus @bind-Value="@registerRequest.PhoneNo" />
+    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 ile giriniz: 05551112233" autofocus @bind-Value="@registerRequest.PhoneNo" />
     <ValidationMessage For="@(() => registerRequest.PhoneNo)" />
     <br />
     <label for="inputPassword">Şifre:</label>
@@ -72,14 +74,14 @@
         {
             if (pickResult == null)
             {
-                js.InvokeVoidAsync("swal", "Fotoğraf Ekleyin!", "Lütfen Fotoğraf ekleyiniz", "error");
+                await js.InvokeVoidAsync("swal", "Fotoğraf Ekleyin!", "Lütfen Fotoğraf ekleyiniz.", "error");
             }
-            else if(pickResult != null)
+            else if (pickResult != null)
             {
                 UploadFiles();
                 await authStateProvider.Register(registerRequest);
 
-                js.InvokeVoidAsync("swal", "Üyelik Kaydı Başarılı", "Sistem Yöneticisi tarafından onaylanması sonrasında programı kullanabileceksiniz", "info");
+                await js.InvokeVoidAsync("swal", "Üyelik Kaydı Başarılı", "Sistem Yöneticisi tarafından onaylanması sonrasında programı kullanabileceksiniz.", "info");
             }
         }
         catch (Exception ex)

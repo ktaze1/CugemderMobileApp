@@ -123,7 +123,7 @@ else
 
             pointlist = await pointDAL.GetPoints();
             groups = await groupDAL.GetGroupsAsync();
-            userlist = await userDAL.GetUsersNoNull();
+            userlist = await userDAL.GetUsersNoNullUserList();
             meetingPoints = await meetingPointDAL.GetMeetingPoints();
             networkingMeetingPoints = await networkingMeetingDAL.GetNetworkingMeetingPoints();
             networkingActivityPoints = await networkingActivityDAL.GetNetworkingActivityPoint();

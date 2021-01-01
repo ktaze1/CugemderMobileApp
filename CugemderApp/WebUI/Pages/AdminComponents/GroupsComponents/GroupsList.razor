@@ -71,7 +71,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         groups = await groupDAL.GetGroupsAsync();
-        users = await userDAL.GetUsers();
+        users = await userDAL.GetUsersNoNullUserList();
     }
 
     void Delete(int groupsId)

@@ -325,7 +325,7 @@
             user.PhotoUrl = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Images/{filename}";
         }
 
-        userDAL.PutUser(user.Id, user);
+        await userDAL.PutUser(user.Id, user);
         if (newPassword != null)
         {
             PasswordChangeModel passwordChange = new PasswordChangeModel();
@@ -334,14 +334,14 @@
             await customStateProvider.ResetPassword(passwordChange);
         }
 
-        js.InvokeVoidAsync("swal", "Güncellendi", " ", "success");
+        await js.InvokeVoidAsync("swal", "Güncellendi!", "Kullanıcı GÜncellendi.", "success");
         uriHelper.NavigateTo("adminaccessuserlist");
     }
 
     async Task Delete(string userId)
     {
 
-        if (await js.InvokeAsync<bool>("swal", "Kullanıcıyı silmek istediğinizden emin misiniz?", "", "error"))
+        if (await js.InvokeAsync<bool>("swal", "Dikkat!", "Kullanıcıyı silmek istediğinizden emin misiniz?", "error"))
         {
             var networkingActivitiesOfUser = networkingActivityPoints.Where(c => c.ReceiverUserId == userId);
             foreach (var item in networkingActivitiesOfUser)
@@ -355,7 +355,7 @@
             }
             meetingPointDAL.DeleteMeetinPoints(userId);
             pointDAL.DeletePoints(userId);
-            userDAL.DeleteUser(userId);
+            await userDAL.DeleteUser(userId);
         }
         else
         {

@@ -36,8 +36,8 @@ else
             {
                 <tr>
                     <td>
-                        <p style="margin-bottom: 0; color: grey;"><strong>Referans Eden</strong>:   @getFullname(meeting.ReferencerId) </p> <span class="br"></span>
-                        <p style="margin-bottom: 0; color: grey;"><strong>Uzman Kişi</strong>: @meeting.ExpertName</p> <span class="br"></span>
+                        <p style="margin-bottom: 0; color: grey;"><strong>Kim</strong>:   @getFullname(meeting.ReferencerId) </p> <span class="br"></span>
+                        <p style="margin-bottom: 0; color: grey;"><strong>Kime</strong>:  @getFullname(meeting.ReferencedId) </p> <span class="br"></span>
                         <p style="margin-bottom: 0; color: grey;"><strong>Durum</strong>:  @jobReferenceStatusName(meeting)</p>
                     </td>
                 </tr>
@@ -64,10 +64,10 @@ else
         if (user.Identity.IsAuthenticated)
         {
             loggedUser = await userDAL.GetUsername(user.Identity.Name);
-            users = await userDAL.GetUsers();
+            users = await userDAL.GetUsersNoNullUserList();
             jobReferences = await jobReferenceDAL.GetJobReferences();
         }
-        users = await userDAL.GetUsers();
+        users = await userDAL.GetUsersNoNullUserList();
     }
 
 

@@ -20,12 +20,17 @@ namespace CugemderApp.DataAccessClasses
 
         public async Task<string> GetUserFullname(string id)
         {
-            return await _http.GetFromJsonAsync<string>("api/AspNetUsers/userFullname/{id}");
+            return await _http.GetFromJsonAsync<string>($"api/AspNetUsers/userFullname/{id}");
         }
 
         public async Task<List<AspNetUsers>> GetUsersNoNull()
         {
             return await _http.GetFromJsonAsync<List<AspNetUsers>>("api/AspNetUsers/NoNull");
+        }
+
+        public async Task<List<AspNetUsers>> GetUsersNoNullUserList()
+        {
+            return await _http.GetFromJsonAsync<List<AspNetUsers>>("api/AspNetUsers/NoNull/UserList");
         }
 
         public async Task<List<AspNetUsers>> GetUsersNoGroup()
@@ -53,7 +58,7 @@ namespace CugemderApp.DataAccessClasses
             return await _http.GetFromJsonAsync<AspNetUsers>($"api/AspNetUsers/username/{email}");
         }
 
-        public async void PutUser(string id, AspNetUsers user)
+        public async Task PutUser(string id, AspNetUsers user)
         {
            await _http.PutAsJsonAsync<AspNetUsers>($"api/AspNetUsers/{id}", user);
         }
@@ -74,7 +79,7 @@ namespace CugemderApp.DataAccessClasses
             await _http.PostAsJsonAsync("api/AspNetUsers", user);
         }
 
-        public async void DeleteUser(string id)
+        public async Task DeleteUser(string id)
         {
             await _http.DeleteAsync($"api/AspNetUsers/{id}");
         }

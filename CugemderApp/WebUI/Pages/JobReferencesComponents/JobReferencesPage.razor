@@ -114,11 +114,10 @@
         if (user.Identity.IsAuthenticated)
         {
             loggedUser = await userDAL.GetUsername(user.Identity.Name);
-            users = await userDAL.GetUsers();
+            users = await userDAL.GetUsersNoNullUserList();
             jobReferencesUserReferenced = await jobReferenceDAL.GetJobReferencesReferenced(loggedUser.Id);
             jobReferencesUserReferencer = await jobReferenceDAL.GetJobReferencesReferencer(loggedUser.Id);
         }
-        users = await userDAL.GetUsers();
     }
 
     public class SearchForm

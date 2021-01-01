@@ -56,6 +56,13 @@ namespace CugemderApp.Security
             result.EnsureSuccessStatusCode();
         }
 
+        public async Task SendConfirmationEmail(string id)
+        {
+            var result = await _httpClient.GetAsync($"api/auth/SendConfirmationEmail?id={id}");
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
+            result.EnsureSuccessStatusCode();
+        }
+
         public async Task ForgotPassword(ForgotPasswordModel model)
         {
             var result = await _httpClient.PostAsJsonAsync("api/auth/SendEmailForConfirmation", model);

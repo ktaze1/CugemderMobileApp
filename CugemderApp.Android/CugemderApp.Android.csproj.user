@@ -4,5 +4,6 @@
     <SelectedDevice>new_pixel</SelectedDevice>
     <DefaultDevice>new_pixel</DefaultDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>

@@ -18,8 +18,8 @@
         color: red !important;
     }
 
+
     .profile-img {
-        text-align: center;
         width: 200px;
         height: 200px;
         overflow: hidden;
@@ -27,9 +27,10 @@
     }
 
         .profile-img img {
-            width: 100%;
-            background-size: cover;
-            background-position: center;
+            max-width: 100%;
+            height: auto;
+            min-height: 200px;
+            object-fit: cover;
         }
 
         .profile-img .file {
@@ -164,6 +165,7 @@ else
                 {
                     <div style="margin-top: 5px;">
                         <h6 style="color: red; margin-bottom: 0px; float:left;">Hakkında</h6>
+                        <br />
                         <div style="font-size:16px; padding-top: 10px; white-space: pre-line; font-weight:500" class="proile-rating">
                             @System.Web.HttpUtility.HtmlDecode(loggedUser.Summary)
                         </div>
@@ -413,7 +415,7 @@ else
             {
                 Unsubscribe(loggedUser.LastGroupName);
             }
-            userlist = await userDAL.GetUsersNoNull();
+            userlist = await userDAL.GetUsersNoNullUserList();
             userlist = userlist.Where(c => c.Group == loggedUser.Group).ToList();
             foreach (var users in userlist)
             {

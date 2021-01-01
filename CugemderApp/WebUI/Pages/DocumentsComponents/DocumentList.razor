@@ -116,33 +116,14 @@
                 documentDAL.PostDocuments(document);
                 document = new Documents();
 
-                js.InvokeVoidAsync("swal", "Dosya Yüklendi", "", "success");
+                js.InvokeVoidAsync("swal", "Dosya Yüklendi", "Dosya başarıyla yüklendi.", "success");
                 RefreshPageContent();
             }
             else if (pickResults == null && document.Summary == null && document.Title == null)
             {
-                js.InvokeVoidAsync("swal", "Dosya seçip formu doldurduğunuzdan emin olun!", "", "error");
+                js.InvokeVoidAsync("swal", "Dosya Seçilmedi", "Dosya seçip formu doldurduğunuzdan emin olun!", "error");
             }
         }
-
-
-        //async void Test()
-        //{
-        //    var pickResult = await FilePicker.PickMultipleAsync();
-        //    if (pickResult != null)
-        //    {
-        //        var fileList = new List<FileBase>();
-        //        foreach (var item in pickResult)
-        //        {
-        //            var stream = await item.OpenReadAsync();
-        //            var content = new StreamContent(stream);
-        //            var multi = new MultipartFormDataContent();
-        //            multi.Add(content, item.FileName, item.FileName);
-        //            fileDAL.UploadDocument(multi);
-        //        }
-
-        //    }
-        //}
 
         async void SelectFiles()
         {

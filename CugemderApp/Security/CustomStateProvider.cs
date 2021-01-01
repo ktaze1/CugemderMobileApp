@@ -65,6 +65,12 @@ namespace CugemderApp.Security
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
+        public async Task SendConfirmationEmail(string id)
+        {
+            await api.SendConfirmationEmail(id);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
         public async Task ForgotPassword(ForgotPasswordModel model)
         {
             await api.ForgotPassword(model);

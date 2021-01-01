@@ -17,7 +17,6 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 
-
 @if (groups == null)
 {
     <p><em>Y&uuml;kleniyor...</em></p>
@@ -35,7 +34,7 @@ else
             </select>
             <br />
             <button class="btn btn-primary" type="submit">Grup Seç</button>
-            <button class="btn btn-secondary" type="submit">Kullanıcıları Güncelle</button>
+            <button class="btn btn-secondary" type="button" @onclick="@( () => UpdateUserList())">Kullanıcıları Güncelle</button>
 
             <button type="button" class="btn btn-danger" @onclick="@(() => uriHelper.NavigateTo("adminsettings"))">Geri Dön</button>
         </div>
@@ -117,9 +116,8 @@ else
 
         pointlist = await pointDAL.GetPoints();
         groups = await groupDAL.GetGroupsAsync();
-        userlist = await userDAL.GetUsersNoNull();
+        userlist = await userDAL.GetUsersNoNullUserList();
 
-        userlistwithNull = await userDAL.GetUsers();
 
         networkingActivityPoints = await networkActivityDAL.GetNetworkingActivityPoint();
         networkingMeetingPoints = await networkMeetingDAL.GetNetworkingMeetingPoints();
@@ -144,15 +142,18 @@ else
     {
         var boolval = false;
 
-        var modalresponse = await js.InvokeAsync<object>("swal", "Kullanıcıyı silmek istediğinizden emin misiniz?", "", "error",
-            new { buttons =
-            new{
+        var modalresponse = await js.InvokeAsync<object>("swal", "Dikkat!", "Kullanıcıyı silmek istediğinizden emin misiniz?", "error",
+            new
+            {
+                buttons =
+            new
+            {
                 cancel = "Hayır",
                 accept = "Evet"
             }
             });
 
-        if(modalresponse == null)
+        if (modalresponse == null)
         {
             boolval = false;
         }
@@ -174,8 +175,17 @@ else
                 networkMeetingDAL.DeleteNetworkingMeetingPoints(item.Id);
             }
             meetingPointDAL.DeleteMeetinPoints(userId);
+            System.Threading.Thread.Sleep(100);
             pointDAL.DeletePoints(userId);
-            userDAL.DeleteUser(userId);
+            System.Threading.Thread.Sleep(100);
+            var user = userlist.Where(c => c.Id == userId).First();
+            user.Points = null;
+            user.Group = null;
+            user.Gender = null;
+            user.Position = null;
+            await userDAL.PutUser(userId, user);
+            System.Threading.Thread.Sleep(100);
+            await userDAL.DeleteUser(userId);
             RefreshPageContent();
         }
         else
@@ -198,22 +208,53 @@ else
 
     async void RefreshPageContent()
     {
-        userlist = await userDAL.GetUsersNoNull();
+        userlist = await userDAL.GetUsersNoNullUserList();
         System.Threading.Thread.Sleep(200);
         uriHelper.NavigateTo("redirect/adminaccessuserlist");
         await OnInitializedAsync();
     }
 
-    void UpdateUserList()
+    async void UpdateUserList()
     {
 
+        js.InvokeVoidAsync("swal", "Dikkat!", "Bu İşlemin Sürmesi Biraz sürebilir. Lütfen \"Güncellendi\" yazısı gelene kadar bekleyin.", "info");
 
+        var userlistwithNull = await userDAL.GetUsers();
         List<string> GroupsWithNewUsers = new List<string>();
-        var tempList = userlistwithNull.Where(c => c.EmailConfirmed == true).Where(c => c.Points == null).ToList();
+        var tempList = userlistwithNull.Where(c => c.Points == null).Where(c => c.EmailConfirmed == true).ToList();
+
+        var userswithoutpoints = new List<AspNetUsers>();
 
         foreach (var user in tempList)
         {
+            foreach (var notnulluser in userlist)
+            {
+                if ((user.Id != notnulluser.Id) && (user.Email == notnulluser.Email))
+                {
+                    userswithoutpoints.Add(user);
+                }
+            }
+
+        }
+
+        foreach (var user in userswithoutpoints)
+        {
+            tempList.Remove(user);
+            await userDAL.DeleteUser(user.Id);
+        }
+
+
+
+        foreach (var user in tempList)
+        {
+
+
+            if(pointlist.Where(c => c.UserId == user.Id).ToList().Count() == 0)
+            {
+                await Delete(user.Id);
+            }
             user.Points = pointlist.Where(c => c.UserId == user.Id).First().Id;
+            await userDAL.PutUser(user.Id, user);
 
             if (!GroupsWithNewUsers.Contains(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName))
             {
@@ -225,5 +266,10 @@ else
         {
             notifications.SendNotification("Grubunuza Yeni Bir Üye Katıldı!", "Yeni Üye", item);
         }
+
+
+        js.InvokeVoidAsync("swal", "Başarılı!", "Liste Güncellendi.", "success");
+
+        RefreshPageContent();
     }
 }

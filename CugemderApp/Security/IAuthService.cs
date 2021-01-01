@@ -11,6 +11,7 @@ namespace CugemderApp.Security
         Task Login(LoginRequest loginRequest);
         Task Register(RegisterRequest registerRequest);
         Task Logout();
+        Task SendConfirmationEmail(string id);
         Task ResetPassword(PasswordChangeModel model);
         Task ForgotPassword(ForgotPasswordModel model);
         Task<CurrentUser> CurrentUserInfo();

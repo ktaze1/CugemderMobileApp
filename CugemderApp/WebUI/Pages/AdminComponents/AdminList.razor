@@ -76,7 +76,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        users = await userDAL.GetUsers();
+        users = await userDAL.GetUsersNoNullUserList();
     }
 
 
@@ -117,7 +117,7 @@
 
     async void RefreshPageContent()
     {
-        users = await userDAL.GetUsers();
+        users = await userDAL.GetUsersNoNullUserList();
         System.Threading.Thread.Sleep(100);
         uriHelper.NavigateTo("redirect/adminlist");
         await OnInitializedAsync();

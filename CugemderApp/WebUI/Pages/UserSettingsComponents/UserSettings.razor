@@ -287,7 +287,7 @@
 
         try
         {
-            userDAL.PutUser(user.Id, user);
+            await userDAL.PutUser(user.Id, user);
         }
         catch (Exception ex)
         {
@@ -303,7 +303,7 @@
         }
 
 
-        js.InvokeVoidAsync("swal", "Güncellendi", " ", "success");
+        await js.InvokeVoidAsync("swal", "Güncellendi", "Ayarlar Güncellendi", "success");
 
         uriHelper.NavigateTo("/");
 
