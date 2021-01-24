@@ -91,6 +91,29 @@ namespace CugemderApp.Server.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SendNewUserEmail(string user)
+        {
+            
+            using (var message = new MailMessage())
+            {
+                message.To.Add(new MailAddress($"info@beeport.org"));
+                message.From = new MailAddress("beeportsifre@gmail.com", "BeePort");
+                message.Subject = "Beeport Uygulama Yeni Üye";
+                message.Body = $"{user} sisteme kayıt olup onay listesinde onay beklemektedir";
+                message.IsBodyHtml = true;
+
+                using (var client = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("beeportsifre@gmail.com", "184589Be-"); // TODO ÇÜGEMDER Mail Gir
+                    client.EnableSsl = true;
+                    client.Send(message);
+                }
+            }
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<IActionResult> ResetPassword([FromQuery] string id)
         {

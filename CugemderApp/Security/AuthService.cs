@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace CugemderApp.Security
 {
     public class AuthService : IAuthService
-    {
+    {   
         HttpClient _httpClient = AppState._http;
 
 
@@ -59,6 +59,13 @@ namespace CugemderApp.Security
         public async Task SendConfirmationEmail(string id)
         {
             var result = await _httpClient.GetAsync($"api/auth/SendConfirmationEmail?id={id}");
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
+            result.EnsureSuccessStatusCode();
+        }
+
+        public async Task SendNewUserEmail(string user)
+        {
+            var result = await _httpClient.PostAsJsonAsync($"api/auth/SendNewUserEmail",user);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }

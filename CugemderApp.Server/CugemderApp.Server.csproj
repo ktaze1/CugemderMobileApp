@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="StaticFiles\Contents\beeportandroid-firebase-adminsdk-6or1y-cad1225bc9.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.1" />
     <PackageReference Include="FirebaseAdmin" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />

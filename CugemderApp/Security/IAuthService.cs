@@ -15,5 +15,6 @@ namespace CugemderApp.Security
         Task ResetPassword(PasswordChangeModel model);
         Task ForgotPassword(ForgotPasswordModel model);
         Task<CurrentUser> CurrentUserInfo();
+        Task SendNewUserEmail(string user);
     }
 }

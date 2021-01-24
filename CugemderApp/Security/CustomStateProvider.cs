@@ -76,6 +76,13 @@ namespace CugemderApp.Security
             await api.ForgotPassword(model);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
+
+        public async Task SendNewUserEmail(string user)
+        {
+            await api.SendNewUserEmail(user);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
         public async Task Register(RegisterRequest registerParameters)
         {
             await api.Register(registerParameters);

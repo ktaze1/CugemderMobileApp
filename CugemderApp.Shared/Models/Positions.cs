@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace CugemderApp.Shared.Models
 {
@@ -13,6 +14,8 @@ namespace CugemderApp.Shared.Models
         public int Id { get; set; }
         public string Position { get; set; }
 
+
+        [IgnoreDataMember]
         public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

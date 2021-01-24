@@ -16,22 +16,22 @@
     <DataAnnotationsValidator />
 
     <label for="inputFirstName">Adınız:</label>
-    <InputText id="inputFirstName" class="form-control" placeholder="Adınız" autofocus @bind-Value="@registerRequest.FirstName" />
+    <InputText id="inputFirstName" class="form-control" placeholder="Adınız" autofocus @bind-Value="@registerRequest.FirstName.Trim()" />
     <ValidationMessage For="@(() => registerRequest.FirstName)" />
     <br />
     <label for="inputLastName">Soyadınız:</label>
-    <InputText id="inputLastName" class="form-control" placeholder="Soyadınız" autofocus @bind-Value="@registerRequest.LastName" />
+    <InputText id="inputLastName" class="form-control" placeholder="Soyadınız" autofocus @bind-Value="@registerRequest.LastName.Trim()" />
     <ValidationMessage For="@(() => registerRequest.LastName)" />
     <br />
     <label for="inputMail">E-mail:</label>
-    <InputText id="inputMail" class="form-control" placeholder="E-mail" autofocus @bind-Value="@registerRequest.Email" />
+    <InputText id="inputMail" class="form-control" placeholder="E-mail" autofocus @bind-Value="@registerRequest.Email.Trim()" />
     <ValidationMessage For="@(() => registerRequest.Email)" />
     <br />
     @*<label for="inputdob">Doğum Tarihi:</label>
         <InputDate id="inputdob" class="form-control" autofocus @bind-Value="@registerRequest.DateofBirth" />
         <br />*@
     <label for="inputPhone">Telefon:</label>
-    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 ile giriniz: 05551112233" autofocus @bind-Value="@registerRequest.PhoneNo" />
+    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 ile giriniz: 05551112233" autofocus @bind-Value="@registerRequest.PhoneNo.Trim()" />
     <ValidationMessage For="@(() => registerRequest.PhoneNo)" />
     <br />
     <label for="inputPassword">Şifre:</label>
@@ -78,9 +78,10 @@
             }
             else if (pickResult != null)
             {
+                var name = registerRequest.FirstName + " " + registerRequest.LastName;
                 UploadFiles();
                 await authStateProvider.Register(registerRequest);
-
+                await authStateProvider.SendNewUserEmail(name);
                 await js.InvokeVoidAsync("swal", "Üyelik Kaydı Başarılı", "Sistem Yöneticisi tarafından onaylanması sonrasında programı kullanabileceksiniz.", "info");
             }
         }

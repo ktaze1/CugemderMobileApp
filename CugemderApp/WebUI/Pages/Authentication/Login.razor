@@ -38,8 +38,8 @@
 </EditForm>
 
 @code{
-    LoginRequest loginRequest { get; set; } = new LoginRequest();
-    string error { get; set; }
+        LoginRequest loginRequest { get; set; } = new LoginRequest() { RememberMe = false };
+        string error { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,8 +48,7 @@
         {
             loginRequest.UserName = Xamarin.Essentials.SecureStorage.GetAsync("loginmail").Result;
             loginRequest.Password = Xamarin.Essentials.SecureStorage.GetAsync("loginpass").Result;
-            await authStateProvider.Login(loginRequest);
-            navigationManager.NavigateTo("");
+            await OnSubmit();
         }
     }
 
