@@ -16,22 +16,22 @@
     <DataAnnotationsValidator />
 
     <label for="inputFirstName">Adınız:</label>
-    <InputText id="inputFirstName" class="form-control" placeholder="Adınız" autofocus @bind-Value="@registerRequest.FirstName.Trim()" />
+    <InputText id="inputFirstName" class="form-control" placeholder="Adınız" autofocus @bind-Value="@registerRequest.FirstName" />
     <ValidationMessage For="@(() => registerRequest.FirstName)" />
     <br />
     <label for="inputLastName">Soyadınız:</label>
-    <InputText id="inputLastName" class="form-control" placeholder="Soyadınız" autofocus @bind-Value="@registerRequest.LastName.Trim()" />
+    <InputText id="inputLastName" class="form-control" placeholder="Soyadınız" autofocus @bind-Value="@registerRequest.LastName" />
     <ValidationMessage For="@(() => registerRequest.LastName)" />
     <br />
     <label for="inputMail">E-mail:</label>
-    <InputText id="inputMail" class="form-control" placeholder="E-mail" autofocus @bind-Value="@registerRequest.Email.Trim()" />
+    <InputText id="inputMail" class="form-control" placeholder="E-mail" autofocus @bind-Value="@registerRequest.Email" />
     <ValidationMessage For="@(() => registerRequest.Email)" />
     <br />
     @*<label for="inputdob">Doğum Tarihi:</label>
         <InputDate id="inputdob" class="form-control" autofocus @bind-Value="@registerRequest.DateofBirth" />
         <br />*@
     <label for="inputPhone">Telefon:</label>
-    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 ile giriniz: 05551112233" autofocus @bind-Value="@registerRequest.PhoneNo.Trim()" />
+    <InputText id="inputPhone" class="form-control" placeholder="Başta 0 ile giriniz: 05551112233" autofocus @bind-Value="@registerRequest.PhoneNo" />
     <ValidationMessage For="@(() => registerRequest.PhoneNo)" />
     <br />
     <label for="inputPassword">Şifre:</label>

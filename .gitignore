@@ -3,3 +3,5 @@
 *.v2
 .vs/CugemderApp/v16/.suo
 CugemderApp.Android/google-services.json
+deniz/
+CugemderApp.Server/StaticFiles/Contents/

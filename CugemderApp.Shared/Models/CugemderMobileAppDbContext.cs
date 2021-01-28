@@ -294,6 +294,10 @@ namespace CugemderApp.Shared.Models
                     .IsRequired()
                     .HasMaxLength(450);
 
+                entity.Property(e => e.SenderUserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
                 entity.HasOne(d => d.Meeting)
                     .WithMany(p => p.MeetingPoints)
                     .HasForeignKey(d => d.MeetingId)

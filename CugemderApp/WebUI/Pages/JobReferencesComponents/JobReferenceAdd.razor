@@ -183,12 +183,13 @@
         if (jobReference.ExpertName != null && jobReference.ExpertContact != null && jobReference.ReferencedId != null)
         {
             jobReference.ReferencerId = loggedUser.Id;
+            jobReference.Date = DateTime.Now;
             jobReferenceDAL.PostJobReferences(jobReference);
             notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Yeni Bir İş/Kişi Yönlendirmiştir.", "İş/Kişi Yönlendirme", referenced.Id);
             userNotifDAL.PostUserNotifications(new UserNotificationList()
             {
                 Title = "İş / Kişi Yönlendirme",
-                Body = $" {loggedUser.FirstName} {loggedUser.LastName.ToUpper()} İş / Kişi Yönlendirmiştir!.",
+                Body = $" {loggedUser.FirstName} {loggedUser.LastName.ToUpper()} İş / Kişi Yönlendirmiştir!",
                 Date = DateTime.Now,
                 Receiver = jobReference.ReferencedId
             });

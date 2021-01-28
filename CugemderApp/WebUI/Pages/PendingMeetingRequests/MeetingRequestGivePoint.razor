@@ -188,10 +188,14 @@
 
         meetingPoint.ReceiverUserId = meeting.ReceiverId;
 
+        meetingPoint.Point1 = modalForm.point1; meetingPoint.Point2 = modalForm.point2; meetingPoint.Point3 = modalForm.point3; meetingPoint.Point4 = modalForm.point4;
+        meetingPoint.Point5 = modalForm.point5; meetingPoint.Point6 = modalForm.point6; meetingPoint.Point7 = modalForm.point7; meetingPoint.Point8 = modalForm.point8;
+        meetingPoint.Point9 = modalForm.point9; meetingPoint.Point10 = modalForm.point10;
+
         meetingPoint.TotalPoints = (modalForm.point1 + modalForm.point2 + modalForm.point3
-            + modalForm.point4 + modalForm.point5 + modalForm.point6
-            + modalForm.point7 + modalForm.point8 + modalForm.point9
-            + modalForm.point10);
+        + modalForm.point4 + modalForm.point5 + modalForm.point6
+        + modalForm.point7 + modalForm.point8 + modalForm.point9
+        + modalForm.point10);
 
         if (loggedUser.Id == meeting.ReceiverId)
         {

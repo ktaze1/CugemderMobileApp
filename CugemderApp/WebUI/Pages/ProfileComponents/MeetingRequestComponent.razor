@@ -70,7 +70,7 @@
         userNotifDAL.PostUserNotifications(new UserNotificationList()
         {
             Title = "Birebir Görüşme Talebi",
-            Body = $" {loggedUser.FirstName} {loggedUser.LastName.ToUpper()} size birebir görüşme Talebi yollamıştır.",
+            Body = $" {loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Birebir Görüşme Talebi Yollamıştır.",
             Date = DateTime.Now,
             Receiver = meeting.ReceiverId
         });
