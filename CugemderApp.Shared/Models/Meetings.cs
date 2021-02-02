@@ -19,8 +19,6 @@ namespace CugemderApp.Shared.Models
         public bool IsResultedbySender { get; set; }
         public bool IsResultedbyReceiver { get; set; }
 
-        public virtual AspNetUsers Receiver { get; set; }
-        public virtual AspNetUsers Sender { get; set; }
         public virtual ICollection<MeetingPoints> MeetingPoints { get; set; }
     }
 }

@@ -332,18 +332,6 @@ namespace CugemderApp.Shared.Models
                 entity.Property(e => e.SenderId)
                     .IsRequired()
                     .HasMaxLength(450);
-
-                entity.HasOne(d => d.Receiver)
-                    .WithMany(p => p.MeetingsReceiver)
-                    .HasForeignKey(d => d.ReceiverId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Meetings_AspNetUsers1");
-
-                entity.HasOne(d => d.Sender)
-                    .WithMany(p => p.MeetingsSender)
-                    .HasForeignKey(d => d.SenderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Meetings_AspNetUsers");
             });
 
             modelBuilder.Entity<NetworkingActivityPoint>(entity =>

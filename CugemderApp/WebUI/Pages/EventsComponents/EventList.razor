@@ -203,7 +203,7 @@ else
         RefreshPageContent();
     }
 
-    void CreateEvent()
+    async void CreateEvent()
     {
         if (newEvent.Title == null || newEvent.Summary == null
            || newEvent.Location == null)
@@ -217,33 +217,45 @@ else
                 newEvent.RelatedGroup = null;
                 foreach (var item in groupList)
                 {
-                    notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", item.GroupName);
-                    notifications.AddNotificaiton(new Notifications()
+                    //        notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", item.GroupName);
+                    var notificationtosend = new Notifications()
                     {
                         Title = "Etkinlik",
                         Body = $"Bugün Olacak Etkinliğin Saati: {newEvent.Date.Value.ToString("t", AppState.trTR)}. ",
                         Time = newEvent.Date.Value,
                         Receiver = item.GroupName
-                    });
-
-                    userNotifDAL.PostUserNotifications(new UserNotificationList(){
+                    };
+                    await notifications.AddNotificaiton(notificationtosend);
+                    var notiftosendforlist = new UserNotificationList()
+                    {
                         Title = "Etkinlik",
-                        Body = $"Bugün Olacak Etkinliğin Saati: {newEvent.Date.Value.ToString("t", AppState.trTR)}. ",
+                        Body = $"{newEvent.Date.Value.ToString("F", AppState.trTR)}. Tarihinde Etkinlik Olacaktır ",
                         Date = DateTime.Now,
                         Receiver = item.GroupName
-                    });
+                    };
+                    await userNotifDAL.PostUserNotifications(notiftosendforlist);
                 }
             }
             else if (newEvent.RelatedGroup != 0)
             {
-                notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
-                notifications.AddNotificaiton(new Notifications()
+                // notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
+                var notificationtosend = new Notifications()
                 {
                     Title = "Etkinlik",
                     Body = $"Bugün Olacak Etkinliğin Saati: {newEvent.Date.Value.ToString("t", AppState.trTR)}. ",
                     Time = newEvent.Date.Value,
                     Receiver = groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName
-                });
+                };
+                await notifications.AddNotificaiton(notificationtosend);
+
+                var notiftosendforlist = new UserNotificationList()
+                {
+                    Title = "Etkinlik",
+                    Body = $"{newEvent.Date.Value.ToString("F", AppState.trTR)} Tarihinde Etkinlik Olacaktır.",
+                    Date = DateTime.Now,
+                    Receiver = groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName
+                };
+                await userNotifDAL.PostUserNotifications(notiftosendforlist);
             }
 
             eventDAL.PostEvents(newEvent);

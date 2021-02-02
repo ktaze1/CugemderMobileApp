@@ -12,8 +12,6 @@ namespace CugemderApp.Shared.Models
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
             MeetingPoints = new HashSet<MeetingPoints>();
-            MeetingsReceiver = new HashSet<Meetings>();
-            MeetingsSender = new HashSet<Meetings>();
             NetworkingActivityPoint = new HashSet<NetworkingActivityPoint>();
             NetworkingMeetingPoints = new HashSet<NetworkingMeetingPoints>();
             Points1 = new HashSet<Points>();
@@ -70,8 +68,6 @@ namespace CugemderApp.Shared.Models
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual ICollection<MeetingPoints> MeetingPoints { get; set; }
-        public virtual ICollection<Meetings> MeetingsReceiver { get; set; }
-        public virtual ICollection<Meetings> MeetingsSender { get; set; }
         public virtual ICollection<NetworkingActivityPoint> NetworkingActivityPoint { get; set; }
         public virtual ICollection<NetworkingMeetingPoints> NetworkingMeetingPoints { get; set; }
         public virtual ICollection<Points> Points1 { get; set; }

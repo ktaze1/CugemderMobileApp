@@ -32,7 +32,7 @@ namespace CugemderApp.DataAccessClasses
             await _http.PutAsJsonAsync($"api/UserNotificationLists/{id}", UserNotificationList);
         }
 
-        public async void PostUserNotifications(UserNotificationList UserNotificationList)
+        public async Task PostUserNotifications(UserNotificationList UserNotificationList)
         {
             await _http.PostAsJsonAsync("api/UserNotificationLists", UserNotificationList);
         }

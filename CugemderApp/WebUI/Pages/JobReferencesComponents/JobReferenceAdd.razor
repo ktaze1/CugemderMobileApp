@@ -20,12 +20,12 @@
             İsim Soyisim :  <InputText class="form-control" @bind-Value="ef.name" />
             <ValidationMessage For="@(() => ef.name)" />
         </div>
+        <br />
         <div>
             Telefon Numarası:  <InputText class="form-control" @bind-Value="ef.phone" />
             <ValidationMessage For="@(() => ef.phone)" />
         </div>
         @message
-        <br />
         <br />
         <button class="btn btn-primary">Kaydet</button>
     </EditForm>
@@ -185,7 +185,7 @@
             jobReference.ReferencerId = loggedUser.Id;
             jobReference.Date = DateTime.Now;
             jobReferenceDAL.PostJobReferences(jobReference);
-            notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Yeni Bir İş/Kişi Yönlendirmiştir.", "İş/Kişi Yönlendirme", referenced.Id);
+          //  notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Yeni Bir İş/Kişi Yönlendirmiştir.", "İş/Kişi Yönlendirme", referenced.Id);
             userNotifDAL.PostUserNotifications(new UserNotificationList()
             {
                 Title = "İş / Kişi Yönlendirme",

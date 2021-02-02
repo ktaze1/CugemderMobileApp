@@ -1,0 +1,34 @@
+﻿@page "/databaseFetch"
+@inject NavigationManager navHelper
+@inject FileUpload fileManager
+@inject IJSRuntime js
+
+<div>
+    <h3>Veritabanı Bilgilerinin Alınması</h3>
+
+    <p> Veritabanında bulunan "Üye Listesi", "Birebir Görüşme Puan Listesi" ve "İş / Kişi Yönlendirme Listesi"nin Excel dosyaları tarafınıza (<i>info@beeport.org</i>) mail olarak atılacaktır.</p>
+    <br />
+    <p> Bu işlem sonrası Yönetici Anasayfasına yönlendirileceksiniz</p>
+    <button class="btn btn-primary" @onclick="@(() => SendDBData())">Verileri Gönder</button>
+</div>
+
+@code {
+
+    void SendDBData()
+    {
+        try
+        {
+            fileManager.SendExcel();
+
+            js.InvokeVoidAsync("swal", "Başarılı!", "Excel Dosyaları Mailinize Gönderilmiştir. Lütfen Mailinizi Kontrol Ediniz.", "success");
+            navHelper.NavigateTo("adminsettings");
+        }
+        catch (Exception ex)
+        {
+            js.InvokeVoidAsync("swal", "Hata!", "Bir Hata Oluştu, Lütfen Tekrar Deneyiniz", "error");
+            navHelper.NavigateTo("adminsettings");
+        }
+
+    }
+
+}

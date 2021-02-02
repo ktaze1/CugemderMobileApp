@@ -18,7 +18,7 @@ namespace CugemderApp.DataAccessClasses
             await _http.PostAsJsonAsync("api/Notifications/sendNotification", notif);
         }
 
-        public async void AddNotificaiton(Notifications notification)
+        public async Task AddNotificaiton(Notifications notification)
         {
             await _http.PostAsJsonAsync("api/Notifications", notification);
         }

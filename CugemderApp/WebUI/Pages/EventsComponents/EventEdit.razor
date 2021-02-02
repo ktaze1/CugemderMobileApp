@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label>Tarih ve Saat</label>
-            <input type="datetime" @bind="events.Date" @bind:format="dd-MM-yyyy HH:mm" />
+            <input class="form-control" type="datetime" @bind="events.Date" @bind:format="dd-MM-yyyy HH:mm" />
             <ValidationMessage For="@(() => events.Date)" />
         </div>
 

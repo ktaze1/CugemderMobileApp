@@ -53,6 +53,7 @@ else
 @code {
 
     AspNetUsers loggedUser = new AspNetUsers();
+    List<string> userIds = new List<string>();
     List<AspNetUsers> users = new List<AspNetUsers>(), tempUserList = new List<AspNetUsers>();
     List<JobReferences> jobReferences = new List<JobReferences>();
 
@@ -67,12 +68,17 @@ else
             users = await userDAL.GetUsersNoNullUserList();
             jobReferences = await jobReferenceDAL.GetJobReferences();
         }
-        users = await userDAL.GetUsersNoNullUserList();
+
+        foreach (var item in users)
+        {
+            userIds.Add(item.Id);
+        }
     }
 
 
     string getFullname(string id)
     {
+        if (!userIds.Contains(id)) { return "Silinmiş Kullanıcı"; }
         var fullname = users.Where(c => c.Id == id).FirstOrDefault().FirstName + " " + users.Where(c => c.Id == id).FirstOrDefault().LastName;
         return fullname;
     }

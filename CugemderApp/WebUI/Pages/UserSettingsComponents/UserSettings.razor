@@ -269,6 +269,11 @@
         user.UpdatedAt = DateTime.UtcNow;
         EnglishToTurkish();
 
+        if (user.Gender == 0) { user.Gender = null; }
+        if (user.Relationship == 0) { user.Relationship = null; }
+        if (user.LocatedCity == 0) { user.LocatedCity = null; }
+        if (user.Position == 0) { user.Position = null; }
+        if (user.JobTitle == 0) { user.JobTitle = null; }
 
         var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
         if (filetoDelete != null && item != null)

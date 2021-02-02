@@ -102,6 +102,7 @@
     AspNetUsers expert, referenced;
     SearchForm sc = new SearchForm();
     AspNetUsers loggedUser = new AspNetUsers();
+    List<string> userIds = new List<string>();
     JobReferences jobReference = new JobReferences();
     List<AspNetUsers> users = new List<AspNetUsers>(), tempUserList = new List<AspNetUsers>();
     List<JobReferences> jobReferencesUserReferencer = new List<JobReferences>(), jobReferencesUserReferenced = new List<JobReferences>();
@@ -117,6 +118,10 @@
             users = await userDAL.GetUsersNoNullUserList();
             jobReferencesUserReferenced = await jobReferenceDAL.GetJobReferencesReferenced(loggedUser.Id);
             jobReferencesUserReferencer = await jobReferenceDAL.GetJobReferencesReferencer(loggedUser.Id);
+        }
+        foreach (var item in users)
+        {
+            userIds.Add(item.Id);
         }
     }
 
@@ -141,6 +146,7 @@
 
     string getFullname(string id)
     {
+        if(!userIds.Contains(id)) { return "Silinmiş Kullanıcı"; }
         var fullname = users.Where(c => c.Id == id).FirstOrDefault().FirstName + " " + users.Where(c => c.Id == id).FirstOrDefault().LastName;
         return fullname;
     }

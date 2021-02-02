@@ -31,12 +31,26 @@ namespace CugemderApp.Server.Controllers
         [Route("user/points/{id}")]
         public async Task<ActionResult<IEnumerable<Meetings>>> GetMeetingsNeedPoint(string id)
         {
-            return await _context.Meetings
+            var meetings = await _context.Meetings
                 .Where(c => (c.SenderId == id && c.IsResultedbySender == false) || (c.ReceiverId == id && c.IsResultedbyReceiver == false))
                 .Where(c => c.Date.AddHours(2) < DateTime.Now)
-                .Include(c => c.Receiver)
-                .Include(c => c.Sender)
                 .ToListAsync();
+            var returnMeetings = meetings.ToList();
+            var users = await _context.AspNetUsers.ToListAsync();
+            List<string> userIds = new List<string>();
+            foreach (var item in users)
+            {
+                userIds.Add(item.Id);
+            }
+            foreach (var item in meetings)
+            {
+                if(!userIds.Contains(item.SenderId) || !userIds.Contains(item.ReceiverId))
+                {
+                    returnMeetings.Remove(item);
+                }
+            }
+
+            return returnMeetings;
         }
 
         // GET: api/Meetings/5
@@ -58,8 +72,6 @@ namespace CugemderApp.Server.Controllers
         public async Task<ActionResult<IEnumerable<Meetings>>> GetMeetingsOfUser(string id)
         {
             var meetings = await _context.Meetings
-                .Include(c => c.Sender)
-                .Include(c => c.Receiver)
                 .Where(c => c.ReceiverId == id || c.SenderId == id).ToListAsync();
 
             if (meetings == null)
@@ -67,7 +79,22 @@ namespace CugemderApp.Server.Controllers
                 return NotFound();
             }
 
-            return meetings;
+            var returnMeetings = meetings.ToList();
+            var users = await _context.AspNetUsers.ToListAsync();
+            List<string> userIds = new List<string>();
+            foreach (var item in users)
+            {
+                userIds.Add(item.Id);
+            }
+            foreach (var item in meetings)
+            {
+                if (!userIds.Contains(item.SenderId) || !userIds.Contains(item.ReceiverId))
+                {
+                    returnMeetings.Remove(item);
+                }
+            }
+
+            return returnMeetings;
         }
 
         // PUT: api/Meetings/5

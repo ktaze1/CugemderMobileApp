@@ -164,28 +164,7 @@ else
 
         if (boolval)
         {
-            var networkingActivitiesOfUser = networkingActivityPoints.Where(c => c.ReceiverUserId == userId);
-            foreach (var item in networkingActivitiesOfUser)
-            {
-                networkActivityDAL.DeleteNetworkingActivityPoint(item.Id);
-            }
-            var networkingMeetingsOfUser = networkingMeetingPoints.Where(c => c.ReceiverUserId == userId);
-            foreach (var item in networkingMeetingsOfUser)
-            {
-                networkMeetingDAL.DeleteNetworkingMeetingPoints(item.Id);
-            }
-            meetingPointDAL.DeleteMeetinPoints(userId);
-            System.Threading.Thread.Sleep(100);
-            pointDAL.DeletePoints(userId);
-            System.Threading.Thread.Sleep(100);
-            var user = userlist.Where(c => c.Id == userId).First();
-            user.Points = null;
-            user.Group = null;
-            user.Gender = null;
-            user.Position = null;
-            await userDAL.PutUser(userId, user);
-            System.Threading.Thread.Sleep(100);
-            await userDAL.DeleteUser(userId);
+            await DeleteUser(userId);
             RefreshPageContent();
         }
         else
@@ -195,6 +174,41 @@ else
 
     }
 
+
+    async Task DeleteUser(string userId)
+    {
+        var networkingActivitiesOfUser = networkingActivityPoints.Where(c => c.ReceiverUserId == userId).ToList();
+        foreach (var item in networkingActivitiesOfUser)
+        {
+            networkActivityDAL.DeleteNetworkingActivityPoint(item.Id);
+        }
+        var networkingMeetingsOfUser = networkingMeetingPoints.Where(c => c.ReceiverUserId == userId).ToList();
+        foreach (var item in networkingMeetingsOfUser)
+        {
+            networkMeetingDAL.DeleteNetworkingMeetingPoints(item.Id);
+        }
+        meetingPointDAL.DeleteMeetinPoints(userId);
+        System.Threading.Thread.Sleep(100);
+        pointDAL.DeletePoints(userId);
+        System.Threading.Thread.Sleep(100);
+        AspNetUsers user;
+        if(userlistwithNull.Count() > 0)
+        {
+            user = userlistwithNull.Where(c => c.Id == userId).First();
+        }
+        else
+        {
+
+            user = userlist.Where(c => c.Id == userId).First();
+        }
+        user.Points = null;
+        user.Group = null;
+        user.Gender = null;
+        user.Position = null;
+        await userDAL.PutUser(userId, user);
+        System.Threading.Thread.Sleep(100);
+        await userDAL.DeleteUser(userId);
+    }
 
     public class JsonResponse
     {
@@ -217,9 +231,9 @@ else
     async void UpdateUserList()
     {
 
-        js.InvokeVoidAsync("swal", "Dikkat!", "Bu İşlemin Sürmesi Biraz sürebilir. Lütfen \"Güncellendi\" yazısı gelene kadar bekleyin.", "info");
+        await js.InvokeVoidAsync("swal", "Dikkat!", "Bu İşlemin Sürmesi Biraz sürebilir. Lütfen \"Güncellendi\" yazısı gelene kadar bekleyin.", "info");
 
-        var userlistwithNull = await userDAL.GetUsers();
+        userlistwithNull = await userDAL.GetUsers();
         List<string> GroupsWithNewUsers = new List<string>();
         var tempList = userlistwithNull.Where(c => c.Points == null).Where(c => c.EmailConfirmed == true).ToList();
 
@@ -240,7 +254,7 @@ else
         foreach (var user in userswithoutpoints)
         {
             tempList.Remove(user);
-            await userDAL.DeleteUser(user.Id);
+            await DeleteUser(user.Id);
         }
 
 
@@ -251,20 +265,23 @@ else
 
             if(pointlist.Where(c => c.UserId == user.Id).ToList().Count() == 0)
             {
-                await Delete(user.Id);
+                await DeleteUser(user.Id);
             }
-            user.Points = pointlist.Where(c => c.UserId == user.Id).First().Id;
-            await userDAL.PutUser(user.Id, user);
-
-            if (!GroupsWithNewUsers.Contains(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName))
+            else
             {
-                GroupsWithNewUsers.Add(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName);
+                user.Points = pointlist.Where(c => c.UserId == user.Id).First().Id;
+                await userDAL.PutUser(user.Id, user);
+
+                if (!GroupsWithNewUsers.Contains(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName))
+                {
+                    GroupsWithNewUsers.Add(groups.Where(c => c.Id == user.Group).FirstOrDefault().GroupName);
+                }
             }
         }
 
         foreach (var item in GroupsWithNewUsers)
         {
-            notifications.SendNotification("Grubunuza Yeni Bir Üye Katıldı!", "Yeni Üye", item);
+            // notifications.SendNotification("Grubunuza Yeni Bir Üye Katıldı!", "Yeni Üye", item);
         }
 
 

@@ -169,7 +169,7 @@ else
             };
 
             pointList.Add(pointToAdd);
-            notifications.SendNotification($"Puanınız güncellenmiştir, Yeni Puanınız: {pointToAdd.TotalPoints}", "Puan Değişikliği!", user.Id);
+           // notifications.SendNotification($"Puanınız güncellenmiştir, Yeni Puanınız: {pointToAdd.TotalPoints}", "Puan Değişikliği!", user.Id);
         }
 
         pointDAL.PostPoints(pointList);

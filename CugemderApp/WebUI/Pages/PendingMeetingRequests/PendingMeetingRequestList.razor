@@ -43,13 +43,15 @@ else
         <div class="table-responsive align-content-start" style="padding-left: 1em;">
             <table class="table">
                 <tbody>
-                    @foreach (var meeting in givePoints.Where(c => c.IsApproved == true))
+                    @foreach (var meeting in givePoints.Where(c => c.IsApproved == true).ToList())
                     {
                         <tr class="row">
-                            @if (meeting.Sender.Id == loggedUser.Id)
+                            @if (meeting.SenderId == loggedUser.Id)
                             {
+                                var user = userlist.Where(c => c.Id == meeting.ReceiverId).FirstOrDefault();
+                                var userfullname = user.FirstName + " " + user.LastName.ToUpper();
                                 <td class="col-8">
-                                    <a style="color: red;" href="/profile/@meeting.ReceiverId">@meeting.Receiver.FirstName @meeting.Receiver.LastName.ToUpper()</a>
+                                    <a style="color: red;" href="/profile/@meeting.ReceiverId">@userfullname</a>
                                     <br />
                                     <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
                                     <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
@@ -59,8 +61,10 @@ else
                             }
                             else
                             {
+                                var user = userlist.Where(c => c.Id == meeting.SenderId).FirstOrDefault();
+                                var userfullname = user.FirstName + " " + user.LastName.ToUpper();
                                 <td class="col-8">
-                                    <a style="color: red;" href="/profile/@meeting.SenderId">@meeting.Sender.FirstName @meeting.Sender.LastName.ToUpper()</a>
+                                    <a style="color: red;" href="/profile/@meeting.SenderId">@userfullname</a>
                                     <br />
                                     <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
                                     <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
@@ -95,12 +99,15 @@ else
         <div class="table-responsive align-content-start" style="padding-left: 1em;">
             <table class="table">
                 <tbody>
-                    @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId != loggedUser.Id))
+                    @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId != loggedUser.Id).ToList())
                     {
+                        var user = userlist.Where(c => c.Id == meeting.SenderId).FirstOrDefault();
+                        var userfullname = user.FirstName + " " + user.LastName.ToUpper();
                         <tr class="row">
 
+
                             <td class="col-8">
-                                <a style="color: red;" href="/profile/@meeting.SenderId">@meeting.Sender.FirstName @meeting.Sender.LastName</a>
+                                <a style="color: red;" href="/profile/@meeting.SenderId">@userfullname</a>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
@@ -135,9 +142,12 @@ else
                 <tbody>
                     @foreach (var meeting in meetingList.Where(c => c.IsApproved == false && c.Date > DateTime.Now && c.SenderId == loggedUser.Id))
                     {
+
+                        var user = userlist.Where(c => c.Id == meeting.ReceiverId).FirstOrDefault();
+                        var userfullname = user.FirstName + " " + user.LastName.ToUpper();
                         <tr class="row">
                             <td class="col-8">
-                                <a style="color: red; font-size: 16px;" href="/profile/@meeting.ReceiverId">@meeting.Receiver.FirstName @meeting.Receiver.LastName.ToUpper() <span style="margin-bottom: 0; color: grey;"> tarafından onay bekleniyor.</span></a>
+                                <a style="color: red; font-size: 16px;" href="/profile/@meeting.ReceiverId">@userfullname <span style="margin-bottom: 0; color: grey;"> tarafından onay bekleniyor.</span></a>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Adres</strong>: @meeting.Location </p> <span class="br"></span>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Tarih</strong>: @meeting.Date.ToLongDateString()</p> <span class="br"></span>
                                 <p style="margin-bottom: 0; color: grey;"><strong>Saat</strong>:  @meeting.Date.ToShortTimeString()</p>
@@ -159,7 +169,8 @@ else
 @code{
 
 
-    private List<Meetings> meetingList, givePoints;
+    private List<Meetings> meetingList = new List<Meetings>(), givePoints = new List<Meetings>();
+    private List<AspNetUsers> userlist = new List<AspNetUsers>();
     private AspNetUsers loggedUser, sender;
     private string _userId;
 
@@ -172,6 +183,7 @@ else
         if (user.Identity.IsAuthenticated)
         {
             loggedUser = await userDAL.GetUsername(user.Identity.Name);
+            userlist = await userDAL.GetUsersNoNullUserList();
             meetingList = await meetingDAL.GetMeetingOfUser(loggedUser.Id);
             givePoints = await meetingDAL.GetMeetingNeedPoint(loggedUser.Id);
         }
@@ -180,9 +192,12 @@ else
 
     async Task Delete(int meetingId)
     {
+         
         meetingDAL.DeleteMeetings(meetingId);
 
     }
+
+
 
     async Task Approve(int meetingId)
     {
@@ -192,12 +207,14 @@ else
         Notifications recepientNotif = new Notifications();
         Notifications senderNotif = new Notifications();
 
+        var senderUser = userlist.Where(c => c.Id == meeting.SenderId).First();
+        var receiverUser = userlist.Where(c => c.Id == meeting.ReceiverId).First();
 
-        string recepientNotifName = meeting.ReceiverId == loggedUser.Id ? $"{meeting.Sender.FirstName} {meeting.Sender.LastName}" :
-        $"{meeting.Receiver.FirstName} {meeting.Receiver.LastName}";
+        string recepientNotifName = meeting.ReceiverId == loggedUser.Id ? $"{senderUser.FirstName} {senderUser.LastName}" :
+        $"{receiverUser.FirstName} {receiverUser.LastName}";
 
-        string senderNotifName = meeting.ReceiverId == loggedUser.Id ? $"{meeting.Receiver.FirstName} {meeting.Receiver.LastName}" :
-            $"{meeting.Sender.FirstName} {meeting.Sender.LastName}";
+        string senderNotifName = meeting.ReceiverId == loggedUser.Id ? $"{receiverUser.FirstName} {receiverUser.LastName}" :
+            $"{senderUser.FirstName} {senderUser.LastName}";
 
         recepientNotif.Title = "Görüşme Talebi";
         senderNotif.Title = "Görüşme Talebi";
@@ -214,21 +231,25 @@ else
         notification.AddNotificaiton(recepientNotif);
         notification.AddNotificaiton(senderNotif);
 
-        userNotifDAL.PostUserNotifications(new UserNotificationList()
+        var notificationforsender = new UserNotificationList()
         {
             Title = "Birebir Görüşme",
             Body = $" {recepientNotifName} İle Birebir Görüşme Tarihi: {meeting.Date.ToString("F", AppState.trTR)} ",
             Date = DateTime.Now,
             Receiver = meeting.SenderId
-        });
+        };
 
-        userNotifDAL.PostUserNotifications(new UserNotificationList()
+        var notificationforreceiver = new UserNotificationList()
         {
             Title = "Birebir Görüşme",
             Body = $" {senderNotifName} İle Birebir Görüşme Tarihi:  {meeting.Date.ToString("F", AppState.trTR)}",
             Date = DateTime.Now,
             Receiver = meeting.ReceiverId
-        });
+        };
+
+        await userNotifDAL.PostUserNotifications(notificationforsender);
+
+        await userNotifDAL.PostUserNotifications(notificationforreceiver);
 
     }
 }

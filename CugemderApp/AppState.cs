@@ -9,7 +9,7 @@ namespace CugemderApp
 {
     public class AppState
     {
-        public static HttpClient _http = new HttpClient() { BaseAddress = new Uri("http://api.cugemder.com") };
+        public static HttpClient _http = new HttpClient() { BaseAddress = new Uri("http://192.168.1.50:3000") };
 
         public static CultureInfo trTR = new CultureInfo("tr-TR");
 

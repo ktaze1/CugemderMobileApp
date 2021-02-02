@@ -22,7 +22,7 @@ namespace CugemderApp.Server.Controllers
     {
         private readonly CugemderMobileAppDbContext _context;
         private readonly FirebaseApp firebaseApp = FirebaseSingleton._firebaseApp;
-        
+
         public NotificationsController(CugemderMobileAppDbContext context)
         {
             _context = context;
@@ -40,7 +40,7 @@ namespace CugemderApp.Server.Controllers
         //    //        Title = title,
         //    //        Body = body,
         //    //    },
-                
+
         //    //    Topic = topic,
         //    //};
 
@@ -115,30 +115,30 @@ namespace CugemderApp.Server.Controllers
             return CreatedAtAction("GetNotifications", new { id = notifications.Id }, notifications);
         }
 
-        [HttpPost]
-        [Route("sendNotification")]
-        public async void SendNotification(NotificationObject notification)
-        {
+        //[HttpPost]
+        //[Route("sendNotification")]
+        //public async void SendNotification(NotificationObject notification)
+        //{
 
-            var normalizedTopic = RemoveDiacritics(notification.topic);
-            
-            var message = new Message()
-            {
-                Notification = new Notification()
-                {
-                    Title = notification.title,
-                    Body = notification.body,
-                },
+        //    var normalizedTopic = RemoveDiacritics(notification.topic);
 
-                Topic = normalizedTopic,
-            };
+        //    var message = new Message()
+        //    {
+        //        Notification = new Notification()
+        //        {
+        //            Title = notification.title,
+        //            Body = notification.body,
+        //        },
 
-            // Send a message to the devices subscribed to the provided topic.
-            string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
-            // Response is a message ID string.
-            Debug.WriteLine("Successfully sent message: " + response);
-            Console.WriteLine("Successfully sent message: " + response);
-        }
+        //        Topic = normalizedTopic,
+        //    };
+
+        //    // Send a message to the devices subscribed to the provided topic.
+        //    string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+        //    // Response is a message ID string.
+        //    Debug.WriteLine("Successfully sent message: " + response);
+        //    Console.WriteLine("Successfully sent message: " + response);
+        //}
 
         // DELETE: api/Notifications/5
         [HttpDelete("{id}")]

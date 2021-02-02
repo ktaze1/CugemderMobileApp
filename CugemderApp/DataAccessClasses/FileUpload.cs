@@ -32,7 +32,10 @@ namespace CugemderApp.DataAccessClasses
             await _http.DeleteAsync($"api/FileUpload/Document/{documentName}");
         }
 
-
+        public async void SendExcel()
+        {
+            await _http.GetAsync($"api/FileUpload/Document/Excel");
+        }
 
     }
 }

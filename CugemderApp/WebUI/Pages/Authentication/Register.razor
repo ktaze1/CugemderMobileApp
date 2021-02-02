@@ -6,13 +6,13 @@
 @inject AspNetUsersDAL userDAL
 @inject IJSRuntime js
 
-
+@using System.ComponentModel.DataAnnotations;
 
 <h1 class="h2 font-weight-normal login-title">
     Üye Ol
 </h1>
 
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerRequest">
+<EditForm class="form-signin" OnValidSubmit="ValidateRequest" Model="registerRequest">
     <DataAnnotationsValidator />
 
     <label for="inputFirstName">Adınız:</label>
@@ -62,7 +62,8 @@
 </center>
 @code{
 
-    RegisterRequest registerRequest { get; set; } = new RegisterRequest() { DateofBirth = new DateTime(DateTime.Today.Year, 01, 01) };
+    RegisterRequestValidation registerRequest { get; set; } = new RegisterRequestValidation() { DateofBirth = new DateTime(DateTime.Today.Year, 01, 01) };
+    RegisterRequest validatedRegisterRequest = new RegisterRequest();
     string error { get; set; }
 
     FileResult pickResult;
@@ -80,8 +81,8 @@
             {
                 var name = registerRequest.FirstName + " " + registerRequest.LastName;
                 UploadFiles();
-                await authStateProvider.Register(registerRequest);
-                await authStateProvider.SendNewUserEmail(name);
+                await authStateProvider.Register(validatedRegisterRequest);
+                //await authStateProvider.SendNewUserEmail(name);
                 await js.InvokeVoidAsync("swal", "Üyelik Kaydı Başarılı", "Sistem Yöneticisi tarafından onaylanması sonrasında programı kullanabileceksiniz.", "info");
             }
         }
@@ -109,8 +110,55 @@
         var multi = new MultipartFormDataContent();
         multi.Add(content, filename, filename);
         fileDAL.UploadPhoto(multi);
-        registerRequest.photoUrl = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Images/{filename}";
+        validatedRegisterRequest.photoUrl = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Images/{filename}";
     }
 
+    async void ValidateRequest()
+    {
+        validatedRegisterRequest.FirstName = registerRequest.FirstName.Trim();
+        validatedRegisterRequest.LastName = registerRequest.LastName.Trim();
+        validatedRegisterRequest.Email = registerRequest.Email.Trim();
+        validatedRegisterRequest.PhoneNo = registerRequest.PhoneNo.Trim();
+        validatedRegisterRequest.Password = registerRequest.Password;
+        validatedRegisterRequest.PasswordConfirm = registerRequest.PasswordConfirm;
+        validatedRegisterRequest.photoUrl = registerRequest.photoUrl;
+        await OnSubmit();
+    }
+
+
+    public class RegisterRequestValidation
+    {
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        public string FirstName { get; set; }
+
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        [RegularExpression(@"05\d{9}\s*$", ErrorMessage = "Geçerli bir telefon numarası giriniz")]
+        public string PhoneNo { get; set; }
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime DateofBirth { get; set; }
+
+
+        [EmailAddress]
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        public string Email { get; set; }
+
+        public string photoUrl { get; set; }
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        [StringLength(100, ErrorMessage = "{0} en az {2} ve en fazla {1} karakter uzunluğunda; en az bir büyük, bir küçük ve bir adet özel karakter içermeli.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Şifre")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
+        [Compare(nameof(Password), ErrorMessage = "Şifreler uyuşmuyor!")]
+        public string PasswordConfirm { get; set; }
+    }
 
 }
