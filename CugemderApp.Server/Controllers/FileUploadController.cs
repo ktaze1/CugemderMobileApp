@@ -196,9 +196,6 @@ namespace CugemderApp.Server.Controllers
                 userNames.Add(new UserNamesWithID { Id = item.Id, Name = item.FirstName + " " + item.LastName});
             }
 
-            // Lets converts our object data to Datatable for a simplified logic.
-            // Datatable is most easy way to deal with complex datatypes for easy reading and formatting. 
-            //System.Data.DataTable table = (System.Data.DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(users), (typeof(System.Data.DataTable)));
 
             var fileMeeting = Path.Combine(path, "Staticfiles", "Contents", $"Birebir Gorusme - {DateTime.Today.ToString("D", trTR)}.xlsx");
             using (SpreadsheetDocument document = SpreadsheetDocument.Create(fileMeeting, SpreadsheetDocumentType.Workbook))
@@ -575,10 +572,12 @@ namespace CugemderApp.Server.Controllers
 
                 foreach (var jobReference in jobReferences)
                 {
+                    var senderName = userNames.Any(c => c.Id == jobReference.ReferencerId) ? userNames.Where(c => c.Id == jobReference.ReferencerId).First().Name : "Silinmiş Kullanıcı";
+                    var receivername = userNames.Any(c => c.Id == jobReference.ReferencedId) ? userNames.Where(c => c.Id == jobReference.ReferencedId).First().Name : "Silinmiş Kullanıcı";
                     Row headerRow = new Row();
-                    Cell senderCell = new Cell(); senderCell.DataType = CellValues.String; senderCell.CellValue = new CellValue(userNames.Where(c => c.Id == jobReference.ReferencerId).First().Name); headerRow.AppendChild(senderCell);
+                    Cell senderCell = new Cell(); senderCell.DataType = CellValues.String; senderCell.CellValue = new CellValue(senderName); headerRow.AppendChild(senderCell);
                     Cell receiverCell = new Cell(); receiverCell.DataType = CellValues.String; receiverCell.CellValue = new CellValue(jobReference.ExpertName); headerRow.AppendChild(receiverCell);
-                    Cell expertCell = new Cell(); expertCell.DataType = CellValues.String; expertCell.CellValue = new CellValue(userNames.Where(c => c.Id == jobReference.ReferencedId).First().Name); headerRow.AppendChild(expertCell);
+                    Cell expertCell = new Cell(); expertCell.DataType = CellValues.String; expertCell.CellValue = new CellValue(receivername); headerRow.AppendChild(expertCell);
                     Cell phoneNoCell = new Cell(); phoneNoCell.DataType = CellValues.String; phoneNoCell.CellValue = new CellValue(jobReference.ExpertContact); headerRow.AppendChild(phoneNoCell);
                     Cell isHappenedCell = new Cell(); isHappenedCell.DataType = CellValues.String; isHappenedCell.CellValue = new CellValue(jobReference.IsMeetingDone ? "EVET" : "HAYIR"); headerRow.AppendChild(isHappenedCell);
                     Cell isProductiveCell = new Cell(); isProductiveCell.DataType = CellValues.String; isProductiveCell.CellValue = new CellValue(jobReference.IsProductive.HasValue ? jobReference.IsProductive.Value ? "EVET" : "HAYIR" : ""); headerRow.AppendChild(isProductiveCell);
@@ -594,21 +593,21 @@ namespace CugemderApp.Server.Controllers
 
             using (var message = new MailMessage())
             {
-               message.To.Add(new MailAddress($"bkaantaze@gmail.com"));
-               message.From = new MailAddress("beeportsifre@gmail.com", "BeePort");
-               message.Subject = "Veritabani bilgiler";
-               message.Body = $"Bilgiler ektedir";
-               message.IsBodyHtml = true;
-               message.Attachments.Add(new Attachment(fileUsers));
-               message.Attachments.Add(new Attachment(fileReference));
-               message.Attachments.Add(new Attachment(fileMeeting));
-               using (var client = new SmtpClient("smtp.gmail.com", 587))
-               {
-                   client.UseDefaultCredentials = false;
-                   client.Credentials = new NetworkCredential("beeportsifre@gmail.com", "184589Be-"); // TODO ÇÜGEMDER Mail Gir
-                   client.EnableSsl = true;
-                   client.Send(message);
-               }
+                message.To.Add(new MailAddress($"bkaantaze@gmail.com"));
+                message.From = new MailAddress("beeportsifre@gmail.com", "BeePort");
+                message.Subject = "Veritabani bilgiler";
+                message.Body = $"Bilgiler ektedir";
+                message.IsBodyHtml = true;
+                message.Attachments.Add(new Attachment(fileUsers));
+                message.Attachments.Add(new Attachment(fileReference));
+                message.Attachments.Add(new Attachment(fileMeeting));
+                using (var client = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("beeportsifre@gmail.com", "184589Be-");
+                    client.EnableSsl = true;
+                    client.Send(message);
+                }
             }
         }
 

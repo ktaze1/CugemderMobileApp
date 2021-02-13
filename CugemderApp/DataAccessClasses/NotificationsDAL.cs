@@ -22,7 +22,7 @@ namespace CugemderApp.DataAccessClasses
         {
             await _http.PostAsJsonAsync("api/Notifications", notification);
         }
-        public async void DeleteNotification(int id)
+        public async Task DeleteNotification(int id)
         {
             await _http.DeleteAsync($"api/Notifications/{id}");
         }

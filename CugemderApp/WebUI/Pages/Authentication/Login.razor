@@ -7,7 +7,7 @@
     Giriş Yap
 </h1>
 
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginRequest">
+<EditForm class="form-signin" OnValidSubmit="@( async () => await OnSubmit())" Model="loginRequest">
     <DataAnnotationsValidator />
 
     <label for="inputUsername">E-mail:</label>

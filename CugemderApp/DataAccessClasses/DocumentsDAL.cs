@@ -23,12 +23,12 @@ namespace CugemderApp.DataAccessClasses
             return await _http.GetFromJsonAsync<Documents>($"api/Documents/{id}");
         }
 
-        public async void PostDocuments(Documents documents)
+        public async Task PostDocuments(Documents documents)
         {
             await _http.PostAsJsonAsync("api/Documents", documents);
         }
 
-        public async void DeleteDocuments(int id)
+        public async Task DeleteDocuments(int id)
         {
             await _http.DeleteAsync($"api/Documents/{id}");
         }

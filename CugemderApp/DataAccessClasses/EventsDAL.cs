@@ -22,17 +22,17 @@ namespace CugemderApp.DataAccessClasses
             return await _http.GetFromJsonAsync<Events>($"api/Events/{id}");
         }
 
-        public async void PutEvents(int id, Events events)
+        public async Task PutEvents(int id, Events events)
         {
             await _http.PutAsJsonAsync($"api/Events/{id}", events);
         }
 
-        public async void PostEvents(Events events)
+        public async Task PostEvents(Events events)
         {
             await _http.PostAsJsonAsync("api/Events", events);
         }
 
-        public async void DeleteEvents(int id)
+        public async Task DeleteEvents(int id)
         {
             await _http.DeleteAsync($"api/Events/{id}");
         }

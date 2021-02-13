@@ -66,6 +66,7 @@ else if (jobTitlesList != null)
     protected override async Task OnInitializedAsync()
     {
         jobTitlesList = await jobDAL.GetJobTitles();
+        jobTitlesList = jobTitlesList.OrderBy(c => c.TitleName).ToList();
         users = await userDAL.GetUsersNoNullUserList();
     }
 
@@ -76,13 +77,13 @@ else if (jobTitlesList != null)
         RefreshPageContent();
     }
 
-    void Delete(int jobId)
+    async void Delete(int jobId)
     {
         var tempUsers = users.Where(c => c.JobTitle == jobId).ToList();
         foreach (var user in tempUsers)
         {
             user.Group = null;
-            userDAL.PutUser(user.Id, user);
+            await userDAL.PutUser(user.Id, user);
         }
         jobDAL.DeleteJobTitles(jobId);
         RefreshPageContent();

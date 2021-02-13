@@ -159,7 +159,7 @@
         showFilter = true;
     }
 
-    async void Filter()
+    void Filter()
     {
         if (users != null)
         {
@@ -178,29 +178,30 @@
         showFilter = false;
     }
 
-    void SendJobReference()
+    async void SendJobReference()
     {
         if (jobReference.ExpertName != null && jobReference.ExpertContact != null && jobReference.ReferencedId != null)
         {
             jobReference.ReferencerId = loggedUser.Id;
             jobReference.Date = DateTime.Now;
             jobReferenceDAL.PostJobReferences(jobReference);
-          //  notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Yeni Bir İş/Kişi Yönlendirmiştir.", "İş/Kişi Yönlendirme", referenced.Id);
-            userNotifDAL.PostUserNotifications(new UserNotificationList()
+            notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Yeni Bir İş/Kişi Yönlendirmiştir.", "İş/Kişi Yönlendirme", referenced.Id);
+            var notification = new UserNotificationList()
             {
                 Title = "İş / Kişi Yönlendirme",
                 Body = $" {loggedUser.FirstName} {loggedUser.LastName.ToUpper()} İş / Kişi Yönlendirmiştir!",
                 Date = DateTime.Now,
                 Receiver = jobReference.ReferencedId
-            });
+            };
+            await userNotifDAL.PostUserNotifications(notification);
 
 
-            js.InvokeVoidAsync("swal", "Başarılı", "İş / Kişi Yönlendirildi!", "success");
+            await js.InvokeVoidAsync("swal", "Başarılı", "İş / Kişi Yönlendirildi!", "success");
             RefreshPageContent();
         }
     }
 
-    async void RefreshPageContent()
+    void RefreshPageContent()
     {
         System.Threading.Thread.Sleep(100);
         uriHelper.NavigateTo("redirect/jobreferences");

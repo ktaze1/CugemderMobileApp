@@ -56,7 +56,7 @@
 
 
 
-    void SubmitForm()
+    async void SubmitForm()
     {
         meeting.ReceiverId = id;
         meeting.SenderId = loggedUser.Id;
@@ -65,15 +65,17 @@
         meeting.IsResultedbySender = false;
         meetingDAL.PostMeetings(meeting);
 
-    //    notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size {meeting.Date.ToString("F", AppState.trTR)} Tarihinde Birebir Görüşme Talebinde Bulunmuştur.", "Yeni Birebir Görüşme Talebi!", meeting.ReceiverId);
+        notifications.SendNotification($"{loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size {meeting.Date.ToString("F", AppState.trTR)} Tarihinde Birebir Görüşme Talebinde Bulunmuştur.", "Yeni Birebir Görüşme Talebi!", meeting.ReceiverId);
 
-        userNotifDAL.PostUserNotifications(new UserNotificationList()
+        var notification = new UserNotificationList()
         {
             Title = "Birebir Görüşme Talebi",
             Body = $" {loggedUser.FirstName} {loggedUser.LastName.ToUpper()} Size Birebir Görüşme Talebi Yollamıştır.",
             Date = DateTime.Now,
             Receiver = meeting.ReceiverId
-        });
+        };
+        
+        await userNotifDAL.PostUserNotifications(notification);
 
 
         uriHelper.NavigateTo($"profile/{id}");

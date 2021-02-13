@@ -28,7 +28,7 @@
                     <ValidationMessage For="@(() => form.description)" />
                 </div>
                 <br />
-                <button class="btn btn-secondary" type="button" @onclick="@( () => SelectFiles())">PDF Seç</button>
+                <button class="btn btn-secondary" type="button" @onclick="@( async () => await SelectFiles())">PDF Seç</button>
                 <button class="btn btn-primary">Dosyayı Ekle</button>
             </div>
             <br />
@@ -54,10 +54,10 @@
                         <p><strong>Açıklama</strong>: @item.Summary</p>
                     </td>
                     <td>
-                        <button @onclick="@( () => Launcher.OpenAsync(item.Url))" class="btn btn-primary" type="button"> Aç</button>
+                        <button @onclick="@( async () => await Launcher.OpenAsync(item.Url))" class="btn btn-primary" type="button"> Aç</button>
                         @if (loggedUser != null && loggedUser.IsAdmin == true)
                         {
-                            <button style="margin-top: 4px;" class="btn btn-danger" @onclick="@( () => DeleteFile(item.Url, item.Id))" type="button"> Sil </button>
+                            <button style="margin-top: 4px;" class="btn btn-danger" @onclick="@( async () => await DeleteFile(item.Url, item.Id))" type="button"> Sil </button>
                         }
                     </td>
                 </tr>
@@ -93,19 +93,19 @@
         }
     }
 
-    async void DeleteFile(string url, int id)
+    async Task DeleteFile(string url, int id)
     {
         var filetoDelete = System.IO.Path.GetFileName(url);
         if (filetoDelete != null)
         {
-            fileDAL.DeleteDocument(filetoDelete);
-            documentDAL.DeleteDocuments(id);
+            await fileDAL.DeleteDocument(filetoDelete);
+            await documentDAL.DeleteDocuments(id);
 
             RefreshPageContent();
         }
     }
 
-    async void UploadFiles()
+    async Task UploadFiles()
     {
         if (pickResults != null)
         {
@@ -116,13 +116,13 @@
             var content = new StreamContent(stream);
             var multi = new MultipartFormDataContent();
             multi.Add(content, filename, filename);
-            fileDAL.UploadDocument(multi);
+            await fileDAL.UploadDocument(multi);
 
             document.Title = form.name;
             document.Summary = form.description;
             document.Url = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Contents/{filename}";
 
-            documentDAL.PostDocuments(document);
+            await documentDAL.PostDocuments(document);
             document = new Documents();
 
             await js.InvokeVoidAsync("swal", "Dosya Yüklendi", "Dosya başarıyla yüklendi.", "success");
@@ -134,7 +134,7 @@
         }
     }
 
-    async void SelectFiles()
+    async Task SelectFiles()
     {
 
         pickResults = await FilePicker.PickAsync();

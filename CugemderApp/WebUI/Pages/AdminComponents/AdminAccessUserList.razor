@@ -189,7 +189,7 @@ else
         }
         meetingPointDAL.DeleteMeetinPoints(userId);
         System.Threading.Thread.Sleep(100);
-        pointDAL.DeletePoints(userId);
+        await pointDAL.DeletePoints(userId);
         System.Threading.Thread.Sleep(100);
         AspNetUsers user;
         if(userlistwithNull.Count() > 0)
@@ -281,11 +281,11 @@ else
 
         foreach (var item in GroupsWithNewUsers)
         {
-            // notifications.SendNotification("Grubunuza Yeni Bir Üye Katıldı!", "Yeni Üye", item);
+            notifications.SendNotification("Grubunuza Yeni Bir Üye Katıldı!", "Yeni Üye", item);
         }
 
 
-        js.InvokeVoidAsync("swal", "Başarılı!", "Liste Güncellendi.", "success");
+        await js.InvokeVoidAsync("swal", "Başarılı!", "Liste Güncellendi.", "success");
 
         RefreshPageContent();
     }

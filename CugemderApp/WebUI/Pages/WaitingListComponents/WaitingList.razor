@@ -1,6 +1,7 @@
 ﻿@page "/waitinglist"
 @inject AspNetUsersDAL userDAL
 @inject GroupsDAL groupDAL
+@inject FileUpload fileDAL
 @inject PointsDAL pointDAL
 @inject NavigationManager  uriHelper
 @inject NotificationsDAL notifications
@@ -132,6 +133,11 @@ else
     async Task Delete(string userId)
     {
         var user = waitingUsers.First(x => x.Id == userId);
+        var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
+        if (!string.IsNullOrEmpty(filetoDelete))
+        {
+            fileDAL.DeletePhoto(filetoDelete);
+        }
         meetingPointDAL.DeleteMeetinPoints(userId);
         pointDAL.DeletePoints(userId);
         await userDAL.DeleteUser(userId);
@@ -142,6 +148,11 @@ else
         try
         {
             var user = waitingUsers.First(x => x.Id == userId);
+            var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
+            if (!string.IsNullOrEmpty(filetoDelete))
+            {
+                fileDAL.DeletePhoto(filetoDelete);
+            }
             meetingPointDAL.DeleteMeetinPoints(userId);
             pointDAL.DeletePoints(userId);
             await userDAL.DeleteUser(userId);

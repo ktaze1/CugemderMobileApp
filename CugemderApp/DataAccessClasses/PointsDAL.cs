@@ -25,17 +25,17 @@ namespace CugemderApp.DataAccessClasses
             return await _http.GetFromJsonAsync<Points>($"api/Points/{id}");
         }
 
-        public async void PutPoints(int id, Points points)
+        public async Task PutPoints(int id, Points points)
         {
             await _http.PutAsJsonAsync($"api/Points/{id}", points);
         }
 
-        public async void PostPoints(Points points)
+        public async Task PostPoints(Points points)
         {
             await _http.PostAsJsonAsync("api/Points", points);
         }
 
-        public async void PostPoints(List<Points> points)
+        public async Task PostPoints(List<Points> points)
         {
             await _http.PostAsJsonAsync("api/Points/list", points);
         }
@@ -43,7 +43,7 @@ namespace CugemderApp.DataAccessClasses
 
 
 
-        public async void DeletePoints(string id)
+        public async Task DeletePoints(string id)
         {
             await _http.DeleteAsync($"api/Points/{id}");
         }

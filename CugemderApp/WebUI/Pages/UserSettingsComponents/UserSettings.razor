@@ -278,7 +278,7 @@
         var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
         if (filetoDelete != null && item != null)
         {
-            fileDAL.DeletePhoto(filetoDelete);
+            await fileDAL.DeletePhoto(filetoDelete);
             System.IO.FileInfo fi = new System.IO.FileInfo(item.FileName);
             string encodedStr = string.Format(@"{0}", Guid.NewGuid());
             var filename = $"{encodedStr}{fi.Extension}";
@@ -286,7 +286,7 @@
             var content = new StreamContent(stream);
             var multi = new MultipartFormDataContent();
             multi.Add(content, filename, filename);
-            fileDAL.UploadPhoto(multi);
+            await fileDAL.UploadPhoto(multi);
             user.PhotoUrl = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Images/{filename}";
         }
 

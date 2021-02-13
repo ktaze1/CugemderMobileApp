@@ -49,7 +49,10 @@
                             }
                             else
                             {
-                                <button @onclick="@( () => UpdateStatus(meeting.Id))" class="btn btn-primary" type="button">Cevapla</button>
+                                if (getFullname(meeting.ReferencerId) != "Silinmiş Kullanıcı" && meeting.ReferencerId != loggedUser.Id)
+                                {
+                                    <button @onclick="@( () => UpdateStatus(meeting.Id))" class="btn btn-primary" type="button">Cevapla</button>
+                                }
                             }
                         </td>
                     </tr>
@@ -132,7 +135,7 @@
         public string? surname { get; set; }
     }
 
-    async void Filter()
+    void Filter()
     {
         if (users != null)
         {
@@ -151,7 +154,7 @@
         return fullname;
     }
 
-    async void UpdateStatus(int referenceId)
+    void UpdateStatus(int referenceId)
     {
         uriHelper.NavigateTo($"jobReferenceUpdate/{referenceId}");
     }

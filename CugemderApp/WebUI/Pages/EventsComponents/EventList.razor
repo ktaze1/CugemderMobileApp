@@ -198,8 +198,8 @@ else
 
     async Task Delete(int eventID)
     {
-        eventDAL.DeleteEvents(eventID);
-        notifications.DeleteNotification(eventID);
+        await eventDAL.DeleteEvents(eventID);
+        await notifications.DeleteNotification(eventID);
         RefreshPageContent();
     }
 
@@ -208,7 +208,7 @@ else
         if (newEvent.Title == null || newEvent.Summary == null
            || newEvent.Location == null)
         {
-            js.InvokeVoidAsync("swal", "Hata", "Etkinlik Boş Girilemez!", "error");
+            await js.InvokeVoidAsync("swal", "Hata", "Etkinlik Boş Girilemez!", "error");
         }
         else
         {
@@ -217,7 +217,7 @@ else
                 newEvent.RelatedGroup = null;
                 foreach (var item in groupList)
                 {
-                    //        notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", item.GroupName);
+                    notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", item.GroupName);
                     var notificationtosend = new Notifications()
                     {
                         Title = "Etkinlik",
@@ -226,6 +226,8 @@ else
                         Receiver = item.GroupName
                     };
                     await notifications.AddNotificaiton(notificationtosend);
+
+
                     var notiftosendforlist = new UserNotificationList()
                     {
                         Title = "Etkinlik",
@@ -238,7 +240,7 @@ else
             }
             else if (newEvent.RelatedGroup != 0)
             {
-                // notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
+                notifications.SendNotification($"{newEvent.Date.Value.ToString("D", AppState.trTR)} Tarihinde Etkinlik Olacaktır.", "Yeni Etkinlik!", groupList.Where(c => c.Id == newEvent.RelatedGroup).First().GroupName);
                 var notificationtosend = new Notifications()
                 {
                     Title = "Etkinlik",
@@ -258,7 +260,7 @@ else
                 await userNotifDAL.PostUserNotifications(notiftosendforlist);
             }
 
-            eventDAL.PostEvents(newEvent);
+            await eventDAL.PostEvents(newEvent);
             RefreshPageContent();
             newEvent = new Events();
         }

@@ -14,18 +14,18 @@
 
 @code {
 
-    void SendDBData()
+    async void SendDBData()
     {
         try
         {
-            fileManager.SendExcel();
+            await fileManager.SendExcel();
 
-            js.InvokeVoidAsync("swal", "Başarılı!", "Excel Dosyaları Mailinize Gönderilmiştir. Lütfen Mailinizi Kontrol Ediniz.", "success");
+            await js.InvokeVoidAsync("swal", "Başarılı!", "Excel Dosyaları Mailinize Gönderilmiştir. Lütfen Mailinizi Kontrol Ediniz.", "success");
             navHelper.NavigateTo("adminsettings");
         }
         catch (Exception ex)
         {
-            js.InvokeVoidAsync("swal", "Hata!", "Bir Hata Oluştu, Lütfen Tekrar Deneyiniz", "error");
+            await js.InvokeVoidAsync("swal", "Hata!", "Bir Hata Oluştu, Lütfen Tekrar Deneyiniz", "error");
             navHelper.NavigateTo("adminsettings");
         }
 

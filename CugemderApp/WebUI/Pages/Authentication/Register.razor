@@ -12,7 +12,7 @@
     Üye Ol
 </h1>
 
-<EditForm class="form-signin" OnValidSubmit="ValidateRequest" Model="registerRequest">
+<EditForm class="form-signin" OnValidSubmit="@( async () => ValidateRequest())" Model="registerRequest">
     <DataAnnotationsValidator />
 
     <label for="inputFirstName">Adınız:</label>
@@ -66,6 +66,8 @@
     RegisterRequest validatedRegisterRequest = new RegisterRequest();
     string error { get; set; }
 
+    bool isRegisterCompleted = false;
+
     FileResult pickResult;
 
     async Task OnSubmit()
@@ -80,10 +82,11 @@
             else if (pickResult != null)
             {
                 var name = registerRequest.FirstName + " " + registerRequest.LastName;
-                UploadFiles();
+                await UploadFiles();
                 await authStateProvider.Register(validatedRegisterRequest);
-                //await authStateProvider.SendNewUserEmail(name);
+                await authStateProvider.SendNewUserEmail(name);
                 await js.InvokeVoidAsync("swal", "Üyelik Kaydı Başarılı", "Sistem Yöneticisi tarafından onaylanması sonrasında programı kullanabileceksiniz.", "info");
+                navigationManager.NavigateTo("login");
             }
         }
         catch (Exception ex)
@@ -100,7 +103,7 @@
         });
     }
 
-    async void UploadFiles()
+    async Task UploadFiles()
     {
         System.IO.FileInfo fi = new System.IO.FileInfo(pickResult.FileName);
         string encodedStr = string.Format(@"{0}", Guid.NewGuid());
@@ -109,7 +112,7 @@
         var content = new StreamContent(stream);
         var multi = new MultipartFormDataContent();
         multi.Add(content, filename, filename);
-        fileDAL.UploadPhoto(multi);
+        await fileDAL.UploadPhoto(multi);
         validatedRegisterRequest.photoUrl = $"{AppState._http.BaseAddress.ToString()}StaticFiles/Images/{filename}";
     }
 
@@ -122,7 +125,11 @@
         validatedRegisterRequest.Password = registerRequest.Password;
         validatedRegisterRequest.PasswordConfirm = registerRequest.PasswordConfirm;
         validatedRegisterRequest.photoUrl = registerRequest.photoUrl;
-        await OnSubmit();
+        if (!isRegisterCompleted)
+        {
+            await OnSubmit();
+            isRegisterCompleted = true;
+        }
     }
 
 

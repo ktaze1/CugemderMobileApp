@@ -44,10 +44,10 @@
     }
     async Task EditEvent()
     {
-        eventDAL.PutEvents(eventId, events);
+        await eventDAL.PutEvents(eventId, events);
         uriHelper.NavigateTo("events/1");
     }
-    async Task Cancel()
+    void Cancel()
     {
         uriHelper.NavigateTo("events/1");
     }

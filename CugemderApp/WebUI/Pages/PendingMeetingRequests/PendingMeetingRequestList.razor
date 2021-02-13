@@ -193,7 +193,7 @@ else
     async Task Delete(int meetingId)
     {
          
-        meetingDAL.DeleteMeetings(meetingId);
+        await meetingDAL.DeleteMeetings(meetingId);
 
     }
 
@@ -228,8 +228,8 @@ else
         recepientNotif.Receiver = meeting.ReceiverId;
         senderNotif.Receiver = meeting.SenderId;
 
-        notification.AddNotificaiton(recepientNotif);
-        notification.AddNotificaiton(senderNotif);
+        await notification.AddNotificaiton(recepientNotif);
+        await notification.AddNotificaiton(senderNotif);
 
         var notificationforsender = new UserNotificationList()
         {

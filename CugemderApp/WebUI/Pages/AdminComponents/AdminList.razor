@@ -2,6 +2,7 @@
 @inject AspNetUsersDAL userDAL
 @inject NavigationManager uriHelper
 
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div>
     <div>
@@ -73,26 +74,34 @@
     List<AspNetUsers> users, tempUserList;
 
     SearchForm sc = new SearchForm();
-
+    private AspNetUsers currentUser, loggedUser;
     protected override async Task OnInitializedAsync()
     {
         users = await userDAL.GetUsersNoNullUserList();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        loggedUser = await userDAL.GetUsername(user.Identity.Name);
+
     }
 
 
     async void Delete(string id)
     {
-        AspNetUsers user = await userDAL.GetUserID(id);
-        user.IsAdmin = false;
-        userDAL.PutUser(id, user);
-        RefreshPageContent();
+        if(loggedUser.Id != id)
+        {
+            AspNetUsers user = await userDAL.GetUserID(id);
+            user.IsAdmin = false;
+            await userDAL.PutUser(id, user);
+            RefreshPageContent();
+        }
     }
 
     async void MakeAdmin(string id)
     {
         AspNetUsers user = await userDAL.GetUserID(id);
         user.IsAdmin = true;
-        userDAL.PutUser(id, user);
+        await userDAL.PutUser(id, user);
         RefreshPageContent();
     }
 
@@ -103,7 +112,7 @@
         public string? surname { get; set; }
     }
 
-    async void Filter()
+    void Filter()
     {
         if (users != null)
         {

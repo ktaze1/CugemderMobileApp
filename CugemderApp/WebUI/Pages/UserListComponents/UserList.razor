@@ -68,7 +68,7 @@
     .br {
         display: block;
         margin-bottom: 0;
-    } 
+    }
 
     @@media all and (min-width: 45em) {
         .list li {
@@ -126,9 +126,16 @@
 {
     <p><em>Y&uuml;kleniyor...</em></p>
 }
-else if(tempList.Count == 0)
+else if (tempList.Count == 0)
 {
-    <p>Üye Bulunamadı</p>
+    if (!isListLoaded)
+    {
+        <p><em>Y&uuml;kleniyor...</em></p>
+    }
+    else
+    {
+        <p>Üye Bulunamadı</p>
+    }
 }
 else
 {
@@ -145,20 +152,20 @@ else
                     {
                         <tr>
                             <td class="inner">
-                                    <div @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-img">
-                                        <img class="profile-img" src="@user.PhotoUrl" />
+                                <div @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-img">
+                                    <img class="profile-img" src="@user.PhotoUrl" />
+                                </div>
+                                <div class="li-text">
+                                    <h6 @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-head" style="color: red;"> @user.FirstName @user.LastName.ToUpper()</h6>
+                                    <div class="li-sub">
+                                        <p style="color:grey; font-size:small;">
+                                            Firma: <span><em>@user.Company</em></span> <span class="br"></span>
+                                            Uzmanlık Alanı: <span><em>@user.Speciality</em></span> <span class="br"></span>
+                                            Grup: <span><em>@user.GroupNavigation.GroupName</em></span> <span class="br"></span>
+                                            Puan: <span><em>@user.PointsNavigation.TotalPoints</em></span>
+                                        </p>
                                     </div>
-                                    <div class="li-text">
-                                        <h6 @onclick="@( () => uriHelper.NavigateTo($"profile/{user.Id}"))" class="li-head" style="color: red;"> @user.FirstName @user.LastName.ToUpper()</h6>
-                                        <div class="li-sub">
-                                            <p style="color:grey; font-size:small;">
-                                                Firma: <span><em>@user.Company</em></span> <span class="br"></span>
-                                                Uzmanlık Alanı: <span><em>@user.Speciality</em></span> <span class="br"></span>
-                                                Grup: <span><em>@user.GroupNavigation.GroupName</em></span> <span class="br"></span>
-                                                Puan: <span><em>@user.PointsNavigation.TotalPoints</em></span>
-                                            </p>
-                                        </div>
-                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }
@@ -184,6 +191,9 @@ else
     Dictionary<string, int> groupStandings = new Dictionary<string, int>();
     int standingNo = 1, groupStandingNo = 1;
 
+
+    bool isListLoaded = false;
+
     private int groupId = 0;
     private int positionId = 0;
     private int genderId = 0;
@@ -203,6 +213,7 @@ else
             user = await userDAL.GetUsername(userAuth.Identity.Name);
         }
         userlist = await userDAL.GetUsersNoNullUserList();
+        isListLoaded = true;
         tempList = userlist.Where(c => c.Group == user.Group).ToList();
         foreach (var user in userlist)
         {
@@ -226,14 +237,15 @@ else
             groupStandingNo = 1;
         }
 
+        this.StateHasChanged();
     }
 
     async Task Delete(string userId)
     {
         var user = userlist.First(x => x.Id == userId);
 
-        pointDAL.DeletePoints(userId);
-        userDAL.DeleteUser(userId);
+        await pointDAL.DeletePoints(userId);
+        await userDAL.DeleteUser(userId);
     }
 
     public class SearchForm
@@ -267,7 +279,7 @@ else
         sc = new SearchForm();
     }
 
-    async void Filter()
+    void Filter()
     {
         if (userlist != null)
         {

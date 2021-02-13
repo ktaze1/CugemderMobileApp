@@ -134,28 +134,18 @@ else
         }
     }
 
-    protected override void OnParametersSet()
-    {
-        option = id.GetValueOrDefault();
-    }
-
-    void Delete(string userId)
-    {
-        meetingPointDAL.DeleteMeetinPoints(userId);
-        pointDAL.DeletePoints(userId);
-        userDAL.DeleteUser(userId);
-    }
 
     void Navigate(int option)
     {
-        if (option == 0)
-            uriHelper.NavigateTo($"/adminaccessuserlist/");
-        else
-            uriHelper.NavigateTo($"/adminaccessuserlist/{option}");
+        if (option != 0 && option > 0)
+        {
+            id = option;
+            this.StateHasChanged();
+        }
     }
 
 
-    void UpdatePoints()
+    async void UpdatePoints()
     {
         var tempUserList = id.HasValue ? userlist.Where(x => x.Group == id) : userlist;
 
@@ -182,10 +172,17 @@ else
             };
 
             pointList.Add(pointToAdd);
-          //  notifications.SendNotification($"Puanınız güncellenmiştir, Yeni Puanınız: {pointToAdd.TotalPoints}", "Puan Değişikliği!", user.Id);
+            notifications.SendNotification($"Puanınız güncellenmiştir, Yeni Puanınız: {pointToAdd.TotalPoints}", "Puan Değişikliği!", user.Id);
         }
 
-        pointDAL.PostPoints(pointList);
-        uriHelper.NavigateTo("adminsettings");
+        await pointDAL.PostPoints(pointList);
+        RefreshPageContent();
+    }
+
+    async void RefreshPageContent()
+    {
+        System.Threading.Thread.Sleep(100);
+        uriHelper.NavigateTo("redirect/networkmeetinguserlist");
+        await OnInitializedAsync();
     }
 }

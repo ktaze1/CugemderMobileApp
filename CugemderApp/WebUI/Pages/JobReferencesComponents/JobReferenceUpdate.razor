@@ -69,7 +69,7 @@
     async void RefreshPageContent()
     {
         System.Threading.Thread.Sleep(100);
-        uriHelper.NavigateTo("redirect/jobreferences");
+        uriHelper.NavigateTo("redirect/jobreferences", true);
         await OnInitializedAsync();
     }
 
