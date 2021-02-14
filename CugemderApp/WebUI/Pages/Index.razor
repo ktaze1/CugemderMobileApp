@@ -355,13 +355,11 @@ else
 
     public void Unsubscribe(string groupname)
     {
-        //
         onTopicUnsubscribed(groupname);
     }
 
     public void Subscribe(string groupname, string username)
     {
-        //
         onTopicSubscribed(groupname, username);
     }
 
@@ -407,7 +405,7 @@ else
                 {
                     Subscribe(loggedUser.GroupNavigation.GroupName, loggedUser.Id);
                     loggedUser.IsTopicSubscribed = true;
-                    userDAL.PutUser(loggedUser.Id, loggedUser);
+                    await userDAL.PutUser(loggedUser.Id, loggedUser);
                 }
 
             }
