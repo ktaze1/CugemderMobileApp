@@ -32,17 +32,17 @@ namespace CugemderApp.DataAccessClasses
             return await _http.GetFromJsonAsync<List<Meetings>>($"api/Meetings/user/{id}");
         }
 
-        public async void PutMeetings(int id, Meetings meeting)
+        public async Task PutMeetings(int id, Meetings meeting)
         {
             await _http.PutAsJsonAsync($"api/Meetings/{id}", meeting);
         }
 
-        public async void PostMeetings(Meetings meeting)
+        public async Task PostMeetings(Meetings meeting)
         {
             await _http.PostAsJsonAsync("api/Meetings", meeting);
         }
 
-        public async void DeleteMeetings(int id)
+        public async Task DeleteMeetings(int id)
         {
             await _http.DeleteAsync($"api/Meetings/{id}");
         }

@@ -59,7 +59,7 @@
             @foreach (var admin in users.Where(c => c.IsAdmin == true))
             {
                 <tr>
-                    <td>@admin.FirstName @admin.LastName</td>
+                    <td>@admin.FirstName @admin.LastName.ToUpper()</td>
                     <td>
                         <button class="btn btn-danger" @onclick="@(() => Delete(admin.Id))">Yöneticilikten Çıkar</button>
                     </td>

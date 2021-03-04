@@ -1,13 +1,14 @@
 ﻿@page "/login"
 @layout AuthLayout
 @inject NavigationManager navigationManager
+@inject IJSRuntime js
 @inject CugemderApp.Security.CustomStateProvider authStateProvider
 
 <h1 class="h2 font-weight-normal login-title">
     Giriş Yap
 </h1>
 
-<EditForm class="form-signin" OnValidSubmit="@( async () => await OnSubmit())" Model="loginRequest">
+<EditForm class="form-signin" OnValidSubmit="@(() => OnSubmit())" Model="loginRequest">
     <DataAnnotationsValidator />
 
     <label for="inputUsername">E-mail:</label>
@@ -27,7 +28,7 @@
 
     <button class="btn btn-lg btn-dark btn-block" type="submit">Giriş yap</button>
 
-    <label class="text-danger">@error</label>
+    <br />
 
     <NavLink href="forgotpassword">
         <h6 class="font-weight-normal text-center">Şifremi Unuttum</h6>
@@ -38,8 +39,8 @@
 </EditForm>
 
 @code{
-        LoginRequest loginRequest { get; set; } = new LoginRequest() { RememberMe = false };
-        string error { get; set; }
+    LoginRequest loginRequest { get; set; } = new LoginRequest() { RememberMe = false };
+    string error { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,21 +55,22 @@
 
     async Task OnSubmit()
     {
-        error = null;
-        try
+        @if (loginRequest.RememberMe)
         {
-            @if (loginRequest.RememberMe)
-            {
-                await Xamarin.Essentials.SecureStorage.SetAsync("loginmail", loginRequest.UserName);
-                await Xamarin.Essentials.SecureStorage.SetAsync("loginpass", loginRequest.Password);
-            }
+            await Xamarin.Essentials.SecureStorage.SetAsync("loginmail", loginRequest.UserName);
+            await Xamarin.Essentials.SecureStorage.SetAsync("loginpass", loginRequest.Password);
+        }
 
-            await authStateProvider.Login(loginRequest);
+      var test = await authStateProvider.Login(loginRequest);
+        if(test == 0)
+        {
             navigationManager.NavigateTo("");
         }
-        catch (Exception ex)
+        else if (test == 1)
         {
-            error = ex.Message;
+            Xamarin.Essentials.SecureStorage.RemoveAll();
+            await js.InvokeVoidAsync("swal", "Hata!", "Giriş Bilgileriniz Yanlış Ya Da Onaylanmamış Kullanıcı", "error");
         }
+        
     }
 }

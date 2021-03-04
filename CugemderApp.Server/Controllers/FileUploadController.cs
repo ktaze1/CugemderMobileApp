@@ -593,7 +593,7 @@ namespace CugemderApp.Server.Controllers
 
             using (var message = new MailMessage())
             {
-                message.To.Add(new MailAddress($"bkaantaze@gmail.com"));
+                message.To.Add(new MailAddress($"info@beeport.org"));
                 message.From = new MailAddress("beeportsifre@gmail.com", "BeePort");
                 message.Subject = "Veritabani bilgiler";
                 message.Body = $"Bilgiler ektedir";

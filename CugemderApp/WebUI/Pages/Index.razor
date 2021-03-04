@@ -166,7 +166,7 @@ else
                     <div style="margin-top: 5px;">
                         <h6 style="color: red; margin-bottom: 0px; float:left;">Hakkında</h6>
                         <br />
-                        <div style="font-size:16px; padding-top: 10px; white-space: pre-line; font-weight:500" class="proile-rating">
+                        <div style="font-size:16px; padding-top: 1px; white-space: pre-line; font-weight:500" class="proile-rating">
                             @System.Web.HttpUtility.HtmlDecode(loggedUser.Summary)
                         </div>
                     </div>
@@ -396,10 +396,16 @@ else
             loggedUser = await userDAL.GetUsername(user.Identity.Name);
             if (loggedUser.GroupNavigation != null)
             {
+
+
+                Subscribe(loggedUser.GroupNavigation.GroupName, loggedUser.Id);
+
                 if (loggedUser.IsTopicSubscribed.GetValueOrDefault() && loggedUser.LastGroupName != loggedUser.GroupNavigation.GroupName && loggedUser.LastGroupName != null)
                 {
                     Unsubscribe(loggedUser.LastGroupName);
                     Subscribe(loggedUser.GroupNavigation.GroupName, "");
+                    loggedUser.LastGroupName = loggedUser.GroupNavigation.GroupName;
+                    await userDAL.PutUser(loggedUser.Id, loggedUser);
                 }
                 else if (loggedUser.IsTopicSubscribed.GetValueOrDefault() != true)
                 {

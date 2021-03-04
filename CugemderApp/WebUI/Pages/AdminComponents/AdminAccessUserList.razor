@@ -65,7 +65,7 @@ else
 
                 <tr>
                     <td>
-                        <a href="/profile/@user.Id">@user.FirstName @user.LastName</a>
+                        <a href="/profile/@user.Id">@user.FirstName @user.LastName.ToUpper()</a>
                     </td>
                     <td>
                         <button class="btn btn-dark" @onclick="@( () => uriHelper.NavigateTo($"adminaccessuser/{user.Id}"))">Düzenle</button>

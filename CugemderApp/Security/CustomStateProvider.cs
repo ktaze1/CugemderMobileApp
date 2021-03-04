@@ -53,10 +53,17 @@ namespace CugemderApp.Security
             _currentUser = null;
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
-        public async Task Login(LoginRequest loginParameters)
+        public async Task<int> Login(LoginRequest loginParameters)
         {
-            await api.Login(loginParameters);
+            var result = await api.Login(loginParameters);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+                return 0;
+            }
+
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+            return 1;
         }
 
         public async Task ResetPassword(PasswordChangeModel model)

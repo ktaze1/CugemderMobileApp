@@ -77,10 +77,11 @@
         {
             if (pickResult == null)
             {
-                await js.InvokeVoidAsync("swal", "Fotoğraf Ekleyin!", "Lütfen Fotoğraf ekleyiniz.", "error");
+                await js.InvokeVoidAsync("swal", "Fotoğraf Ekleyin!", "Lütfen Fotoğraf Ekleyiniz.", "error");
             }
             else if (pickResult != null)
             {
+                await js.InvokeVoidAsync("swal", "Lütfen Bekleyin", "Kontroller Sağlanıyor, İşlem Tamamlandığında Otomatik Olarak Giriş Sayfasına Yönlendireleceksiniz.", "info");
                 var name = registerRequest.FirstName + " " + registerRequest.LastName;
                 await UploadFiles();
                 await authStateProvider.Register(validatedRegisterRequest);
@@ -151,7 +152,7 @@
         public DateTime DateofBirth { get; set; }
 
 
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Geçerli bir e-mail giriniz.")]
         [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         public string Email { get; set; }
 

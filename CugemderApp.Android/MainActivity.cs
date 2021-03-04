@@ -1,22 +1,12 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.Content.PM;
-using Android.Gms.Common;
 using Android.OS;
-using Android.Util;
 using System;
 using Microsoft.MobileBlazorBindings.WebView.Android;
 using Android.Runtime;
-using CugemderApp.WebUI.Pages;
-using System.Net.Http;
 using System.Text;
 using System.Globalization;
 using System.Linq;
-using Android.Widget;
-using Android.Graphics;
-using Android.Views;
-using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
-using Xamarin.Forms.Platform.Android;
 
 namespace CugemderApp.Droid
 {
@@ -45,6 +35,9 @@ namespace CugemderApp.Droid
 
             WebUI.Pages.Index.topicSubscribed += OnSubscribeTopic;
             WebUI.Pages.Index.topicUnsubscribed += OnUnsubscribeTopic;
+
+            WebUI.Shared.NavMenu.topicUnsubscribed += OnUnsubscribeTopic;
+
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -78,7 +71,7 @@ namespace CugemderApp.Droid
             {
                 var normalizedGroupName = String.Join("", groupname.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
                 .Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)).Replace("ı", "i");
-                Firebase.Messaging.FirebaseMessaging.Instance.SubscribeToTopic(normalizedGroupName);
+                Firebase.Messaging.FirebaseMessaging.Instance.UnsubscribeFromTopic(normalizedGroupName);
 
             }
             catch (Exception ex)

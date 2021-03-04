@@ -65,7 +65,7 @@
             </li>
         }
         <li class="nav-item px-3">
-            <div @onclick="@( () => Logout())" class="nav-link" style="color: lightgrey;">
+            <div @onclick="@( () => Logout())" class="nav-link" style="color: lightgrey; cursor: pointer">
                 <span class="oi oi-account-logout" aria-hidden="true"></span> Çıkış Yap
             </div>
         </li>
@@ -85,6 +85,24 @@
     private AspNetUsers loggedUser;
     private string _userId;
 
+    public delegate bool onUnSubscribe(string groupname);
+
+    public delegate void UnsubscribeTopicEventHandler(string groupname);
+
+    public static event UnsubscribeTopicEventHandler topicUnsubscribed;
+
+    protected virtual void onTopicUnsubscribed(string groupname)
+    {
+        if (topicUnsubscribed != null)
+            topicUnsubscribed(groupname);
+
+    }
+
+    public void Unsubscribe(string groupname)
+    {
+        onTopicUnsubscribed(groupname);
+    }
+
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -98,9 +116,12 @@
 
     protected async void Logout()
     {
+        loggedUser = await userDAL.GetUsername(loggedUser.Email);
         loggedUser.IsTopicSubscribed = false;
         await userDAL.PutUser(loggedUser.Id, loggedUser);
         Xamarin.Essentials.SecureStorage.RemoveAll();
+        Unsubscribe(loggedUser.GroupNavigation.GroupName);
+        Unsubscribe(loggedUser.Id);
         await customStateProvider.Logout();
     }
 }

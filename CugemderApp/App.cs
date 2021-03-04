@@ -30,7 +30,6 @@ namespace CugemderApp
                     services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
                     services.AddScoped<IAuthService, AuthService>();
 
-
                     services.AddSingleton<DataAccessClasses.AspNetUsersDAL>();
                     services.AddSingleton<DataAccessClasses.CitiesDAL>();
                     services.AddSingleton<DataAccessClasses.DocumentsDAL>();

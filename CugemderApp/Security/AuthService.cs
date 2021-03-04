@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CugemderApp.Security
@@ -30,11 +27,14 @@ namespace CugemderApp.Security
             return new CurrentUser() { IsAuthenticated = false };
         }
 
-        public async Task Login(LoginRequest loginRequest)
+        public async Task<HttpResponseMessage> Login(LoginRequest loginRequest)
         {
-            var result = await _httpClient.PostAsJsonAsync("api/auth/login", loginRequest);
-            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
-            result.EnsureSuccessStatusCode();
+            var result = await _httpClient.PostAsJsonAsync("api/auth/Login", loginRequest);
+            if (result.IsSuccessStatusCode)
+            {
+                return result;
+            }
+            return new HttpResponseMessage() { StatusCode = System.Net.HttpStatusCode.BadRequest };
         }
 
         public async Task Logout()

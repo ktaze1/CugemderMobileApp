@@ -225,6 +225,8 @@
     AspNetUsers user = new AspNetUsers();
     string newPassword;
 
+   int lastGroupId;
+
     int groupId = 0, positionId = 0, genderId = 0, jobTitleId = 0, relationshipId = 0, cityId = 0;
     FileResult item;
 
@@ -261,6 +263,8 @@
             cityId = user.LocatedCity.HasValue ? (int)user.LocatedCity : 0;
             relationshipId = user.Relationship.HasValue ? (int)user.Relationship : 0;
             UnicodeToEnglish();
+
+            lastGroupId = groupId;
         }
     }
 
@@ -274,6 +278,11 @@
         if (user.LocatedCity == 0) { user.LocatedCity = null; }
         if (user.Position == 0) { user.Position = null; }
         if (user.JobTitle == 0) { user.JobTitle = null; }
+
+        if(user.Group.Value != lastGroupId)
+        {
+            user.LastGroupName = groups.Where(c => c.Id == lastGroupId).FirstOrDefault().GroupName;
+        }
 
         var filetoDelete = System.IO.Path.GetFileName(user.PhotoUrl);
         if (filetoDelete != null && item != null)
